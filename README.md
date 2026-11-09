@@ -1,6 +1,6 @@
-# GridWeave Paper 1 anonymous research artifact
+# Paper: GridWeave: Weaving Custody, Obligations, and Evidence into Smart-Grid Benchmarks 
 
-This bundle accompanies the current GridWeave benchmark paper. It includes the corrected generator, GraphSpec and RelationalSpec, the VERCLO consumer, the inputs and evaluator labels used in the study, and the recorded evidence behind the paper.
+This bundle accompanies the current GridWeave benchmark paper. It includes the generator, GraphSpec and RelationalSpec, the VERCLO consumer, the inputs and evaluator labels used in the study, and the recorded evidence behind the paper.
 
 ## Datasets
 
