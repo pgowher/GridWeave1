@@ -1,0 +1,129 @@
+{
+  "schema_id": "htgl.dataset.v1.observer_event",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "e4d5a6ccfa568768c29fe00f2877e3642db9ad83852783666321561650a8f4af",
+  "table_name": "observer_event",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "observer_record_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Projection row key."
+      }
+    },
+    {
+      "name": "observer_actor_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Institution/observer FK."
+      }
+    },
+    {
+      "name": "source_event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Privileged event FK retained in protected mapping only or hashed in public views."
+      }
+    },
+    {
+      "name": "projection_profile_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Visibility rule profile."
+      }
+    },
+    {
+      "name": "visible_timestamp",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Observed time after delay/clock effects."
+      }
+    },
+    {
+      "name": "visibility_class",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "visibility_class",
+        "privacy_class": "restricted",
+        "semantic_invariant": "direct, shared, inferred, redacted, delayed or omitted."
+      }
+    },
+    {
+      "name": "omission_reason",
+      "type": "dictionary<string>",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": "omission_reason",
+        "privacy_class": "restricted",
+        "semantic_invariant": "policy, transport_loss, compromise, redaction, out_of_scope or sampling."
+      }
+    },
+    {
+      "name": "redacted_field_paths",
+      "type": "list<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Redactions."
+      }
+    },
+    {
+      "name": "schema_profile_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Institution-specific output schema."
+      }
+    },
+    {
+      "name": "payload_json",
+      "type": "large_string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Projected event payload."
+      }
+    },
+    {
+      "name": "projection_digest",
+      "type": "fixed_size_binary[32]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Digest for projection integrity."
+      }
+    },
+    {
+      "name": "ground_truth_access_class",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "privacy_class",
+        "privacy_class": "restricted",
+        "semantic_invariant": "public, evaluator_only or sealed."
+      }
+    }
+  ]
+}

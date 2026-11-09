@@ -1,0 +1,129 @@
+{
+  "schema_id": "htgl.dataset.v1.data_object",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "d17428b7206bf30db61718dc77b1a346ab28df7c96b74a4b55bd4b04337f3c54",
+  "table_name": "data_object",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "data_object_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Logical object key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "origin_database_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Origin database FK."
+      }
+    },
+    {
+      "name": "object_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "object_type",
+        "privacy_class": "restricted",
+        "semantic_invariant": "meter interval, profile, bill, consent, model feature, market bid, etc."
+      }
+    },
+    {
+      "name": "subject_cohort_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Subject/cohort FK."
+      }
+    },
+    {
+      "name": "sensitivity",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "sensitivity",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Configured sensitivity class."
+      }
+    },
+    {
+      "name": "schema_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Payload schema FK."
+      }
+    },
+    {
+      "name": "created_at",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Creation time."
+      }
+    },
+    {
+      "name": "valid_from",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Semantic validity start."
+      }
+    },
+    {
+      "name": "valid_to",
+      "type": "timestamp[us, UTC]",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Semantic validity end."
+      }
+    },
+    {
+      "name": "source_physical_record_ids",
+      "type": "list<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Physical records that produced the object; empty if not applicable."
+      }
+    },
+    {
+      "name": "purpose_tags",
+      "type": "list<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Configured allowed/observed purposes."
+      }
+    }
+  ]
+}

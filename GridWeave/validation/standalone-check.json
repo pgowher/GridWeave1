@@ -1,0 +1,111 @@
+{
+  "status": "PASS",
+  "date": "2026-10-25",
+  "workflow": "Standalone generation and dataset validation only",
+  "package_version": "0.2.1",
+  "generation_source_id": "17512fe51989b0a9928ca6dbcacb0f8cb4a506d806e66038872851eb9724e98b",
+  "runtime": {
+    "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+    "prefix": "${ARCHIVE_ROOT}/Implementations/VERCLO_PhD/GridWeave/.venv",
+    "modules": {
+      "gridweave": "${ARCHIVE_ROOT}/Implementations/VERCLO_PhD/GridWeave/src/gridweave/__init__.py",
+      "paeforge_pipeline": "${ARCHIVE_ROOT}/Implementations/VERCLO_PhD/GridWeave/support/PaEForge/src/paeforge_pipeline/__init__.py",
+      "verclo": "${ARCHIVE_ROOT}/Implementations/VERCLO_PhD/GridWeave/support/HTGLThesis/src/verclo/__init__.py",
+      "cryptography": "${ARCHIVE_ROOT}/Implementations/VERCLO_PhD/GridWeave/.venv/lib/python3.14/site-packages/cryptography/__init__.py",
+      "jsonschema": "${ARCHIVE_ROOT}/Implementations/VERCLO_PhD/GridWeave/.venv/lib/python3.14/site-packages/jsonschema/__init__.py",
+      "pyarrow": "${ARCHIVE_ROOT}/Implementations/VERCLO_PhD/GridWeave/.venv/lib/python3.14/site-packages/pyarrow/__init__.py"
+    },
+    "dependencies": {
+      "cryptography": "46.0.5",
+      "jsonschema": "4.19.2",
+      "pyarrow": "23.0.1",
+      "attrs": "25.4.0",
+      "jsonschema-specifications": "2023.12.1",
+      "referencing": "0.36.2",
+      "rpds-py": "0.27.1",
+      "cffi": "2.1.1",
+      "pycparser": "3.12"
+    }
+  },
+  "generator_property_tests_passed": 11,
+  "reference_dataset": {
+    "status": "READY_FOR_VERCLO_INPUT",
+    "version": "GridWeave-0.2.0",
+    "dataset": "${ARCHIVE_ROOT}/Implementations/VERCLO_PhD/GridWeave/datasets/reference",
+    "manifest_sha256": "35778ae20cf2cda8a2c719b0713ee9c3fc2158eac75fb46679f35cae44db9b9f",
+    "materialized_cases": 420,
+    "pairs": 210,
+    "source_families": 7,
+    "source_family_split_overlap": false,
+    "class_support": {
+      "CLOSED": 198,
+      "CLOSED_WITH_EXCEPTIONS": 54,
+      "DISPUTED": 21,
+      "IN_PROGRESS": 21,
+      "OPEN": 21,
+      "PARTIALLY_CLOSED": 63,
+      "UNVERIFIABLE": 42
+    },
+    "serialized_input_bytes": 6935764,
+    "proof_profile": "REAL_ED25519_SYNTHETIC_E2",
+    "q_status": "NOT_EXECUTED",
+    "scope": "Input, cryptographic fixture and independent-oracle checks; no VERCLO execution implied"
+  },
+  "reference_directory": "datasets/reference",
+  "native_verifier_case_evaluations": 0,
+  "blocked_consumer_calls": [],
+  "relocated_copy": {
+    "runtime": {
+      "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+      "prefix": "/tmp/gridweave-independent-_t0g38e2/GridWeave/.venv",
+      "modules": {
+        "gridweave": "/tmp/gridweave-independent-_t0g38e2/GridWeave/src/gridweave/__init__.py",
+        "paeforge_pipeline": "/tmp/gridweave-independent-_t0g38e2/GridWeave/support/PaEForge/src/paeforge_pipeline/__init__.py",
+        "verclo": "/tmp/gridweave-independent-_t0g38e2/GridWeave/support/HTGLThesis/src/verclo/__init__.py",
+        "cryptography": "/tmp/gridweave-independent-_t0g38e2/GridWeave/.venv/lib/python3.14/site-packages/cryptography/__init__.py",
+        "jsonschema": "/tmp/gridweave-independent-_t0g38e2/GridWeave/.venv/lib/python3.14/site-packages/jsonschema/__init__.py",
+        "pyarrow": "/tmp/gridweave-independent-_t0g38e2/GridWeave/.venv/lib/python3.14/site-packages/pyarrow/__init__.py"
+      },
+      "dependencies": {
+        "cryptography": "46.0.5",
+        "jsonschema": "4.19.2",
+        "pyarrow": "23.0.1",
+        "attrs": "25.4.0",
+        "jsonschema-specifications": "2023.12.1",
+        "referencing": "0.36.2",
+        "rpds-py": "0.27.1",
+        "cffi": "2.1.1",
+        "pycparser": "3.12"
+      }
+    },
+    "dataset": {
+      "status": "READY_FOR_VERCLO_INPUT",
+      "version": "GridWeave-0.2.0",
+      "dataset": "/tmp/gridweave-independent-_t0g38e2/reproduced",
+      "manifest_sha256": "788d37fa95131bbc6e7483d41905d7da0014c774364b364aa8fbd934f6dd40bc",
+      "materialized_cases": 20,
+      "pairs": 10,
+      "source_families": 1,
+      "source_family_split_overlap": false,
+      "class_support": {
+        "CLOSED": 11,
+        "CLOSED_WITH_EXCEPTIONS": 1,
+        "DISPUTED": 1,
+        "IN_PROGRESS": 1,
+        "OPEN": 1,
+        "PARTIALLY_CLOSED": 3,
+        "UNVERIFIABLE": 2
+      },
+      "serialized_input_bytes": 205298,
+      "proof_profile": "REAL_ED25519_SYNTHETIC_E2",
+      "q_status": "NOT_EXECUTED",
+      "scope": "Input, cryptographic fixture and independent-oracle checks; no VERCLO execution implied"
+    },
+    "blocked": []
+  },
+  "portable_reproduction_byte_identical": true,
+  "negative_integrity_controls": {
+    "wrong_manifest_pin": "dataset manifest trust-pin mismatch",
+    "changed_receipt": "dataset integrity mismatch: public/cases/11fff03e507669f641a92c80bb6fad97/receipt-stream.json"
+  }
+}

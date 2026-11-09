@@ -1,0 +1,313 @@
+{
+  "bundle_format": "htgl.observer.profiles.v1",
+  "bundle_id": "OBSERVER-PROFILES-REFERENCE-v1",
+  "version": "1.0.0",
+  "visibility_dsl_profile_id": "OBSERVER-VISIBILITY-DSL-v1",
+  "leakage_scan_profile_id": "OBSERVER-NONLEAKAGE-STRICT-v1",
+  "task_registry_id": "OBSERVER-RESEARCH-TASKS-v1",
+  "redaction_profiles": {
+    "REDACT-TRUTH-LABELS-v1": [
+      "governance_event.actor_identifiers",
+      "governance_event.object_identifiers",
+      "governance_event.workflow_identifier",
+      "policy.evaluator_truth",
+      "anomaly.evaluator_truth",
+      "evidence.verification_truth",
+      "sampling.design_truth"
+    ]
+  },
+  "delay_profiles": {
+    "DELAY-NONE-v1": {
+      "minimum_seconds": 0,
+      "maximum_seconds": 0,
+      "clock_offset_seconds": 0
+    },
+    "DELAY-OBSERVER-v1": {
+      "minimum_seconds": 30,
+      "maximum_seconds": 900,
+      "clock_offset_seconds": 5
+    }
+  },
+  "loss_profiles": {
+    "LOSS-NONE-v1": {
+      "probability": 0.0
+    },
+    "LOSS-LOW-v1": {
+      "probability": 0.05
+    },
+    "LOSS-PUBLIC-v1": {
+      "probability": 0.2
+    }
+  },
+  "forbidden_field_sets": {
+    "FORBID-TRUTH-LABELS": [
+      "applied_rule_ids",
+      "conflict_resolution_trace",
+      "expected_action",
+      "explanation_code",
+      "is_conformant_world_truth",
+      "is_cross_region",
+      "is_violation",
+      "target_invariant_id",
+      "verification_status_truth",
+      "violation_type"
+    ],
+    "FORBID-PAIR-IDS": [
+      "anomaly_instance_id",
+      "invalid_counterfactual_workflow_id",
+      "protected_pair_id",
+      "valid_counterfactual_workflow_id"
+    ],
+    "FORBID-SEALED-IDS": [
+      "actor_id",
+      "data_object_id",
+      "decision_id",
+      "event_id",
+      "local_database_id",
+      "obligation_id",
+      "receipt_id",
+      "replica_id",
+      "source_event_id",
+      "workflow_instance_id"
+    ],
+    "FORBID-SAMPLING-PROBABILITIES": [
+      "analysis_weight",
+      "design_weight",
+      "estimator_eligible",
+      "first_order_inclusion_probability",
+      "induced_inclusion_probability",
+      "selection_probability"
+    ]
+  },
+  "profiles": [
+    {
+      "profile_id": "OBS-FULL-EVALUATOR",
+      "mode": "full",
+      "observer_actor_class": "auditor",
+      "release_access_class": "evaluator_only",
+      "schema_profile_id": "observer.full.v1",
+      "visibility_rules": [
+        {
+          "rule_id": "FULL-DIRECT",
+          "visibility_class": "direct",
+          "condition": {"op": "const", "value": true}
+        }
+      ],
+      "allowed_payload_fields": [
+        "actor_classes",
+        "causal_parent_refs",
+        "database_kind",
+        "event_family",
+        "event_ref",
+        "event_type",
+        "evidence_receipt_count",
+        "evidence_types",
+        "object_type",
+        "policy_purpose_id",
+        "workflow_ref",
+        "workflow_state_after",
+        "workflow_state_before"
+      ],
+      "redaction_profile_id": "REDACT-TRUTH-LABELS-v1",
+      "delay_profile_id": "DELAY-NONE-v1",
+      "loss_profile_id": "LOSS-NONE-v1",
+      "adversarial_omission_probability": 0.0,
+      "adversarial_omission_condition": {"op": "const", "value": false},
+      "collusion_member_profile_ids": []
+    },
+    {
+      "profile_id": "OBS-DSO-DIRECT",
+      "mode": "role_based",
+      "observer_actor_class": "dso",
+      "release_access_class": "restricted",
+      "schema_profile_id": "observer.dso.role.v1",
+      "visibility_rules": [
+        {
+          "rule_id": "DSO-DIRECT-ACTOR",
+          "visibility_class": "direct",
+          "condition": {"op": "contains_field", "field": "event.actor_ids", "other_field": "observer.id"}
+        },
+        {
+          "rule_id": "DSO-SHARED-RELATIONSHIP",
+          "visibility_class": "shared",
+          "condition": {"op": "intersects", "field": "observer.relationship_types_to_event_actors", "values": ["controls", "processes_for", "supplies", "aggregates", "discloses_to"]}
+        },
+        {
+          "rule_id": "DSO-INFERRED-REGION",
+          "visibility_class": "inferred",
+          "condition": {"op": "all", "args": [
+            {"op": "eq_field", "field": "observer.region", "other_field": "event.source_region"},
+            {"op": "in", "field": "event.family", "values": ["audit", "incident", "operational"]}
+          ]}
+        }
+      ],
+      "allowed_payload_fields": [
+        "actor_classes",
+        "causal_parent_refs",
+        "database_kind",
+        "event_family",
+        "event_ref",
+        "event_type",
+        "evidence_receipt_count",
+        "evidence_types",
+        "object_type",
+        "policy_purpose_id",
+        "workflow_ref",
+        "workflow_state_after",
+        "workflow_state_before"
+      ],
+      "redaction_profile_id": "REDACT-TRUTH-LABELS-v1",
+      "delay_profile_id": "DELAY-NONE-v1",
+      "loss_profile_id": "LOSS-NONE-v1",
+      "adversarial_omission_probability": 0.0,
+      "adversarial_omission_condition": {"op": "const", "value": false},
+      "collusion_member_profile_ids": []
+    },
+    {
+      "profile_id": "OBS-AUDITOR-DELAYED",
+      "mode": "delayed",
+      "observer_actor_class": "auditor",
+      "release_access_class": "restricted",
+      "schema_profile_id": "observer.auditor.delayed.v1",
+      "visibility_rules": [
+        {
+          "rule_id": "AUDITOR-DIRECT-ACTOR",
+          "visibility_class": "direct",
+          "condition": {"op": "contains_field", "field": "event.actor_ids", "other_field": "observer.id"}
+        },
+        {
+          "rule_id": "AUDITOR-SHARED-EVIDENCE",
+          "visibility_class": "shared",
+          "condition": {"op": "any", "args": [
+            {"op": "eq", "field": "evidence.has_obligation", "value": true},
+            {"op": "in", "field": "event.family", "values": ["audit", "incident", "erasure"]}
+          ]}
+        }
+      ],
+      "allowed_payload_fields": [
+        "causal_parent_refs",
+        "event_family",
+        "event_ref",
+        "event_type",
+        "evidence_receipt_count",
+        "evidence_types",
+        "object_type",
+        "workflow_ref",
+        "workflow_state_after"
+      ],
+      "redaction_profile_id": "REDACT-TRUTH-LABELS-v1",
+      "delay_profile_id": "DELAY-OBSERVER-v1",
+      "loss_profile_id": "LOSS-LOW-v1",
+      "adversarial_omission_probability": 0.0,
+      "adversarial_omission_condition": {"op": "const", "value": false},
+      "collusion_member_profile_ids": []
+    },
+    {
+      "profile_id": "OBS-PUBLIC-LOSSY",
+      "mode": "lossy",
+      "observer_actor_class": "regulator",
+      "release_access_class": "public",
+      "schema_profile_id": "observer.public.lossy.v1",
+      "visibility_rules": [
+        {
+          "rule_id": "PUBLIC-INFERRED-SUMMARY",
+          "visibility_class": "inferred",
+          "condition": {"op": "const", "value": true}
+        }
+      ],
+      "allowed_payload_fields": [
+        "event_family",
+        "evidence_present",
+        "inferred_summary"
+      ],
+      "redaction_profile_id": "REDACT-TRUTH-LABELS-v1",
+      "delay_profile_id": "DELAY-OBSERVER-v1",
+      "loss_profile_id": "LOSS-PUBLIC-v1",
+      "adversarial_omission_probability": 0.0,
+      "adversarial_omission_condition": {"op": "const", "value": false},
+      "collusion_member_profile_ids": []
+    },
+    {
+      "profile_id": "OBS-ADVERSARIAL-OMISSION",
+      "mode": "adversarial_omission",
+      "observer_actor_class": "auditor",
+      "release_access_class": "restricted",
+      "schema_profile_id": "observer.adversarial.omission.v1",
+      "visibility_rules": [
+        {
+          "rule_id": "ADVERSARIAL-SHARED-BASE",
+          "visibility_class": "shared",
+          "condition": {"op": "const", "value": true}
+        }
+      ],
+      "allowed_payload_fields": [
+        "causal_parent_refs",
+        "event_family",
+        "event_ref",
+        "event_type",
+        "evidence_receipt_count",
+        "evidence_types",
+        "workflow_ref"
+      ],
+      "redaction_profile_id": "REDACT-TRUTH-LABELS-v1",
+      "delay_profile_id": "DELAY-NONE-v1",
+      "loss_profile_id": "LOSS-NONE-v1",
+      "adversarial_omission_probability": 0.35,
+      "adversarial_omission_condition": {"op": "any", "args": [
+        {"op": "eq", "field": "anomaly.workflow_member", "value": true},
+        {"op": "eq", "field": "evidence.has_obligation", "value": true},
+        {"op": "eq", "field": "policy.is_violation", "value": true}
+      ]},
+      "collusion_member_profile_ids": []
+    },
+    {
+      "profile_id": "OBS-COLLUSION-UTILITY-AUDITOR",
+      "mode": "collusion",
+      "observer_actor_class": "auditor",
+      "release_access_class": "restricted",
+      "schema_profile_id": "observer.collusion.utility-auditor.v1",
+      "visibility_rules": [],
+      "allowed_payload_fields": [],
+      "redaction_profile_id": "REDACT-TRUTH-LABELS-v1",
+      "delay_profile_id": "DELAY-NONE-v1",
+      "loss_profile_id": "LOSS-NONE-v1",
+      "adversarial_omission_probability": 0.0,
+      "adversarial_omission_condition": {"op": "const", "value": false},
+      "collusion_member_profile_ids": [
+        "OBS-DSO-DIRECT",
+        "OBS-AUDITOR-DELAYED"
+      ]
+    }
+  ],
+  "collusion_profiles": {
+    "COLLUSION-UTILITY-AUDITOR-v1": {
+      "output_profile_id": "OBS-COLLUSION-UTILITY-AUDITOR",
+      "member_profile_ids": ["OBS-DSO-DIRECT", "OBS-AUDITOR-DELAYED"],
+      "composition": "union_earliest_visible_payload_union",
+      "threat_model": "The DSO and auditor share their released restricted views; evaluator mappings and sealed truth remain unavailable."
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "TASK-CAUSAL-RECONSTRUCTION",
+      "metric_name": "visible_edge_coverage",
+      "required_profile_thresholds": {
+        "OBS-FULL-EVALUATOR": 1.0
+      }
+    },
+    {
+      "task_id": "TASK-EVIDENCE-RECOVERABILITY",
+      "metric_name": "evidence_recoverability",
+      "required_profile_thresholds": {
+        "OBS-FULL-EVALUATOR": 0.9
+      }
+    },
+    {
+      "task_id": "TASK-ANOMALY-EVENT-RECOVERABILITY",
+      "metric_name": "anomaly_event_recoverability",
+      "required_profile_thresholds": {
+        "OBS-FULL-EVALUATOR": 1.0
+      }
+    }
+  ]
+}

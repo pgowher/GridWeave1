@@ -1,0 +1,139 @@
+{
+  "schema_id": "htgl.dataset.v1.anomaly_instance",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "f9abc0501db133f7ad371c6c81cb04efe310bf23ebf47202303f6d3e88f3f1ce",
+  "table_name": "anomaly_instance",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "anomaly_instance_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Episode key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "anomaly_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "anomaly_type",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Typed governance anomaly."
+      }
+    },
+    {
+      "name": "target_invariant_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Exactly targeted invariant for minimal cases."
+      }
+    },
+    {
+      "name": "severity",
+      "type": "float32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "validation_severity",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Documented scale in [0,1]."
+      }
+    },
+    {
+      "name": "start_time",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Start."
+      }
+    },
+    {
+      "name": "end_time",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "End."
+      }
+    },
+    {
+      "name": "valid_counterfactual_workflow_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Valid member of pair."
+      }
+    },
+    {
+      "name": "invalid_counterfactual_workflow_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Invalid member of pair."
+      }
+    },
+    {
+      "name": "changed_field_paths",
+      "type": "list<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Exact perturbations."
+      }
+    },
+    {
+      "name": "preserved_invariant_ids",
+      "type": "list<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Non-target invariants checked."
+      }
+    },
+    {
+      "name": "adversarial",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Adversarial designation."
+      }
+    },
+    {
+      "name": "episode_event_count",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Events in episode."
+      }
+    }
+  ]
+}

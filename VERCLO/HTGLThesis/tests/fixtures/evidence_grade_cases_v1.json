@@ -1,0 +1,276 @@
+{
+  "fixture_format": "pae.evidence-grade-cases.v1",
+  "fixture_id": "PAE-EVIDENCE-GRADE-CASES-v1",
+  "version": "1.0.0",
+  "registry_id": "PAE-EVIDENCE-GRADES-v1",
+  "receipt_defaults": {
+    "evidence_type": "signature",
+    "obligation_id": "O1",
+    "issuer_id": "P-CUSTODIAN",
+    "issuer_role": "CUSTODIAN",
+    "trust_domain": "TD-CUSTODIAN",
+    "fault_domain": "FD-CUSTODIAN",
+    "disposition": "ERASED",
+    "event_time": "2026-09-10T00:00:00Z",
+    "obligation_deadline": "2026-09-15T00:00:00Z",
+    "evaluation_time": "2026-09-16T00:00:00Z",
+    "not_before": "2026-01-01T00:00:00Z",
+    "expires_at": null,
+    "canonical_valid": true,
+    "obligation_bound": true,
+    "provenance_complete": true,
+    "verification_material_available": true,
+    "credential_valid_at_event": true,
+    "authenticator_valid": true,
+    "anchor_valid": false,
+    "ordering_support_valid": false,
+    "mechanism": {
+      "present": false,
+      "valid": false,
+      "expires_at": null
+    }
+  },
+  "receipts": [
+    {
+      "receipt_id": "R-DIGEST",
+      "evidence_type": "digest",
+      "disposition": "UNREACHABLE"
+    },
+    {
+      "receipt_id": "R-HMAC",
+      "evidence_type": "hmac"
+    },
+    {
+      "receipt_id": "R-SIGNATURE",
+      "evidence_type": "signature",
+      "claim_commitment": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    {
+      "receipt_id": "R-INCLUSION",
+      "evidence_type": "inclusion_proof",
+      "issuer_id": "P-LOG",
+      "issuer_role": "SERVICE",
+      "trust_domain": "TD-LOG",
+      "fault_domain": "FD-LOG",
+      "disposition": "UNREACHABLE",
+      "anchor_valid": true,
+      "provenance_refs": [
+        "PROV-1",
+        "receipt:R-SIGNATURE",
+        "claim:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      ]
+    },
+    {
+      "receipt_id": "R-DELETION-ACK",
+      "evidence_type": "deletion_acknowledgement"
+    },
+    {
+      "receipt_id": "R-REPLICA-ATTESTATION",
+      "evidence_type": "replica_attestation"
+    },
+    {
+      "receipt_id": "R-AUDIT-1",
+      "evidence_type": "audit_finding",
+      "issuer_id": "P-AUDITOR-1",
+      "issuer_role": "AUDITOR",
+      "trust_domain": "TD-AUDIT-1",
+      "fault_domain": "FD-AUDIT-1"
+    },
+    {
+      "receipt_id": "R-MERKLE-ANCHOR",
+      "evidence_type": "merkle_anchor",
+      "issuer_id": "P-LOG",
+      "issuer_role": "SERVICE",
+      "trust_domain": "TD-LOG",
+      "fault_domain": "FD-LOG",
+      "disposition": "UNREACHABLE",
+      "anchor_valid": true
+    },
+    {
+      "receipt_id": "R-NOTIFICATION",
+      "evidence_type": "notification_receipt",
+      "issuer_id": "P-MESSENGER",
+      "issuer_role": "SERVICE",
+      "disposition": "UNREACHABLE"
+    },
+    {
+      "receipt_id": "R-BAD-SIGNATURE",
+      "evidence_type": "signature",
+      "authenticator_valid": false
+    },
+    {
+      "receipt_id": "R-MISSING-ANCHOR",
+      "evidence_type": "inclusion_proof",
+      "anchor_valid": false
+    },
+    {
+      "receipt_id": "R-EXPIRED",
+      "evidence_type": "signature",
+      "expires_at": "2026-09-15T23:59:59Z"
+    },
+    {
+      "receipt_id": "R-LATE",
+      "evidence_type": "signature",
+      "event_time": "2026-09-15T00:00:01Z"
+    },
+    {
+      "receipt_id": "R-MISSING-PROVENANCE",
+      "evidence_type": "deletion_acknowledgement",
+      "provenance_complete": false
+    },
+    {
+      "receipt_id": "R-MECHANISM",
+      "evidence_type": "deletion_acknowledgement",
+      "ordering_support_valid": true,
+      "mechanism": {
+        "present": true,
+        "valid": true,
+        "expires_at": "2026-12-31T00:00:00Z"
+      }
+    },
+    {
+      "receipt_id": "R-MECHANISM-EXPIRED",
+      "evidence_type": "deletion_acknowledgement",
+      "ordering_support_valid": true,
+      "mechanism": {
+        "present": true,
+        "valid": true,
+        "expires_at": "2026-09-15T23:59:59Z"
+      }
+    },
+    {
+      "receipt_id": "R-AUDIT-2",
+      "evidence_type": "audit_finding",
+      "issuer_id": "P-AUDITOR-2",
+      "issuer_role": "AUDITOR",
+      "trust_domain": "TD-AUDIT-2",
+      "fault_domain": "FD-AUDIT-2"
+    },
+    {
+      "receipt_id": "R-AUDIT-SAME-1",
+      "evidence_type": "audit_finding",
+      "issuer_id": "P-AUDITOR-3",
+      "issuer_role": "AUDITOR",
+      "trust_domain": "TD-SHARED",
+      "fault_domain": "FD-SHARED"
+    },
+    {
+      "receipt_id": "R-AUDIT-SAME-2",
+      "evidence_type": "audit_finding",
+      "issuer_id": "P-AUDITOR-4",
+      "issuer_role": "AUDITOR",
+      "trust_domain": "TD-SHARED",
+      "fault_domain": "FD-SHARED"
+    },
+    {
+      "receipt_id": "R-CONFLICT",
+      "evidence_type": "signature",
+      "issuer_id": "P-CUSTODIAN",
+      "disposition": "FAILED"
+    },
+    {
+      "receipt_id": "R-UNKNOWN",
+      "evidence_type": "future_quantum_receipt"
+    }
+  ],
+  "bundles": [
+    {
+      "bundle_id": "B-E0",
+      "obligation_id": "O1",
+      "primary_receipt_id": null,
+      "support_receipt_ids": [],
+      "required_grade": "E0"
+    },
+    {
+      "bundle_id": "B-E1",
+      "obligation_id": "O1",
+      "primary_receipt_id": "R-DIGEST",
+      "support_receipt_ids": [],
+      "required_grade": "E1"
+    },
+    {
+      "bundle_id": "B-E2",
+      "obligation_id": "O1",
+      "primary_receipt_id": "R-SIGNATURE",
+      "support_receipt_ids": [],
+      "required_grade": "E2"
+    },
+    {
+      "bundle_id": "B-E3",
+      "obligation_id": "O1",
+      "primary_receipt_id": "R-SIGNATURE",
+      "support_receipt_ids": [
+        "R-INCLUSION"
+      ],
+      "required_grade": "E3"
+    },
+    {
+      "bundle_id": "B-E4",
+      "obligation_id": "O1",
+      "primary_receipt_id": "R-MECHANISM",
+      "support_receipt_ids": [],
+      "required_grade": "E4"
+    },
+    {
+      "bundle_id": "B-E5",
+      "obligation_id": "O1",
+      "primary_receipt_id": "R-MECHANISM",
+      "support_receipt_ids": [
+        "R-AUDIT-1",
+        "R-AUDIT-2"
+      ],
+      "required_grade": "E5",
+      "required_corroborators": 2,
+      "required_independent_domains": 2
+    },
+    {
+      "bundle_id": "B-CONFLICT",
+      "obligation_id": "O1",
+      "primary_receipt_id": "R-SIGNATURE",
+      "support_receipt_ids": [
+        "R-CONFLICT"
+      ],
+      "required_grade": "E2"
+    },
+    {
+      "bundle_id": "B-MISSING-ORDERING",
+      "obligation_id": "O1",
+      "primary_receipt_id": "R-SIGNATURE",
+      "support_receipt_ids": [
+        "R-NOT-PRESENT"
+      ],
+      "required_grade": "E3"
+    },
+    {
+      "bundle_id": "B-EXPIRED-MECHANISM",
+      "obligation_id": "O1",
+      "primary_receipt_id": "R-MECHANISM-EXPIRED",
+      "support_receipt_ids": [],
+      "required_grade": "E4"
+    },
+    {
+      "bundle_id": "B-NONINDEPENDENT-CORROBORATION",
+      "obligation_id": "O1",
+      "primary_receipt_id": "R-MECHANISM",
+      "support_receipt_ids": [
+        "R-AUDIT-SAME-1",
+        "R-AUDIT-SAME-2"
+      ],
+      "required_grade": "E5",
+      "required_corroborators": 2,
+      "required_independent_domains": 2
+    },
+    {
+      "bundle_id": "B-MISSING-CORROBORATION",
+      "obligation_id": "O1",
+      "primary_receipt_id": "R-MECHANISM",
+      "support_receipt_ids": [
+        "R-AUDIT-1"
+      ],
+      "required_grade": "E5",
+      "required_corroborators": 2,
+      "required_independent_domains": 2
+    }
+  ],
+  "research_fixture_revision": "Explicit binding of ordering support to the primary receipt and its claim commitment; expected grades unchanged."
+}

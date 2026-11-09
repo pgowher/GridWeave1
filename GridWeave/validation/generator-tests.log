@@ -1,0 +1,16 @@
+test_exact_matches_bruteforce_on_twenty_small_problems (tests.test_gridweave.CoverageResearchProperties.test_exact_matches_bruteforce_on_twenty_small_problems) ... ok
+test_greedy_is_not_mislabeled_exact (tests.test_gridweave.CoverageResearchProperties.test_greedy_is_not_mislabeled_exact) ... ok
+test_optimizer_does_not_depend_on_input_order (tests.test_gridweave.CoverageResearchProperties.test_optimizer_does_not_depend_on_input_order) ... ok
+test_unreachable_goal_and_duplicate_id_are_rejected (tests.test_gridweave.CoverageResearchProperties.test_unreachable_goal_and_duplicate_id_are_rejected) ... ok
+test_all_scales_and_mutations_of_family_share_split (tests.test_gridweave.BoundarySynthesisProperties.test_all_scales_and_mutations_of_family_share_split) ... ok
+test_exception_cannot_be_extended_without_a_new_signature (tests.test_gridweave.BoundarySynthesisProperties.test_exception_cannot_be_extended_without_a_new_signature) ... ok
+test_exception_expiry_uses_half_open_interval (tests.test_gridweave.BoundarySynthesisProperties.test_exception_expiry_uses_half_open_interval) ... ok
+test_hidden_worlds_have_byte_identical_observations (tests.test_gridweave.BoundarySynthesisProperties.test_hidden_worlds_have_byte_identical_observations) ... ok
+test_manual_reference_and_negative_outcomes (tests.test_gridweave.BoundarySynthesisProperties.test_manual_reference_and_negative_outcomes) ... ok
+test_receipt_key_is_not_its_own_trust_anchor (tests.test_gridweave.BoundarySynthesisProperties.test_receipt_key_is_not_its_own_trust_anchor) ... ok
+test_signature_tamper_is_rejected_by_real_worker_backend (tests.test_gridweave.BoundarySynthesisProperties.test_signature_tamper_is_rejected_by_real_worker_backend) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 107.726s
+
+OK

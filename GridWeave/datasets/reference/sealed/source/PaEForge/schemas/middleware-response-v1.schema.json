@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paeforge.local/schema/middleware-response/v1",
+  "title": "PaEForge middleware response v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "protocol_version", "request_id", "exchange_id", "case_id", "result", "enforcement"],
+  "properties": {
+    "schema_id": {"const": "https://paeforge.local/schema/middleware-response/v1"},
+    "schema_version": {"const": "1.0.0"},
+    "protocol_version": {"const": "1.0.0"},
+    "request_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "exchange_id": {"type": "string", "minLength": 1, "maxLength": 512},
+    "case_id": {"type": "string", "minLength": 1, "maxLength": 512},
+    "result": {"type": "object"},
+    "enforcement": {
+      "type": "object", "additionalProperties": false,
+      "required": ["input_sha256", "payload_bytes", "gateway_validation_ns", "gateway_forward_ns", "verifier_validation_ns", "verifier_execution_ns", "hop_count", "oracle_fields_rejected"],
+      "properties": {
+        "input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "payload_bytes": {"type": "integer", "minimum": 1},
+        "gateway_validation_ns": {"type": "integer", "minimum": 0},
+        "gateway_forward_ns": {"type": "integer", "minimum": 0},
+        "verifier_validation_ns": {"type": "integer", "minimum": 0},
+        "verifier_execution_ns": {"type": "integer", "minimum": 0},
+        "hop_count": {"const": 2},
+        "oracle_fields_rejected": {"const": true}
+      }
+    }
+  }
+}

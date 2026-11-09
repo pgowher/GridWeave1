@@ -1,0 +1,99 @@
+{
+  "schema_id": "htgl.dataset.v1.event_edge",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "d35482a3f2f31f8b164556a1d17901f7a4c00ae07cc61c183c9d021eba9e3393",
+  "table_name": "event_edge",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "edge_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Edge key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "source_event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Parent/source event FK."
+      }
+    },
+    {
+      "name": "target_event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Child/target event FK."
+      }
+    },
+    {
+      "name": "edge_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "edge_type",
+        "privacy_class": "restricted",
+        "semantic_invariant": "causes, responds_to, derives, copies, discloses, invalidates, erases, evidences or precedes."
+      }
+    },
+    {
+      "name": "cross_workflow",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Whether endpoints have different workflows."
+      }
+    },
+    {
+      "name": "dependency_strength",
+      "type": "float32",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Optional modeled strength."
+      }
+    },
+    {
+      "name": "required_for_closure",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Sampling-closure flag."
+      }
+    },
+    {
+      "name": "rule_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Rule that created the dependency."
+      }
+    }
+  ]
+}

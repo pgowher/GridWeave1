@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/paegen-smart-grid-scenario/v1",
+  "$comment": "Canonical PaEBench smart-grid lifecycle profile bound to PAE-FECM-v1.0.0.",
+  "title": "PaEGen canonical smart-grid scenario",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "model_version", "scenario_id", "title", "lifecycle_trigger", "time_origin", "standards_basis", "synthetic_data_profile", "organizations", "repositories", "assets", "policy_profile", "obligations", "exceptions", "observable_metadata", "variants"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "scenario_id": {"type": "string", "pattern": "^PBE-SG-[A-Z0-9-]+$"},
+    "title": {"type": "string", "minLength": 8},
+    "lifecycle_trigger": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]+$"},
+    "time_origin": {"type": "string", "format": "date-time"},
+    "standards_basis": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Standard"}},
+    "synthetic_data_profile": {"$ref": "#/$defs/SyntheticData"},
+    "organizations": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/Organization"}},
+    "repositories": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/Repository"}},
+    "assets": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/Asset"}},
+    "policy_profile": {"$ref": "#/$defs/Policy"},
+    "obligations": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/Obligation"}},
+    "exceptions": {"type": "array", "items": {"$ref": "#/$defs/Exception"}},
+    "observable_metadata": {"$ref": "#/$defs/ObservableMetadata"},
+    "variants": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/Variant"}}
+  },
+  "$defs": {
+    "Ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+    "Standard": {
+      "type": "object", "additionalProperties": false, "required": ["standard_id", "authoritative_url", "applied_concepts"],
+      "properties": {"standard_id": {"type": "string"}, "authoritative_url": {"type": "string", "pattern": "^https://"}, "applied_concepts": {"$ref": "#/$defs/Ids"}}
+    },
+    "SyntheticData": {
+      "type": "object", "additionalProperties": false, "required": ["mode", "subject_namespace", "direct_identifiers_prohibited"],
+      "properties": {"mode": {"const": "synthetic_only"}, "subject_namespace": {"type": "string"}, "direct_identifiers_prohibited": {"const": true}}
+    },
+    "Organization": {
+      "type": "object", "additionalProperties": false, "required": ["organization_id", "organization_type", "roles"],
+      "properties": {"organization_id": {"type": "string"}, "organization_type": {"enum": ["UTILITY", "SUPPLIER", "DISTRIBUTION_OPERATOR", "AGGREGATOR", "METER_OPERATOR", "DATA_SERVICE", "CHARGE_POINT_OPERATOR", "EMOBILITY_PROVIDER", "REGULATOR", "SETTLEMENT_BODY"]}, "roles": {"$ref": "#/$defs/Ids"}}
+    },
+    "Repository": {
+      "type": "object", "additionalProperties": false, "required": ["repository_id", "organization_id", "repository_kind", "region", "observable"],
+      "properties": {"repository_id": {"type": "string"}, "organization_id": {"type": "string"}, "repository_kind": {"type": "string"}, "region": {"type": "string"}, "observable": {"type": "boolean"}}
+    },
+    "Asset": {
+      "type": "object", "additionalProperties": false, "required": ["asset_id", "asset_type", "repository_id", "parent_asset_ids", "replica_role", "personal_data_category"],
+      "properties": {"asset_id": {"type": "string"}, "asset_type": {"type": "string"}, "repository_id": {"type": "string"}, "parent_asset_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}, "replica_role": {"enum": ["primary", "secondary", "cache", "backup", "export", "derived"]}, "personal_data_category": {"enum": ["PSEUDONYMOUS", "AGGREGATED", "ACCOUNT", "OPERATIONAL"]}}
+    },
+    "Policy": {
+      "type": "object", "additionalProperties": false, "required": ["profile_id", "version", "authorization_basis", "deadline_hours", "valid_dispositions", "evidence_floor"],
+      "properties": {"profile_id": {"type": "string"}, "version": {"const": "1.0.0"}, "authorization_basis": {"type": "string"}, "deadline_hours": {"type": "integer", "minimum": 1}, "valid_dispositions": {"type": "array", "items": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM", "RETAINED"]}, "minItems": 1, "uniqueItems": true}, "evidence_floor": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5"]}}
+    },
+    "Obligation": {
+      "type": "object", "additionalProperties": false, "required": ["template_id", "asset_ids", "responsible_role", "required_disposition", "deadline_offset_hours", "evidence_types"],
+      "properties": {"template_id": {"type": "string"}, "asset_ids": {"$ref": "#/$defs/Ids"}, "responsible_role": {"type": "string"}, "required_disposition": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM", "RETAINED"]}, "deadline_offset_hours": {"type": "integer", "minimum": 1}, "evidence_types": {"$ref": "#/$defs/Ids"}}
+    },
+    "Exception": {
+      "type": "object", "additionalProperties": false, "required": ["exception_id", "applies_to_obligation_id", "justification_code", "maximum_retention_days", "required_evidence_types"],
+      "properties": {"exception_id": {"type": "string"}, "applies_to_obligation_id": {"type": "string"}, "justification_code": {"type": "string"}, "maximum_retention_days": {"type": "integer", "minimum": 1}, "required_evidence_types": {"$ref": "#/$defs/Ids"}}
+    },
+    "ObservableMetadata": {
+      "type": "object", "additionalProperties": false, "required": ["observer_profiles", "visible_fields", "redacted_fields"],
+      "properties": {
+        "observer_profiles": {"type": "array", "minItems": 2, "items": {"type": "object", "additionalProperties": false, "required": ["observer_profile_id", "access_class"], "properties": {"observer_profile_id": {"type": "string"}, "access_class": {"enum": ["public", "restricted"]}}}},
+        "visible_fields": {"$ref": "#/$defs/Ids"}, "redacted_fields": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "claim_disposition_visibility": {"enum": ["visible", "hidden"]}
+      }
+    },
+    "Mutation": {
+      "type": "object", "additionalProperties": false, "required": ["operation", "target_obligation_id"],
+      "properties": {"operation": {"enum": ["OMIT_RESOLUTION", "CONTRADICT_EVIDENCE", "INVALIDATE_EXCEPTION", "REMOVE_BASELINE"]}, "target_obligation_id": {"type": "string"}}
+    },
+    "Variant": {
+      "type": "object", "additionalProperties": false, "required": ["variant_id", "variant_class", "expected_closure", "mutations", "expected_reason_codes"],
+      "properties": {
+        "variant_id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+        "variant_class": {"enum": ["successful_closure", "partial_or_unverifiable", "adversarial_or_disputed"]},
+        "expected_closure": {"enum": ["CLOSED", "CLOSED_WITH_EXCEPTIONS", "PARTIALLY_CLOSED", "OPEN", "DISPUTED", "UNVERIFIABLE"]},
+        "mutations": {"type": "array", "items": {"$ref": "#/$defs/Mutation"}},
+        "expected_reason_codes": {"$ref": "#/$defs/Ids"}
+      }
+    }
+  }
+}

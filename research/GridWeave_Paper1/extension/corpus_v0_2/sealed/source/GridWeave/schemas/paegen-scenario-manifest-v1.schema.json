@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/paegen-scenario-manifest/v1",
+  "$comment": "Safe scenario inventory: contains commitments and counts, never oracle labels.",
+  "title": "PaEGen scenario manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "interface_version", "model_version", "run_id", "scenario_id", "replicate_id", "config_sha256", "seed_stream_digest", "case_count", "sealed_ground_truth", "observer_views"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"}, "interface_version": {"const": "1.0.0"},
+    "model_version": {"const": "PAE-FECM-v1.0.0"}, "run_id": {"type": "string", "minLength": 1},
+    "scenario_id": {"type": "string", "minLength": 1}, "replicate_id": {"type": "integer", "minimum": 0},
+    "config_sha256": {"$ref": "#/$defs/Digest"}, "seed_stream_digest": {"$ref": "#/$defs/Digest"},
+    "case_count": {"type": "integer", "minimum": 0},
+    "sealed_ground_truth": {"$ref": "#/$defs/ArtifactRef"},
+    "observer_views": {"type": "array", "items": {"$ref": "#/$defs/ObserverRef"}}
+  },
+  "$defs": {
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "ArtifactRef": {
+      "type": "object", "additionalProperties": false, "required": ["schema_id", "sha256"],
+      "properties": {"schema_id": {"type": "string", "format": "uri"}, "sha256": {"$ref": "#/$defs/Digest"}}
+    },
+    "ObserverRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["observer_profile_id", "access_class", "schema_id", "sha256", "record_count"],
+      "properties": {
+        "observer_profile_id": {"type": "string"}, "access_class": {"enum": ["public", "restricted"]},
+        "schema_id": {"type": "string", "format": "uri"}, "sha256": {"$ref": "#/$defs/Digest"},
+        "record_count": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

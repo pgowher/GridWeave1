@@ -1,0 +1,129 @@
+{
+  "schema_id": "htgl.dataset.v1.actor",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "d85ca389e62617b9ce76d772686affe34c030f928e9043369e01e4ed78e87b62",
+  "table_name": "actor",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "actor_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Stable actor key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "actor_class",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "actor_class",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Consumer, prosumer, DSO, TSO, supplier, aggregator, regulator, vendor, auditor, etc."
+      }
+    },
+    {
+      "name": "organization_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Organization boundary."
+      }
+    },
+    {
+      "name": "region_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Primary region."
+      }
+    },
+    {
+      "name": "jurisdiction_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Policy jurisdiction."
+      }
+    },
+    {
+      "name": "fault_domain_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Correlated-failure domain."
+      }
+    },
+    {
+      "name": "trust_domain_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Credential/trust domain."
+      }
+    },
+    {
+      "name": "capabilities",
+      "type": "list<dictionary<string>>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "actor_capability",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Controller, processor, requester, custodian, oversight and other roles."
+      }
+    },
+    {
+      "name": "valid_from",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Relationship validity start."
+      }
+    },
+    {
+      "name": "valid_to",
+      "type": "timestamp[us, UTC]",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Validity end."
+      }
+    },
+    {
+      "name": "synthetic_source",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "generation_source",
+        "privacy_class": "restricted",
+        "semantic_invariant": "procedural, imported-template or calibrated."
+      }
+    }
+  ]
+}

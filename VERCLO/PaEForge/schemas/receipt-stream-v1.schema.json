@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paeforge.local/schema/receipt-stream/v1",
+  "title": "PaEForge observer-visible receipt stream v1",
+  "description": "Ordered receipt assertions and public verification references; no precomputed validity or evidence-grade labels are permitted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "contract_version", "model_version", "data_class", "exchange_id", "run_id", "scenario_id", "case_id", "seed", "stream_id", "stream_version", "receipts", "stream_commitment", "provenance"],
+  "properties": {
+    "schema_id": {"const": "https://paeforge.local/schema/receipt-stream/v1"},
+    "schema_version": {"const": "1.0.0"},
+    "contract_version": {"const": "1.0.0"},
+    "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "data_class": {"const": "VERIFIER_VISIBLE_INPUT"},
+    "exchange_id": {"$ref": "#/$defs/Identifier"},
+    "run_id": {"$ref": "#/$defs/Identifier"},
+    "scenario_id": {"$ref": "#/$defs/Identifier"},
+    "case_id": {"$ref": "#/$defs/Identifier"},
+    "seed": {"$ref": "#/$defs/SeedRef"},
+    "stream_id": {"$ref": "#/$defs/Identifier"},
+    "stream_version": {"type": "integer", "minimum": 1},
+    "receipts": {"type": "array", "items": {"$ref": "#/$defs/Receipt"}},
+    "stream_commitment": {"$ref": "#/$defs/Digest"},
+    "provenance": {"$ref": "#/$defs/Provenance"}
+  },
+  "$defs": {
+    "Identifier": {"type": "string", "minLength": 1, "maxLength": 256},
+    "Identifiers": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "SemVer": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "Timestamp": {"type": "string", "format": "date-time"},
+    "SeedRef": {"type": "object", "additionalProperties": false, "required": ["replicate_id", "seed_stream_digest"], "properties": {"replicate_id": {"type": "integer", "minimum": 0}, "seed_stream_digest": {"$ref": "#/$defs/Digest"}}},
+    "ProofReference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["format", "verification_material_refs"],
+      "properties": {
+        "format": {"$ref": "#/$defs/Identifier"},
+        "verification_material_refs": {"$ref": "#/$defs/Identifiers"},
+        "credential_ref": {"$ref": "#/$defs/Identifier"},
+        "anchor_ref": {"$ref": "#/$defs/Identifier"},
+        "mechanism_ref": {"$ref": "#/$defs/Identifier"}
+      }
+    },
+    "Receipt": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sequence", "receipt_id", "case_id", "obligation_id", "asset_id", "replica_id", "repository_id", "issuer_principal_id", "issuer_role", "trust_domain", "fault_domain", "evidence_type", "disposition", "event_time", "submitted_at", "not_before", "provenance_refs", "claim_commitment", "proof"],
+      "properties": {
+        "sequence": {"type": "integer", "minimum": 0},
+        "receipt_id": {"$ref": "#/$defs/Identifier"},
+        "case_id": {"$ref": "#/$defs/Identifier"},
+        "obligation_id": {"$ref": "#/$defs/Identifier"},
+        "asset_id": {"$ref": "#/$defs/Identifier"},
+        "replica_id": {"$ref": "#/$defs/Identifier"},
+        "repository_id": {"$ref": "#/$defs/Identifier"},
+        "issuer_principal_id": {"$ref": "#/$defs/Identifier"},
+        "issuer_role": {"$ref": "#/$defs/Identifier"},
+        "trust_domain": {"$ref": "#/$defs/Identifier"},
+        "fault_domain": {"$ref": "#/$defs/Identifier"},
+        "evidence_type": {"enum": ["digest", "hmac", "signature", "inclusion_proof", "deletion_acknowledgement", "replica_attestation", "audit_finding", "merkle_anchor", "notification_receipt"]},
+        "disposition": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM", "RETAINED", "FAILED", "UNREACHABLE"]},
+        "event_time": {"$ref": "#/$defs/Timestamp"},
+        "submitted_at": {"$ref": "#/$defs/Timestamp"},
+        "not_before": {"$ref": "#/$defs/Timestamp"},
+        "expires_at": {"$ref": "#/$defs/Timestamp"},
+        "provenance_refs": {"$ref": "#/$defs/Identifiers"},
+        "claim_commitment": {"$ref": "#/$defs/Digest"},
+        "proof": {"$ref": "#/$defs/ProofReference"}
+      }
+    },
+    "Provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["producer", "producer_version", "source_revision", "source_bundle_sha256"],
+      "properties": {"producer": {"const": "PaEGen"}, "producer_version": {"$ref": "#/$defs/SemVer"}, "source_revision": {"$ref": "#/$defs/Identifier"}, "source_bundle_sha256": {"$ref": "#/$defs/Digest"}}
+    }
+  }
+}

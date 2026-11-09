@@ -1,0 +1,129 @@
+{
+  "schema_id": "htgl.dataset.v1.raw_network_state",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "1dc9d54a0050b694160635f48c6c07109a4f5c784be77ae9abc8f363703088e9",
+  "table_name": "raw_network_state",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "network_state_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "State record key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "network_element_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Bus, line, transformer or switch key."
+      }
+    },
+    {
+      "name": "timestamp",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "State time."
+      }
+    },
+    {
+      "name": "element_class",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "network_element_class",
+        "privacy_class": "restricted",
+        "semantic_invariant": "CIM-aligned element class where possible."
+      }
+    },
+    {
+      "name": "voltage_pu",
+      "type": "float64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Per-unit voltage."
+      }
+    },
+    {
+      "name": "loading_percent",
+      "type": "float64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Equipment loading."
+      }
+    },
+    {
+      "name": "active_power_kw",
+      "type": "float64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Active flow/injection."
+      }
+    },
+    {
+      "name": "reactive_power_kvar",
+      "type": "float64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Reactive flow/injection."
+      }
+    },
+    {
+      "name": "switch_open",
+      "type": "bool",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Switch state."
+      }
+    },
+    {
+      "name": "violation_flags",
+      "type": "list<dictionary<string>>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "physical_violation_flag",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Physical limit flags."
+      }
+    },
+    {
+      "name": "solver_backend",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Controlled analytic state-generator identity for the current contract; external solver identities require a future contract migration and executed adapter evidence."
+      }
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "fixture_format": "verclo.closure-conformance.v1",
+  "model_version": "PAE-FECM-v1.0.0",
+  "cases": [
+    {
+      "case_id": "CF-01-CLOSED",
+      "mode": "covered_all",
+      "expected": "CLOSED"
+    },
+    {
+      "case_id": "CF-02-CLOSED-WITH-EXCEPTIONS",
+      "mode": "covered_and_excepted",
+      "expected": "CLOSED_WITH_EXCEPTIONS"
+    },
+    {
+      "case_id": "CF-03-PARTIALLY-CLOSED",
+      "mode": "covered_one",
+      "expected": "PARTIALLY_CLOSED"
+    },
+    {
+      "case_id": "CF-04-OPEN",
+      "mode": "missing_all",
+      "expected": "OPEN"
+    },
+    {
+      "case_id": "CF-05-DISPUTED",
+      "mode": "contradictory",
+      "expected": "DISPUTED"
+    },
+    {
+      "case_id": "CF-06-UNVERIFIABLE",
+      "mode": "invalid_baseline",
+      "expected": "UNVERIFIABLE"
+    },
+    {
+      "case_id": "CF-07-IN-PROGRESS",
+      "mode": "before_deadline",
+      "expected": "IN_PROGRESS"
+    },
+    {
+      "case_id": "CF-08-LATE",
+      "mode": "late_all",
+      "expected": "OPEN"
+    },
+    {
+      "case_id": "CF-09-INVALID",
+      "mode": "invalid_all",
+      "expected": "OPEN"
+    },
+    {
+      "case_id": "CF-10-EMPTY-UNATTESTED",
+      "mode": "no_applicable",
+      "expected": "UNVERIFIABLE"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "status": "READY_FOR_VERCLO_INPUT",
+  "version": "GridWeave-0.2.0",
+  "dataset": "/tmp/paper1-generation-profile-uwb2qae4/dataset",
+  "manifest_sha256": "9cb0ffdcb00c55f5ee3f38c9251528aeedeed4cf0f9044c566a07f6c872602f2",
+  "materialized_cases": 120,
+  "pairs": 60,
+  "source_families": 6,
+  "source_family_split_overlap": false,
+  "class_support": {
+    "CLOSED": 66,
+    "CLOSED_WITH_EXCEPTIONS": 6,
+    "DISPUTED": 6,
+    "IN_PROGRESS": 6,
+    "OPEN": 6,
+    "PARTIALLY_CLOSED": 18,
+    "UNVERIFIABLE": 12
+  },
+  "serialized_input_bytes": 1732486,
+  "proof_profile": "REAL_ED25519_SYNTHETIC_E2",
+  "q_status": "NOT_EXECUTED",
+  "scope": "Input, cryptographic fixture and independent-oracle checks; no VERCLO execution implied"
+}

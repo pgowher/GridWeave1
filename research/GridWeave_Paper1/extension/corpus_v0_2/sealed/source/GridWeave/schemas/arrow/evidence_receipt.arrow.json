@@ -1,0 +1,139 @@
+{
+  "schema_id": "htgl.dataset.v1.evidence_receipt",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "dbc9be33182452ed09c5d708d4f4dd9535dada45a8a91d5972db3543a8ab5b21",
+  "table_name": "evidence_receipt",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "receipt_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Receipt key."
+      }
+    },
+    {
+      "name": "obligation_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Obligation FK."
+      }
+    },
+    {
+      "name": "event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Evidenced event FK."
+      }
+    },
+    {
+      "name": "issuer_actor_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Issuer FK."
+      }
+    },
+    {
+      "name": "evidence_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "evidence_type",
+        "privacy_class": "restricted",
+        "semantic_invariant": "digest, signature, inclusion proof, deletion acknowledgement, replica attestation, audit finding, etc."
+      }
+    },
+    {
+      "name": "issued_at",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Issue time."
+      }
+    },
+    {
+      "name": "canonical_digest",
+      "type": "fixed_size_binary[32]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Digest of domain-separated canonical payload."
+      }
+    },
+    {
+      "name": "algorithm",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "sha256, HMAC profile, signature profile or simulated marker."
+      }
+    },
+    {
+      "name": "key_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Synthetic key reference; no private keys released."
+      }
+    },
+    {
+      "name": "anchor_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Optional transparency/Merkle anchor."
+      }
+    },
+    {
+      "name": "verification_status_truth",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "verification_status_truth",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "valid, invalid, expired, missing_dependency or simulated_only."
+      }
+    },
+    {
+      "name": "covers_replica_ids",
+      "type": "list<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Replica coverage."
+      }
+    },
+    {
+      "name": "payload_ref",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Optional detached evidence object."
+      }
+    }
+  ]
+}

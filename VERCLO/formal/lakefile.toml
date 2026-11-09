@@ -1,0 +1,6 @@
+name = "PAEFECM"
+version = "0.2.0"
+defaultTargets = ["PAEFECM"]
+
+[[lean_lib]]
+name = "PAEFECM"

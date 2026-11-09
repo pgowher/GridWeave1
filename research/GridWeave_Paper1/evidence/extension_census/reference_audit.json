@@ -1,0 +1,226 @@
+{
+  "audit_date": "2026-11-05",
+  "dataset": "${ARTIFACT_ROOT}/research/GridWeave_Paper1/extension/corpus_v0_2",
+  "manifest_sha256": "9cb0ffdcb00c55f5ee3f38c9251528aeedeed4cf0f9044c566a07f6c872602f2",
+  "method": "Direct file census and exact directed graph isomorphism; no generator oracle imports",
+  "limitations": [
+    "Not independent human adjudication",
+    "Graph equivalence excludes roots, policy, receipts, times, visibility and scope flags",
+    "Byte identity measures saved input equivalence; not semantic case equivalence",
+    "No new assessor utility or clean environment study"
+  ],
+  "counts": {
+    "case_units": 120,
+    "pairs": 60,
+    "source_families": 6,
+    "control_units": 60,
+    "challenge_units": 60,
+    "distinct_control_inputs": 12,
+    "distinct_all_inputs": 66,
+    "family_scale_groups": 6
+  },
+  "structures": {
+    "asset": {
+      "all_case_classes": 12,
+      "control_classes": 6,
+      "definition": "Asset nodes and directed lineage only",
+      "classes_shared_across_splits": 0
+    },
+    "custody": {
+      "all_case_classes": 12,
+      "control_classes": 6,
+      "definition": "Asset, replica, repository and custodian node types; directed relation types",
+      "classes_shared_across_splits": 0
+    },
+    "semantic": {
+      "all_case_classes": 12,
+      "control_classes": 6,
+      "definition": "Custody graph plus asset kind, replica class and repository class",
+      "classes_shared_across_splits": 0
+    }
+  },
+  "structure_ranges": {
+    "assets": {
+      "min": 3,
+      "max": 5,
+      "distribution": {
+        "3": 20,
+        "4": 40,
+        "5": 60
+      }
+    },
+    "replicas": {
+      "min": 4,
+      "max": 7,
+      "distribution": {
+        "4": 40,
+        "5": 40,
+        "6": 20,
+        "7": 20
+      }
+    },
+    "repositories": {
+      "min": 4,
+      "max": 6,
+      "distribution": {
+        "4": 60,
+        "5": 40,
+        "6": 20
+      }
+    },
+    "custodians": {
+      "min": 3,
+      "max": 5,
+      "distribution": {
+        "3": 20,
+        "4": 60,
+        "5": 40
+      }
+    },
+    "max_replicas_per_asset": {
+      "min": 1,
+      "max": 3,
+      "distribution": {
+        "1": 80,
+        "2": 20,
+        "3": 20
+      }
+    },
+    "lineage_edges": {
+      "min": 1,
+      "max": 4,
+      "distribution": {
+        "1": 1,
+        "2": 21,
+        "3": 41,
+        "4": 57
+      }
+    },
+    "lineage_depth": {
+      "min": 1,
+      "max": 4,
+      "distribution": {
+        "1": 23,
+        "2": 77,
+        "3": 1,
+        "4": 19
+      }
+    },
+    "max_lineage_fanout": {
+      "min": 1,
+      "max": 4,
+      "distribution": {
+        "1": 60,
+        "2": 40,
+        "3": 1,
+        "4": 19
+      }
+    }
+  },
+  "outcomes": {
+    "CLOSED": 66,
+    "CLOSED_WITH_EXCEPTIONS": 6,
+    "DISPUTED": 6,
+    "IN_PROGRESS": 6,
+    "OPEN": 6,
+    "PARTIALLY_CLOSED": 18,
+    "UNVERIFIABLE": 12
+  },
+  "splits": {
+    "train": {
+      "units": 0,
+      "families": 0
+    },
+    "validation": {
+      "units": 0,
+      "families": 0
+    },
+    "test": {
+      "units": 120,
+      "families": 6
+    }
+  },
+  "operation_transitions": [
+    {
+      "operation": "conflict",
+      "pairs": 6,
+      "transitions": {
+        "CLOSED -> DISPUTED": 6
+      }
+    },
+    {
+      "operation": "expiry_crossing",
+      "pairs": 6,
+      "transitions": {
+        "CLOSED_WITH_EXCEPTIONS -> PARTIALLY_CLOSED": 6
+      }
+    },
+    {
+      "operation": "hidden_copy_twin",
+      "pairs": 6,
+      "transitions": {
+        "CLOSED -> CLOSED": 6
+      }
+    },
+    {
+      "operation": "lineage_gap",
+      "pairs": 6,
+      "transitions": {
+        "CLOSED -> UNVERIFIABLE": 6
+      }
+    },
+    {
+      "operation": "omit_all",
+      "pairs": 6,
+      "transitions": {
+        "CLOSED -> OPEN": 6
+      }
+    },
+    {
+      "operation": "omit_one",
+      "pairs": 6,
+      "transitions": {
+        "CLOSED -> PARTIALLY_CLOSED": 6
+      }
+    },
+    {
+      "operation": "permutation",
+      "pairs": 6,
+      "transitions": {
+        "CLOSED -> CLOSED": 6
+      }
+    },
+    {
+      "operation": "pre_deadline",
+      "pairs": 6,
+      "transitions": {
+        "CLOSED -> IN_PROGRESS": 6
+      }
+    },
+    {
+      "operation": "scope_gap",
+      "pairs": 6,
+      "transitions": {
+        "CLOSED -> UNVERIFIABLE": 6
+      }
+    },
+    {
+      "operation": "signature_tamper",
+      "pairs": 6,
+      "transitions": {
+        "CLOSED -> PARTIALLY_CLOSED": 6
+      }
+    }
+  ],
+  "checks": {
+    "exact_isomorphism_sanity_checks": "PASS",
+    "family_split_overlap": false,
+    "hidden_copy_pairs": 6,
+    "hidden_copy_pairs_equal_full_input_and_observer_truth_but_different_world": 6,
+    "frozen_source_files_checked": 318,
+    "frozen_source_errors": []
+  },
+  "serialized_public_input_bytes": 1732486,
+  "tracked_profile": "REAL_ED25519_SYNTHETIC_E2",
+  "q_status": "NOT_EXECUTED"
+}

@@ -1,0 +1,109 @@
+{
+  "schema_id": "htgl.dataset.v1.sample_membership",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "ca7aa5f77087380ec2adcc99c54fabd551b1db37e623d47a549613e857d94fae",
+  "table_name": "sample_membership",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "sample_design_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Design FK."
+      }
+    },
+    {
+      "name": "unit_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Primary or closure-added unit."
+      }
+    },
+    {
+      "name": "unit_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "unit_type",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Unit type."
+      }
+    },
+    {
+      "name": "stratum_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Stratum."
+      }
+    },
+    {
+      "name": "first_order_inclusion_probability",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "\u03c0\u1d62 in (0,1]."
+      }
+    },
+    {
+      "name": "design_weight",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "1/\u03c0\u1d62 before adjustment."
+      }
+    },
+    {
+      "name": "selection_reason",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "selection_reason",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "primary_draw, closure_added, paired_counterfactual or census."
+      }
+    },
+    {
+      "name": "primary_unit_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Primary unit causing closure addition."
+      }
+    },
+    {
+      "name": "analysis_weight",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Final documented weight."
+      }
+    },
+    {
+      "name": "estimator_eligible",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "False if probability semantics are unavailable."
+      }
+    }
+  ]
+}

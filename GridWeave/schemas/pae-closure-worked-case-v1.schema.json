@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/closure-worked-cases/v1",
+  "$comment": "Frozen semantic baseline: Federated Erasure Closure Model v1.0.0 (PAE-FECM-v1.0.0).",
+  "title": "Phase 2.2 closure worked-case suite",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["suite_version", "specification_id", "defaults", "cases"],
+  "properties": {
+    "suite_version": {"const": "1.0.0"},
+    "specification_id": {"const": "PAE-FM-2.2"},
+    "defaults": {"$ref": "#/$defs/CaseState"},
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/CaseOverride"}
+    }
+  },
+  "$defs": {
+    "Timestamp": {"type": "string", "format": "date-time"},
+    "Identifier": {"type": "string", "minLength": 1, "maxLength": 160},
+    "Policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "applicable_asset_kinds": {"type": "array", "items": {"enum": ["SOURCE", "EXPORT", "DERIVATIVE", "AGGREGATE", "FEATURE", "AUDIT_RECORD", "EVIDENCE_RECORD"]}, "uniqueItems": true},
+        "applicable_replica_classes": {"type": "array", "items": {"enum": ["PRIMARY", "SECONDARY", "CACHE", "BACKUP", "EXPORT_INSTANCE", "DERIVED_INSTANCE"]}, "uniqueItems": true},
+        "allowed_dispositions": {"type": "array", "items": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM"]}, "uniqueItems": true},
+        "minimum_grade": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5"]},
+        "exception_authority_ids": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+        "early_closure_allowed": {"type": "boolean"}
+      }
+    },
+    "Baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "authorization_valid": {"type": "boolean"},
+        "policy_authenticated": {"type": "boolean"},
+        "scope_commitment_valid": {"type": "boolean"},
+        "obligation_commitment_valid": {"type": "boolean"},
+        "graph_available": {"type": "boolean"},
+        "committed_obligation_ids": {
+          "oneOf": [
+            {"const": "AUTO"},
+            {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true}
+          ]
+        },
+        "no_applicable_determination_valid": {"type": "boolean"}
+      }
+    },
+    "Asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset_id", "kind"],
+      "properties": {
+        "asset_id": {"$ref": "#/$defs/Identifier"},
+        "kind": {"enum": ["SOURCE", "EXPORT", "DERIVATIVE", "AGGREGATE", "FEATURE", "AUDIT_RECORD", "EVIDENCE_RECORD"]}
+      }
+    },
+    "Lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_asset_id", "target_asset_id", "kind", "status", "authenticated"],
+      "properties": {
+        "source_asset_id": {"$ref": "#/$defs/Identifier"},
+        "target_asset_id": {"$ref": "#/$defs/Identifier"},
+        "kind": {"enum": ["DERIVED_FROM", "EXPORTED_FROM"]},
+        "status": {"enum": ["DECLARED", "DISCOVERABLE", "HIDDEN"]},
+        "authenticated": {"type": "boolean"},
+        "disclosed_at": {"$ref": "#/$defs/Timestamp"}
+      }
+    },
+    "Replica": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["replica_id", "asset_id", "repository_id", "custodian_id", "replica_class", "status", "authenticated"],
+      "properties": {
+        "replica_id": {"$ref": "#/$defs/Identifier"},
+        "asset_id": {"$ref": "#/$defs/Identifier"},
+        "repository_id": {"$ref": "#/$defs/Identifier"},
+        "custodian_id": {"$ref": "#/$defs/Identifier"},
+        "replica_class": {"enum": ["PRIMARY", "SECONDARY", "CACHE", "BACKUP", "EXPORT_INSTANCE", "DERIVED_INSTANCE"]},
+        "status": {"enum": ["DECLARED", "DISCOVERABLE", "HIDDEN"]},
+        "authenticated": {"type": "boolean"},
+        "disclosed_at": {"$ref": "#/$defs/Timestamp"},
+        "deadline": {"$ref": "#/$defs/Timestamp"},
+        "minimum_grade": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5"]},
+        "allowed_dispositions": {"type": "array", "items": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM"]}, "uniqueItems": true}
+      }
+    },
+    "Continuity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chain_authenticated", "sequence_contiguous", "predecessors_available"],
+      "properties": {
+        "chain_authenticated": {"type": "boolean"},
+        "sequence_contiguous": {"type": "boolean"},
+        "predecessors_available": {"type": "boolean"}
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_id", "obligation_id", "issuer_id", "disposition", "event_time", "grade", "authenticated", "binding_valid", "integrity_valid", "ordering_valid", "continuity"],
+      "properties": {
+        "evidence_id": {"$ref": "#/$defs/Identifier"},
+        "obligation_id": {"$ref": "#/$defs/Identifier"},
+        "issuer_id": {"$ref": "#/$defs/Identifier"},
+        "disposition": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM", "FAILED", "REFUSED", "UNREACHABLE"]},
+        "event_time": {"$ref": "#/$defs/Timestamp"},
+        "grade": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5"]},
+        "authenticated": {"type": "boolean"},
+        "binding_valid": {"type": "boolean"},
+        "integrity_valid": {"type": "boolean"},
+        "ordering_valid": {"type": "boolean"},
+        "physical_truth_matches": {"type": "boolean"},
+        "continuity": {"$ref": "#/$defs/Continuity"}
+      }
+    },
+    "Exception": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exception_id", "obligation_ids", "authority_id", "basis_commitment", "effective_at", "expires_at", "authenticated"],
+      "properties": {
+        "exception_id": {"$ref": "#/$defs/Identifier"},
+        "obligation_ids": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+        "authority_id": {"$ref": "#/$defs/Identifier"},
+        "basis_commitment": {"type": "string"},
+        "effective_at": {"$ref": "#/$defs/Timestamp"},
+        "expires_at": {"$ref": "#/$defs/Timestamp"},
+        "authenticated": {"type": "boolean"}
+      }
+    },
+    "Challenge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["challenge_id", "authenticated", "resolved"],
+      "properties": {
+        "challenge_id": {"$ref": "#/$defs/Identifier"},
+        "authenticated": {"type": "boolean"},
+        "resolved": {"type": "boolean"}
+      }
+    },
+    "CaseState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evaluation_time", "case_deadline", "root_asset_ids", "policy", "baseline", "assets", "lineage", "replicas", "evidence", "exceptions", "challenges"],
+      "properties": {
+        "evaluation_time": {"$ref": "#/$defs/Timestamp"},
+        "case_deadline": {"$ref": "#/$defs/Timestamp"},
+        "root_asset_ids": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+        "policy": {"$ref": "#/$defs/Policy"},
+        "baseline": {"$ref": "#/$defs/Baseline"},
+        "assets": {"type": "array", "items": {"$ref": "#/$defs/Asset"}},
+        "lineage": {"type": "array", "items": {"$ref": "#/$defs/Lineage"}},
+        "replicas": {"type": "array", "items": {"$ref": "#/$defs/Replica"}},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/Evidence"}},
+        "exceptions": {"type": "array", "items": {"$ref": "#/$defs/Exception"}},
+        "challenges": {"type": "array", "items": {"$ref": "#/$defs/Challenge"}}
+      }
+    },
+    "CaseOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_id", "title"],
+      "properties": {
+        "case_id": {"$ref": "#/$defs/Identifier"},
+        "title": {"type": "string", "minLength": 1},
+        "evaluation_time": {"$ref": "#/$defs/Timestamp"},
+        "case_deadline": {"$ref": "#/$defs/Timestamp"},
+        "root_asset_ids": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+        "policy": {"$ref": "#/$defs/Policy"},
+        "baseline": {"$ref": "#/$defs/Baseline"},
+        "assets": {"type": "array", "items": {"$ref": "#/$defs/Asset"}},
+        "lineage": {"type": "array", "items": {"$ref": "#/$defs/Lineage"}},
+        "replicas": {"type": "array", "items": {"$ref": "#/$defs/Replica"}},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/Evidence"}},
+        "exceptions": {"type": "array", "items": {"$ref": "#/$defs/Exception"}},
+        "challenges": {"type": "array", "items": {"$ref": "#/$defs/Challenge"}}
+      }
+    }
+  }
+}

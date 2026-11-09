@@ -1,0 +1,17 @@
+{
+  "config_format": "verclo.dispute-policy.v1",
+  "policy_id": "VERCLO-DISPUTE-POLICY-v1",
+  "version": "1.0.0",
+  "model_version": "PAE-FECM-v1.0.0",
+  "protocol_version": "C-PAE-1.0.0",
+  "challenge_timeout_hours": {
+    "SCOPE": 72,
+    "AUTHORITY": 72,
+    "EXCEPTION": 120,
+    "EVIDENCE": 120,
+    "DEADLINE": 72,
+    "OTHER": 120
+  },
+  "dispute_timeout_hours": 168,
+  "terminal_retention_days": 365
+}

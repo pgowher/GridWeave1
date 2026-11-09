@@ -1,0 +1,129 @@
+{
+  "schema_id": "htgl.dataset.v1.local_database",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "4418ee3ce711bfd6f8c0c0cd9c326d79d9f5e16fa8d263fe780728857a1629c4",
+  "table_name": "local_database",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "database_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Local store key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "controller_actor_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Controller FK."
+      }
+    },
+    {
+      "name": "operator_actor_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Operator/processor FK."
+      }
+    },
+    {
+      "name": "region_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Physical region."
+      }
+    },
+    {
+      "name": "database_kind",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "database_kind",
+        "privacy_class": "restricted",
+        "semantic_invariant": "meter data, billing, DERMS, CRM, market, audit, archive, etc."
+      }
+    },
+    {
+      "name": "storage_class",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "storage_class",
+        "privacy_class": "restricted",
+        "semantic_invariant": "primary, replica, cache, archive or immutable-log."
+      }
+    },
+    {
+      "name": "supported_object_types",
+      "type": "list<dictionary<string>>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "object_type",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Allowed data-object types."
+      }
+    },
+    {
+      "name": "represented_record_count",
+      "type": "int64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Represented records."
+      }
+    },
+    {
+      "name": "retention_profile_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Retention policy FK."
+      }
+    },
+    {
+      "name": "encryption_profile_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Configured protection profile\u2014not proof of encryption."
+      }
+    },
+    {
+      "name": "capacity_records",
+      "type": "int64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Synthetic capacity metadata."
+      }
+    }
+  ]
+}

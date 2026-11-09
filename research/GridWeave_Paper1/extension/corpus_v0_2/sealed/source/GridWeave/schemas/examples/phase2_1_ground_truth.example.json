@@ -1,0 +1,719 @@
+{
+  "schema_version": "1.0.0",
+  "scenario_id": "SCENARIO_PHASE2_1_HIDDEN_DERIVATIVE",
+  "generated_at": "2026-09-03T08:00:00Z",
+  "policy_profiles": [
+    {
+      "policy_profile_id": "POLICY_REFERENCE",
+      "version": "1.0.0",
+      "digest": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "observer_profile_ids": ["OBSERVER_AUDITOR_MINIMAL_V1"],
+  "state": {
+    "at": "2026-09-03T12:00:00Z",
+    "organisations": [
+      {
+        "organisation_id": "ORG_DSO",
+        "organisation_class": "UTILITY",
+        "jurisdiction_id": "JURISDICTION_TEST",
+        "trust_domain_id": "TRUST_DSO",
+        "fault_domain_id": "FAULT_DSO",
+        "behavior_profile": "HONEST"
+      },
+      {
+        "organisation_id": "ORG_ANALYTICS",
+        "organisation_class": "SERVICE_PROVIDER",
+        "jurisdiction_id": "JURISDICTION_TEST",
+        "trust_domain_id": "TRUST_ANALYTICS",
+        "fault_domain_id": "FAULT_ANALYTICS",
+        "behavior_profile": "MALICIOUS"
+      },
+      {
+        "organisation_id": "ORG_AUDIT",
+        "organisation_class": "AUDIT_BODY",
+        "jurisdiction_id": "JURISDICTION_TEST",
+        "trust_domain_id": "TRUST_AUDIT",
+        "fault_domain_id": "FAULT_AUDIT",
+        "behavior_profile": "HONEST"
+      },
+      {
+        "organisation_id": "ORG_VALIDATION",
+        "organisation_class": "VALIDATION_BODY",
+        "jurisdiction_id": "JURISDICTION_TEST",
+        "trust_domain_id": "TRUST_VALIDATION",
+        "fault_domain_id": "FAULT_VALIDATION",
+        "behavior_profile": "HONEST"
+      }
+    ],
+    "principals": [
+      {
+        "principal_id": "P_REQUESTER",
+        "principal_kind": "HUMAN",
+        "key_ids": ["KEY_REQUESTER"],
+        "behavior_profile": "HONEST",
+        "controlled_by_adversary": false
+      },
+      {
+        "principal_id": "P_COORDINATOR",
+        "principal_kind": "SERVICE",
+        "organisation_id": "ORG_DSO",
+        "key_ids": ["KEY_COORDINATOR"],
+        "behavior_profile": "HONEST",
+        "controlled_by_adversary": false
+      },
+      {
+        "principal_id": "P_CUSTODIAN_METER",
+        "principal_kind": "SERVICE",
+        "organisation_id": "ORG_DSO",
+        "key_ids": ["KEY_CUSTODIAN_METER"],
+        "behavior_profile": "HONEST",
+        "controlled_by_adversary": false
+      },
+      {
+        "principal_id": "P_CUSTODIAN_ANALYTICS",
+        "principal_kind": "SERVICE",
+        "organisation_id": "ORG_ANALYTICS",
+        "key_ids": ["KEY_CUSTODIAN_ANALYTICS"],
+        "behavior_profile": "MALICIOUS",
+        "controlled_by_adversary": true
+      },
+      {
+        "principal_id": "P_AUDITOR",
+        "principal_kind": "INSTITUTIONAL_AGENT",
+        "organisation_id": "ORG_AUDIT",
+        "key_ids": ["KEY_AUDITOR"],
+        "behavior_profile": "HONEST",
+        "controlled_by_adversary": false
+      },
+      {
+        "principal_id": "P_VALIDATOR",
+        "principal_kind": "INSTITUTIONAL_AGENT",
+        "organisation_id": "ORG_VALIDATION",
+        "key_ids": ["KEY_VALIDATOR"],
+        "behavior_profile": "HONEST",
+        "controlled_by_adversary": false
+      }
+    ],
+    "role_assignments": [
+      {
+        "assignment_id": "ROLE_REQUESTER",
+        "principal_id": "P_REQUESTER",
+        "role": "REQUESTER",
+        "scope_refs": [{"kind": "CASE", "id": "CASE_001"}],
+        "valid_from": "2026-09-03T08:00:00Z"
+      },
+      {
+        "assignment_id": "ROLE_COORDINATOR",
+        "principal_id": "P_COORDINATOR",
+        "organisation_id": "ORG_DSO",
+        "role": "CASE_COORDINATOR",
+        "scope_refs": [{"kind": "ORGANISATION", "id": "ORG_DSO"}],
+        "valid_from": "2026-09-03T08:00:00Z"
+      },
+      {
+        "assignment_id": "ROLE_CONTROLLER",
+        "principal_id": "P_COORDINATOR",
+        "organisation_id": "ORG_DSO",
+        "role": "CONTROLLER",
+        "scope_refs": [{"kind": "REPOSITORY", "id": "REPO_METER"}],
+        "valid_from": "2026-09-03T08:00:00Z"
+      },
+      {
+        "assignment_id": "ROLE_CUSTODIAN_METER",
+        "principal_id": "P_CUSTODIAN_METER",
+        "organisation_id": "ORG_DSO",
+        "role": "CUSTODIAN",
+        "scope_refs": [{"kind": "REPOSITORY", "id": "REPO_METER"}],
+        "valid_from": "2026-09-03T08:00:00Z"
+      },
+      {
+        "assignment_id": "ROLE_OPERATOR_METER",
+        "principal_id": "P_CUSTODIAN_METER",
+        "organisation_id": "ORG_DSO",
+        "role": "REPOSITORY_OPERATOR",
+        "scope_refs": [{"kind": "REPOSITORY", "id": "REPO_METER"}],
+        "valid_from": "2026-09-03T08:00:00Z"
+      },
+      {
+        "assignment_id": "ROLE_CUSTODIAN_ANALYTICS",
+        "principal_id": "P_CUSTODIAN_ANALYTICS",
+        "organisation_id": "ORG_ANALYTICS",
+        "role": "CUSTODIAN",
+        "scope_refs": [{"kind": "REPOSITORY", "id": "REPO_ANALYTICS"}],
+        "valid_from": "2026-09-03T08:00:00Z"
+      },
+      {
+        "assignment_id": "ROLE_OPERATOR_ANALYTICS",
+        "principal_id": "P_CUSTODIAN_ANALYTICS",
+        "organisation_id": "ORG_ANALYTICS",
+        "role": "REPOSITORY_OPERATOR",
+        "scope_refs": [{"kind": "REPOSITORY", "id": "REPO_ANALYTICS"}],
+        "valid_from": "2026-09-03T08:00:00Z"
+      },
+      {
+        "assignment_id": "ROLE_AUDITOR",
+        "principal_id": "P_AUDITOR",
+        "organisation_id": "ORG_AUDIT",
+        "role": "AUDITOR",
+        "scope_refs": [{"kind": "CASE", "id": "CASE_001"}],
+        "valid_from": "2026-09-03T08:00:00Z"
+      },
+      {
+        "assignment_id": "ROLE_OBSERVER",
+        "principal_id": "P_AUDITOR",
+        "organisation_id": "ORG_AUDIT",
+        "role": "OBSERVER",
+        "scope_refs": [{"kind": "CASE", "id": "CASE_001"}],
+        "valid_from": "2026-09-03T08:00:00Z"
+      },
+      {
+        "assignment_id": "ROLE_VALIDATOR",
+        "principal_id": "P_VALIDATOR",
+        "organisation_id": "ORG_VALIDATION",
+        "role": "VALIDATOR",
+        "scope_refs": [{"kind": "CASE", "id": "CASE_001"}],
+        "valid_from": "2026-09-03T08:00:00Z"
+      }
+    ],
+    "repositories": [
+      {
+        "repository_id": "REPO_METER",
+        "repository_kind": "METER_DATA",
+        "owner_organisation_id": "ORG_DSO",
+        "operator_principal_ids": ["P_CUSTODIAN_METER"],
+        "trust_domain_id": "TRUST_DSO",
+        "fault_domain_id": "FAULT_DSO",
+        "availability": "AVAILABLE",
+        "behavior_profile": "HONEST",
+        "controlled_by_adversary": false
+      },
+      {
+        "repository_id": "REPO_ANALYTICS",
+        "repository_kind": "FEATURE_STORE",
+        "owner_organisation_id": "ORG_ANALYTICS",
+        "operator_principal_ids": ["P_CUSTODIAN_ANALYTICS"],
+        "trust_domain_id": "TRUST_ANALYTICS",
+        "fault_domain_id": "FAULT_ANALYTICS",
+        "availability": "AVAILABLE",
+        "behavior_profile": "MALICIOUS",
+        "controlled_by_adversary": true
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "ASSET_METER",
+        "asset_kind": "SOURCE",
+        "asset_commitment": "2222222222222222222222222222222222222222222222222222222222222222",
+        "created_at": "2026-09-03T08:05:00Z",
+        "policy_tags": ["PERSONAL_DATA"],
+        "declaration_status": "DECLARED"
+      },
+      {
+        "asset_id": "ASSET_FEATURE",
+        "asset_kind": "FEATURE",
+        "asset_commitment": "3333333333333333333333333333333333333333333333333333333333333333",
+        "created_at": "2026-09-03T08:10:00Z",
+        "policy_tags": ["PERSONAL_DATA", "DERIVED_DATA"],
+        "declaration_status": "HIDDEN"
+      }
+    ],
+    "replicas": [
+      {
+        "replica_id": "REPLICA_METER",
+        "asset_id": "ASSET_METER",
+        "repository_id": "REPO_METER",
+        "replica_class": "PRIMARY",
+        "lifecycle_state": "ERASED",
+        "created_at": "2026-09-03T08:05:00Z",
+        "state_changed_at": "2026-09-03T10:20:00Z",
+        "declaration_status": "DECLARED"
+      },
+      {
+        "replica_id": "REPLICA_FEATURE",
+        "asset_id": "ASSET_FEATURE",
+        "repository_id": "REPO_ANALYTICS",
+        "replica_class": "DERIVED_INSTANCE",
+        "lifecycle_state": "PRESENT",
+        "created_at": "2026-09-03T08:10:00Z",
+        "declaration_status": "HIDDEN"
+      }
+    ],
+    "relationships": [
+      {
+        "relationship_id": "REL_METER_OWNER",
+        "relationship_kind": "OPERATED_BY",
+        "source": {"kind": "REPOSITORY", "id": "REPO_METER"},
+        "target": {"kind": "ORGANISATION", "id": "ORG_DSO"},
+        "valid_from": "2026-09-03T08:00:00Z",
+        "declaration_status": "DECLARED",
+        "discovery_evidence_refs": []
+      },
+      {
+        "relationship_id": "REL_METER_MANAGER",
+        "relationship_kind": "MANAGED_BY",
+        "source": {"kind": "REPOSITORY", "id": "REPO_METER"},
+        "target": {"kind": "PRINCIPAL", "id": "P_CUSTODIAN_METER"},
+        "valid_from": "2026-09-03T08:00:00Z",
+        "declaration_status": "DECLARED",
+        "discovery_evidence_refs": []
+      },
+      {
+        "relationship_id": "REL_METER_ASSET",
+        "relationship_kind": "REPLICA_OF",
+        "source": {"kind": "REPLICA", "id": "REPLICA_METER"},
+        "target": {"kind": "ASSET", "id": "ASSET_METER"},
+        "valid_from": "2026-09-03T08:05:00Z",
+        "declaration_status": "DECLARED",
+        "discovery_evidence_refs": []
+      },
+      {
+        "relationship_id": "REL_METER_STORED",
+        "relationship_kind": "STORED_IN",
+        "source": {"kind": "REPLICA", "id": "REPLICA_METER"},
+        "target": {"kind": "REPOSITORY", "id": "REPO_METER"},
+        "valid_from": "2026-09-03T08:05:00Z",
+        "declaration_status": "DECLARED",
+        "discovery_evidence_refs": []
+      },
+      {
+        "relationship_id": "REL_ANALYTICS_OWNER",
+        "relationship_kind": "OPERATED_BY",
+        "source": {"kind": "REPOSITORY", "id": "REPO_ANALYTICS"},
+        "target": {"kind": "ORGANISATION", "id": "ORG_ANALYTICS"},
+        "valid_from": "2026-09-03T08:00:00Z",
+        "declaration_status": "HIDDEN",
+        "discovery_evidence_refs": []
+      },
+      {
+        "relationship_id": "REL_ANALYTICS_MANAGER",
+        "relationship_kind": "MANAGED_BY",
+        "source": {"kind": "REPOSITORY", "id": "REPO_ANALYTICS"},
+        "target": {"kind": "PRINCIPAL", "id": "P_CUSTODIAN_ANALYTICS"},
+        "valid_from": "2026-09-03T08:00:00Z",
+        "declaration_status": "HIDDEN",
+        "discovery_evidence_refs": []
+      },
+      {
+        "relationship_id": "REL_FEATURE_ASSET",
+        "relationship_kind": "REPLICA_OF",
+        "source": {"kind": "REPLICA", "id": "REPLICA_FEATURE"},
+        "target": {"kind": "ASSET", "id": "ASSET_FEATURE"},
+        "valid_from": "2026-09-03T08:10:00Z",
+        "declaration_status": "HIDDEN",
+        "discovery_evidence_refs": []
+      },
+      {
+        "relationship_id": "REL_FEATURE_STORED",
+        "relationship_kind": "STORED_IN",
+        "source": {"kind": "REPLICA", "id": "REPLICA_FEATURE"},
+        "target": {"kind": "REPOSITORY", "id": "REPO_ANALYTICS"},
+        "valid_from": "2026-09-03T08:10:00Z",
+        "declaration_status": "HIDDEN",
+        "discovery_evidence_refs": []
+      },
+      {
+        "relationship_id": "REL_FEATURE_DERIVATION",
+        "relationship_kind": "DERIVED_FROM",
+        "source": {"kind": "ASSET", "id": "ASSET_METER"},
+        "target": {"kind": "ASSET", "id": "ASSET_FEATURE"},
+        "valid_from": "2026-09-03T08:10:00Z",
+        "declaration_status": "HIDDEN",
+        "discovery_evidence_refs": []
+      }
+    ],
+    "cases": [
+      {
+        "case_id": "CASE_001",
+        "requester_principal_id": "P_REQUESTER",
+        "root_asset_refs": ["ASSET_METER"],
+        "policy_ref": {
+          "policy_profile_id": "POLICY_REFERENCE",
+          "version": "1.0.0",
+          "digest": "1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        "status": "READY",
+        "accepted_at": "2026-09-03T09:05:00Z",
+        "snapshot_at": "2026-09-03T09:10:00Z",
+        "deadline": "2026-09-03T11:00:00Z",
+        "scope_version": 1,
+        "scope_commitment": "4444444444444444444444444444444444444444444444444444444444444444",
+        "obligation_commitment": "5555555555555555555555555555555555555555555555555555555555555555"
+      }
+    ],
+    "obligations": [
+      {
+        "obligation_id": "OBLIGATION_METER",
+        "case_id": "CASE_001",
+        "replica_id": "REPLICA_METER",
+        "custodian_principal_id": "P_CUSTODIAN_METER",
+        "deadline": "2026-09-03T11:00:00Z",
+        "minimum_evidence_grade": "E3",
+        "permitted_success_dispositions": ["ERASED", "CRYPTO_ERASED"],
+        "basis_scope_version": 1
+      }
+    ],
+    "messages": [
+      {
+        "message_id": "MSG_CASE_SUBMIT",
+        "message_type": "CASE_SUBMIT",
+        "sender_principal_id": "P_REQUESTER",
+        "sender_role": "REQUESTER",
+        "recipient_principal_ids": ["P_COORDINATOR"],
+        "sequence_number": 1,
+        "nonce": "nonce-case-submit-0001",
+        "emitted_at": "2026-09-03T09:00:00Z",
+        "received_at": "2026-09-03T09:00:01Z",
+        "body_commitment": "6666666666666666666666666666666666666666666666666666666666666666",
+        "body": {
+          "case_id": "CASE_001",
+          "request_ref": "REQUEST_001",
+          "root_asset_refs": ["ASSET_METER"],
+          "policy_profile_ref": "POLICY_REFERENCE"
+        },
+        "signature": {"algorithm": "SIMULATED_ED25519", "key_id": "KEY_REQUESTER", "value": "simulated-signature-case-submit"},
+        "delivery_state": "DELIVERED"
+      },
+      {
+        "message_id": "MSG_CASE_ACCEPT",
+        "message_type": "CASE_ACCEPT",
+        "sender_principal_id": "P_COORDINATOR",
+        "sender_role": "CASE_COORDINATOR",
+        "recipient_principal_ids": ["P_REQUESTER", "P_AUDITOR", "P_VALIDATOR"],
+        "sequence_number": 1,
+        "nonce": "nonce-case-accept-0001",
+        "emitted_at": "2026-09-03T09:05:00Z",
+        "received_at": "2026-09-03T09:05:01Z",
+        "body_commitment": "7777777777777777777777777777777777777777777777777777777777777777",
+        "body": {"case_id": "CASE_001", "request_ref": "REQUEST_001", "policy_profile_ref": "POLICY_REFERENCE"},
+        "signature": {"algorithm": "SIMULATED_ED25519", "key_id": "KEY_COORDINATOR", "value": "simulated-signature-case-accept"},
+        "delivery_state": "DELIVERED"
+      },
+      {
+        "message_id": "MSG_SCOPE_DECLARE",
+        "message_type": "SCOPE_DECLARE",
+        "sender_principal_id": "P_COORDINATOR",
+        "sender_role": "CASE_COORDINATOR",
+        "recipient_principal_ids": ["P_AUDITOR", "P_VALIDATOR"],
+        "sequence_number": 2,
+        "nonce": "nonce-scope-declare-0001",
+        "emitted_at": "2026-09-03T09:10:00Z",
+        "received_at": "2026-09-03T09:10:01Z",
+        "body_commitment": "8888888888888888888888888888888888888888888888888888888888888888",
+        "previous_message_commitment": "7777777777777777777777777777777777777777777777777777777777777777",
+        "body": {
+          "case_id": "CASE_001",
+          "scope_version": 1,
+          "relationship_refs": ["REL_METER_OWNER", "REL_METER_MANAGER", "REL_METER_ASSET", "REL_METER_STORED"],
+          "replica_refs": ["REPLICA_METER"]
+        },
+        "signature": {"algorithm": "SIMULATED_ED25519", "key_id": "KEY_COORDINATOR", "value": "simulated-signature-scope-declare"},
+        "delivery_state": "DELIVERED"
+      },
+      {
+        "message_id": "MSG_SCOPE_COMMIT",
+        "message_type": "SCOPE_COMMIT",
+        "sender_principal_id": "P_COORDINATOR",
+        "sender_role": "CASE_COORDINATOR",
+        "recipient_principal_ids": ["P_AUDITOR", "P_VALIDATOR"],
+        "sequence_number": 3,
+        "nonce": "nonce-scope-commit-0001",
+        "emitted_at": "2026-09-03T09:15:00Z",
+        "received_at": "2026-09-03T09:15:01Z",
+        "body_commitment": "9999999999999999999999999999999999999999999999999999999999999999",
+        "previous_message_commitment": "8888888888888888888888888888888888888888888888888888888888888888",
+        "body": {
+          "case_id": "CASE_001",
+          "scope_version": 1,
+          "scope_commitment": "4444444444444444444444444444444444444444444444444444444444444444",
+          "obligation_commitment": "5555555555555555555555555555555555555555555555555555555555555555"
+        },
+        "signature": {"algorithm": "SIMULATED_ED25519", "key_id": "KEY_COORDINATOR", "value": "simulated-signature-scope-commit"},
+        "delivery_state": "DELIVERED"
+      },
+      {
+        "message_id": "MSG_OBLIGATION_ASSIGN",
+        "message_type": "OBLIGATION_ASSIGN",
+        "sender_principal_id": "P_COORDINATOR",
+        "sender_role": "CASE_COORDINATOR",
+        "recipient_principal_ids": ["P_CUSTODIAN_METER"],
+        "sequence_number": 4,
+        "nonce": "nonce-obligation-assign-0001",
+        "emitted_at": "2026-09-03T09:20:00Z",
+        "received_at": "2026-09-03T09:20:01Z",
+        "body_commitment": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "previous_message_commitment": "9999999999999999999999999999999999999999999999999999999999999999",
+        "body": {"case_id": "CASE_001", "obligation_refs": ["OBLIGATION_METER"]},
+        "signature": {"algorithm": "SIMULATED_ED25519", "key_id": "KEY_COORDINATOR", "value": "simulated-signature-obligation-assign"},
+        "delivery_state": "DELIVERED"
+      },
+      {
+        "message_id": "MSG_ERASURE_COMMAND",
+        "message_type": "ERASURE_COMMAND",
+        "sender_principal_id": "P_COORDINATOR",
+        "sender_role": "CASE_COORDINATOR",
+        "recipient_principal_ids": ["P_CUSTODIAN_METER"],
+        "sequence_number": 5,
+        "nonce": "nonce-erasure-command-0001",
+        "emitted_at": "2026-09-03T09:21:00Z",
+        "received_at": "2026-09-03T09:21:01Z",
+        "body_commitment": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "previous_message_commitment": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "body": {"case_id": "CASE_001", "obligation_refs": ["OBLIGATION_METER"]},
+        "signature": {"algorithm": "SIMULATED_ED25519", "key_id": "KEY_COORDINATOR", "value": "simulated-signature-erasure-command"},
+        "delivery_state": "DELIVERED"
+      },
+      {
+        "message_id": "MSG_TERMINAL_RECEIPT",
+        "message_type": "TERMINAL_RECEIPT",
+        "sender_principal_id": "P_CUSTODIAN_METER",
+        "sender_role": "CUSTODIAN",
+        "recipient_principal_ids": ["P_AUDITOR", "P_VALIDATOR"],
+        "sequence_number": 1,
+        "nonce": "nonce-terminal-receipt-0001",
+        "claimed_event_at": "2026-09-03T10:20:00Z",
+        "emitted_at": "2026-09-03T10:21:00Z",
+        "received_at": "2026-09-03T10:21:01Z",
+        "body_commitment": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "body": {
+          "case_id": "CASE_001",
+          "obligation_refs": ["OBLIGATION_METER"],
+          "disposition": "ERASED",
+          "event_time": "2026-09-03T10:20:00Z",
+          "evidence_refs": ["EVIDENCE_METER"]
+        },
+        "signature": {"algorithm": "SIMULATED_ED25519", "key_id": "KEY_CUSTODIAN_METER", "value": "simulated-signature-terminal-receipt"},
+        "delivery_state": "DELIVERED"
+      },
+      {
+        "message_id": "MSG_CLOSURE_QUERY",
+        "message_type": "CLOSURE_QUERY",
+        "sender_principal_id": "P_AUDITOR",
+        "sender_role": "AUDITOR",
+        "recipient_principal_ids": ["P_VALIDATOR"],
+        "sequence_number": 1,
+        "nonce": "nonce-closure-query-0001",
+        "emitted_at": "2026-09-03T11:01:00Z",
+        "received_at": "2026-09-03T11:01:01Z",
+        "body_commitment": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "body": {"case_id": "CASE_001", "query_time": "2026-09-03T11:01:00Z"},
+        "signature": {"algorithm": "SIMULATED_ED25519", "key_id": "KEY_AUDITOR", "value": "simulated-signature-closure-query"},
+        "delivery_state": "DELIVERED"
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "EVIDENCE_METER",
+        "case_id": "CASE_001",
+        "obligation_id": "OBLIGATION_METER",
+        "issuer_principal_id": "P_CUSTODIAN_METER",
+        "evidence_type": "SIGNED_RECEIPT",
+        "claimed_disposition": "ERASED",
+        "claimed_event_at": "2026-09-03T10:20:00Z",
+        "issued_at": "2026-09-03T10:21:00Z",
+        "received_at": "2026-09-03T10:21:01Z",
+        "body_commitment": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "anchor_ref": "ANCHOR_001",
+        "witness_principal_refs": ["P_AUDITOR"],
+        "claimed_grade": "E3",
+        "signature": {"algorithm": "SIMULATED_ED25519", "key_id": "KEY_CUSTODIAN_METER", "value": "simulated-signature-evidence-meter"},
+        "verification_status_truth": "VALID"
+      }
+    ],
+    "exceptions": [],
+    "challenges": [],
+    "network_links": [],
+    "keys": [
+      {"key_id": "KEY_REQUESTER", "owner_principal_id": "P_REQUESTER", "algorithm": "SIMULATED_ED25519", "status": "ACTIVE", "compromised": false},
+      {"key_id": "KEY_COORDINATOR", "owner_principal_id": "P_COORDINATOR", "algorithm": "SIMULATED_ED25519", "status": "ACTIVE", "compromised": false},
+      {"key_id": "KEY_CUSTODIAN_METER", "owner_principal_id": "P_CUSTODIAN_METER", "algorithm": "SIMULATED_ED25519", "status": "ACTIVE", "compromised": false},
+      {"key_id": "KEY_CUSTODIAN_ANALYTICS", "owner_principal_id": "P_CUSTODIAN_ANALYTICS", "algorithm": "SIMULATED_ED25519", "status": "ACTIVE", "compromised": false},
+      {"key_id": "KEY_AUDITOR", "owner_principal_id": "P_AUDITOR", "algorithm": "SIMULATED_ED25519", "status": "ACTIVE", "compromised": false},
+      {"key_id": "KEY_VALIDATOR", "owner_principal_id": "P_VALIDATOR", "algorithm": "SIMULATED_ED25519", "status": "ACTIVE", "compromised": false}
+    ]
+  },
+  "transition_trace": [
+    {
+      "transition_id": "TRANSITION_CREATE_HIDDEN_ASSET",
+      "transition_type": "CREATE_ASSET",
+      "actor_principal_id": "P_CUSTODIAN_ANALYTICS",
+      "actor_role": "CUSTODIAN",
+      "occurred_at": "2026-09-03T08:10:00Z",
+      "input_refs": [{"kind": "REPOSITORY", "id": "REPO_ANALYTICS"}],
+      "output_refs": [{"kind": "ASSET", "id": "ASSET_FEATURE"}],
+      "emitted_message_refs": [],
+      "truth_only": true,
+      "status": "APPLIED",
+      "reason_codes": []
+    },
+    {
+      "transition_id": "TRANSITION_CREATE_HIDDEN_REPLICA",
+      "transition_type": "CREATE_REPLICA",
+      "actor_principal_id": "P_CUSTODIAN_ANALYTICS",
+      "actor_role": "CUSTODIAN",
+      "occurred_at": "2026-09-03T08:10:01Z",
+      "input_refs": [{"kind": "ASSET", "id": "ASSET_FEATURE"}, {"kind": "REPOSITORY", "id": "REPO_ANALYTICS"}],
+      "output_refs": [{"kind": "REPLICA", "id": "REPLICA_FEATURE"}],
+      "emitted_message_refs": [],
+      "truth_only": true,
+      "status": "APPLIED",
+      "reason_codes": []
+    },
+    {
+      "transition_id": "TRANSITION_RECORD_HIDDEN_DERIVATION",
+      "transition_type": "RECORD_DERIVATION",
+      "actor_principal_id": "P_CUSTODIAN_ANALYTICS",
+      "actor_role": "CUSTODIAN",
+      "occurred_at": "2026-09-03T08:10:02Z",
+      "input_refs": [{"kind": "ASSET", "id": "ASSET_METER"}, {"kind": "ASSET", "id": "ASSET_FEATURE"}],
+      "output_refs": [{"kind": "RELATIONSHIP", "id": "REL_FEATURE_DERIVATION"}],
+      "emitted_message_refs": [],
+      "truth_only": true,
+      "status": "APPLIED",
+      "reason_codes": []
+    },
+    {
+      "transition_id": "TRANSITION_SUBMIT_CASE",
+      "transition_type": "SUBMIT_CASE",
+      "actor_principal_id": "P_REQUESTER",
+      "actor_role": "REQUESTER",
+      "occurred_at": "2026-09-03T09:00:00Z",
+      "input_refs": [{"kind": "ASSET", "id": "ASSET_METER"}],
+      "output_refs": [{"kind": "CASE", "id": "CASE_001"}, {"kind": "MESSAGE", "id": "MSG_CASE_SUBMIT"}],
+      "emitted_message_refs": ["MSG_CASE_SUBMIT"],
+      "truth_only": false,
+      "status": "APPLIED",
+      "reason_codes": []
+    },
+    {
+      "transition_id": "TRANSITION_ACCEPT_CASE",
+      "transition_type": "ACCEPT_CASE",
+      "actor_principal_id": "P_COORDINATOR",
+      "actor_role": "CASE_COORDINATOR",
+      "occurred_at": "2026-09-03T09:05:00Z",
+      "input_refs": [{"kind": "MESSAGE", "id": "MSG_CASE_SUBMIT"}],
+      "output_refs": [{"kind": "MESSAGE", "id": "MSG_CASE_ACCEPT"}],
+      "emitted_message_refs": ["MSG_CASE_ACCEPT"],
+      "truth_only": false,
+      "status": "APPLIED",
+      "reason_codes": []
+    },
+    {
+      "transition_id": "TRANSITION_DECLARE_SCOPE",
+      "transition_type": "DECLARE_SCOPE",
+      "actor_principal_id": "P_COORDINATOR",
+      "actor_role": "CASE_COORDINATOR",
+      "occurred_at": "2026-09-03T09:10:00Z",
+      "input_refs": [{"kind": "MESSAGE", "id": "MSG_CASE_ACCEPT"}],
+      "output_refs": [{"kind": "MESSAGE", "id": "MSG_SCOPE_DECLARE"}],
+      "emitted_message_refs": ["MSG_SCOPE_DECLARE"],
+      "truth_only": false,
+      "status": "APPLIED",
+      "reason_codes": []
+    },
+    {
+      "transition_id": "TRANSITION_INDUCE_OBLIGATIONS",
+      "transition_type": "INDUCE_OBLIGATIONS",
+      "actor_principal_id": "P_COORDINATOR",
+      "actor_role": "CASE_COORDINATOR",
+      "occurred_at": "2026-09-03T09:15:00Z",
+      "input_refs": [{"kind": "MESSAGE", "id": "MSG_SCOPE_DECLARE"}],
+      "output_refs": [{"kind": "OBLIGATION", "id": "OBLIGATION_METER"}, {"kind": "MESSAGE", "id": "MSG_SCOPE_COMMIT"}],
+      "emitted_message_refs": ["MSG_SCOPE_COMMIT"],
+      "truth_only": false,
+      "status": "APPLIED",
+      "reason_codes": []
+    },
+    {
+      "transition_id": "TRANSITION_DISPATCH_OBLIGATION",
+      "transition_type": "DISPATCH_OBLIGATION",
+      "actor_principal_id": "P_COORDINATOR",
+      "actor_role": "CASE_COORDINATOR",
+      "occurred_at": "2026-09-03T09:20:00Z",
+      "input_refs": [{"kind": "OBLIGATION", "id": "OBLIGATION_METER"}],
+      "output_refs": [{"kind": "MESSAGE", "id": "MSG_OBLIGATION_ASSIGN"}, {"kind": "MESSAGE", "id": "MSG_ERASURE_COMMAND"}],
+      "emitted_message_refs": ["MSG_OBLIGATION_ASSIGN", "MSG_ERASURE_COMMAND"],
+      "truth_only": false,
+      "status": "APPLIED",
+      "reason_codes": []
+    },
+    {
+      "transition_id": "TRANSITION_EXECUTE_DISPOSITION",
+      "transition_type": "EXECUTE_DISPOSITION",
+      "actor_principal_id": "P_CUSTODIAN_METER",
+      "actor_role": "CUSTODIAN",
+      "occurred_at": "2026-09-03T10:20:00Z",
+      "input_refs": [{"kind": "OBLIGATION", "id": "OBLIGATION_METER"}, {"kind": "MESSAGE", "id": "MSG_ERASURE_COMMAND"}],
+      "output_refs": [{"kind": "REPLICA", "id": "REPLICA_METER"}],
+      "emitted_message_refs": [],
+      "truth_only": true,
+      "status": "APPLIED",
+      "reason_codes": []
+    },
+    {
+      "transition_id": "TRANSITION_SUBMIT_EVIDENCE",
+      "transition_type": "SUBMIT_EVIDENCE",
+      "actor_principal_id": "P_CUSTODIAN_METER",
+      "actor_role": "CUSTODIAN",
+      "occurred_at": "2026-09-03T10:21:00Z",
+      "input_refs": [{"kind": "OBLIGATION", "id": "OBLIGATION_METER"}],
+      "output_refs": [{"kind": "EVIDENCE", "id": "EVIDENCE_METER"}, {"kind": "MESSAGE", "id": "MSG_TERMINAL_RECEIPT"}],
+      "emitted_message_refs": ["MSG_TERMINAL_RECEIPT"],
+      "truth_only": false,
+      "status": "APPLIED",
+      "reason_codes": []
+    },
+    {
+      "transition_id": "TRANSITION_REQUEST_CLOSURE",
+      "transition_type": "REQUEST_CLOSURE",
+      "actor_principal_id": "P_AUDITOR",
+      "actor_role": "AUDITOR",
+      "occurred_at": "2026-09-03T11:01:00Z",
+      "input_refs": [{"kind": "CASE", "id": "CASE_001"}],
+      "output_refs": [{"kind": "MESSAGE", "id": "MSG_CLOSURE_QUERY"}],
+      "emitted_message_refs": ["MSG_CLOSURE_QUERY"],
+      "truth_only": false,
+      "status": "APPLIED",
+      "reason_codes": []
+    }
+  ],
+  "adversary_plan": {
+    "controlled_principal_ids": ["P_CUSTODIAN_ANALYTICS"],
+    "controlled_repository_ids": ["REPO_ANALYTICS"],
+    "compromised_key_ids": [],
+    "controlled_link_ids": [],
+    "enabled_capabilities": ["CAP-INCOMPLETE-LINEAGE"],
+    "actions": [
+      {
+        "action_id": "ATTACK_HIDE_DERIVATION",
+        "capability_id": "CAP-INCOMPLETE-LINEAGE",
+        "controller_principal_ids": ["P_CUSTODIAN_ANALYTICS"],
+        "target_refs": [{"kind": "RELATIONSHIP", "id": "REL_FEATURE_DERIVATION"}, {"kind": "REPLICA", "id": "REPLICA_FEATURE"}],
+        "active_from": "2026-09-03T08:10:00Z",
+        "parameters": {"mode": "PERFECTLY_HIDDEN", "independent_trace": false}
+      }
+    ]
+  },
+  "oracle": {
+    "specification_id": "PAE-FM-2.1",
+    "derived_by": "INDEPENDENT_REFERENCE_SEMANTICS",
+    "case_expectations": [
+      {
+        "case_id": "CASE_001",
+        "evaluation_time": "2026-09-03T11:01:00Z",
+        "expected_outcome": "CLOSED",
+        "baseline_verifiable_truth": true,
+        "obligation_truth": [
+          {
+            "obligation_id": "OBLIGATION_METER",
+            "expected_resolution": "SUCCESS",
+            "world_disposition": "ERASED",
+            "reason_codes": ["TIMELY_ADMISSIBLE_E3_RECEIPT"]
+          }
+        ],
+        "out_of_declared_scope_replica_refs": ["REPLICA_FEATURE"],
+        "reason_codes": ["DECLARED_SCOPE_CLOSED", "HIDDEN_LINEAGE_OUTSIDE_POSITIVE_DETECTION_CLAIM"]
+      }
+    ]
+  }
+}

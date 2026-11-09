@@ -1,0 +1,88 @@
+{
+  "scope": "Saved-label entries, including repetitions and conditional maps under invalid baselines; not additional assessor runs",
+  "resources": {
+    "independent_fixtures": {
+      "verified_manifest_members": 594,
+      "units": 98,
+      "class_support": {
+        "DISPUTED": 4,
+        "CLOSED": 53,
+        "PARTIALLY_CLOSED": 19,
+        "CLOSED_WITH_EXCEPTIONS": 13,
+        "IN_PROGRESS": 2,
+        "UNVERIFIABLE": 5,
+        "OPEN": 2
+      },
+      "obligation_category_support": {
+        "COVERED": 320,
+        "CONTRADICTORY": 3,
+        "INVALID": 12,
+        "EXCEPTED": 13,
+        "MISSING": 9,
+        "LATE": 4
+      },
+      "receipt_diagnosis_support": {
+        "AUTHENTICATED_E2": 344,
+        "REJECTED": 11
+      },
+      "invalid_baseline_classes": {
+        "IN_PROGRESS": 1,
+        "UNVERIFIABLE": 5
+      }
+    },
+    "reference": {
+      "verified_manifest_members": 2843,
+      "units": 420,
+      "class_support": {
+        "CLOSED": 198,
+        "CLOSED_WITH_EXCEPTIONS": 54,
+        "PARTIALLY_CLOSED": 63,
+        "UNVERIFIABLE": 42,
+        "IN_PROGRESS": 21,
+        "OPEN": 21,
+        "DISPUTED": 21
+      },
+      "obligation_category_support": {
+        "COVERED": 2522,
+        "EXCEPTED": 151,
+        "MISSING": 189,
+        "INVALID": 21,
+        "CONTRADICTORY": 21
+      },
+      "receipt_diagnosis_support": {
+        "AUTHENTICATED_E2": 2694,
+        "REJECTED": 21
+      },
+      "invalid_baseline_classes": {
+        "UNVERIFIABLE": 42
+      }
+    },
+    "structural_extension": {
+      "verified_manifest_members": 1045,
+      "units": 120,
+      "class_support": {
+        "CLOSED": 66,
+        "PARTIALLY_CLOSED": 18,
+        "CLOSED_WITH_EXCEPTIONS": 6,
+        "DISPUTED": 6,
+        "OPEN": 6,
+        "UNVERIFIABLE": 12,
+        "IN_PROGRESS": 6
+      },
+      "obligation_category_support": {
+        "COVERED": 533,
+        "MISSING": 42,
+        "EXCEPTED": 6,
+        "INVALID": 6,
+        "CONTRADICTORY": 6
+      },
+      "receipt_diagnosis_support": {
+        "AUTHENTICATED_E2": 545,
+        "REJECTED": 6
+      },
+      "invalid_baseline_classes": {
+        "UNVERIFIABLE": 12
+      }
+    }
+  }
+}

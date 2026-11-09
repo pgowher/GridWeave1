@@ -1,0 +1,110 @@
+{
+  "bundle_format": "htgl.evidence.receipt-profiles.v1",
+  "bundle_id": "RECEIPT-PROFILES-REFERENCE-v1",
+  "version": "1.0.0",
+  "canonicalization_profile_id": "HTGL-CANONICAL-TLV-UTC-US-v1",
+  "synthetic_key_profile_id": "KEYS-SYNTHETIC-NO-SECRETS-v1",
+  "proof_limit_statement": "Evidence fixtures evaluate model-level verification assumptions and do not prove physical deletion.",
+  "adversarial_case_types": [
+    "invalid",
+    "late",
+    "malformed",
+    "contradictory",
+    "forged_under_synthetic_key",
+    "incomplete",
+    "missing_dependency"
+  ],
+  "anchor_profiles": [
+    {
+      "anchor_profile_id": "ANCHOR-MERKLE-SYNTH-v1",
+      "algorithm": "HTGL-MERKLE-SHA256-v1",
+      "leaf_domain": "htgl/evidence/merkle-leaf/v1",
+      "node_domain": "htgl/evidence/merkle-node/v1",
+      "odd_leaf_rule": "duplicate_last"
+    }
+  ],
+  "profiles": [
+    {
+      "evidence_type": "digest",
+      "profile_id": "EVIDENCE-DIGEST-SHA256-v1",
+      "primitive": "digest",
+      "algorithm": "SHA-256",
+      "domain": "htgl/evidence/receipt/digest/v1",
+      "requires_key": false,
+      "requires_anchor": false
+    },
+    {
+      "evidence_type": "hmac",
+      "profile_id": "EVIDENCE-HMAC-SHA256-v1",
+      "primitive": "hmac",
+      "algorithm": "HMAC-SHA256-SYNTHETIC",
+      "domain": "htgl/evidence/receipt/hmac/v1",
+      "requires_key": true,
+      "requires_anchor": false
+    },
+    {
+      "evidence_type": "signature",
+      "profile_id": "EVIDENCE-ED25519-v1",
+      "primitive": "signature",
+      "algorithm": "Ed25519-SYNTHETIC",
+      "domain": "htgl/evidence/receipt/signature/v1",
+      "requires_key": true,
+      "requires_anchor": false
+    },
+    {
+      "evidence_type": "inclusion_proof",
+      "profile_id": "EVIDENCE-MERKLE-INCLUSION-v1",
+      "primitive": "merkle_inclusion",
+      "algorithm": "HTGL-MERKLE-SHA256-v1",
+      "domain": "htgl/evidence/receipt/inclusion-proof/v1",
+      "requires_key": false,
+      "requires_anchor": true
+    },
+    {
+      "evidence_type": "deletion_acknowledgement",
+      "profile_id": "EVIDENCE-DELETION-ACK-ED25519-v1",
+      "primitive": "signature",
+      "algorithm": "Ed25519-SYNTHETIC",
+      "domain": "htgl/evidence/receipt/deletion-acknowledgement/v1",
+      "requires_key": true,
+      "requires_anchor": false
+    },
+    {
+      "evidence_type": "replica_attestation",
+      "profile_id": "EVIDENCE-REPLICA-HMAC-v1",
+      "primitive": "hmac",
+      "algorithm": "HMAC-SHA256-SYNTHETIC",
+      "domain": "htgl/evidence/receipt/replica-attestation/v1",
+      "requires_key": true,
+      "requires_anchor": false
+    },
+    {
+      "evidence_type": "audit_finding",
+      "profile_id": "EVIDENCE-AUDIT-ED25519-v1",
+      "primitive": "signature",
+      "algorithm": "Ed25519-SYNTHETIC",
+      "domain": "htgl/evidence/receipt/audit-finding/v1",
+      "requires_key": true,
+      "requires_anchor": false
+    },
+    {
+      "evidence_type": "merkle_anchor",
+      "profile_id": "EVIDENCE-MERKLE-ANCHOR-v1",
+      "primitive": "merkle_inclusion",
+      "algorithm": "HTGL-MERKLE-SHA256-v1",
+      "domain": "htgl/evidence/receipt/merkle-anchor/v1",
+      "requires_key": false,
+      "requires_anchor": true
+    },
+    {
+      "evidence_type": "notification_receipt",
+      "profile_id": "EVIDENCE-NOTIFICATION-ED25519-v1",
+      "primitive": "signature",
+      "algorithm": "Ed25519-SYNTHETIC",
+      "domain": "htgl/evidence/receipt/notification/v1",
+      "requires_key": true,
+      "requires_anchor": false
+    }
+  ],
+  "ml_removal_profiles": []
+}

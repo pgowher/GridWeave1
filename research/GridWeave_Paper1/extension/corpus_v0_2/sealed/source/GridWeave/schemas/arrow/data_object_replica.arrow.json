@@ -1,0 +1,109 @@
+{
+  "schema_id": "htgl.dataset.v1.data_object_replica",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "7a3d1e8e8e0d080a4d7da6cc5c7bbb5fd74ba75ec7b6ce9783fe93117e8d75f0",
+  "table_name": "data_object_replica",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "replica_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Replica key."
+      }
+    },
+    {
+      "name": "data_object_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Logical object FK."
+      }
+    },
+    {
+      "name": "database_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Hosting database FK."
+      }
+    },
+    {
+      "name": "replica_role",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "replica_role",
+        "privacy_class": "restricted",
+        "semantic_invariant": "primary, secondary, cache, backup, export or derived."
+      }
+    },
+    {
+      "name": "created_by_event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Causal event FK."
+      }
+    },
+    {
+      "name": "created_at",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Creation time."
+      }
+    },
+    {
+      "name": "deletion_due_at",
+      "type": "timestamp[us, UTC]",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Derived deadline."
+      }
+    },
+    {
+      "name": "deleted_at",
+      "type": "timestamp[us, UTC]",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "World-truth deletion time."
+      }
+    },
+    {
+      "name": "deletion_status",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "deletion_status",
+        "privacy_class": "restricted",
+        "semantic_invariant": "not_due, due, deleted, failed, unknown or exempt."
+      }
+    },
+    {
+      "name": "retention_basis_rule_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Rule retaining the replica."
+      }
+    }
+  ]
+}

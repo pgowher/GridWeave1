@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "pipeline_version": "1.0.0",
+  "run_label": "reference-supplier-switch",
+  "repositories": {
+    "paegen": "../../GridWeave",
+    "verclo": "../../HTGLThesis"
+  },
+  "output": {
+    "root": "../../PaEForge-runs",
+    "contract_series": "v1"
+  },
+  "paegen": {
+    "scenario_id": "PBE-SG-SUPPLIER-SWITCHING",
+    "variant_id": "success",
+    "observer_profile_id": "OBS-SG-AUDITOR",
+    "root_seed": "PAEFORGE-VERTICAL-REFERENCE-v1"
+  },
+  "projection": {
+    "profile_id": "PAEFORGE-VISIBLE-CUSTODY-v1",
+    "profile_version": "1.0.0",
+    "access_class": "restricted",
+    "expose_visible_repository_bindings": true,
+    "include_only_observable_repositories": true
+  },
+  "verclo": {
+    "backend_id": "deterministic-public-fixture-v1",
+    "synthetic_proof_format": "PAEGEN-SYNTHETIC-ORDERED-V1"
+  },
+  "evaluation": {
+    "visibility_attribution": "NONE"
+  }
+}

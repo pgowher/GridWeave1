@@ -1,0 +1,17 @@
+{
+  "status": "FROZEN_RESEARCH_IMPLEMENTATION",
+  "package_version": "0.2.1",
+  "dataset_format": "GridWeave-0.2.0",
+  "date": "2026-10-25",
+  "generation_source_id": "17512fe51989b0a9928ca6dbcacb0f8cb4a506d806e66038872851eb9724e98b",
+  "source_manifest": "SOURCE_MANIFEST.json",
+  "standalone_launcher": "gridweave",
+  "supported_commands": [
+    "generate",
+    "validate"
+  ],
+  "scope_record": "Docs/Technical_Guide.md",
+  "dataset_directory": "datasets",
+  "validation_record": "validation/standalone-check.json",
+  "layout": "Self-contained generator with frozen local support and its own Python environment"
+}

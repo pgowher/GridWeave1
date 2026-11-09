@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "https://pae.local/schema/paegen-adversarial-receipts/v1",
+  "type": "object", "additionalProperties": false, "required": ["schema_version", "model_version", "receipt_attacks"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"}, "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "receipt_attacks": {"type": "array", "minItems": 1, "items": {
+      "type": "object", "additionalProperties": false, "required": ["profile_id", "attack_type", "mutated_fields", "observable_checks", "admissible"],
+      "properties": {
+        "profile_id": {"type": "string"},
+        "attack_type": {"enum": ["FORGED_RECEIPT", "MALFORMED_RECEIPT", "REPLAY", "BACKDATING", "CONTRADICTION", "DELAY", "COLLUSION"]},
+        "mutated_fields": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+        "observable_checks": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+        "admissible": {"const": false}
+      }
+    }}
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "schema_id": "htgl.dataset.v1.artifact_manifest",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "4c9fcba5ee0ef1a69084c41049362d5f11a06959cc37fea9881ea8030deedc46",
+  "table_name": "artifact_manifest",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "artifact_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Artifact key."
+      }
+    },
+    {
+      "name": "run_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Run FK."
+      }
+    },
+    {
+      "name": "relative_path",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Portable path."
+      }
+    },
+    {
+      "name": "media_type",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "media_type",
+        "privacy_class": "public",
+        "semantic_invariant": "IANA-like type."
+      }
+    },
+    {
+      "name": "schema_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Schema reference."
+      }
+    },
+    {
+      "name": "record_count",
+      "type": "int64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Logical records."
+      }
+    },
+    {
+      "name": "uncompressed_bytes",
+      "type": "int64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Uncompressed size."
+      }
+    },
+    {
+      "name": "stored_bytes",
+      "type": "int64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Stored size."
+      }
+    },
+    {
+      "name": "sha256",
+      "type": "fixed_size_binary[32]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Artifact digest."
+      }
+    },
+    {
+      "name": "partition_keys",
+      "type": "list<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Partition keys."
+      }
+    },
+    {
+      "name": "privacy_class",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "privacy_class",
+        "privacy_class": "public",
+        "semantic_invariant": "public, restricted, evaluator_only or sealed."
+      }
+    },
+    {
+      "name": "generation_stage",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Producing stage."
+      }
+    },
+    {
+      "name": "publication_eligible",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Passed required release gates."
+      }
+    }
+  ]
+}

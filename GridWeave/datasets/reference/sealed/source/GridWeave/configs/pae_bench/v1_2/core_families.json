@@ -1,0 +1,922 @@
+[
+  {
+    "family_id": "PBE-V12-TRAIN-0",
+    "domain": "smart_grid",
+    "subject_namespace": "SYN-PBE-V12-TRAIN-0",
+    "split": "train",
+    "repositories": [
+      {
+        "repository_id": "PBE-V12-TRAIN-0-R0",
+        "kind": "train service tier 0",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TRAIN-0-R1",
+        "kind": "train service tier 1",
+        "observer_visible": true
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "PBE-V12-TRAIN-0-A0",
+        "repository_id": "PBE-V12-TRAIN-0-R0",
+        "parent_asset_ids": []
+      },
+      {
+        "asset_id": "PBE-V12-TRAIN-0-A1",
+        "repository_id": "PBE-V12-TRAIN-0-R1",
+        "parent_asset_ids": [
+          "PBE-V12-TRAIN-0-A0"
+        ]
+      }
+    ],
+    "obligations": [
+      {
+        "obligation_id": "PBE-V12-TRAIN-0-O0",
+        "asset_id": "PBE-V12-TRAIN-0-A0",
+        "principal_id": "PBE-V12-TRAIN-0-P0",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 48
+      },
+      {
+        "obligation_id": "PBE-V12-TRAIN-0-O1",
+        "asset_id": "PBE-V12-TRAIN-0-A1",
+        "principal_id": "PBE-V12-TRAIN-0-P1",
+        "required_disposition": "CRYPTO_ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 72
+      }
+    ],
+    "variants": [
+      {
+        "variant_id": "clean",
+        "operation": "NONE",
+        "expected_closure": "CLOSED"
+      },
+      {
+        "variant_id": "v12-case-omit_one-control",
+        "operation": "OMIT_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-omit_all-control",
+        "operation": "OMIT_ALL",
+        "expected_closure": "OPEN"
+      },
+      {
+        "variant_id": "v12-case-baseline_missing-control",
+        "operation": "BASELINE_MISSING",
+        "expected_closure": "UNVERIFIABLE"
+      },
+      {
+        "variant_id": "v12-case-baseline_invalid-control",
+        "operation": "BASELINE_INVALID",
+        "expected_closure": "UNVERIFIABLE"
+      },
+      {
+        "variant_id": "v12-case-conflict-control",
+        "operation": "CONFLICT",
+        "expected_closure": "DISPUTED",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-early_omit-control",
+        "operation": "EARLY_OMIT",
+        "expected_closure": "IN_PROGRESS",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-exception_target-control",
+        "operation": "EXCEPTION_TARGET",
+        "expected_closure": "CLOSED_WITH_EXCEPTIONS",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-invalid_exception-control",
+        "operation": "INVALID_EXCEPTION",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-invalid_signature-control",
+        "operation": "INVALID_SIGNATURE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-material_missing-control",
+        "operation": "MATERIAL_MISSING",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-key_unknown-control",
+        "operation": "KEY_UNKNOWN",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-floor_raise-control",
+        "operation": "FLOOR_RAISE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-anchor_missing-control",
+        "operation": "ANCHOR_MISSING",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-late_one-control",
+        "operation": "LATE_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      },
+      {
+        "variant_id": "v12-case-future_one-control",
+        "operation": "FUTURE_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-0-O1"
+      }
+    ]
+  },
+  {
+    "family_id": "PBE-V12-TRAIN-1",
+    "domain": "smart_grid",
+    "subject_namespace": "SYN-PBE-V12-TRAIN-1",
+    "split": "train",
+    "repositories": [
+      {
+        "repository_id": "PBE-V12-TRAIN-1-R0",
+        "kind": "train service tier 0",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TRAIN-1-R1",
+        "kind": "train service tier 1",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TRAIN-1-R2",
+        "kind": "train service tier 2",
+        "observer_visible": true
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "PBE-V12-TRAIN-1-A0",
+        "repository_id": "PBE-V12-TRAIN-1-R0",
+        "parent_asset_ids": []
+      },
+      {
+        "asset_id": "PBE-V12-TRAIN-1-A1",
+        "repository_id": "PBE-V12-TRAIN-1-R1",
+        "parent_asset_ids": [
+          "PBE-V12-TRAIN-1-A0"
+        ]
+      },
+      {
+        "asset_id": "PBE-V12-TRAIN-1-A2",
+        "repository_id": "PBE-V12-TRAIN-1-R2",
+        "parent_asset_ids": [
+          "PBE-V12-TRAIN-1-A0"
+        ]
+      }
+    ],
+    "obligations": [
+      {
+        "obligation_id": "PBE-V12-TRAIN-1-O0",
+        "asset_id": "PBE-V12-TRAIN-1-A0",
+        "principal_id": "PBE-V12-TRAIN-1-P0",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 48
+      },
+      {
+        "obligation_id": "PBE-V12-TRAIN-1-O1",
+        "asset_id": "PBE-V12-TRAIN-1-A1",
+        "principal_id": "PBE-V12-TRAIN-1-P1",
+        "required_disposition": "CRYPTO_ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 72
+      },
+      {
+        "obligation_id": "PBE-V12-TRAIN-1-O2",
+        "asset_id": "PBE-V12-TRAIN-1-A2",
+        "principal_id": "PBE-V12-TRAIN-1-P2",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 96
+      }
+    ],
+    "variants": [
+      {
+        "variant_id": "clean",
+        "operation": "NONE",
+        "expected_closure": "CLOSED"
+      },
+      {
+        "variant_id": "v12-case-omit_one-control",
+        "operation": "OMIT_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-omit_all-control",
+        "operation": "OMIT_ALL",
+        "expected_closure": "OPEN"
+      },
+      {
+        "variant_id": "v12-case-baseline_missing-control",
+        "operation": "BASELINE_MISSING",
+        "expected_closure": "UNVERIFIABLE"
+      },
+      {
+        "variant_id": "v12-case-baseline_invalid-control",
+        "operation": "BASELINE_INVALID",
+        "expected_closure": "UNVERIFIABLE"
+      },
+      {
+        "variant_id": "v12-case-conflict-control",
+        "operation": "CONFLICT",
+        "expected_closure": "DISPUTED",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-early_omit-control",
+        "operation": "EARLY_OMIT",
+        "expected_closure": "IN_PROGRESS",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-exception_target-control",
+        "operation": "EXCEPTION_TARGET",
+        "expected_closure": "CLOSED_WITH_EXCEPTIONS",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-invalid_exception-control",
+        "operation": "INVALID_EXCEPTION",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-invalid_signature-control",
+        "operation": "INVALID_SIGNATURE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-material_missing-control",
+        "operation": "MATERIAL_MISSING",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-key_unknown-control",
+        "operation": "KEY_UNKNOWN",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-floor_raise-control",
+        "operation": "FLOOR_RAISE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-anchor_missing-control",
+        "operation": "ANCHOR_MISSING",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-late_one-control",
+        "operation": "LATE_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      },
+      {
+        "variant_id": "v12-case-future_one-control",
+        "operation": "FUTURE_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TRAIN-1-O2"
+      }
+    ]
+  },
+  {
+    "family_id": "PBE-V12-DEVELOPMENT-0",
+    "domain": "smart_grid",
+    "subject_namespace": "SYN-PBE-V12-DEVELOPMENT-0",
+    "split": "development",
+    "repositories": [
+      {
+        "repository_id": "PBE-V12-DEVELOPMENT-0-R0",
+        "kind": "development service tier 0",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-DEVELOPMENT-0-R1",
+        "kind": "development service tier 1",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-DEVELOPMENT-0-R2",
+        "kind": "development service tier 2",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-DEVELOPMENT-0-R3",
+        "kind": "development service tier 3",
+        "observer_visible": true
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "PBE-V12-DEVELOPMENT-0-A0",
+        "repository_id": "PBE-V12-DEVELOPMENT-0-R0",
+        "parent_asset_ids": []
+      },
+      {
+        "asset_id": "PBE-V12-DEVELOPMENT-0-A1",
+        "repository_id": "PBE-V12-DEVELOPMENT-0-R1",
+        "parent_asset_ids": [
+          "PBE-V12-DEVELOPMENT-0-A0"
+        ]
+      },
+      {
+        "asset_id": "PBE-V12-DEVELOPMENT-0-A2",
+        "repository_id": "PBE-V12-DEVELOPMENT-0-R2",
+        "parent_asset_ids": [
+          "PBE-V12-DEVELOPMENT-0-A1"
+        ]
+      },
+      {
+        "asset_id": "PBE-V12-DEVELOPMENT-0-A3",
+        "repository_id": "PBE-V12-DEVELOPMENT-0-R3",
+        "parent_asset_ids": [
+          "PBE-V12-DEVELOPMENT-0-A2"
+        ]
+      }
+    ],
+    "obligations": [
+      {
+        "obligation_id": "PBE-V12-DEVELOPMENT-0-O0",
+        "asset_id": "PBE-V12-DEVELOPMENT-0-A0",
+        "principal_id": "PBE-V12-DEVELOPMENT-0-P0",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 48
+      },
+      {
+        "obligation_id": "PBE-V12-DEVELOPMENT-0-O1",
+        "asset_id": "PBE-V12-DEVELOPMENT-0-A1",
+        "principal_id": "PBE-V12-DEVELOPMENT-0-P1",
+        "required_disposition": "CRYPTO_ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 72
+      },
+      {
+        "obligation_id": "PBE-V12-DEVELOPMENT-0-O2",
+        "asset_id": "PBE-V12-DEVELOPMENT-0-A2",
+        "principal_id": "PBE-V12-DEVELOPMENT-0-P2",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 96
+      },
+      {
+        "obligation_id": "PBE-V12-DEVELOPMENT-0-O3",
+        "asset_id": "PBE-V12-DEVELOPMENT-0-A3",
+        "principal_id": "PBE-V12-DEVELOPMENT-0-P3",
+        "required_disposition": "CRYPTO_ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 120
+      }
+    ],
+    "variants": [
+      {
+        "variant_id": "clean",
+        "operation": "NONE",
+        "expected_closure": "CLOSED"
+      },
+      {
+        "variant_id": "v12-case-omit_one-control",
+        "operation": "OMIT_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-omit_all-control",
+        "operation": "OMIT_ALL",
+        "expected_closure": "OPEN"
+      },
+      {
+        "variant_id": "v12-case-baseline_missing-control",
+        "operation": "BASELINE_MISSING",
+        "expected_closure": "UNVERIFIABLE"
+      },
+      {
+        "variant_id": "v12-case-baseline_invalid-control",
+        "operation": "BASELINE_INVALID",
+        "expected_closure": "UNVERIFIABLE"
+      },
+      {
+        "variant_id": "v12-case-conflict-control",
+        "operation": "CONFLICT",
+        "expected_closure": "DISPUTED",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-early_omit-control",
+        "operation": "EARLY_OMIT",
+        "expected_closure": "IN_PROGRESS",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-exception_target-control",
+        "operation": "EXCEPTION_TARGET",
+        "expected_closure": "CLOSED_WITH_EXCEPTIONS",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-invalid_exception-control",
+        "operation": "INVALID_EXCEPTION",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-invalid_signature-control",
+        "operation": "INVALID_SIGNATURE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-material_missing-control",
+        "operation": "MATERIAL_MISSING",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-key_unknown-control",
+        "operation": "KEY_UNKNOWN",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-floor_raise-control",
+        "operation": "FLOOR_RAISE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-anchor_missing-control",
+        "operation": "ANCHOR_MISSING",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-late_one-control",
+        "operation": "LATE_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      },
+      {
+        "variant_id": "v12-case-future_one-control",
+        "operation": "FUTURE_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-DEVELOPMENT-0-O3"
+      }
+    ]
+  },
+  {
+    "family_id": "PBE-V12-TEST-0",
+    "domain": "smart_grid",
+    "subject_namespace": "SYN-PBE-V12-TEST-0",
+    "split": "test",
+    "repositories": [
+      {
+        "repository_id": "PBE-V12-TEST-0-R0",
+        "kind": "test service tier 0",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TEST-0-R1",
+        "kind": "test service tier 1",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TEST-0-R2",
+        "kind": "test service tier 2",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TEST-0-R3",
+        "kind": "test service tier 3",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TEST-0-R4",
+        "kind": "test service tier 4",
+        "observer_visible": true
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "PBE-V12-TEST-0-A0",
+        "repository_id": "PBE-V12-TEST-0-R0",
+        "parent_asset_ids": []
+      },
+      {
+        "asset_id": "PBE-V12-TEST-0-A1",
+        "repository_id": "PBE-V12-TEST-0-R1",
+        "parent_asset_ids": [
+          "PBE-V12-TEST-0-A0"
+        ]
+      },
+      {
+        "asset_id": "PBE-V12-TEST-0-A2",
+        "repository_id": "PBE-V12-TEST-0-R2",
+        "parent_asset_ids": [
+          "PBE-V12-TEST-0-A1"
+        ]
+      },
+      {
+        "asset_id": "PBE-V12-TEST-0-A3",
+        "repository_id": "PBE-V12-TEST-0-R3",
+        "parent_asset_ids": [
+          "PBE-V12-TEST-0-A2"
+        ]
+      },
+      {
+        "asset_id": "PBE-V12-TEST-0-A4",
+        "repository_id": "PBE-V12-TEST-0-R4",
+        "parent_asset_ids": [
+          "PBE-V12-TEST-0-A3"
+        ]
+      }
+    ],
+    "obligations": [
+      {
+        "obligation_id": "PBE-V12-TEST-0-O0",
+        "asset_id": "PBE-V12-TEST-0-A0",
+        "principal_id": "PBE-V12-TEST-0-P0",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 48
+      },
+      {
+        "obligation_id": "PBE-V12-TEST-0-O1",
+        "asset_id": "PBE-V12-TEST-0-A1",
+        "principal_id": "PBE-V12-TEST-0-P1",
+        "required_disposition": "CRYPTO_ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 72
+      },
+      {
+        "obligation_id": "PBE-V12-TEST-0-O2",
+        "asset_id": "PBE-V12-TEST-0-A2",
+        "principal_id": "PBE-V12-TEST-0-P2",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 96
+      },
+      {
+        "obligation_id": "PBE-V12-TEST-0-O3",
+        "asset_id": "PBE-V12-TEST-0-A3",
+        "principal_id": "PBE-V12-TEST-0-P3",
+        "required_disposition": "CRYPTO_ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 120
+      },
+      {
+        "obligation_id": "PBE-V12-TEST-0-O4",
+        "asset_id": "PBE-V12-TEST-0-A4",
+        "principal_id": "PBE-V12-TEST-0-P4",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 144
+      }
+    ],
+    "variants": [
+      {
+        "variant_id": "clean",
+        "operation": "NONE",
+        "expected_closure": "CLOSED"
+      },
+      {
+        "variant_id": "v12-case-omit_one-control",
+        "operation": "OMIT_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-omit_all-control",
+        "operation": "OMIT_ALL",
+        "expected_closure": "OPEN"
+      },
+      {
+        "variant_id": "v12-case-baseline_missing-control",
+        "operation": "BASELINE_MISSING",
+        "expected_closure": "UNVERIFIABLE"
+      },
+      {
+        "variant_id": "v12-case-baseline_invalid-control",
+        "operation": "BASELINE_INVALID",
+        "expected_closure": "UNVERIFIABLE"
+      },
+      {
+        "variant_id": "v12-case-conflict-control",
+        "operation": "CONFLICT",
+        "expected_closure": "DISPUTED",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-early_omit-control",
+        "operation": "EARLY_OMIT",
+        "expected_closure": "IN_PROGRESS",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-exception_target-control",
+        "operation": "EXCEPTION_TARGET",
+        "expected_closure": "CLOSED_WITH_EXCEPTIONS",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-invalid_exception-control",
+        "operation": "INVALID_EXCEPTION",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-invalid_signature-control",
+        "operation": "INVALID_SIGNATURE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-material_missing-control",
+        "operation": "MATERIAL_MISSING",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-key_unknown-control",
+        "operation": "KEY_UNKNOWN",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-floor_raise-control",
+        "operation": "FLOOR_RAISE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-anchor_missing-control",
+        "operation": "ANCHOR_MISSING",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-late_one-control",
+        "operation": "LATE_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      },
+      {
+        "variant_id": "v12-case-future_one-control",
+        "operation": "FUTURE_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-0-O4"
+      }
+    ]
+  },
+  {
+    "family_id": "PBE-V12-TEST-1",
+    "domain": "smart_grid",
+    "subject_namespace": "SYN-PBE-V12-TEST-1",
+    "split": "test",
+    "repositories": [
+      {
+        "repository_id": "PBE-V12-TEST-1-R0",
+        "kind": "test service tier 0",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TEST-1-R1",
+        "kind": "test service tier 1",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TEST-1-R2",
+        "kind": "test service tier 2",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TEST-1-R3",
+        "kind": "test service tier 3",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TEST-1-R4",
+        "kind": "test service tier 4",
+        "observer_visible": true
+      },
+      {
+        "repository_id": "PBE-V12-TEST-1-R5",
+        "kind": "test service tier 5",
+        "observer_visible": true
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "PBE-V12-TEST-1-A0",
+        "repository_id": "PBE-V12-TEST-1-R0",
+        "parent_asset_ids": []
+      },
+      {
+        "asset_id": "PBE-V12-TEST-1-A1",
+        "repository_id": "PBE-V12-TEST-1-R1",
+        "parent_asset_ids": [
+          "PBE-V12-TEST-1-A0"
+        ]
+      },
+      {
+        "asset_id": "PBE-V12-TEST-1-A2",
+        "repository_id": "PBE-V12-TEST-1-R2",
+        "parent_asset_ids": [
+          "PBE-V12-TEST-1-A0"
+        ]
+      },
+      {
+        "asset_id": "PBE-V12-TEST-1-A3",
+        "repository_id": "PBE-V12-TEST-1-R3",
+        "parent_asset_ids": [
+          "PBE-V12-TEST-1-A1"
+        ]
+      },
+      {
+        "asset_id": "PBE-V12-TEST-1-A4",
+        "repository_id": "PBE-V12-TEST-1-R4",
+        "parent_asset_ids": [
+          "PBE-V12-TEST-1-A1"
+        ]
+      },
+      {
+        "asset_id": "PBE-V12-TEST-1-A5",
+        "repository_id": "PBE-V12-TEST-1-R5",
+        "parent_asset_ids": [
+          "PBE-V12-TEST-1-A2"
+        ]
+      }
+    ],
+    "obligations": [
+      {
+        "obligation_id": "PBE-V12-TEST-1-O0",
+        "asset_id": "PBE-V12-TEST-1-A0",
+        "principal_id": "PBE-V12-TEST-1-P0",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 48
+      },
+      {
+        "obligation_id": "PBE-V12-TEST-1-O1",
+        "asset_id": "PBE-V12-TEST-1-A1",
+        "principal_id": "PBE-V12-TEST-1-P1",
+        "required_disposition": "CRYPTO_ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 72
+      },
+      {
+        "obligation_id": "PBE-V12-TEST-1-O2",
+        "asset_id": "PBE-V12-TEST-1-A2",
+        "principal_id": "PBE-V12-TEST-1-P2",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 96
+      },
+      {
+        "obligation_id": "PBE-V12-TEST-1-O3",
+        "asset_id": "PBE-V12-TEST-1-A3",
+        "principal_id": "PBE-V12-TEST-1-P3",
+        "required_disposition": "CRYPTO_ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 120
+      },
+      {
+        "obligation_id": "PBE-V12-TEST-1-O4",
+        "asset_id": "PBE-V12-TEST-1-A4",
+        "principal_id": "PBE-V12-TEST-1-P4",
+        "required_disposition": "ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 144
+      },
+      {
+        "obligation_id": "PBE-V12-TEST-1-O5",
+        "asset_id": "PBE-V12-TEST-1-A5",
+        "principal_id": "PBE-V12-TEST-1-P5",
+        "required_disposition": "CRYPTO_ERASED",
+        "evidence_floor": "E3",
+        "deadline_hours": 168
+      }
+    ],
+    "variants": [
+      {
+        "variant_id": "clean",
+        "operation": "NONE",
+        "expected_closure": "CLOSED"
+      },
+      {
+        "variant_id": "v12-case-omit_one-control",
+        "operation": "OMIT_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-omit_all-control",
+        "operation": "OMIT_ALL",
+        "expected_closure": "OPEN"
+      },
+      {
+        "variant_id": "v12-case-baseline_missing-control",
+        "operation": "BASELINE_MISSING",
+        "expected_closure": "UNVERIFIABLE"
+      },
+      {
+        "variant_id": "v12-case-baseline_invalid-control",
+        "operation": "BASELINE_INVALID",
+        "expected_closure": "UNVERIFIABLE"
+      },
+      {
+        "variant_id": "v12-case-conflict-control",
+        "operation": "CONFLICT",
+        "expected_closure": "DISPUTED",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-early_omit-control",
+        "operation": "EARLY_OMIT",
+        "expected_closure": "IN_PROGRESS",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-exception_target-control",
+        "operation": "EXCEPTION_TARGET",
+        "expected_closure": "CLOSED_WITH_EXCEPTIONS",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-invalid_exception-control",
+        "operation": "INVALID_EXCEPTION",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-invalid_signature-control",
+        "operation": "INVALID_SIGNATURE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-material_missing-control",
+        "operation": "MATERIAL_MISSING",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-key_unknown-control",
+        "operation": "KEY_UNKNOWN",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-floor_raise-control",
+        "operation": "FLOOR_RAISE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-anchor_missing-control",
+        "operation": "ANCHOR_MISSING",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-late_one-control",
+        "operation": "LATE_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      },
+      {
+        "variant_id": "v12-case-future_one-control",
+        "operation": "FUTURE_ONE",
+        "expected_closure": "PARTIALLY_CLOSED",
+        "target_obligation_id": "PBE-V12-TEST-1-O5"
+      }
+    ]
+  }
+]

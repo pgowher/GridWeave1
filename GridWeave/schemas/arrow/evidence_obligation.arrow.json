@@ -1,0 +1,109 @@
+{
+  "schema_id": "htgl.dataset.v1.evidence_obligation",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "a44f38d5612ea1191c9cdd8397e4afb43152b2518a6eed9c7cf0203d8282d0a0",
+  "table_name": "evidence_obligation",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "obligation_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Obligation key."
+      }
+    },
+    {
+      "name": "event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Triggering event FK."
+      }
+    },
+    {
+      "name": "policy_rule_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Creating rule FK."
+      }
+    },
+    {
+      "name": "obligation_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "obligation_type",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "authorization, provenance, replica deletion, notification, retention exception, anchor, etc."
+      }
+    },
+    {
+      "name": "subject_object_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Object/replica subject."
+      }
+    },
+    {
+      "name": "responsible_actor_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Actor that must produce evidence."
+      }
+    },
+    {
+      "name": "due_at",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Deadline."
+      }
+    },
+    {
+      "name": "required_evidence_types",
+      "type": "list<dictionary<string>>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "evidence_type",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Acceptable receipt types."
+      }
+    },
+    {
+      "name": "minimum_count",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Minimum receipts."
+      }
+    },
+    {
+      "name": "coverage_scope",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "coverage_scope",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "object, replica_set, workflow, actor_set or causal_closure."
+      }
+    }
+  ]
+}

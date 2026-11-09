@@ -1,0 +1,227 @@
+{
+  "audit_date": "2026-11-05",
+  "dataset": "${ARTIFACT_ROOT}/GridWeave/datasets/reference",
+  "manifest_sha256": "35778ae20cf2cda8a2c719b0713ee9c3fc2158eac75fb46679f35cae44db9b9f",
+  "method": "Direct file census and exact directed graph isomorphism; no generator oracle imports",
+  "limitations": [
+    "Not independent human adjudication",
+    "Graph equivalence excludes roots, policy, receipts, times, visibility and scope flags",
+    "Byte identity measures saved input equivalence; not semantic case equivalence",
+    "No new assessor utility or clean environment study"
+  ],
+  "counts": {
+    "case_units": 420,
+    "pairs": 210,
+    "source_families": 7,
+    "control_units": 210,
+    "challenge_units": 210,
+    "distinct_control_inputs": 42,
+    "distinct_all_inputs": 231,
+    "family_scale_groups": 21
+  },
+  "structures": {
+    "asset": {
+      "all_case_classes": 11,
+      "control_classes": 6,
+      "definition": "Asset nodes and directed lineage only",
+      "classes_shared_across_splits": 11
+    },
+    "custody": {
+      "all_case_classes": 23,
+      "control_classes": 12,
+      "definition": "Asset, replica, repository and custodian node types; directed relation types",
+      "classes_shared_across_splits": 12
+    },
+    "semantic": {
+      "all_case_classes": 42,
+      "control_classes": 21,
+      "definition": "Custody graph plus asset kind, replica class and repository class",
+      "classes_shared_across_splits": 0
+    }
+  },
+  "structure_ranges": {
+    "assets": {
+      "min": 3,
+      "max": 12,
+      "distribution": {
+        "3": 140,
+        "6": 140,
+        "12": 140
+      }
+    },
+    "replicas": {
+      "min": 3,
+      "max": 12,
+      "distribution": {
+        "3": 140,
+        "6": 140,
+        "12": 140
+      }
+    },
+    "repositories": {
+      "min": 3,
+      "max": 3,
+      "distribution": {
+        "3": 420
+      }
+    },
+    "custodians": {
+      "min": 2,
+      "max": 3,
+      "distribution": {
+        "2": 300,
+        "3": 120
+      }
+    },
+    "max_replicas_per_asset": {
+      "min": 1,
+      "max": 1,
+      "distribution": {
+        "1": 420
+      }
+    },
+    "lineage_edges": {
+      "min": 1,
+      "max": 8,
+      "distribution": {
+        "1": 7,
+        "2": 133,
+        "3": 7,
+        "4": 133,
+        "7": 7,
+        "8": 133
+      }
+    },
+    "lineage_depth": {
+      "min": 1,
+      "max": 2,
+      "distribution": {
+        "1": 125,
+        "2": 295
+      }
+    },
+    "max_lineage_fanout": {
+      "min": 1,
+      "max": 2,
+      "distribution": {
+        "1": 302,
+        "2": 118
+      }
+    }
+  },
+  "outcomes": {
+    "CLOSED": 198,
+    "CLOSED_WITH_EXCEPTIONS": 54,
+    "DISPUTED": 21,
+    "IN_PROGRESS": 21,
+    "OPEN": 21,
+    "PARTIALLY_CLOSED": 63,
+    "UNVERIFIABLE": 42
+  },
+  "splits": {
+    "train": {
+      "units": 180,
+      "families": 3
+    },
+    "validation": {
+      "units": 120,
+      "families": 2
+    },
+    "test": {
+      "units": 120,
+      "families": 2
+    }
+  },
+  "operation_transitions": [
+    {
+      "operation": "conflict",
+      "pairs": 21,
+      "transitions": {
+        "CLOSED -> DISPUTED": 18,
+        "CLOSED_WITH_EXCEPTIONS -> DISPUTED": 3
+      }
+    },
+    {
+      "operation": "expiry_crossing",
+      "pairs": 21,
+      "transitions": {
+        "CLOSED_WITH_EXCEPTIONS -> PARTIALLY_CLOSED": 21
+      }
+    },
+    {
+      "operation": "hidden_copy_twin",
+      "pairs": 21,
+      "transitions": {
+        "CLOSED -> CLOSED": 18,
+        "CLOSED_WITH_EXCEPTIONS -> CLOSED_WITH_EXCEPTIONS": 3
+      }
+    },
+    {
+      "operation": "lineage_gap",
+      "pairs": 21,
+      "transitions": {
+        "CLOSED -> UNVERIFIABLE": 18,
+        "CLOSED_WITH_EXCEPTIONS -> UNVERIFIABLE": 3
+      }
+    },
+    {
+      "operation": "omit_all",
+      "pairs": 21,
+      "transitions": {
+        "CLOSED -> OPEN": 18,
+        "CLOSED_WITH_EXCEPTIONS -> OPEN": 3
+      }
+    },
+    {
+      "operation": "omit_one",
+      "pairs": 21,
+      "transitions": {
+        "CLOSED -> PARTIALLY_CLOSED": 18,
+        "CLOSED_WITH_EXCEPTIONS -> PARTIALLY_CLOSED": 3
+      }
+    },
+    {
+      "operation": "permutation",
+      "pairs": 21,
+      "transitions": {
+        "CLOSED -> CLOSED": 18,
+        "CLOSED_WITH_EXCEPTIONS -> CLOSED_WITH_EXCEPTIONS": 3
+      }
+    },
+    {
+      "operation": "pre_deadline",
+      "pairs": 21,
+      "transitions": {
+        "CLOSED -> IN_PROGRESS": 18,
+        "CLOSED_WITH_EXCEPTIONS -> IN_PROGRESS": 3
+      }
+    },
+    {
+      "operation": "scope_gap",
+      "pairs": 21,
+      "transitions": {
+        "CLOSED -> UNVERIFIABLE": 18,
+        "CLOSED_WITH_EXCEPTIONS -> UNVERIFIABLE": 3
+      }
+    },
+    {
+      "operation": "signature_tamper",
+      "pairs": 21,
+      "transitions": {
+        "CLOSED -> PARTIALLY_CLOSED": 18,
+        "CLOSED_WITH_EXCEPTIONS -> PARTIALLY_CLOSED": 3
+      }
+    }
+  ],
+  "checks": {
+    "exact_isomorphism_sanity_checks": "PASS",
+    "family_split_overlap": false,
+    "hidden_copy_pairs": 21,
+    "hidden_copy_pairs_equal_full_input_and_observer_truth_but_different_world": 21,
+    "frozen_source_files_checked": 318,
+    "frozen_source_errors": []
+  },
+  "serialized_public_input_bytes": 6935764,
+  "tracked_profile": "REAL_ED25519_SYNTHETIC_E2",
+  "q_status": "NOT_EXECUTED"
+}

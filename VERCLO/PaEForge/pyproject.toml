@@ -1,0 +1,23 @@
+[project]
+name = "paeforge-contract"
+version = "1.0.0"
+description = "Oracle-isolated exchange contracts and adapters for PaEGen, VERCLO, C-PaE, and PaEBench."
+requires-python = ">=3.11"
+dependencies = ["jsonschema>=4.19.0"]
+
+[project.scripts]
+paeforge-contract = "paeforge_contract.cli:main"
+paeforge = "paeforge_pipeline.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+paeforge_contract = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

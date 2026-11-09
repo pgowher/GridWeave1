@@ -1,0 +1,129 @@
+{
+  "schema_id": "htgl.dataset.v1.prosumer_cohort",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "7c8a05f06e6e7a6e0ff749d6af807ead6e15f459b034b5b069d04dd2cb204cb7",
+  "table_name": "prosumer_cohort",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "cohort_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Cohort key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "region_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Region FK."
+      }
+    },
+    {
+      "name": "represented_consumer_count",
+      "type": "int64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Represented consumers."
+      }
+    },
+    {
+      "name": "represented_prosumer_count",
+      "type": "int64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Represented prosumers."
+      }
+    },
+    {
+      "name": "der_adoption_fraction",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "DER adoption in [0,1]."
+      }
+    },
+    {
+      "name": "dwelling_type",
+      "type": "dictionary<string>",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Physical-demand conditioning attribute."
+      }
+    },
+    {
+      "name": "tariff_profile_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Tariff conditioning."
+      }
+    },
+    {
+      "name": "climate_zone_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Weather/load conditioning."
+      }
+    },
+    {
+      "name": "subject_scope",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "subject_scope",
+        "privacy_class": "restricted",
+        "semantic_invariant": "individual, household, business or aggregate."
+      }
+    },
+    {
+      "name": "sampling_stratum",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Probability-sampling stratum."
+      }
+    },
+    {
+      "name": "calibration_source_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Calibration provenance."
+      }
+    }
+  ]
+}

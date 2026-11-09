@@ -1,0 +1,24 @@
+{
+  "config_format": "verclo.publication-campaign.v1",
+  "campaign_id": "VERCLO-PUBLICATION-FAULT-CAMPAIGN-v1",
+  "seed": 20260922,
+  "scenarios": [
+    {"scenario_id": "C-CLEAN", "fault_family": "control", "expected_closed": true},
+    {"scenario_id": "F-RECEIPT-OMISSION", "fault_family": "omission", "expected_closed": false},
+    {"scenario_id": "F-LATE-RECEIPT", "fault_family": "timing", "expected_closed": false},
+    {"scenario_id": "F-AUTHENTICATOR-CORRUPTION", "fault_family": "evidence-integrity", "expected_closed": false},
+    {"scenario_id": "F-ANCHOR-CORRUPTION", "fault_family": "evidence-integrity", "expected_closed": false},
+    {"scenario_id": "F-MECHANISM-LOSS", "fault_family": "evidence-capability", "expected_closed": false},
+    {"scenario_id": "F-EQUIVOCATION", "fault_family": "equivocation", "expected_closed": false},
+    {"scenario_id": "F-CORRELATED-CORROBORATORS", "fault_family": "correlated-fault-domain", "expected_closed": false},
+    {"scenario_id": "F-BASELINE-LOSS", "fault_family": "scope-completeness", "expected_closed": false},
+    {"scenario_id": "C-VALID-EXCEPTION", "fault_family": "policy-exception", "expected_closed": true},
+    {"scenario_id": "F-OPEN-CHALLENGE", "fault_family": "dispute", "expected_closed": false},
+    {"scenario_id": "D-BYZANTINE-WITHIN-THRESHOLD", "fault_family": "byzantine-validator", "expected_closed": true},
+    {"scenario_id": "D-CRASH-WITHIN-THRESHOLD", "fault_family": "validator-crash", "expected_closed": true},
+    {"scenario_id": "D-QUORUM-LOSS", "fault_family": "validator-crash", "expected_closed": false},
+    {"scenario_id": "D-NETWORK-PARTITION", "fault_family": "network-partition", "expected_closed": false},
+    {"scenario_id": "D-COMMITMENT-EQUIVOCATION", "fault_family": "certificate-equivocation", "expected_closed": false},
+    {"scenario_id": "D-DUPLICATE-IDENTITY", "fault_family": "membership-integrity", "expected_closed": false}
+  ]
+}

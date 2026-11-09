@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "protocol_version": "C-PAE-1.0.0",
+  "valid_traces": [
+    {"trace_id":"SUCCESSFUL","transitions":["CPAE-TR-02","CPAE-TR-03","CPAE-TR-04","CPAE-TR-05","CPAE-TR-06","CPAE-TR-07","CPAE-TR-08","CPAE-TR-10","CPAE-TR-11","CPAE-TR-12","CPAE-TR-21","CPAE-TR-22"],"expected_final_phase":"DECIDED","expected_closure":"CLOSED"},
+    {"trace_id":"PARTIAL","transitions":["CPAE-TR-02","CPAE-TR-03","CPAE-TR-04","CPAE-TR-05","CPAE-TR-06","CPAE-TR-10","CPAE-TR-11","CPAE-TR-21","CPAE-TR-22"],"expected_final_phase":"DECIDED","expected_closure":"PARTIALLY_CLOSED"},
+    {"trace_id":"DISPUTED","transitions":["CPAE-TR-02","CPAE-TR-03","CPAE-TR-04","CPAE-TR-05","CPAE-TR-06","CPAE-TR-10","CPAE-TR-11","CPAE-TR-18","CPAE-TR-21","CPAE-TR-22"],"expected_final_phase":"DECIDED","expected_closure":"DISPUTED"},
+    {"trace_id":"UNAVAILABLE_CUSTODIAN","transitions":["CPAE-TR-02","CPAE-TR-03","CPAE-TR-04","CPAE-TR-05","CPAE-TR-06","CPAE-TR-07","CPAE-TR-17","CPAE-TR-21","CPAE-TR-22"],"expected_final_phase":"DECIDED","expected_closure":"OPEN"}
+  ],
+  "invalid_transitions": [
+    {"case_id":"WRONG_PHASE","transition_id":"CPAE-TR-03","phase":"NONE","actor_role":"CASE_COORDINATOR","false_fact":null,"expected_code":"INVALID_STATE_TRANSITION"},
+    {"case_id":"WRONG_ROLE","transition_id":"CPAE-TR-10","phase":"OBLIGATIONS_ACTIVE","actor_role":"REQUESTER","false_fact":null,"expected_code":"UNAUTHORIZED_ROLE"},
+    {"case_id":"DUPLICATE_CASE","transition_id":"CPAE-TR-02","phase":"NONE","actor_role":"REQUESTER","false_fact":"case_id_unused","expected_code":"CASE_ALREADY_EXISTS"},
+    {"case_id":"SCOPE_REGRESSION","transition_id":"CPAE-TR-04","phase":"SCOPED","actor_role":"CASE_COORDINATOR","false_fact":"scope_version_monotone","expected_code":"VERSION_REGRESSION"},
+    {"case_id":"UNKNOWN_OBLIGATION","transition_id":"CPAE-TR-10","phase":"OBLIGATIONS_ACTIVE","actor_role":"CUSTODIAN","false_fact":"obligation_exists","expected_code":"UNKNOWN_OBLIGATION"},
+    {"case_id":"BAD_RECEIPT","transition_id":"CPAE-TR-10","phase":"OBLIGATIONS_ACTIVE","actor_role":"CUSTODIAN","false_fact":"canonical_body_valid","expected_code":"MALFORMED_CANONICAL_PAYLOAD"},
+    {"case_id":"EXPIRED_EXCEPTION","transition_id":"CPAE-TR-20","phase":"OBLIGATIONS_ACTIVE","actor_role":"VALIDATOR","false_fact":"exception_temporally_valid","expected_code":"EXCEPTION_EXPIRED"},
+    {"case_id":"CHALLENGE_CLOSED","transition_id":"CPAE-TR-16","phase":"OBLIGATIONS_ACTIVE","actor_role":"CONTROLLER","false_fact":"challenge_open","expected_code":"CHALLENGE_NOT_OPEN"},
+    {"case_id":"DISPUTE_CLOSED","transition_id":"CPAE-TR-19","phase":"OBLIGATIONS_ACTIVE","actor_role":"CONTROLLER","false_fact":"dispute_open","expected_code":"DISPUTE_NOT_OPEN"},
+    {"case_id":"CLOSURE_TOO_EARLY","transition_id":"CPAE-TR-22","phase":"READY","actor_role":"VALIDATOR","false_fact":"case_ready","expected_code":"CASE_NOT_READY"},
+    {"case_id":"AUDIT_FORBIDDEN","transition_id":"CPAE-TR-23","phase":"DECIDED","actor_role":"AUDITOR","false_fact":"projection_authorized","expected_code":"PROJECTION_NOT_AUTHORIZED"}
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "schema_id": "htgl.dataset.v1.policy_decision_truth",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "0792fa3962c9df5629aeddd78b991f2e403fa610f09551369deb5f48148d0b44",
+  "table_name": "policy_decision_truth",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "decision_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Decision key."
+      }
+    },
+    {
+      "name": "event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Event FK."
+      }
+    },
+    {
+      "name": "oracle_version",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Independent oracle version."
+      }
+    },
+    {
+      "name": "expected_action",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "policy_action",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "allow, deny, retain, erase, notify, escalate or no_op."
+      }
+    },
+    {
+      "name": "observed_action",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "policy_action",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Action encoded in world truth."
+      }
+    },
+    {
+      "name": "is_violation",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Expected vs observed result."
+      }
+    },
+    {
+      "name": "violation_type",
+      "type": "dictionary<string>",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": "violation_type",
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Typed invariant/rule violation."
+      }
+    },
+    {
+      "name": "requires_retention",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Retention duty."
+      }
+    },
+    {
+      "name": "requires_erasure",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Erasure duty."
+      }
+    },
+    {
+      "name": "is_cross_region",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Derived from actor regions, never actor-object inequality shortcut."
+      }
+    },
+    {
+      "name": "applied_rule_ids",
+      "type": "list<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Rule trace."
+      }
+    },
+    {
+      "name": "conflict_resolution_trace",
+      "type": "list<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Ordered resolution steps."
+      }
+    },
+    {
+      "name": "explanation_code",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "evaluator_only",
+        "semantic_invariant": "Stable machine explanation."
+      }
+    }
+  ]
+}

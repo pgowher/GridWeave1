@@ -1,0 +1,27 @@
+test_all_scales_and_mutations_of_family_share_split (test_gridweave.BoundarySynthesisProperties.test_all_scales_and_mutations_of_family_share_split) ... ok
+test_exception_cannot_be_extended_without_a_new_signature (test_gridweave.BoundarySynthesisProperties.test_exception_cannot_be_extended_without_a_new_signature) ... ok
+test_exception_expiry_uses_half_open_interval (test_gridweave.BoundarySynthesisProperties.test_exception_expiry_uses_half_open_interval) ... ok
+test_hidden_worlds_have_byte_identical_observations (test_gridweave.BoundarySynthesisProperties.test_hidden_worlds_have_byte_identical_observations) ... ok
+test_manual_reference_and_negative_outcomes (test_gridweave.BoundarySynthesisProperties.test_manual_reference_and_negative_outcomes) ... ok
+test_receipt_key_is_not_its_own_trust_anchor (test_gridweave.BoundarySynthesisProperties.test_receipt_key_is_not_its_own_trust_anchor) ... ok
+test_signature_tamper_is_rejected_by_real_worker_backend (test_gridweave.BoundarySynthesisProperties.test_signature_tamper_is_rejected_by_real_worker_backend) ... ok
+test_exact_matches_bruteforce_on_twenty_small_problems (test_gridweave.CoverageResearchProperties.test_exact_matches_bruteforce_on_twenty_small_problems) ... ok
+test_greedy_is_not_mislabeled_exact (test_gridweave.CoverageResearchProperties.test_greedy_is_not_mislabeled_exact) ... ok
+test_optimizer_does_not_depend_on_input_order (test_gridweave.CoverageResearchProperties.test_optimizer_does_not_depend_on_input_order) ... ok
+test_unreachable_goal_and_duplicate_id_are_rejected (test_gridweave.CoverageResearchProperties.test_unreachable_goal_and_duplicate_id_are_rejected) ... ok
+test_all_seven_model_classes_and_pair_cost_are_materialized (test_gridweave.ExportAndPipelineResearchProperties.test_all_seven_model_classes_and_pair_cost_are_materialized) ... ok
+test_existing_output_and_incorrect_trust_pin_fail (test_gridweave.ExportAndPipelineResearchProperties.test_existing_output_and_incorrect_trust_pin_fail) ... ok
+test_public_projection_rejects_a_label_canary (test_gridweave.ExportAndPipelineResearchProperties.test_public_projection_rejects_a_label_canary) ... ok
+test_real_public_only_worker_consumes_every_case (test_gridweave.ExportAndPipelineResearchProperties.test_real_public_only_worker_consumes_every_case) ... ok
+test_same_seed_reproduces_exact_manifest (test_gridweave.ExportAndPipelineResearchProperties.test_same_seed_reproduces_exact_manifest) ... ok
+test_scorer_accepts_unchanged_native_result_replay (test_gridweave.ExportAndPipelineResearchProperties.test_scorer_accepts_unchanged_native_result_replay) ... ok
+test_scorer_does_not_score_undefined_categories (test_gridweave.ExportAndPipelineResearchProperties.test_scorer_does_not_score_undefined_categories) ... ok
+test_scorer_rejects_duplicate_obligations_even_with_unverifiable_baseline (test_gridweave.ExportAndPipelineResearchProperties.test_scorer_rejects_duplicate_obligations_even_with_unverifiable_baseline) ... ok
+test_scorer_reports_category_difference_with_matching_closure (test_gridweave.ExportAndPipelineResearchProperties.test_scorer_reports_category_difference_with_matching_closure) ... ok
+test_scorer_reports_missing_obligation (test_gridweave.ExportAndPipelineResearchProperties.test_scorer_reports_missing_obligation) ... ok
+test_scorer_reports_unexpected_obligation (test_gridweave.ExportAndPipelineResearchProperties.test_scorer_reports_unexpected_obligation) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 58.839s
+
+OK

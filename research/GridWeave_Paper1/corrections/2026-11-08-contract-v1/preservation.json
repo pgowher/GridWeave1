@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "frozen_files_checked": 10924,
+  "changed": [],
+  "added_in_frozen_roots": [],
+  "frozen_before_sha256": "a31dd1319c4147f4f8656af686ef6b1b9d20b99d8f06b9556dc765681c66b6f3",
+  "corrected_executable_source_identity_matches_verification": true
+}

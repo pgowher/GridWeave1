@@ -1,0 +1,4 @@
+Checking pipeline
+....................                                                     [100%]
+20 passed in 2.58s
+{"status": "PASS", "failed_projects": [], "scope": "Research semantics, protocol, algorithms, saved-data contracts and abstract model"}

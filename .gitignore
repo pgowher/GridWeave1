@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+/research/GridWeave_Paper1/LATEST_STUDY.json
+/research/GridWeave_Paper1/runs/*
+!/research/GridWeave_Paper1/runs/development-study-1/
+!/research/GridWeave_Paper1/runs/paper1-study-v1/
+/GridWeave/datasets/*
+!/GridWeave/datasets/reference/
+/VERCLO/results/

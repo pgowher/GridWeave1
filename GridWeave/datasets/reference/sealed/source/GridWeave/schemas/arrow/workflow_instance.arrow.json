@@ -1,0 +1,129 @@
+{
+  "schema_id": "htgl.dataset.v1.workflow_instance",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "7d1480723ae691133b26c1edb86addd279d2836979203329864a25cab0edf733",
+  "table_name": "workflow_instance",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "workflow_instance_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Workflow key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "workflow_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "workflow_type",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Consent, access, disclosure, erasure, retention, audit, etc."
+      }
+    },
+    {
+      "name": "workflow_definition_version",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Automaton version."
+      }
+    },
+    {
+      "name": "root_event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Root FK."
+      }
+    },
+    {
+      "name": "initial_state",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "workflow_state",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Initial state."
+      }
+    },
+    {
+      "name": "final_state",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "workflow_state",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Final state."
+      }
+    },
+    {
+      "name": "started_at",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Start."
+      }
+    },
+    {
+      "name": "ended_at",
+      "type": "timestamp[us, UTC]",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "End; null if open."
+      }
+    },
+    {
+      "name": "terminal_event_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Terminal event FK."
+      }
+    },
+    {
+      "name": "is_conformant_world_truth",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Conformance truth before observer projection."
+      }
+    },
+    {
+      "name": "event_count",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Trace length."
+      }
+    }
+  ]
+}

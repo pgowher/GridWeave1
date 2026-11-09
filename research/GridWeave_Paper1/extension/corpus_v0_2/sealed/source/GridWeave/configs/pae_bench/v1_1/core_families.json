@@ -1,0 +1,23 @@
+[
+  {
+    "family_id": "PBE-E1-OPEN-RECIPIENT-GAP", "domain": "smart_grid", "subject_namespace": "SYN-E1-OPEN", "split": "train",
+    "repositories": [{"repository_id": "E1-METER", "kind": "meter store", "observer_visible": true}, {"repository_id": "E1-EXPORT", "kind": "recipient export", "observer_visible": true}, {"repository_id": "E1-DERIVED", "kind": "derived readings", "observer_visible": true}],
+    "assets": [{"asset_id": "E1-READING", "repository_id": "E1-METER", "parent_asset_ids": []}, {"asset_id": "E1-COPY", "repository_id": "E1-EXPORT", "parent_asset_ids": ["E1-READING"]}, {"asset_id": "E1-FEATURE", "repository_id": "E1-DERIVED", "parent_asset_ids": ["E1-COPY"]}],
+    "obligations": [{"obligation_id": "E1-O-METER", "asset_id": "E1-READING", "principal_id": "E1-UTILITY", "required_disposition": "ERASED", "evidence_floor": "E3", "deadline_hours": 72}, {"obligation_id": "E1-O-EXPORT", "asset_id": "E1-COPY", "principal_id": "E1-RECIPIENT", "required_disposition": "ERASED", "evidence_floor": "E3", "deadline_hours": 96}, {"obligation_id": "E1-O-FEATURE", "asset_id": "E1-FEATURE", "principal_id": "E1-PROCESSOR", "required_disposition": "ERASED", "evidence_floor": "E2", "deadline_hours": 120}],
+    "variants": [{"variant_id": "clean", "operation": "NONE", "expected_closure": "CLOSED"}, {"variant_id": "all-missing", "operation": "OMIT_ALL", "expected_closure": "OPEN"}, {"variant_id": "conflicting-export", "operation": "CONFLICT", "target_obligation_id": "E1-O-EXPORT", "expected_closure": "DISPUTED"}, {"variant_id": "hidden-copy", "operation": "HIDDEN_COPY", "expected_closure": "CLOSED"}]
+  },
+  {
+    "family_id": "PBE-E1-UNVERIFIABLE-SCOPE", "domain": "smart_grid", "subject_namespace": "SYN-E1-SCOPE", "split": "development",
+    "repositories": [{"repository_id": "E1-CONSENT", "kind": "consent registry", "observer_visible": true}, {"repository_id": "E1-SERVICE", "kind": "service copy", "observer_visible": true}],
+    "assets": [{"asset_id": "E1-GRANT", "repository_id": "E1-CONSENT", "parent_asset_ids": []}, {"asset_id": "E1-SERVICE-COPY", "repository_id": "E1-SERVICE", "parent_asset_ids": ["E1-GRANT"]}],
+    "obligations": [{"obligation_id": "E1-O-GRANT", "asset_id": "E1-GRANT", "principal_id": "E1-CONTROLLER", "required_disposition": "ERASED", "evidence_floor": "E3", "deadline_hours": 48}, {"obligation_id": "E1-O-SERVICE", "asset_id": "E1-SERVICE-COPY", "principal_id": "E1-PROCESSOR", "required_disposition": "ERASED", "evidence_floor": "E3", "deadline_hours": 72}],
+    "variants": [{"variant_id": "clean", "operation": "NONE", "expected_closure": "CLOSED"}, {"variant_id": "missing-scope-commitment", "operation": "BASELINE_MISSING", "expected_closure": "UNVERIFIABLE"}, {"variant_id": "one-missing", "operation": "OMIT_ONE", "target_obligation_id": "E1-O-SERVICE", "expected_closure": "PARTIALLY_CLOSED"}, {"variant_id": "unavailable-key", "operation": "MATERIAL_MISSING", "target_obligation_id": "E1-O-SERVICE", "expected_closure": "PARTIALLY_CLOSED"}]
+  },
+  {
+    "family_id": "PBE-E1-IN-PROGRESS-DEADLINE", "domain": "smart_grid", "subject_namespace": "SYN-E1-DEADLINE", "split": "test",
+    "repositories": [{"repository_id": "E1-DR-BASE", "kind": "demand response records", "observer_visible": true}, {"repository_id": "E1-DR-ANALYTICS", "kind": "analytics processor", "observer_visible": true}],
+    "assets": [{"asset_id": "E1-DR-REQUEST", "repository_id": "E1-DR-BASE", "parent_asset_ids": []}, {"asset_id": "E1-DR-MODEL", "repository_id": "E1-DR-ANALYTICS", "parent_asset_ids": ["E1-DR-REQUEST"]}],
+    "obligations": [{"obligation_id": "E1-O-DR-BASE", "asset_id": "E1-DR-REQUEST", "principal_id": "E1-OPERATOR", "required_disposition": "ERASED", "evidence_floor": "E3", "deadline_hours": 72}, {"obligation_id": "E1-O-DR-MODEL", "asset_id": "E1-DR-MODEL", "principal_id": "E1-ANALYTICS", "required_disposition": "APPROVED_TRANSFORM", "evidence_floor": "E3", "deadline_hours": 120}],
+    "variants": [{"variant_id": "clean", "operation": "NONE", "expected_closure": "CLOSED"}, {"variant_id": "early-unresolved", "operation": "EARLY_OMIT", "target_obligation_id": "E1-O-DR-MODEL", "expected_closure": "IN_PROGRESS"}, {"variant_id": "late-model", "operation": "LATE_ONE", "target_obligation_id": "E1-O-DR-MODEL", "expected_closure": "PARTIALLY_CLOSED"}, {"variant_id": "invalid-signature", "operation": "INVALID_SIGNATURE", "target_obligation_id": "E1-O-DR-MODEL", "expected_closure": "PARTIALLY_CLOSED"}]
+  }
+]

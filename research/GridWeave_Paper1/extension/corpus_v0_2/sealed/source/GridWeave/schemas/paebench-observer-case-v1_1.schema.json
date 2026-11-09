@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/paebench-observer-case/v1.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "case_id", "evaluation_time", "assets", "repositories", "obligations", "receipts", "exceptions", "policy", "scope_commitment"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "case_id": {"type": "string", "pattern": "^case-[a-f0-9]{16}$"},
+    "evaluation_time": {"type": "string", "format": "date-time"},
+    "assets": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["asset_id", "repository_id", "parent_asset_ids"], "additionalProperties": false, "properties": {"asset_id": {"type": "string"}, "repository_id": {"type": "string"}, "parent_asset_ids": {"type": "array", "items": {"type": "string"}}}}},
+    "repositories": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["repository_id", "kind", "observer_visible"], "additionalProperties": false, "properties": {"repository_id": {"type": "string"}, "kind": {"type": "string"}, "observer_visible": {"type": "boolean"}}}},
+    "obligations": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["obligation_id", "asset_id", "replica_id", "repository_id", "principal_id", "permitted_dispositions", "evidence_floor", "deadline"], "additionalProperties": false, "properties": {"obligation_id": {"type": "string"}, "asset_id": {"type": "string"}, "replica_id": {"type": "string"}, "repository_id": {"type": "string"}, "principal_id": {"type": "string"}, "permitted_dispositions": {"type": "array", "minItems": 1, "items": {"type": "string"}}, "evidence_floor": {"enum": ["E2", "E3", "E4"]}, "deadline": {"type": "string", "format": "date-time"}}}},
+    "receipts": {"type": "array", "items": {"type": "object", "required": ["receipt_id", "obligation_id", "issuer_id", "claimed_disposition", "event_time", "public_key", "signature", "anchor_commitment", "mechanism_attestation"], "additionalProperties": false, "properties": {"receipt_id": {"type": "string"}, "obligation_id": {"type": "string"}, "issuer_id": {"type": "string"}, "claimed_disposition": {"type": "string"}, "event_time": {"type": "string", "format": "date-time"}, "public_key": {"type": ["string", "null"]}, "signature": {"type": "string"}, "anchor_commitment": {"type": "string"}, "mechanism_attestation": {"type": "boolean"}}}},
+    "exceptions": {"type": "array", "items": {"type": "object", "required": ["obligation_id", "authority_id", "basis_commitment", "effective_at", "expires_at", "public_key", "signature"], "additionalProperties": false, "properties": {"obligation_id": {"type": "string"}, "authority_id": {"type": "string"}, "basis_commitment": {"type": "string"}, "effective_at": {"type": "string", "format": "date-time"}, "expires_at": {"type": "string", "format": "date-time"}, "public_key": {"type": "string"}, "signature": {"type": "string"}}}},
+    "policy": {"type": "object", "required": ["exception_authority_ids", "exception_authority_public_keys", "principal_public_keys"], "additionalProperties": false, "properties": {"exception_authority_ids": {"type": "array", "items": {"type": "string"}}, "exception_authority_public_keys": {"type": "object", "additionalProperties": {"type": "string"}}, "principal_public_keys": {"type": "object", "additionalProperties": {"type": "string"}}}},
+    "scope_commitment": {"type": ["string", "null"]}
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "schema_id": "htgl.dataset.v1.actor_relationship",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "f00eae06ab963216ac5541da98549d8a470809b06595c62bd0f956f961917994",
+  "table_name": "actor_relationship",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "relationship_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Stable relationship key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "source_actor_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Source actor FK."
+      }
+    },
+    {
+      "name": "target_actor_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Target actor FK."
+      }
+    },
+    {
+      "name": "relationship_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "relationship_type",
+        "privacy_class": "restricted",
+        "semantic_invariant": "controls, processes_for, supplies, aggregates, oversees, audits, discloses_to, etc."
+      }
+    },
+    {
+      "name": "contract_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Optional data-sharing/processing contract."
+      }
+    },
+    {
+      "name": "policy_profile_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Relationship-specific policy profile."
+      }
+    },
+    {
+      "name": "valid_from",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Start."
+      }
+    },
+    {
+      "name": "valid_to",
+      "type": "timestamp[us, UTC]",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "End."
+      }
+    }
+  ]
+}

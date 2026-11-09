@@ -1,0 +1,607 @@
+{
+  "run_scenario": [
+    {
+      "run_id": "RUN-STEP1-GOLDEN-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "replicate_id": 0,
+      "contract_version": "1.1.0",
+      "profile_name": "step1_golden_reference",
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-01-02T00:00:00Z",
+      "represented_population": 10000,
+      "materialized_row_target": 100,
+      "executed_operation_target": null,
+      "calibration_profile_id": "CAL-GOLDEN-0001",
+      "policy_profile_id": "POLICY-GOLDEN-0001",
+      "publication_derived": false,
+      "config_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "seed_stream": [
+    {
+      "run_id": "RUN-STEP1-GOLDEN-0001",
+      "stream_name": "S01.golden.root",
+      "parent_stream_name": null,
+      "seed_material_hex": "0123456789abcdef",
+      "algorithm": "sha256-counter-v1",
+      "deterministic_id_namespace": "6f9619ff-8b86-d011-b42d-00cf4fc964ff"
+    }
+  ],
+  "actor": [
+    {
+      "actor_id": "ACT-CONSUMER-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "actor_class": "consumer",
+      "organization_id": "ORG-HOUSEHOLD-0001",
+      "region_id": "R-NORTH",
+      "jurisdiction_id": "J-NORTH",
+      "fault_domain_id": "FD-NORTH-1",
+      "trust_domain_id": "TD-CONSUMER",
+      "capabilities": [
+        "requester"
+      ],
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_to": null,
+      "synthetic_source": "controlled_synthetic"
+    },
+    {
+      "actor_id": "ACT-DSO-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "actor_class": "dso",
+      "organization_id": "ORG-DSO-0001",
+      "region_id": "R-NORTH",
+      "jurisdiction_id": "J-NORTH",
+      "fault_domain_id": "FD-NORTH-OPS",
+      "trust_domain_id": "TD-UTILITY",
+      "capabilities": [
+        "controller",
+        "custodian"
+      ],
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_to": null,
+      "synthetic_source": "controlled_synthetic"
+    },
+    {
+      "actor_id": "ACT-SUPPLIER-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "actor_class": "supplier",
+      "organization_id": "ORG-SUPPLIER-0001",
+      "region_id": "R-SOUTH",
+      "jurisdiction_id": "J-SOUTH",
+      "fault_domain_id": "FD-SOUTH-OPS",
+      "trust_domain_id": "TD-UTILITY",
+      "capabilities": [
+        "processor"
+      ],
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_to": null,
+      "synthetic_source": "controlled_synthetic"
+    },
+    {
+      "actor_id": "ACT-AUDITOR-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "actor_class": "auditor",
+      "organization_id": "ORG-AUDITOR-0001",
+      "region_id": "R-SOUTH",
+      "jurisdiction_id": "J-SOUTH",
+      "fault_domain_id": "FD-AUDIT",
+      "trust_domain_id": "TD-OVERSIGHT",
+      "capabilities": [
+        "auditor",
+        "observer"
+      ],
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_to": null,
+      "synthetic_source": "controlled_synthetic"
+    },
+    {
+      "actor_id": "ACT-AGGREGATOR-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "actor_class": "aggregator",
+      "organization_id": "ORG-AGGREGATOR-0001",
+      "region_id": "R-NORTH",
+      "jurisdiction_id": "J-NORTH",
+      "fault_domain_id": "FD-AGG",
+      "trust_domain_id": "TD-MARKET",
+      "capabilities": [
+        "processor",
+        "requester"
+      ],
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_to": null,
+      "synthetic_source": "controlled_synthetic"
+    }
+  ],
+  "actor_relationship": [
+    {
+      "relationship_id": "REL-CONTROLS-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "source_actor_id": "ACT-DSO-0001",
+      "target_actor_id": "ACT-CONSUMER-0001",
+      "relationship_type": "controls",
+      "contract_id": "CONTRACT-METER-0001",
+      "policy_profile_id": "POLICY-GOLDEN-0001",
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_to": null
+    },
+    {
+      "relationship_id": "REL-PROCESSES-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "source_actor_id": "ACT-SUPPLIER-0001",
+      "target_actor_id": "ACT-DSO-0001",
+      "relationship_type": "processes_for",
+      "contract_id": "CONTRACT-PROC-0001",
+      "policy_profile_id": "POLICY-GOLDEN-0001",
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_to": null
+    }
+  ],
+  "prosumer_cohort": [
+    {
+      "cohort_id": "COHORT-AMI-NORTH-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "region_id": "R-NORTH",
+      "represented_consumer_count": 8000,
+      "represented_prosumer_count": 2000,
+      "der_adoption_fraction": 0.2,
+      "dwelling_type": "detached",
+      "tariff_profile_id": "TARIFF-TOU-0001",
+      "climate_zone_id": "CLIMATE-TEMPERATE",
+      "subject_scope": "household",
+      "sampling_stratum": "R-NORTH:household:der_mix",
+      "calibration_source_id": "CAL-GOLDEN-0001"
+    }
+  ],
+  "network_area": [
+    {
+      "network_area_id": "NA-NORTH-SUBSTATION-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "region_id": "R-NORTH",
+      "jurisdiction_id": "J-NORTH",
+      "network_area_kind": "substation_area",
+      "parent_network_area_id": null,
+      "controller_actor_id": "ACT-DSO-0001",
+      "operator_actor_id": "ACT-DSO-0001",
+      "fault_domain_id": "FD-NORTH-OPS",
+      "trust_domain_id": "TD-UTILITY",
+      "represented_consumer_count": 8000,
+      "represented_prosumer_count": 2000,
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_to": "2026-01-02T00:00:00Z",
+      "source_profile_id": "NET-GOLDEN-NORTH-v1",
+      "generation_source": "controlled_synthetic"
+    }
+  ],
+  "local_database": [
+    {
+      "database_id": "DB-METER-NORTH-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "controller_actor_id": "ACT-DSO-0001",
+      "operator_actor_id": "ACT-SUPPLIER-0001",
+      "region_id": "R-NORTH",
+      "database_kind": "meter_data",
+      "storage_class": "primary",
+      "supported_object_types": [
+        "meter_interval",
+        "consent"
+      ],
+      "represented_record_count": 10000,
+      "retention_profile_id": "RET-AMI-0001",
+      "encryption_profile_id": "ENC-SYNTH-0001",
+      "capacity_records": 20000
+    }
+  ],
+  "data_object": [
+    {
+      "data_object_id": "OBJ-METER-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "origin_database_id": "DB-METER-NORTH-0001",
+      "object_type": "meter_interval",
+      "subject_cohort_id": "COHORT-AMI-NORTH-0001",
+      "sensitivity": "moderate",
+      "schema_id": "raw_meter_reading.v1",
+      "created_at": "2026-01-01T00:00:00Z",
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_to": null,
+      "source_physical_record_ids": [
+        "READING-0001"
+      ],
+      "purpose_tags": [
+        "PURPOSE-BILLING"
+      ]
+    }
+  ],
+  "data_object_replica": [
+    {
+      "replica_id": "REPLICA-METER-PRIMARY-0001",
+      "data_object_id": "OBJ-METER-0001",
+      "database_id": "DB-METER-NORTH-0001",
+      "replica_role": "primary",
+      "created_by_event_id": "EVT-CONSENT-REQ-0001",
+      "created_at": "2026-01-01T00:00:00Z",
+      "deletion_due_at": "2026-02-01T00:00:00Z",
+      "deleted_at": null,
+      "deletion_status": "not_due",
+      "retention_basis_rule_id": "RULE-AUTH-0001"
+    }
+  ],
+  "raw_meter_reading": [
+    {
+      "reading_id": "READING-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "meter_id": "METER-0001",
+      "cohort_id": "COHORT-AMI-NORTH-0001",
+      "region_id": "R-NORTH",
+      "interval_start": "2026-01-01T00:00:00Z",
+      "interval_end": "2026-01-01T00:05:00Z",
+      "import_energy_kwh": 0.42,
+      "export_energy_kwh": 0.0,
+      "reactive_energy_kvarh": 0.05,
+      "voltage_v": 230.0,
+      "quality_flags": [
+        "synthetic"
+      ],
+      "generation_backend": "procedural",
+      "calibration_source_id": "CAL-GOLDEN-0001",
+      "represented_meter_count": 100.0
+    }
+  ],
+  "raw_der_telemetry": [
+    {
+      "telemetry_id": "DER-TEL-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "der_asset_id": "DER-PV-0001",
+      "timestamp": "2026-01-01T00:00:00Z",
+      "active_power_kw": 1.2,
+      "reactive_power_kvar": 0.0,
+      "state_of_charge": null,
+      "availability": true,
+      "control_mode": "grid_support",
+      "quality_flags": [
+        "synthetic"
+      ],
+      "trigger_event_id": "EVT-CONSENT-GRANT-0001"
+    }
+  ],
+  "raw_network_state": [
+    {
+      "network_state_id": "NET-STATE-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "network_element_id": "BUS-0001",
+      "timestamp": "2026-01-01T00:00:00Z",
+      "element_class": "bus",
+      "voltage_pu": 1.01,
+      "loading_percent": 42.5,
+      "active_power_kw": 25.0,
+      "reactive_power_kvar": 3.1,
+      "switch_open": false,
+      "violation_flags": [],
+      "solver_backend": "procedural-v1"
+    }
+  ],
+  "raw_context_event": [
+    {
+      "context_event_id": "CTX-TARIFF-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "event_class": "tariff",
+      "region_id": "R-NORTH",
+      "asset_id": null,
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-01-01T01:00:00Z",
+      "numeric_value": 0.21,
+      "unit": "EUR/kWh",
+      "categorical_value": "tou_peak",
+      "generation_source": "controlled_synthetic",
+      "calibration_source_id": "CAL-GOLDEN-0001"
+    }
+  ],
+  "arrival": [
+    {
+      "arrival_id": "ARR-CONSENT-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "replicate_id": 0,
+      "timestamp": "2026-01-01T00:00:00Z",
+      "arrival_bin": 0,
+      "event_family": "consent",
+      "region_id": "R-NORTH",
+      "subject_cohort_id": "COHORT-AMI-NORTH-0001",
+      "model_class": "conditioned_NHPP",
+      "intensity_per_second": 0.001,
+      "regime_id": null,
+      "parent_arrival_id": null,
+      "anomaly_designated": false,
+      "represented_arrival_count": 100.0
+    }
+  ],
+  "governance_event": [
+    {
+      "event_id": "EVT-CONSENT-REQ-0001",
+      "source_event_id": null,
+      "scenario_id": "SCN-GOLDEN-0001",
+      "replicate_id": 0,
+      "timestamp": "2026-01-01T00:00:00Z",
+      "recorded_timestamp": "2026-01-01T00:00:00Z",
+      "event_type": "consent_requested",
+      "event_family": "consent",
+      "source_actor_id": "ACT-CONSUMER-0001",
+      "requesting_actor_id": "ACT-CONSUMER-0001",
+      "controller_actor_id": "ACT-DSO-0001",
+      "processor_actor_id": "ACT-SUPPLIER-0001",
+      "oversight_actor_id": "ACT-AUDITOR-0001",
+      "subject_cohort_id": "COHORT-AMI-NORTH-0001",
+      "local_database_id": "DB-METER-NORTH-0001",
+      "data_object_id": "OBJ-METER-0001",
+      "workflow_instance_id": "WFI-CONSENT-0001",
+      "workflow_state_before": "not_requested",
+      "workflow_state_after": "requested",
+      "workflow_step_index": 0,
+      "root_event_id": "EVT-CONSENT-REQ-0001",
+      "causal_depth": 0,
+      "policy_purpose_id": "PURPOSE-BILLING",
+      "legal_basis_label_id": "LBL-CONSENT",
+      "consent_state_after": "requested",
+      "retention_state_after": "active",
+      "erasure_state_after": "not_requested",
+      "payload_schema_id": "payload.consent_request.v1",
+      "payload_ref": "payload://golden/consent_request",
+      "represented_event_count": 100.0,
+      "materialization_reason": "census"
+    },
+    {
+      "event_id": "EVT-CONSENT-GRANT-0001",
+      "source_event_id": null,
+      "scenario_id": "SCN-GOLDEN-0001",
+      "replicate_id": 0,
+      "timestamp": "2026-01-01T00:05:00Z",
+      "recorded_timestamp": "2026-01-01T00:05:00Z",
+      "event_type": "consent_granted",
+      "event_family": "consent",
+      "source_actor_id": "ACT-CONSUMER-0001",
+      "requesting_actor_id": "ACT-CONSUMER-0001",
+      "controller_actor_id": "ACT-DSO-0001",
+      "processor_actor_id": "ACT-SUPPLIER-0001",
+      "oversight_actor_id": "ACT-AUDITOR-0001",
+      "subject_cohort_id": "COHORT-AMI-NORTH-0001",
+      "local_database_id": "DB-METER-NORTH-0001",
+      "data_object_id": "OBJ-METER-0001",
+      "workflow_instance_id": "WFI-CONSENT-0001",
+      "workflow_state_before": "requested",
+      "workflow_state_after": "granted",
+      "workflow_step_index": 1,
+      "root_event_id": "EVT-CONSENT-REQ-0001",
+      "causal_depth": 1,
+      "policy_purpose_id": "PURPOSE-BILLING",
+      "legal_basis_label_id": "LBL-CONSENT",
+      "consent_state_after": "granted",
+      "retention_state_after": "active",
+      "erasure_state_after": "not_requested",
+      "payload_schema_id": "payload.consent_grant.v1",
+      "payload_ref": "payload://golden/consent_grant",
+      "represented_event_count": 100.0,
+      "materialization_reason": "census"
+    }
+  ],
+  "event_edge": [
+    {
+      "edge_id": "EDGE-CONSENT-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "source_event_id": "EVT-CONSENT-REQ-0001",
+      "target_event_id": "EVT-CONSENT-GRANT-0001",
+      "edge_type": "responds_to",
+      "cross_workflow": false,
+      "dependency_strength": 1.0,
+      "required_for_closure": true,
+      "rule_id": "RULE-AUTH-0001"
+    }
+  ],
+  "workflow_instance": [
+    {
+      "workflow_instance_id": "WFI-CONSENT-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "workflow_type": "consent",
+      "workflow_definition_version": "consent.v1",
+      "root_event_id": "EVT-CONSENT-REQ-0001",
+      "initial_state": "not_requested",
+      "final_state": "granted",
+      "started_at": "2026-01-01T00:00:00Z",
+      "ended_at": "2026-01-01T00:05:00Z",
+      "terminal_event_id": "EVT-CONSENT-GRANT-0001",
+      "is_conformant_world_truth": true,
+      "event_count": 2
+    }
+  ],
+  "policy_rule": [
+    {
+      "policy_rule_id": "RULE-AUTH-0001",
+      "policy_profile_id": "POLICY-GOLDEN-0001",
+      "version": "1.0.0",
+      "jurisdiction_id": "J-NORTH",
+      "rule_kind": "permission",
+      "action": "collect_meter_interval",
+      "asset_selector": "object_type == meter_interval",
+      "party_selector": "controller_actor_id == ACT-DSO-0001",
+      "purpose_selector": "PURPOSE-BILLING",
+      "condition_expression": "consent_state_after in [requested, granted]",
+      "priority": 100,
+      "effective_from": "2026-01-01T00:00:00Z",
+      "effective_to": null,
+      "source_citation": "controlled synthetic golden policy profile",
+      "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "policy_decision_truth": [
+    {
+      "decision_id": "DEC-CONSENT-GRANT-0001",
+      "event_id": "EVT-CONSENT-GRANT-0001",
+      "oracle_version": "oracle.v1",
+      "expected_action": "allow",
+      "observed_action": "allow",
+      "is_violation": false,
+      "violation_type": "none",
+      "requires_retention": true,
+      "requires_erasure": false,
+      "is_cross_region": false,
+      "applied_rule_ids": [
+        "RULE-AUTH-0001"
+      ],
+      "conflict_resolution_trace": [
+        "priority:100"
+      ],
+      "explanation_code": "ALLOW_EFFECTIVE_CONSENT_PURPOSE"
+    }
+  ],
+  "anomaly_instance": [
+    {
+      "anomaly_instance_id": "ANOM-UNAUTH-PURPOSE-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "anomaly_type": "unauthorized_purpose",
+      "target_invariant_id": "INV-PURPOSE-PERMITTED",
+      "severity": 0.25,
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-01-01T00:05:00Z",
+      "valid_counterfactual_workflow_id": "WFI-CONSENT-0001",
+      "invalid_counterfactual_workflow_id": "WFI-CONSENT-INVALID-0001",
+      "changed_field_paths": [
+        "governance_event.policy_purpose_id"
+      ],
+      "preserved_invariant_ids": [
+        "INV-SAME-ACTORS",
+        "INV-SAME-OBJECT",
+        "INV-SAME-TIME"
+      ],
+      "adversarial": true,
+      "episode_event_count": 2
+    }
+  ],
+  "evidence_obligation": [
+    {
+      "obligation_id": "OBL-AUTH-0001",
+      "event_id": "EVT-CONSENT-GRANT-0001",
+      "policy_rule_id": "RULE-AUTH-0001",
+      "obligation_type": "authorization",
+      "subject_object_id": "OBJ-METER-0001",
+      "responsible_actor_id": "ACT-DSO-0001",
+      "due_at": "2026-01-01T00:10:00Z",
+      "required_evidence_types": [
+        "digest"
+      ],
+      "minimum_count": 1,
+      "coverage_scope": "workflow"
+    }
+  ],
+  "evidence_receipt": [
+    {
+      "receipt_id": "RCPT-AUTH-0001",
+      "obligation_id": "OBL-AUTH-0001",
+      "event_id": "EVT-CONSENT-GRANT-0001",
+      "issuer_actor_id": "ACT-DSO-0001",
+      "evidence_type": "digest",
+      "issued_at": "2026-01-01T00:05:00Z",
+      "canonical_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+      "algorithm": "sha256-domain-separated-v1",
+      "key_id": null,
+      "anchor_id": null,
+      "verification_status_truth": "valid",
+      "covers_replica_ids": [
+        "REPLICA-METER-PRIMARY-0001"
+      ],
+      "payload_ref": "payload://golden/receipt"
+    }
+  ],
+  "observer_event": [
+    {
+      "observer_record_id": "OBS-AUDIT-0001",
+      "observer_actor_id": "ACT-AUDITOR-0001",
+      "source_event_id": "EVT-CONSENT-GRANT-0001",
+      "projection_profile_id": "PROJ-AUDIT-DIRECT-0001",
+      "visible_timestamp": "2026-01-01T00:05:00Z",
+      "visibility_class": "direct",
+      "omission_reason": null,
+      "redacted_field_paths": [],
+      "schema_profile_id": "observer.audit.v1",
+      "payload_json": "{\"event_type\":\"consent_granted\",\"workflow_instance_id\":\"WFI-CONSENT-0001\"}",
+      "projection_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+      "ground_truth_access_class": "restricted"
+    }
+  ],
+  "sampling_design": [
+    {
+      "sample_design_id": "SAMPLE-GOLDEN-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "design_type": "cluster",
+      "primary_unit_type": "workflow",
+      "stratum_definition": "region_id + event_family",
+      "target_sample_size": 1,
+      "closure_policy": "full_dependency_closure",
+      "estimator_family": "Horvitz_Thompson",
+      "common_random_number_group": null,
+      "design_seed_stream": "S01.golden.root"
+    }
+  ],
+  "sample_membership": [
+    {
+      "sample_design_id": "SAMPLE-GOLDEN-0001",
+      "unit_id": "WFI-CONSENT-0001",
+      "unit_type": "workflow",
+      "stratum_id": "R-NORTH:consent",
+      "first_order_inclusion_probability": 1.0,
+      "design_weight": 1.0,
+      "selection_reason": "census",
+      "primary_unit_id": "WFI-CONSENT-0001",
+      "analysis_weight": 1.0,
+      "estimator_eligible": true
+    }
+  ],
+  "validation_issue": [
+    {
+      "check_id": "CHK-SCHEMA-0001",
+      "run_id": "RUN-STEP1-GOLDEN-0001",
+      "severity": "info",
+      "domain": "schema",
+      "status": "pass",
+      "observed_value": "28 tables validated",
+      "expected_condition": "all schemas resolve",
+      "affected_record_ids": [],
+      "message": "Golden fixture schema contract validation passed.",
+      "validator_version": "validator.v1"
+    }
+  ],
+  "run_metric": [
+    {
+      "metric_id": "MET-WORKFLOW-CONFORMANCE-0001",
+      "run_id": "RUN-STEP1-GOLDEN-0001",
+      "scenario_id": "SCN-GOLDEN-0001",
+      "replicate_id": 0,
+      "metric_domain": "workflow",
+      "metric_name": "transition_conformance_rate",
+      "value": 1.0,
+      "unit": "ratio",
+      "standard_error": null,
+      "ci_lower": null,
+      "ci_upper": null,
+      "estimator": "direct_golden_fixture",
+      "weighting": "unweighted",
+      "baseline_id": null
+    }
+  ],
+  "artifact_manifest": [
+    {
+      "artifact_id": "ART-GOVERNANCE-EVENT-0001",
+      "run_id": "RUN-STEP1-GOLDEN-0001",
+      "relative_path": "canonical/events/scenario_id=SCN-GOLDEN-0001/replicate_id=0/governance_event.parquet",
+      "media_type": "application/parquet",
+      "schema_id": "htgl.dataset.v1.governance_event",
+      "record_count": 2,
+      "uncompressed_bytes": 2048,
+      "stored_bytes": 1024,
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "partition_keys": [
+        "scenario_id",
+        "replicate_id"
+      ],
+      "privacy_class": "restricted",
+      "generation_stage": "S06",
+      "publication_eligible": false
+    }
+  ]
+}

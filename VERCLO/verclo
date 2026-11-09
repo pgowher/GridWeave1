@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+verclo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+if [[ ! -x "$verclo_root/.venv/bin/python" ]]; then
+    echo "Set up VERCLO first: bash \"$verclo_root/setup.sh\"" >&2
+    exit 1
+fi
+exec "$verclo_root/.venv/bin/python" "$verclo_root/run.py" "$@"

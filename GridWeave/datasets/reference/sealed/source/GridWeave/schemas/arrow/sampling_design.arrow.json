@@ -1,0 +1,109 @@
+{
+  "schema_id": "htgl.dataset.v1.sampling_design",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "c4721d37d66564c1da0e1f428ed0ace77dad32d1ad766292c0c476e6fef0d092",
+  "table_name": "sampling_design",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "sample_design_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Design key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "design_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "design_type",
+        "privacy_class": "restricted",
+        "semantic_invariant": "stratified, PPS, cluster, nested_common_random_numbers or census."
+      }
+    },
+    {
+      "name": "primary_unit_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "primary_unit_type",
+        "privacy_class": "restricted",
+        "semantic_invariant": "workflow, cohort, actor, object or time_bin."
+      }
+    },
+    {
+      "name": "stratum_definition",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Resolved stratum expression."
+      }
+    },
+    {
+      "name": "target_sample_size",
+      "type": "int64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Primary draw target."
+      }
+    },
+    {
+      "name": "closure_policy",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "closure_policy",
+        "privacy_class": "restricted",
+        "semantic_invariant": "ancestor, descendant, replica, evidence or full dependency closure."
+      }
+    },
+    {
+      "name": "estimator_family",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "estimator_family",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Horvitz_Thompson, Hajek, analytic_weighted or none."
+      }
+    },
+    {
+      "name": "common_random_number_group",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Nested/comparable scale group."
+      }
+    },
+    {
+      "name": "design_seed_stream",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Seed stream FK."
+      }
+    }
+  ]
+}

@@ -1,0 +1,328 @@
+{
+  "version": "GridWeave-Paper1-Structural-Pilot-0.2",
+  "status": "AUTHORED_SYNTHETIC_NATIVE_PROFILES_NOT_FIELD_VALIDATED",
+  "semantics": "Existing default signed E2 policy only; no heterogeneous obligation rules",
+  "profiles": [
+    {
+      "id": "meter_replacement_chain",
+      "purpose": "Declared withdrawal after meter replacement across migration and reporting stores",
+      "repositories": 5,
+      "custodians": 4,
+      "asset_kinds": [
+        "meter_account",
+        "reading_export",
+        "normalized_readings",
+        "usage_features",
+        "report_export"
+      ],
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "roots": [
+        0
+      ],
+      "placements": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "flexibility_service_fanout",
+      "purpose": "Termination of a flexibility service with four declared downstream extracts",
+      "repositories": 5,
+      "custodians": 5,
+      "asset_kinds": [
+        "service_account",
+        "dispatch_cache",
+        "aggregator_export",
+        "forecast_features",
+        "service_report"
+      ],
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "roots": [
+        0
+      ],
+      "placements": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "billing_analytics_join",
+      "purpose": "Withdrawal of account-derived inputs to a shared billing analysis",
+      "repositories": 4,
+      "custodians": 3,
+      "asset_kinds": [
+        "meter_account",
+        "billing_extract",
+        "tariff_features",
+        "joined_analysis"
+      ],
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "roots": [
+        0
+      ],
+      "placements": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "rooftop_export_replicas",
+      "purpose": "End of an export service with the same asset replicated across declared custodians",
+      "repositories": 4,
+      "custodians": 4,
+      "asset_kinds": [
+        "export_account",
+        "generation_features",
+        "settlement_extract"
+      ],
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "roots": [
+        0
+      ],
+      "placements": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "shared_flexibility_derivative",
+      "purpose": "Two declared source accounts contribute to a shared flexibility feature and report",
+      "repositories": 4,
+      "custodians": 4,
+      "asset_kinds": [
+        "source_account",
+        "source_account",
+        "shared_flexibility_feature",
+        "service_report"
+      ],
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "roots": [
+        0,
+        1
+      ],
+      "placements": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "community_energy_scope",
+      "purpose": "Account offboarding with an unrelated visible asset outside root reachability",
+      "repositories": 6,
+      "custodians": 5,
+      "asset_kinds": [
+        "community_account",
+        "billing_extract",
+        "service_features",
+        "downstream_report",
+        "unrelated_account"
+      ],
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "roots": [
+        0
+      ],
+      "placements": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ]
+    }
+  ]
+}

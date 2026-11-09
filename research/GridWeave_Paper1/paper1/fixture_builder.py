@@ -1,0 +1,151 @@
+"""Construct native fixtures without GridWeave, PaEForge or assessor imports.
+
+Expected classes/categories come from the explicit specification case catalogue,
+not by evaluating the generated case. Ordinary fixtures have explicit successful
+construction contracts. This is implementation independence, not human review.
+"""
+from copy import deepcopy
+from datetime import datetime,timedelta,timezone
+from hashlib import sha256
+from pathlib import Path
+import uuid
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+from cryptography.hazmat.primitives.serialization import Encoding,PublicFormat
+from .wire import canonical,digest,domain,exchange_domain,write,file_hash,read
+
+# Independent, named ordinary-fixture structures; no GridWeave source templates.
+STRUCTURES=[
+ ('account_handover',3,[(0,1),(1,2)],[0],[(0,0),(1,1),(2,2)]),
+ ('service_fanout',4,[(0,1),(0,2),(0,3)],[0],[(0,0),(1,1),(2,2),(3,3)]),
+ ('billing_join',4,[(0,1),(0,2),(1,3),(2,3)],[0],[(0,0),(1,1),(2,2),(3,3)]),
+ ('two_accounts',5,[(0,2),(1,2),(2,3),(3,4)],[0,1],[(i,i) for i in range(5)]),
+ ('replicated_readings',3,[(0,1),(1,2)],[0],[(0,0),(0,1),(1,1),(1,2),(2,2)]),
+ ('account_replicas',1,[],[0],[(0,0),(0,1)]),
+ ('irrelevant_store',4,[(0,1),(1,2)],[0],[(i,i) for i in range(4)]),
+ ('report_chain',5,[(i,i+1) for i in range(4)],[0],[(i,i) for i in range(5)]),
+ ('single_store',1,[],[0],[(0,0)]),
+ ('wide_distribution',6,[(0,i) for i in range(1,6)],[0],[(i,i) for i in range(6)]),
+ ('join_and_export',6,[(0,1),(0,2),(1,3),(2,3),(3,4),(4,5)],[0],[(i,i) for i in range(6)]),
+ ('nested_join',6,[(0,2),(1,2),(2,3),(2,4),(3,5),(4,5)],[0,1],[(i,i) for i in range(6)])]
+
+
+def construct(shape,spec,replicate,source_id):
+    name,n,edges,roots,placements=shape;kind=spec['name'];uid=digest(['independent-fixture-v1',name,kind,replicate])[:32];cid=str(uuid.UUID(hex=digest(['case',uid])[:32]));prefix='FX-'+uid[:8].upper()
+    origin=datetime(2026,1,1,tzinfo=timezone.utc)
+    def stamp(hours):return (origin+timedelta(hours=hours)).isoformat(timespec='microseconds').replace('+00:00','Z')
+    def key(principal):return Ed25519PrivateKey.from_private_bytes(sha256(('paper1-independent-fixture-key:'+uid+':'+principal).encode()).digest())
+    def pub(principal):return key(principal).public_key().public_bytes(Encoding.Raw,PublicFormat.Raw).hex()
+    nr=max(r for _,r in placements)+1;principals=[prefix+'-C'+str(i) for i in range(nr)]
+    seed={'derivation':'NAMED_STREAM_SHA256_V1','replicate_id':replicate,'master_seed_commitment':digest(['fixture-seed',uid]),'seed_stream_digest':digest(['fixture-stream',uid])}
+    header=dict(schema_version='1.0.0',contract_version='1.0.0',model_version='PAE-FECM-v1.0.0',data_class='VERIFIER_VISIBLE_INPUT',exchange_id='EXCHANGE-'+uid,run_id='RUN-INDEPENDENT-FIXTURES-V1',scenario_id='FIXTURE-'+name.upper(),case_id=cid,seed={k:seed[k] for k in ('replicate_id','seed_stream_digest')})
+    policy=dict(schema_version='1.0.0',model_version='PAE-FECM-v1.0.0',profile_id='VERCLO-POLICY-INDEPENDENT-FIXTURE-E2',version='1.0.0',authorization_basis='DECLARED_RESEARCH_FIXTURE',applicable_asset_kinds=['*'],applicable_replica_classes=['primary'],early_closure_allowed=False,exception_authority_ids=['FIXTURE-AUTHORITY'],default_rule=dict(deadline_hours=48,minimum_evidence_grade='E2',permitted_dispositions=['ERASED']),overrides=[])
+    pref={k:policy[k] for k in ('profile_id','version')};pref['sha256']=domain('verclo-policy-profile-v1',policy)
+    case=dict(accepted_at=stamp(0),dataset_id='DATA-'+uid,correlation_id='CORR-'+uid,request_id='REQUEST-'+uid,requester_principal_id='REQUESTER',root_asset_ids=[prefix+'-A'+str(i) for i in roots],metadata={'fixture_profile':'SIGNED-E2-DEFAULT'})
+    top=dict(scope_version=1,graph_available=True,declared_scope_complete=True,unresolved_reference_ids=[],assets=[dict(asset_id=prefix+'-A'+str(i),asset_kind='meter_account' if i in roots else 'derived_record',dataset_id=case['dataset_id'],visibility='DECLARED') for i in range(n)],repositories=[dict(repository_id=prefix+'-R'+str(i),organization_id=principals[i],custodian_principal_id=principals[i],repository_class='RESEARCH_STORE',visibility='DECLARED') for i in range(nr)],replicas=[dict(replica_id=str(uuid.UUID(hex=digest([uid,'copy',j])[:32])),asset_id=prefix+'-A'+str(ai),repository_id=prefix+'-R'+str(ri),replica_class='primary',visibility='DECLARED') for j,(ai,ri) in enumerate(placements)],lineage_edges=[dict(relationship_id='EDGE-'+str(j),parent_asset_id=prefix+'-A'+str(a),child_asset_id=prefix+'-A'+str(b),relationship_type='DERIVED_FROM',visibility='DECLARED') for j,(a,b) in enumerate(edges)])
+    material=dict(case_id=cid,dataset_id=case['dataset_id'],correlation_id=case['correlation_id'],scope_version=1)
+    for field,idkey in [('assets','asset_id'),('repositories','repository_id'),('replicas','replica_id'),('lineage_edges','relationship_id')]:material[field]=sorted(top[field],key=lambda r:r[idkey])
+    top['scope_commitment']=domain('verclo-visible-scope-v1',material)
+    # Fixture construction contract declares reachability; not an expected-label evaluator.
+    reached=set(roots)
+    for _ in range(n):reached.update(b for a,b in edges if a in reached)
+    rows=[];oids=[];diagnoses={};categories={}
+    for j,(copy,(ai,ri)) in enumerate(zip(top['replicas'],placements)):
+        if ai not in reached:continue
+        subject=dict(case_id=cid,dataset_id=case['dataset_id'],correlation_id=case['correlation_id'],asset_id=copy['asset_id'],replica_id=copy['replica_id'],repository_id=copy['repository_id'],custodian_principal_id=principals[ri],policy_profile_id=policy['profile_id'],policy_version=policy['version']);oid='OBL-'+domain('verclo-obligation-v1',subject)[:32].upper();oids.append(oid)
+        row=dict(sequence=len(rows),receipt_id='RECEIPT-'+str(j),case_id=cid,obligation_id=oid,asset_id=copy['asset_id'],replica_id=copy['replica_id'],repository_id=copy['repository_id'],issuer_principal_id=principals[ri],issuer_role='CUSTODIAN',trust_domain='FIXTURE-TRUST-'+str(ri),fault_domain='FIXTURE-FAULT-'+str(ri),evidence_type='deletion_acknowledgement',disposition='ERASED',event_time=stamp(1),submitted_at=stamp(1),not_before=stamp(0),provenance_refs=['fixture-source:'+source_id]);rows.append(row);categories[oid]=spec.get('all','COVERED')
+    target=oids[0];categories[target]=spec.get('target',spec.get('all','COVERED'));exceptions=[];challenges=[];now=50
+    bad_receipts=set();bad_exception=False
+    exception_modes={'active_exception','exact_exception_expiry','after_exception_expiry','exception_bad_signature','exception_unknown_authority','exception_effective_after_deadline','conflict_with_exception','ordinary_exception'}
+    if kind in ('missing_one',*exception_modes):
+        if kind!='conflict_with_exception':rows=rows[1:]
+    if kind=='missing_all':rows=[]
+    if kind in ('authenticated_conflict','conflict_with_exception','late_conflicting_statement','valid_receipt_with_invalid_conflict'):
+        extra=deepcopy(rows[0]);extra['receipt_id']='RECEIPT-CONFLICT';extra['disposition']='FAILED'
+        if kind=='late_conflicting_statement':extra['event_time']=stamp(49)
+        if kind=='valid_receipt_with_invalid_conflict':bad_receipts.add(extra['receipt_id'])
+        rows.append(extra)
+    if kind=='invalid_signature':bad_receipts.add(rows[0]['receipt_id'])
+    if kind=='wrong_issuer':rows[0]['issuer_principal_id']='FIXTURE-OTHER-ISSUER';bad_receipts.add(rows[0]['receipt_id'])
+    if kind=='wrong_asset':rows[0]['asset_id']=prefix+'-A1';bad_receipts.add(rows[0]['receipt_id'])
+    if kind=='wrong_replica':rows[0]['replica_id']=str(uuid.UUID(hex=digest(['wrong-replica',uid])[:32]));bad_receipts.add(rows[0]['receipt_id'])
+    if kind in ('before_deadline','before_deadline_incomplete_scope'):now=47
+    if kind in ('scope_incomplete','before_deadline_incomplete_scope'):top['declared_scope_complete']=False
+    if kind=='scope_commitment_mismatch':top['scope_commitment']='0'*64
+    if kind=='graph_unavailable':top['graph_available']=False
+    if kind=='unresolved_reference':top['unresolved_reference_ids']=['UNRESOLVED-ASSET']
+    if kind=='expired_receipt':rows[0]['expires_at']=stamp(50);bad_receipts.add(rows[0]['receipt_id'])
+    if kind=='future_event':rows[0]['event_time']=stamp(51);bad_receipts.add(rows[0]['receipt_id'])
+    if kind=='not_yet_valid':rows[0]['not_before']=stamp(51);bad_receipts.add(rows[0]['receipt_id'])
+    if kind=='late_receipt':rows[0]['event_time']=stamp(49)
+    if kind=='exact_receipt_deadline':rows[0]['event_time']=stamp(48)
+    if kind=='exact_case_deadline':now=48
+    if kind=='all_late':
+        for r in rows:r['event_time']=stamp(49)
+    # Keep ordinary and late-event fixtures temporally well formed. Dedicated
+    # malformed-submission fixtures below intentionally violate this invariant.
+    for r in rows:
+        if r['submitted_at'] < r['event_time']:r['submitted_at']=r['event_time']
+    if kind=='submission_before_event':
+        rows[0]['event_time']=stamp(2);rows[0]['submitted_at']=stamp(1);bad_receipts.add(rows[0]['receipt_id'])
+    if kind=='future_submission':rows[0]['submitted_at']=stamp(51);bad_receipts.add(rows[0]['receipt_id'])
+    if kind=='authenticated_failure':rows[0]['disposition']='FAILED'
+    if kind=='nonterminal_evidence':rows[0]['evidence_type']='digest'
+    if kind in ('open_challenge','resolved_challenge'):challenges=[dict(challenge_id='CHALLENGE-1',opened_at=stamp(2),subject_ref=target,reason_code='DECLARED_REVIEW',status='OPEN' if kind=='open_challenge' else 'RESOLVED')]
+    if kind in exception_modes:
+        exceptions=[dict(exception_id='EXCEPTION-1',obligation_id=target,authority_principal_id='FIXTURE-AUTHORITY',basis_commitment=digest(['fixture-exception',uid]),effective_at=stamp(0),expires_at=stamp(50 if 'expiry' in kind else 60))]
+        if kind=='after_exception_expiry':now=51
+        if kind=='exception_bad_signature':bad_exception=True
+        if kind=='exception_unknown_authority':exceptions[0]['authority_principal_id']='UNKNOWN-AUTHORITY'
+        if kind=='exception_effective_after_deadline':exceptions[0]['effective_at']=stamp(49)
+    if kind=='ordinary_duplicate':
+        extra=deepcopy(rows[0]);extra['receipt_id']='RECEIPT-REPEATED';rows.append(extra)
+    if kind=='ordinary_permutation':rows.reverse()
+    if kind=='ordinary_receipt_expiry':
+        for r in rows:r['expires_at']=stamp(60)
+    if kind=='no_applicable_obligations':policy['applicable_asset_kinds']=['excluded_kind'];categories={};pref['sha256']=domain('verclo-policy-profile-v1',policy)
+    context=dict(version='GRIDWEAVE-ED25519-E2-v1',principal_public_keys={p:pub(p) for p in principals+['FIXTURE-OTHER-ISSUER']},exception_authority_public_keys={'FIXTURE-AUTHORITY':pub('FIXTURE-AUTHORITY')},exception_signatures={})
+    for seq,r in enumerate(rows):
+        r['sequence']=seq;payload={k:v for k,v in r.items() if k!='sequence'};r['claim_commitment']=sha256(canonical(payload)).hexdigest();sig=key(r['issuer_principal_id']).sign(canonical(payload)).hex()
+        if kind=='invalid_signature' and r['receipt_id'] in bad_receipts or kind=='valid_receipt_with_invalid_conflict' and r['receipt_id'] in bad_receipts:sig=('00' if sig[:2]!='00' else 'ff')+sig[2:]
+        r['proof']=dict(format='GRIDWEAVE-ED25519-E2-v1',credential_ref='ed25519:'+pub(r['issuer_principal_id']),verification_material_refs=['ed25519-signature:'+sig]);diagnoses[r['receipt_id']]='REJECTED' if r['receipt_id'] in bad_receipts else 'AUTHENTICATED_E2'
+    if kind=='untrusted_key':
+        context['principal_public_keys'][rows[0]['issuer_principal_id']]='0'*64
+        # Other receipts from the same issuer also become untrusted; in the curated anchor each has its own issuer.
+        diagnoses[rows[0]['receipt_id']]='REJECTED'
+    for x in exceptions:
+        sig=key(x['authority_principal_id']).sign(canonical(x)).hex()
+        if bad_exception:sig=('00' if sig[:2]!='00' else 'ff')+sig[2:]
+        context['exception_signatures'][x['exception_id']]=sig
+        if x['authority_principal_id']=='UNKNOWN-AUTHORITY':context['exception_authority_public_keys']['UNKNOWN-AUTHORITY']=pub('UNKNOWN-AUTHORITY')
+    if not categories:diagnoses={}
+    provenance=dict(producer='PaEGen',producer_version='1.0.0',source_revision=source_id,source_bundle_sha256=digest([shape,spec,replicate]))
+    observer=dict(schema_id='https://paeforge.local/schema/observer-projection/v1',**header,produced_at=stamp(0),evaluation_time=stamp(now),observer=dict(principal_id='FIXTURE-AUDITOR',roles=['AUDITOR'],profile_id='SIGNED-E2-DEFAULT',profile_version='1.0.0',access_class='restricted'),policy=pref,case=case,topology=top,exceptions=exceptions,challenges=challenges,provenance=provenance)
+    observer['projection_commitment']=exchange_domain('paeforge-observer-projection-v1',{k:observer[k] for k in ('observer','policy','case','topology','exceptions','challenges')})
+    stream=dict(schema_id='https://paeforge.local/schema/receipt-stream/v1',**header,stream_id='STREAM-'+uid,stream_version=1,receipts=rows,stream_commitment=exchange_domain('paeforge-receipt-stream-v1',rows),provenance=provenance)
+    manifest=dict(schema_id='https://paeforge.local/schema/case-manifest/v1',**{k:v for k,v in header.items() if k!='seed'},seed=seed,policy=pref,artifacts={k:dict(schema_id=doc['schema_id'],media_type='application/json',path=path,sha256=digest(doc)) for k,doc,path in [('observer_projection',observer,'observer-projection.json'),('receipt_stream',stream,'receipt-stream.json')]},provenance=dict(producer='PaEGen',producer_version='1.0.0',source_revision=source_id,generated_at=stamp(0)))
+    truth=dict(outcome=spec['expected'],baseline_verifiable=spec.get('baseline',True),obligation_categories=dict(sorted(categories.items())),receipt_diagnoses=dict(sorted(diagnoses.items())),specification='Paper1 explicit specification-authored fixture expectations v1')
+    return uid,(manifest,observer,stream,policy,context),truth
+
+
+def generate(output,catalogue):
+    root=Path(output)
+    if root.exists():raise FileExistsError('Fixture output exists')
+    spec=read(catalogue);source_id=digest({str(p.name):file_hash(p) for p in [Path(__file__),Path(catalogue),Path(__file__).parent/'wire.py']});units=[]
+    for shape in STRUCTURES:
+        for i,kind in enumerate(['ordinary_success','ordinary_exception','ordinary_duplicate','ordinary_permutation','ordinary_receipt_expiry']):
+            literal=dict(name=kind,expected='CLOSED_WITH_EXCEPTIONS' if kind=='ordinary_exception' else 'CLOSED',target='EXCEPTED' if kind=='ordinary_exception' else 'COVERED')
+            units.append((shape,literal,i,'ordinary_positive'))
+    for literal in spec['cases']:units.append((STRUCTURES[0],literal,0,'semantic_boundary'))
+    entries=[];metadata=[]
+    for shape,literal,i,track in units:
+        uid,docs,truth=construct(shape,literal,i,source_id);m,o,s,p,c=docs;folder=root/'public/cases'/uid;cfg=root/'public/configuration'/uid
+        for name,value in [('case-manifest.json',m),('observer-projection.json',o),('receipt-stream.json',s)]:write(folder/name,value)
+        write(cfg/'policies/policy.json',p);write(cfg/'verification-context.json',c)
+        files=[*folder.iterdir(),cfg/'policies/policy.json',cfg/'verification-context.json']
+        entries.append(dict(unit_id=uid,split='test',files={str(f.relative_to(root/'public')):file_hash(f) for f in sorted(files)}));family=digest(['independent-structure',shape])[:32]
+        write(root/'sealed/cases'/(uid+'.json'),dict(unit_id=uid,family=family,split='test',operation=literal['name'],truth=truth,world_truth={'undeclared_copy_present':False}));metadata.append(dict(unit_id=uid,track=track,fixture_name=literal['name'],structure=shape[0],family=family,replicate=i))
+    write(root/'public/index.json',dict(version='GridWeave-0.2.0',cases=sorted(entries,key=lambda e:e['unit_id'])));write(root/'sealed/pairs.json',[]);write(root/'sealed/fixture-catalogue.json',dict(version=spec['version'],cases=metadata))
+    for p in [Path(__file__),Path(catalogue),Path(__file__).parent/'wire.py']:write(root/'sealed/source-records'/ (p.name+'.json'),dict(filename=p.name,sha256=file_hash(p),content=p.read_text()))
+    inventory={str(p.relative_to(root)):file_hash(p) for p in root.rglob('*') if p.is_file()}
+    write(root/'dataset-manifest.json',dict(version='GridWeave-0.2.0',resource_version=spec['version'],evaluation_unit='case',n_materialized_cases=len(entries),materialized_pairs=0,N_synthetic_source_families=len(STRUCTURES),proof_profile='REAL_ED25519_SYNTHETIC_E2',source_snapshot_sha256=source_id,files=inventory,label_provenance='Explicit specification-authored expectations; constructed without generator or assessor imports; same-task nonblind authorship',claim_boundary='Native assessment fixtures, not physical erasure evidence'))
+    return dict(cases=len(entries),ordinary_positive=60,semantic_boundary=len(spec['cases']),manifest_sha256=file_hash(root/'dataset-manifest.json'))

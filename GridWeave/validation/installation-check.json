@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "date": "2026-10-25",
+  "generation_source_id": "17512fe51989b0a9928ca6dbcacb0f8cb4a506d806e66038872851eb9724e98b",
+  "frozen_generation_files_verified": 318,
+  "standalone_interface_files": {
+    "gridweave": "ebc7b48341274731480220d6024f19631e9a502a4ea51246564a5238adb09919",
+    "run.py": "b2a6dfc1be3d60cbbca88c33b0f79717fe15ff0cae6d44b44c3bef4d0b47d4c2",
+    "setup.sh": "66989ebdb34f79054bab564cf3dad49ff96ab41c3a2326d93cc5ce8f10e02c54",
+    "requirements.txt": "ceb9337849960bb168ba023ce57e2548bea889362cf59ea28b2a81026eccd8b4",
+    "tools/check_standalone.py": "9e0c7726b7977604628be82a16a0cd230bf05863ef7c90671b4656cf68a88b5c"
+  },
+  "ready_reference_cases": 420,
+  "native_verifier_case_evaluations": 0,
+  "portable_reproduction_byte_identical": true,
+  "consumer_separation_tests_passed": 3,
+  "repository_boundary_tests_passed": 5,
+  "documents": {
+    "GridWeave_User_Guide.docx": {
+      "sha256": "283f802abeb975d71740fbd1caf2250f66ef7b5f28513d29f7fb61137490b90a",
+      "pages": 4,
+      "all_pages_visually_reviewed": true,
+      "accessibility_findings": 0
+    },
+    "GridWeave_Technical_Guide.docx": {
+      "sha256": "31398dffdbcd7a7e8d966bd4cf7b3e3400f07d300fda5944ecb02506d9494c1b",
+      "pages": 6,
+      "all_pages_visually_reviewed": true,
+      "accessibility_findings": 0
+    }
+  },
+  "broken_document_links": [],
+  "superseded_material_in_clean_folder": false,
+  "reference_dataset_directory": "datasets/reference"
+}

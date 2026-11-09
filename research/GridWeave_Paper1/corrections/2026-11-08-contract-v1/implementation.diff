@@ -1,0 +1,705 @@
+--- before/GridWeave/src/gridweave/oracle.py
++++ after/GridWeave/src/gridweave/oracle.py
+@@ -82,13 +82,15 @@
+             signed={k:v for k,v in row.items() if k not in {'sequence','proof','claim_commitment'}}
+             proof=row['proof'];key=context['principal_public_keys'].get(row['issuer_principal_id'],'')
+             refs=proof['verification_material_refs']
+-            sig=next((x.removeprefix('ed25519-signature:') for x in refs if x.startswith('ed25519-signature:')),'')
++            signatures=[x.removeprefix('ed25519-signature:') for x in refs if x.startswith('ed25519-signature:')]
++            sig=signatures[0] if len(signatures)==1 else ''
+             valid=(binding and row['issuer_principal_id']==repo['custodian_principal_id'] and
+                    row['provenance_refs'] and proof['format']=='GRIDWEAVE-ED25519-E2-v1' and key and
++                   len(signatures)==1 and
+                    proof.get('credential_ref')=='ed25519:'+key and
+                    row['claim_commitment']==sha256(encode(signed)).hexdigest() and
+                    _signature(key,sig,signed) and instant(row['not_before'])<=now and
+-                   instant(row['event_time'])<=now and
++                   instant(row['event_time'])<=instant(row['submitted_at'])<=now and
+                    ('expires_at' not in row or now<instant(row['expires_at'])))
+             receipt_diagnoses[row['receipt_id']]='AUTHENTICATED_E2' if valid else 'REJECTED'
+             if not valid:continue
+--- before/research/GridWeave_Paper1/paper1/graph_assessor.py
++++ after/research/GridWeave_Paper1/paper1/graph_assessor.py
+@@ -2,7 +2,8 @@
+ 
+ No imports from GridWeave, VERCLO, PaEForge or the SQL assessor. Independently
+ implemented in this task after inspecting the existing profile; not blind or
+-independently human-authored. wire supplies serialization and time parsing only.
++independently human-authored. wire supplies shared utilities and public
++envelope/profile admission; assessment logic below is separate.
+ """
+ from collections import defaultdict,deque
+ from datetime import timedelta
+--- before/research/GridWeave_Paper1/paper1/profiling.py
++++ after/research/GridWeave_Paper1/paper1/profiling.py
+@@ -1,32 +1,87 @@
+-"""Current-host repeated generation cost and byte-reproduction measurements."""
+-import os,platform,subprocess,sys,tempfile,time,statistics
++"""Recorded-source generation cost and byte-reproduction measurements."""
++import json,os,platform,subprocess,sys,tempfile,time,statistics
++from datetime import datetime,timezone
++from importlib.metadata import version,PackageNotFoundError
+ from pathlib import Path
+ from .wire import read,write,file_hash
++from .replay import prepare_generation_replay
++
++
++def machine_context():
++    """Capture this execution's host; never backfill historical measurements."""
++    model=platform.processor() or None
++    cpuinfo=Path('/proc/cpuinfo')
++    if cpuinfo.is_file():
++        model=next((line.split(':',1)[1].strip() for line in cpuinfo.read_text().splitlines()
++                    if line.startswith('model name')),model)
++    try:ram=os.sysconf('SC_PHYS_PAGES')*os.sysconf('SC_PAGE_SIZE')
++    except (ValueError,OSError,AttributeError):ram=None
++    dependencies={}
++    for name in ('cryptography','jsonschema','pyarrow'):
++        try:dependencies[name]=version(name)
++        except PackageNotFoundError:dependencies[name]=None
++    return dict(captured_at=datetime.now(timezone.utc).isoformat(),platform=platform.platform(),
++                python=sys.version,python_executable=sys.executable,cpu_model=model,
++                logical_cpus=os.cpu_count(),physical_memory_bytes=ram,dependencies=dependencies,
++                provenance='Captured before this execution; not historical-run hardware metadata')
+ 
+ 
+ def run(project,lab,out,repetitions=3):
+     project=Path(project);lab=Path(lab);out=Path(out);out.mkdir(parents=True,exist_ok=False)
+     if not hasattr(os,'wait4'):raise RuntimeError('This declared measurement profile requires a wait4-capable host')
+-    expected={'reference':file_hash(project/'GridWeave/datasets/reference/dataset-manifest.json'),'structural_extension':file_hash(lab/'extension/corpus_v0_2/dataset-manifest.json')}
+-    baseline=read(project/'GridWeave/datasets/reference/sealed/reproduction.json');rows=[]
+-    for name in expected:
+-        for repetition in range(repetitions):
+-            with tempfile.TemporaryDirectory(prefix='paper1-generation-profile-') as temporary:
+-                destination=Path(temporary)/'dataset'
+-                if name=='reference':
+-                    args=[project/'GridWeave/.venv/bin/python',project/'GridWeave/run.py','generate','--output',destination,'--seed',baseline['seed'],'--scales',*map(str,baseline['scales']),'--strategy',baseline['strategy'],'--max-states',str(baseline['max_states'])]
+-                    if baseline['include_audit']:args.append('--include-audit')
+-                else:args=[project/'GridWeave/.venv/bin/python',lab/'scripts/build_structural_pilot.py','--output',destination]
+-                log=out/f'{name}-{repetition}.log';started=time.perf_counter()
+-                with log.open('w') as stream:
+-                    process=subprocess.Popen(list(map(str,args)),cwd=project,stdout=stream,stderr=subprocess.STDOUT,env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1'))
+-                    _,status,usage=os.wait4(process.pid,0);process.returncode=os.waitstatus_to_exitcode(status)
+-                seconds=time.perf_counter()-started
+-                if process.returncode:raise RuntimeError('Generation profile failed: '+str(log))
+-                actual=file_hash(destination/'dataset-manifest.json');rss=usage.ru_maxrss*(1 if sys.platform=='darwin' else 1024)
+-                row=dict(dataset=name,repetition=repetition,wall_seconds=seconds,peak_child_rss_bytes=rss,manifest_sha256=actual,byte_identical=actual==expected[name],public_input_bytes=sum(p.stat().st_size for p in (destination/'public').rglob('*') if p.is_file()),total_output_bytes=sum(p.stat().st_size for p in destination.rglob('*') if p.is_file()))
+-                rows.append(row);write(out/'observations.json',rows)
+-                if not row['byte_identical']:raise RuntimeError('Byte reproduction differed; raw artifacts remain identified in '+str(log))
+-                print(f"Generation profile {name} {repetition+1}/{repetitions}: {seconds:.2f} s, {rss/1048576:.2f} MiB",flush=True)
+-    report=dict(status='COMPLETE',platform=platform.platform(),python=sys.version,existing_dependency_environment=True,generation_includes_validation=True,memory_definition='Peak resident memory of each specific generator child from wait4, not summed process-tree memory',repetitions_per_corpus=repetitions,all_byte_identical=all(r['byte_identical'] for r in rows),corpora={name:dict(median_wall_seconds=statistics.median(r['wall_seconds'] for r in rows if r['dataset']==name),min_wall_seconds=min(r['wall_seconds'] for r in rows if r['dataset']==name),max_wall_seconds=max(r['wall_seconds'] for r in rows if r['dataset']==name),median_peak_child_rss_bytes=statistics.median(r['peak_child_rss_bytes'] for r in rows if r['dataset']==name)) for name in expected})
++    corpora={'reference':project/'GridWeave/datasets/reference',
++             'structural_extension':lab/'extension/corpus_v0_2'}
++    expected={name:file_hash(root/'dataset-manifest.json') for name,root in corpora.items()}
++    baseline=read(corpora['reference']/'sealed/reproduction.json');rows=[];sources={}
++    write(out/'host.json',machine_context())
++    for name,corpus in corpora.items():
++        # Snapshot preparation is outside the timed generator-child interval.
++        with tempfile.TemporaryDirectory(prefix='paper1-recorded-source-') as source_tmp:
++            replay=prepare_generation_replay(project,corpus,Path(source_tmp)/'project',
++                                             extension=name=='structural_extension')
++            sources[name]={k:replay[k] for k in ('source_snapshot_sha256','source_files')}
++            sources[name]['mode']='RECORDED_GENERATION_SOURCE_REPLAY'
++            write(out/'generation_sources.json',sources)
++            for repetition in range(repetitions):
++                with tempfile.TemporaryDirectory(prefix='paper1-generation-profile-') as temporary:
++                    destination=Path(temporary)/'dataset'
++                    if name=='reference':
++                        bootstrap=('import sys,json; from gridweave.dataset import generate; '
++                                   'generate(sys.argv[1],**json.loads(sys.argv[2]))')
++                        settings={k:baseline[k] for k in ('seed','scales','strategy','max_states','include_audit')}
++                        settings['scenario_ids']=baseline.get('scenario_ids')
++                        args=[project/'GridWeave/.venv/bin/python','-c',bootstrap,destination,json.dumps(settings)]
++                        cwd=replay['gridweave']
++                    else:
++                        args=[project/'GridWeave/.venv/bin/python',replay['lab']/'scripts/build_structural_pilot.py',
++                              '--output',destination]
++                        cwd=replay['project']
++                    log=out/f'{name}-{repetition}.log';started=time.perf_counter()
++                    with log.open('w') as stream:
++                        process=subprocess.Popen(list(map(str,args)),cwd=cwd,stdout=stream,
++                                                 stderr=subprocess.STDOUT,env=replay['env'])
++                        _,status,usage=os.wait4(process.pid,0);process.returncode=os.waitstatus_to_exitcode(status)
++                    seconds=time.perf_counter()-started
++                    if process.returncode:raise RuntimeError('Generation profile failed: '+str(log))
++                    actual=file_hash(destination/'dataset-manifest.json');rss=usage.ru_maxrss*(1 if sys.platform=='darwin' else 1024)
++                    row=dict(dataset=name,repetition=repetition,wall_seconds=seconds,peak_child_rss_bytes=rss,
++                             manifest_sha256=actual,byte_identical=actual==expected[name],
++                             source_mode='RECORDED_GENERATION_SOURCE_REPLAY',
++                             generation_source_snapshot_sha256=replay['source_snapshot_sha256'],
++                             public_input_bytes=sum(p.stat().st_size for p in (destination/'public').rglob('*') if p.is_file()),
++                             total_output_bytes=sum(p.stat().st_size for p in destination.rglob('*') if p.is_file()))
++                    rows.append(row);write(out/'observations.json',rows)
++                    if not row['byte_identical']:raise RuntimeError('Recorded-source byte reproduction differed; inspect '+str(log))
++                    print(f"Generation profile {name} {repetition+1}/{repetitions}: {seconds:.2f} s, {rss/1048576:.2f} MiB",flush=True)
++    report=dict(status='COMPLETE',platform=platform.platform(),python=sys.version,existing_dependency_environment=True,
++                host_metadata_file='host.json',host_metadata_sha256=file_hash(out/'host.json'),
++                generation_source_mode='RECORDED_GENERATION_SOURCE_REPLAY',generation_includes_validation=True,
++                snapshot_preparation_in_timed_interval=False,
++                memory_definition='Peak resident memory of each specific generator child from wait4, not summed process-tree memory',
++                repetitions_per_corpus=repetitions,all_byte_identical=all(r['byte_identical'] for r in rows),
++                corpora={name:dict(median_wall_seconds=statistics.median(r['wall_seconds'] for r in rows if r['dataset']==name),
++                                  min_wall_seconds=min(r['wall_seconds'] for r in rows if r['dataset']==name),
++                                  max_wall_seconds=max(r['wall_seconds'] for r in rows if r['dataset']==name),
++                                  median_peak_child_rss_bytes=statistics.median(r['peak_child_rss_bytes'] for r in rows if r['dataset']==name))
++                         for name in expected})
+     write(out/'summary.json',report);return report
+--- /dev/null
++++ after/research/GridWeave_Paper1/paper1/replay.py
+@@ -0,0 +1,41 @@
++"""Materialize recorded generation sources without altering frozen corpora.
++
++Historical byte reproduction executes its recorded snapshot, since an active
++source correction changes hashes even when none of the saved labels change.
++"""
++import os
++import shutil
++from pathlib import Path
++from .wire import file_hash, read
++
++
++def prepare_generation_replay(project, dataset, destination, *, extension=False):
++    project, dataset, destination = map(Path, (project, dataset, destination))
++    destination.mkdir(parents=True, exist_ok=False)
++    mapping = {
++        'GridWeave': destination / 'GridWeave',
++        'PaEForge': destination / 'GridWeave/support/PaEForge',
++        'HTGLThesis': destination / 'GridWeave/support/HTGLThesis',
++        'Paper1Lab': destination / 'research/GridWeave_Paper1',
++    }
++    hashes = read(dataset / 'sealed/source-hashes.json')
++    for name, expected in hashes.items():
++        parts = Path(name).parts
++        if len(parts) < 2 or parts[0] not in mapping or '..' in parts:
++            raise ValueError('Invalid recorded source path')
++        source = dataset / 'sealed/source' / name
++        if file_hash(source) != expected:
++            raise ValueError('Recorded generation source changed: ' + name)
++        target = mapping[parts[0]].joinpath(*parts[1:])
++        target.parent.mkdir(parents=True, exist_ok=True)
++        shutil.copyfile(source, target)
++    if extension:
++        shutil.copytree(project / 'GridWeave/datasets/reference',
++                        destination / 'GridWeave/datasets/reference')
++    paths = [mapping[name] / 'src' for name in ('GridWeave', 'PaEForge', 'HTGLThesis')]
++    env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1',
++               PYTHONPATH=os.pathsep.join(map(str, paths)))
++    return dict(project=destination, gridweave=mapping['GridWeave'],
++                lab=mapping['Paper1Lab'], env=env,
++                source_snapshot_sha256=read(dataset / 'dataset-manifest.json')['source_snapshot_sha256'],
++                source_files=len(hashes))
+--- before/research/GridWeave_Paper1/paper1/sql_assessor.py
++++ after/research/GridWeave_Paper1/paper1/sql_assessor.py
+@@ -1,6 +1,6 @@
+ """RelationalSpec: recursive SQLite reachability and relational evidence joins.
+ 
+-Shares wire serialization only with GraphSpec. Assessment, scope reconstruction,
++Shares wire utilities and envelope/profile admission with GraphSpec. Assessment, scope reconstruction,
+ receipt checking and category aggregation do not call either existing oracle.
+ """
+ import sqlite3
+--- before/research/GridWeave_Paper1/paper1/study.py
++++ after/research/GridWeave_Paper1/paper1/study.py
+@@ -20,19 +20,21 @@
+ def report(run):
+     run=Path(run);summary=read(run/'study_summary.json');lines=['# GridWeave paper 1 executable study results','',f"Study {summary['study_version']}. Status {summary['status']}. All counts describe the declared synthetic signed E2 profile.",'','## Semantic assessment and adjudication','', '| Dataset | Assessor | Cases | Class matches | Field disagreements |','| --- | --- | --- | --- | --- |']
+     for row in summary['assessment_runs']:lines.append(f"| {row['dataset']} | {row['assessor']} | {row['cases']} | {row['exact_class_matches']} | {row['disagreement_count']} |")
+-    lines+=['','The graph and SQLite checkers share wire serialization only, and import neither the generator nor VERCLO assessment code. VERCLO is a separate related consumer. All read public input copies only. These are independent implementations with same-task nonblind AI authorship, not human-independent judgments. The separate fixture catalogue supplies ordinary positive constructions and explicit semantic boundary expectations; counts and catalogue versions are recorded below.','', '## Matched-budget testing utility','', '| Repetition | Ordinary positive detected | GridWeave positive detected | GridWeave pairs detected | Pair-only beyond ordinary |','| --- | --- | --- | --- | --- |']
++    lines+=['','The graph and SQLite checkers share wire utilities and envelope/profile validation, while their assessment algorithms are separate; they import neither the generator nor VERCLO assessment code. VERCLO is a separate related consumer. All read public input copies only. These are independent implementations with same-task nonblind AI authorship, not human-independent judgments. The separate fixture catalogue supplies ordinary positive constructions and explicit semantic boundary expectations; counts and catalogue versions are recorded below.','', '## Matched-budget testing utility','', '| Repetition | Ordinary positive detected | GridWeave positive detected | GridWeave pairs detected | Pair-only beyond ordinary |','| --- | --- | --- | --- | --- |']
+     for row in summary['utility']['repetition_summaries']:
+         d=row['detected'];lines.append(f"| {row['repetition']} | {d['ordinary_positive']} | {d['gridweave_positive']} | {d['gridweave_pairs']} | {len(row['unique_pairs_beyond_ordinary'])} |")
+     lines+=['',f"The experiment uses {summary['utility']['mutants']} deliberate mutants from eight fault families across two assessor implementations, {summary['utility']['case_budget_per_condition']} executions per condition, and {summary['utility']['repetitions']} deterministic subset repetitions. Detection includes incorrect obligation or receipt diagnoses as well as incorrect case classes. It does not estimate a population of real bugs.",'','## Generation cost and byte reproduction','', '| Corpus | Repetitions | Median seconds including validation | Median peak child MiB |','| --- | --- | --- | --- |']
+     for name,value in summary['generation_profile']['corpora'].items():lines.append(f"| {name} | {summary['generation_profile']['repetitions_per_corpus']} | {value['median_wall_seconds']:.2f} | {value['median_peak_child_rss_bytes']/1048576:.2f} |")
+     lines+=['', 'All measured regenerations reproduced their recorded corpus manifests byte for byte in the existing research environment. Memory is the peak resident memory of each generator child process, not summed process-tree memory.','', '## Readiness and limits','', 'The current-workspace prototype has a runnable study, frozen outputs, machine-readable disagreement records, conformance checks and raw utility observations. Licensing, clean dependency installations and public release are outside the requested completion scope. Higher evidence grades, physical deletion, undisclosed-copy detection, field realism and independent human adjudication are not claimed.','', 'Run definitions, source identities, predictions, comparisons and fault observations are retained beside this report. A disagreement must be inspected; this runner never rewrites a saved label to force agreement.']
++    if summary['generation_profile'].get('generation_source_mode')=='RECORDED_GENERATION_SOURCE_REPLAY':
++        lines+=['', 'Generation byte reproduction executes the verified source snapshots saved with the corpora. Snapshot preparation is outside the timed generator-child interval. This is recorded-source replay, not a timing claim for the active corrected generator. This run\'s hardware and dependency metadata are in generation_profile/host.json and do not backfill historical measurements.']
+     (run/'REPORT.md').write_text('\n'.join(lines)+'\n')
+ 
+ def execute(output):
+     out=Path(output).resolve()
+     if out.exists():raise FileExistsError('Choose a fresh study output directory')
+     out.mkdir(parents=True);config=read(LAB/'config/study_v1.json');stages=[]
+-    executable_sources=[*sorted((LAB/'paper1').glob('*.py')),*sorted((LAB/'tests').glob('*.py')),LAB/'run.py',LAB/'config/study_v1.json',LAB/'fixtures/semantic_cases_v1.json']
++    executable_sources=[*sorted((LAB/'paper1').glob('*.py')),*sorted((LAB/'tests').glob('*.py')),LAB/'run.py',LAB/'config/study_v1.json',LAB/'fixtures/semantic_cases_v1.json',LAB/'SEMANTIC_SPECIFICATION.md',PROJECT/'GridWeave/src/gridweave/oracle.py']
+     freeze={str(p.relative_to(PROJECT)):file_hash(p) for p in executable_sources};write(out/'source-freeze.json',freeze);write(out/'study_config.json',config)
+     seconds=command([sys.executable,'-m','unittest','discover','-s',LAB/'tests','-v'],out/'tests.log');stages.append(dict(stage='conformance_tests',seconds=seconds,status='PASS'))
+     fixture_root=out/'independent_fixtures';fixture_record=generate(fixture_root,LAB/'fixtures/semantic_cases_v1.json');write(out/'fixture_generation.json',fixture_record)
+--- before/research/GridWeave_Paper1/paper1/utility.py
++++ after/research/GridWeave_Paper1/paper1/utility.py
+@@ -101,7 +101,7 @@
+         found={condition:{r['mutant'] for r in aggregates if r['repetition']==repeat and r['condition']==condition and r['detected']} for condition in selected[str(repeat)]}
+         summaries.append(dict(repetition=repeat,detected={k:len(v) for k,v in found.items()},unique_pairs_beyond_ordinary=sorted(found['gridweave_pairs']-found['ordinary_positive']),unique_pairs_beyond_gridweave_positive=sorted(found['gridweave_pairs']-found['gridweave_positive']),ordinary_only=sorted(found['ordinary_positive']-found['gridweave_pairs'])))
+     survivors=[name for name in implementations if not any(r['mutant']==name and r['detected'] for r in aggregates)]
+-    report=dict(status='COMPLETE',fault_model='Eight deliberate fault families in two independent assessor implementations; sixteen mutants',mutants=len(implementations),fault_families=len(FAULTS),case_budget_per_condition=budget,repetitions=repetitions,total_case_evaluations=len(observations),repetition_summaries=summaries,survived_all_conditions=survivors,equivalence_policy='Surviving mutants remain in the denominator; survival is not proof of equivalence',limits=['Same-task nonblind authorship; not independent human adjudication','Seeded faults are distinct executable ablations, not sampled real defects','Shared wire serialization and cryptography primitives; graph/SQL assessment logic is separate','Five deterministic subsets are repeated measurements, not independent source populations','Assessment timings exclude input loading and are not a stable performance ranking'])
++    report=dict(status='COMPLETE',fault_model='Eight deliberate fault families in two independent assessor implementations; sixteen mutants',mutants=len(implementations),fault_families=len(FAULTS),case_budget_per_condition=budget,repetitions=repetitions,total_case_evaluations=len(observations),repetition_summaries=summaries,survived_all_conditions=survivors,equivalence_policy='Surviving mutants remain in the denominator; survival is not proof of equivalence',limits=['Same-task nonblind authorship; not independent human adjudication','Seeded faults are distinct executable ablations, not sampled real defects','Shared wire utilities, envelope/profile validation and cryptography primitives; graph/SQL assessment logic is separate','Five deterministic subsets are repeated measurements, not independent source populations','Assessment timings exclude input loading and are not a stable performance ranking'])
+     write(out/'summary.json',report)
+     for name,rows in [('case_observations.csv',observations),('mutant_condition_results.csv',aggregates)]:
+         with (out/name).open('w',newline='') as f:
+--- before/research/GridWeave_Paper1/paper1/wire.py
++++ after/research/GridWeave_Paper1/paper1/wire.py
+@@ -1,4 +1,8 @@
+-"""Wire-format utilities only: no obligation or assessment semantics."""
++"""Shared wire utilities and public envelope/profile validation.
++
++Obligation reconstruction, receipt admission and assessment aggregation remain
++in the separate assessors. Envelope checks here are a shared dependency.
++"""
+ from __future__ import annotations
+ import hashlib,json
+ from pathlib import Path
+@@ -39,7 +43,13 @@
+         if m['artifacts']['observer_projection']['sha256']!=digest(o) or m['artifacts']['receipt_stream']['sha256']!=digest(s):raise ValueError('Case manifest mismatch')
+         semantic={k:o[k] for k in ('observer','policy','case','topology','exceptions','challenges')}
+         if o['projection_commitment']!=exchange_domain('paeforge-observer-projection-v1',semantic) or s['stream_commitment']!=exchange_domain('paeforge-receipt-stream-v1',s['receipts']):raise ValueError('Exchange commitment mismatch')
+-        if o['policy']['sha256']!=domain('verclo-policy-profile-v1',policy):raise ValueError('Policy digest mismatch')
++        expected_policy=dict(profile_id=policy['profile_id'],version=policy['version'],sha256=domain('verclo-policy-profile-v1',policy))
++        for label,doc in [('case manifest',m),('observer projection',o)]:
++            ref=doc.get('policy')
++            if not isinstance(ref,dict) or any(ref.get(k)!=v for k,v in expected_policy.items()):
++                raise ValueError('Policy binding mismatch: '+label)
++        receipt_ids=[r['receipt_id'] for r in s['receipts']]
++        if len(set(receipt_ids))!=len(receipt_ids):raise ValueError('Duplicate receipt identifier')
+         if policy['overrides'] or policy['early_closure_allowed'] or policy['default_rule']['minimum_evidence_grade']!='E2':raise ValueError('Unsupported policy profile')
+         if len({e['obligation_id'] for e in o['exceptions']})!=len(o['exceptions']):raise ValueError('Multiple exceptions per obligation are outside the study profile')
+         bundles.append((uid,o,s,policy,context))
+--- /dev/null
++++ after/research/GridWeave_Paper1/scripts/verify_contract_corrections.py
+@@ -0,0 +1,157 @@
++#!/usr/bin/env python3
++"""Verify corrected code against frozen inputs; never replace historical results."""
++import argparse
++from copy import deepcopy
++from datetime import datetime, timezone
++from hashlib import sha256
++import importlib.util
++import json
++from pathlib import Path
++import shutil
++import subprocess
++import sys
++import tempfile
++
++sys.dont_write_bytecode = True
++LAB = Path(__file__).resolve().parents[1]
++PROJECT = LAB.parents[1]
++sys.path.insert(0, str(LAB))
++from paper1.wire import file_hash, load_public, read, write
++from paper1.adjudication import FIELDS, compare, expected_labels
++from paper1.profiling import machine_context
++
++
++def oracle_at(path, name):
++    spec = importlib.util.spec_from_file_location(name, path)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module.evaluate
++
++
++def main():
++    ap = argparse.ArgumentParser(description=__doc__)
++    ap.add_argument('--output', type=Path, required=True)
++    args = ap.parse_args()
++    out = args.output.resolve()
++    out.mkdir(parents=True, exist_ok=False)
++    sources = [*sorted((LAB / 'paper1').glob('*.py')),
++               *sorted((LAB / 'tests').glob('*.py')),
++               PROJECT / 'GridWeave/src/gridweave/oracle.py', Path(__file__)]
++    freeze = {str(p.relative_to(PROJECT)): file_hash(p) for p in sources}
++    write(out / 'source-freeze.json', freeze)
++    write(out / 'host.json', machine_context())
++    identities = read(LAB / 'runs/paper1-study-v1/dataset-identities.json')
++    write(out / 'dataset-identities.json', identities)
++    corrected = oracle_at(PROJECT / 'GridWeave/src/gridweave/oracle.py', 'corrected_oracle')
++    previous = oracle_at(LAB / 'corrections/2026-11-08-contract-v1/before/GridWeave/src/gridweave/oracle.py',
++                         'previous_oracle')
++    disagreements, previous_differences, comparisons = [], [], []
++    manifest_files = 0
++    for name, identity in identities.items():
++        dataset = Path(identity['path'])
++        assert file_hash(dataset / 'dataset-manifest.json') == identity['manifest_sha256']
++        manifest = read(dataset / 'dataset-manifest.json')
++        for rel, expected_hash in manifest['files'].items():
++            assert file_hash(dataset / rel) == expected_hash, rel
++            manifest_files += 1
++        expected = expected_labels(dataset)
++        labels = []
++        for uid, observer, stream, policy, context in load_public(dataset / 'public'):
++            truth = expected[uid]['truth']
++            actual = corrected(observer, stream, policy, context)
++            old = previous(observer, stream, policy, context)
++            fields = [field for field in FIELDS if actual[field] != truth[field]]
++            old_fields = [field for field in FIELDS if old[field] != truth[field]]
++            entry = dict(dataset=name, unit_id=uid, condition=expected[uid]['operation'],
++                         expected={field: truth[field] for field in FIELDS},
++                         corrected={field: actual[field] for field in FIELDS},
++                         differing_fields=fields, previous_differing_fields=old_fields)
++            labels.append(entry)
++            if fields:
++                disagreements.append(entry)
++            if old_fields:
++                previous_differences.append(entry)
++        write(out / 'oracle' / (name + '.json'), labels)
++        with tempfile.TemporaryDirectory(prefix='paper1-corrected-public-') as tmp:
++            public = Path(tmp) / 'public'
++            shutil.copytree(dataset / 'public', public)
++            for assessor in ('graph', 'sql'):
++                predictions = out / 'predictions' / name / assessor
++                predictions.parent.mkdir(parents=True, exist_ok=True)
++                completed = subprocess.run([
++                    sys.executable, '-m', 'paper1.assessor_worker', '--public', str(public),
++                    '--assessor', assessor, '--output', str(predictions)], cwd=LAB,
++                    capture_output=True, text=True)
++                (out / f'{name}-{assessor}.log').write_text(completed.stdout + completed.stderr)
++                assert completed.returncode == 0, completed.stderr
++                result = compare(dataset, predictions, assessor, out / 'comparisons' / name / assessor)
++                assert result['disagreement_count'] == 0, result
++                result['dataset'] = name
++                comparisons.append(result)
++    assert not disagreements, disagreements
++    assert {entry['condition'] for entry in previous_differences} == {'submission_before_event', 'future_submission'}
++
++    # The supplementary probes do not change the existing fixture catalogue.
++    spec = importlib.util.spec_from_file_location('contract_probe_helpers', LAB / 'tests/test_contract_corrections.py')
++    helper = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(helper)
++    rejected = []
++    for name, uid, docs, message in helper.malformed_variants():
++        public = out / 'malformed_inputs' / name / 'public'
++        helper.export_public(public, uid, docs)
++        for assessor in ('graph', 'sql'):
++            destination = out / 'malformed_predictions' / name / assessor
++            completed = subprocess.run([
++                sys.executable, '-m', 'paper1.assessor_worker', '--public', str(public),
++                '--assessor', assessor, '--output', str(destination)], cwd=LAB,
++                capture_output=True, text=True)
++            (destination.parent / (assessor + '.log')).write_text(completed.stdout + completed.stderr)
++            assert completed.returncode != 0 and message in completed.stderr
++            assert not list(destination.glob('*.json'))
++            rejected.append(dict(probe=name, assessor=assessor, rejected=True, expected_reason=message))
++    from paper1.graph_assessor import assess as graph
++    from paper1.sql_assessor import assess as sql
++    uid, base, truth = helper.fixture()
++    signature_probes = []
++    original = base[2]['receipts'][0]['proof']['verification_material_refs'][0]
++    for name, refs in [('zero', []), ('two_identical', [original, original]),
++                       ('two_distinct', [original, 'ed25519-signature:' + '00' * 64])]:
++        docs = deepcopy(base)
++        row = docs[2]['receipts'][0]
++        row['proof']['verification_material_refs'] = refs
++        expected = {field: deepcopy(truth[field]) for field in FIELDS}
++        expected['outcome'] = 'PARTIALLY_CLOSED'
++        expected['obligation_categories'][row['obligation_id']] = 'INVALID'
++        expected['receipt_diagnoses'][row['receipt_id']] = 'REJECTED'
++        helper.export_public(out / 'signature_inputs' / name / 'public', uid, docs)
++        results = {}
++        for label, fn in [('oracle', corrected), ('graph', graph), ('sql', sql)]:
++            actual = fn(*docs[1:])
++            assert all(actual[field] == expected[field] for field in FIELDS)
++            results[label] = {field: actual[field] for field in FIELDS}
++        entry = dict(probe=name, expected=expected, assessments=results)
++        signature_probes.append(entry)
++    write(out / 'signature_probes.json', signature_probes)
++    write(out / 'malformed_rejections.json', rejected)
++    write(out / 'previous_oracle_differences.json', previous_differences)
++    assert freeze == {str(p.relative_to(PROJECT)): file_hash(p) for p in sources}
++    record = dict(status='PASS', completed_at=datetime.now(timezone.utc).isoformat(),
++                  scope='Separate correction verification; historical 1,914-comparison study unchanged',
++                  oracle_case_units=638, oracle_scored_field_disagreements=0,
++                  preserved_generated_units=540, preserved_generated_label_changes=0,
++                  previous_oracle_disagreeing_existing_fixtures=len(previous_differences),
++                  corrected_checker_case_comparisons=sum(row['cases'] for row in comparisons),
++                  corrected_checker_scored_field_disagreements=sum(row['disagreement_count'] for row in comparisons),
++                  signature_cardinality_probes=len(signature_probes),
++                  signature_cardinality_assessments=len(signature_probes)*3,
++                  malformed_input_variants=len(rejected)//2, malformed_worker_rejections=len(rejected),
++                  original_fixture_catalogue_units=98, dataset_manifest_members_verified=manifest_files,
++                  sources_unchanged_during_verification=True, assessment_runs=comparisons)
++    write(out / 'summary.json', record)
++    write(out / 'output-manifest.json', dict(files={str(p.relative_to(out)): file_hash(p)
++                                                   for p in sorted(out.rglob('*')) if p.is_file()}))
++    print(json.dumps({k: v for k, v in record.items() if k != 'assessment_runs'}, indent=2))
++
++
++if __name__ == '__main__':
++    main()
+--- /dev/null
++++ after/research/GridWeave_Paper1/tests/test_contract_corrections.py
+@@ -0,0 +1,158 @@
++"""Regression checks for the separately recorded November contract correction.
++
++The original 98-fixture catalogue and frozen datasets are not modified.
++"""
++import importlib.util
++import subprocess
++import sys
++import tempfile
++import unittest
++from copy import deepcopy
++from pathlib import Path
++
++LAB = Path(__file__).resolve().parents[1]
++PROJECT = LAB.parents[1]
++sys.path.insert(0, str(LAB))
++from paper1.fixture_builder import STRUCTURES, construct
++from paper1.wire import digest, exchange_domain, file_hash, load_public, read, write
++from paper1 import graph_assessor, sql_assessor
++
++
++def load_oracle():
++    path = PROJECT / 'GridWeave/src/gridweave/oracle.py'
++    spec = importlib.util.spec_from_file_location('contract_test_oracle', path)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module.evaluate
++
++
++def fixture(name='resolved', **expectations):
++    spec = dict(name=name, expected='CLOSED', target='COVERED')
++    spec.update(expectations)
++    return construct(STRUCTURES[0], spec, 0, 'contract-correction-regression-v1')
++
++
++def export_public(root, uid, docs):
++    """Refresh the outer envelope so probes isolate the intended defect."""
++    manifest, observer, stream, policy, context = deepcopy(docs)
++    observer['projection_commitment'] = exchange_domain(
++        'paeforge-observer-projection-v1',
++        {k: observer[k] for k in ('observer', 'policy', 'case', 'topology', 'exceptions', 'challenges')})
++    stream['stream_commitment'] = exchange_domain('paeforge-receipt-stream-v1', stream['receipts'])
++    manifest['artifacts']['observer_projection']['sha256'] = digest(observer)
++    manifest['artifacts']['receipt_stream']['sha256'] = digest(stream)
++    files = {
++        f'cases/{uid}/case-manifest.json': manifest,
++        f'cases/{uid}/observer-projection.json': observer,
++        f'cases/{uid}/receipt-stream.json': stream,
++        f'configuration/{uid}/policies/policy.json': policy,
++        f'configuration/{uid}/verification-context.json': context,
++    }
++    for path, value in files.items():
++        write(root / path, value)
++    write(root / 'index.json', dict(version='GridWeave-0.2.0', cases=[dict(
++        unit_id=uid, split='test', files={path: file_hash(root / path) for path in files})]))
++
++
++def malformed_variants():
++    uid, base, _ = fixture()
++    for doc_index, label in ((0, 'manifest'), (1, 'observer')):
++        for field in ('profile_id', 'version', 'sha256'):
++            docs = deepcopy(base)
++            docs[doc_index]['policy'][field] = 'MISMATCH'
++            yield label + '_' + field, uid, docs, 'Policy binding mismatch'
++    for field in ('profile_id', 'version'):
++        docs = deepcopy(base)
++        for doc in docs[:2]:
++            doc['policy'][field] = 'CONSISTENT-BUT-WRONG'
++        yield 'both_' + field, uid, docs, 'Policy binding mismatch'
++    docs = deepcopy(base)
++    docs[2]['receipts'].append(deepcopy(docs[2]['receipts'][0]))
++    yield 'duplicate_receipt', uid, docs, 'Duplicate receipt identifier'
++
++
++class OracleAdmissionRegression(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        cls.oracle = staticmethod(load_oracle())
++
++    def test_submission_boundary_expectations(self):
++        for name in ('submission_before_event', 'future_submission'):
++            with self.subTest(fixture=name):
++                _, docs, expected = fixture(name, expected='PARTIALLY_CLOSED', target='INVALID')
++                actual = self.oracle(*docs[1:])
++                for field in ('outcome', 'baseline_verifiable', 'obligation_categories', 'receipt_diagnoses'):
++                    self.assertEqual(actual[field], expected[field], field)
++
++    def test_zero_or_multiple_signature_references_are_rejected(self):
++        _, base, _ = fixture()
++        original = base[2]['receipts'][0]['proof']['verification_material_refs'][0]
++        variants = ([], [original, original], [original, 'ed25519-signature:' + '00' * 64])
++        for references in variants:
++            with self.subTest(signature_count=len(references)):
++                docs = deepcopy(base)
++                receipt = docs[2]['receipts'][0]
++                receipt['proof']['verification_material_refs'] = references
++                expected = dict(outcome='PARTIALLY_CLOSED', receipt='REJECTED', category='INVALID')
++                for assessor in (self.oracle, graph_assessor.assess, sql_assessor.assess):
++                    actual = assessor(*docs[1:])
++                    self.assertEqual(actual['outcome'], expected['outcome'])
++                    self.assertEqual(actual['receipt_diagnoses'][receipt['receipt_id']], expected['receipt'])
++                    self.assertEqual(actual['obligation_categories'][receipt['obligation_id']], expected['category'])
++
++    def test_single_signature_remains_accepted(self):
++        _, docs, expected = fixture()
++        actual = self.oracle(*docs[1:])
++        for field in ('outcome', 'baseline_verifiable', 'obligation_categories', 'receipt_diagnoses'):
++            self.assertEqual(actual[field], expected[field])
++
++
++class PublicEnvelopeRegression(unittest.TestCase):
++    def test_valid_public_bundle_is_accepted(self):
++        uid, docs, _ = fixture()
++        with tempfile.TemporaryDirectory() as tmp:
++            export_public(Path(tmp), uid, docs)
++            self.assertEqual([x[0] for x in load_public(tmp)], [uid])
++
++    def test_policy_bindings_and_duplicate_receipts_are_rejected(self):
++        for name, uid, docs, error in malformed_variants():
++            with self.subTest(probe=name), tempfile.TemporaryDirectory() as tmp:
++                export_public(Path(tmp), uid, docs)
++                with self.assertRaisesRegex(ValueError, error):
++                    load_public(tmp)
++
++    def test_both_execution_paths_reject_before_writing_predictions(self):
++        for name, uid, docs, error in malformed_variants():
++            with tempfile.TemporaryDirectory() as tmp:
++                root = Path(tmp)
++                export_public(root / 'public', uid, docs)
++                for assessor in ('graph', 'sql'):
++                    with self.subTest(probe=name, assessor=assessor):
++                        output = root / assessor
++                        result = subprocess.run([
++                            sys.executable, '-m', 'paper1.assessor_worker', '--public', str(root / 'public'),
++                            '--assessor', assessor, '--output', str(output)], cwd=LAB,
++                            capture_output=True, text=True)
++                        self.assertNotEqual(result.returncode, 0)
++                        self.assertIn(error, result.stderr)
++                        self.assertFalse(list(output.glob('*.json')))
++
++    def test_both_execution_paths_still_predict_valid_inputs(self):
++        uid, docs, _ = fixture()
++        with tempfile.TemporaryDirectory() as tmp:
++            root = Path(tmp)
++            export_public(root / 'public', uid, docs)
++            for assessor in ('graph', 'sql'):
++                with self.subTest(assessor=assessor):
++                    output = root / assessor
++                    result = subprocess.run([
++                        sys.executable, '-m', 'paper1.assessor_worker', '--public', str(root / 'public'),
++                        '--assessor', assessor, '--output', str(output)], cwd=LAB,
++                        capture_output=True, text=True)
++                    self.assertEqual(result.returncode, 0, result.stderr)
++                    self.assertEqual(read(output / (uid + '.json'))['assessment']['outcome'], 'CLOSED')
++                    self.assertEqual(read(output / 'results-manifest.json')['status'], 'COMPLETE')
++
++
++if __name__ == '__main__':
++    unittest.main()
+--- before/GridWeave/README.md
++++ after/GridWeave/README.md
+@@ -34,4 +34,4 @@
+ - [VERCLO Handoff](Docs/VERCLO_Handoff.md): the saved-data boundary.
+ - [Reproducibility](Docs/Reproducibility.md) and [Validation Report](Docs/Validation_Report.md).
+ 
+-The frozen algorithm and support sources are unchanged. `RESEARCH_FREEZE.json` and `SOURCE_MANIFEST.json` pin their identity. The source, support, schemas, configuration and required reference fixtures stay together. Old plans, reports, release packages and superseded documentation are excluded from this implementation folder.
++The original source snapshot and support libraries remain preserved in the reference corpus. `RESEARCH_FREEZE.json` and `SOURCE_MANIFEST.json` identify the historical pre-correction implementation, not the active corrected oracle. The 8 November 2026 correction adds submission-time and signature-cardinality admission checks; its source identities, regression tests and separate verification are recorded in `../research/GridWeave_Paper1/corrections/2026-11-08-contract-v1/`. No reference inputs or saved labels changed. New generation includes the corrected source identity; historical byte reproduction uses the recorded source snapshot. The source, support, schemas, configuration and required reference fixtures stay together. Old plans, reports, release packages and superseded documentation are excluded from this implementation folder.
+--- before/research/GridWeave_Paper1/SEMANTIC_SPECIFICATION.md
++++ after/research/GridWeave_Paper1/SEMANTIC_SPECIFICATION.md
+@@ -1,10 +1,10 @@
+ # Signed E2 assessment specification for the paper prototype
+ 
+-This specification defines the executable research task. GraphSpec and RelationalSpec implement it without importing the existing GridWeave oracle, generator or VERCLO assessment logic. They share the wire-format serializer and timestamp parser. Their authoring occurred in this task after inspection of the existing profile. Independence therefore concerns code paths, algorithms and predictor access to labels; it is not blind or independent human authorship.
++This specification defines the executable research task. GraphSpec and RelationalSpec implement it without importing the existing GridWeave oracle, generator or VERCLO assessment logic. They share serialization, hashing, timestamp parsing, public-input loading, and envelope/profile admission checks; those checks are a shared validation dependency. Their authoring occurred in this task after inspection of the existing profile. Independence therefore concerns code paths, algorithms and predictor access to labels; it is not blind or independent human authorship.
+ 
+ ## Inputs and supported profile
+ 
+-The input consists of the five native public files for a unit: case manifest, observer projection, receipt stream, policy and verification context. Public file hashes, exchange commitments, case identifiers and the policy binding must agree. The profile supports a single default E2 rule, no overrides and no early closure. Evidence authenticates synthetic assertions against configured keys; it does not establish physical destruction or trustworthy real execution time.
++The input consists of the five native public files for a unit: case manifest, observer projection, receipt stream, policy and verification context. Public file hashes, exchange commitments, case identifiers and the policy binding must agree. Both manifest and observer policy references must match the loaded policy's profile identifier, version and domain-separated digest. Receipt identifiers must be unique within a stream; duplicate identifiers and policy-reference mismatches are rejected before either new assessor executes. The profile supports a single default E2 rule, no overrides and no early closure. Evidence authenticates synthetic assertions against configured keys; it does not establish physical destruction or trustworthy real execution time.
+ 
+ Exchange commitments include the canonical JSON trailing newline. VERCLO scope, policy and obligation domain commitments exclude that trailing newline. Receipts and exception signatures sign the canonical JSON including the newline. These are wire-format conventions rather than scientific contributions.
+ 
+@@ -44,3 +44,7 @@
+ Freeze the implementations, fixture catalogue and study configuration. Run each assessor on a public-only copy, save complete predictions and their hashes, then compare with saved labels. Compare final class, baseline verifiability, complete obligation-category maps and matched receipt diagnoses. GraphSpec and RelationalSpec also cross-check conditional reconstructions under unverifiable baselines. VERCLO abstains from those intermediate claims when its baseline is invalid, so the report records that scoring coverage separately.
+ 
+ A disagreement stops the study before the utility experiment. Preserve the original prediction, label, source hashes and condition. Resolve a defect against this specification and the explicit boundary fixture, then rerun in a new output directory. Never edit a label merely to match an implementation. Human review can add evidence later, but is not fabricated or presented as completed here.
++
++## Separately recorded contract correction (8 November 2026)
++
++The active generator oracle now enforces event <= submission <= evaluation and exactly one Ed25519 signature reference. The common public loader now checks policy-reference identity/version/digest and receipt identity uniqueness. The historical `runs/paper1-study-v1` and its 98-fixture catalogue are unchanged. Supplementary verification is recorded under `corrections/2026-11-08-contract-v1/`: the corrected oracle matches all four fields over the 638 saved units, both corrected checker execution paths match all four fields in 1,276 comparisons, three signature-cardinality probes agree across the oracle and both checkers, and nine malformed-envelope variants are rejected by each new worker. None of the 540 generated-unit labels changes. These additional checks are not pooled into the historical study totals.
+--- before/research/GridWeave_Paper1/README.md
++++ after/research/GridWeave_Paper1/README.md
+@@ -17,7 +17,7 @@
+ - The immutable reference corpus contains 420 units in 210 pairs from seven source families.
+ - The versioned structural extension adds 120 units in 60 pairs from six authored profiles, including joins, deeper lineage and cross-custodian replicas.
+ - The independent fixture builder creates 60 ordinary positive cases and 38 explicit semantic boundary cases without importing GridWeave, PaEForge or an assessor.
+-- GraphSpec uses graph traversal and explicit evidence rules. RelationalSpec uses recursive SQLite queries and relational aggregation. They share only wire-format utilities.
++- GraphSpec uses graph traversal and explicit evidence rules. RelationalSpec uses recursive SQLite queries and relational aggregation. They share wire utilities and envelope/profile validation, not assessment algorithms.
+ - The existing VERCLO consumer supplies a third implementation. Its invalid-exception handling and case-resource reporting were corrected using the new fixtures.
+ - Automated adjudication compares classes, baseline status, obligation categories and receipt diagnoses. Predictions are frozen before expected labels are joined.
+ - The utility study applies eight fault families to both new implementations, with three fixture conditions and five matched-budget subset repetitions.
+@@ -37,4 +37,18 @@
+ - `evidence/development_findings/` and `runs/development-study-1/` preserve failures and resolutions.
+ - `archive/v0_2/` retains earlier draft text, the toy fault pilot and blank human-review templates. These are historical artifacts, not active scaffolds.
+ 
+-The original GridWeave generation sources, saved labels and both pre-existing corpora remain unchanged. The paper prototype adds validation and experiment code outside that frozen baseline. The scope does not include physical erasure verification, discovery of undisclosed copies, higher evidence grades, field realism or a proof of general correctness.
++The historical generation-source snapshots, saved labels and both pre-existing corpora remain unchanged. The active oracle and public loader have separately verified contract corrections; see `corrections/2026-11-08-contract-v1/verification/summary.json`. The historical 1,914-comparison study remains `runs/paper1-study-v1`; the correction verification is not pooled into that study. The scope does not include physical erasure verification, discovery of undisclosed copies, higher evidence grades, field realism or a proof of general correctness.
++
++## Contract correction and historical reproduction
++
++The active oracle enforces event <= submission <= evaluation and exactly one signature reference. Both new workers reject mismatched manifest/observer policy references (identifier, version or digest) and duplicate receipt IDs before assessment. The original 98-fixture catalogue is unchanged. Separate verification checks all four fields for the oracle on 638 saved units and both workers in 1,276 comparisons, three signature-cardinality probes, and 18 expected worker rejections across nine malformed variants. All 540 generated-unit labels are unchanged.
++
++The current manuscript is `${MANUSCRIPT_ROOT}/GridWeaveV2/main.tex`; the older Markdown/Word working drafts retain their historical status. The corrected source and the old research capsule have different identities. Do not replace the original datasets, measurements, capsule or source records to make their hashes agree with the corrected tree.
++
++Fresh full-study runs now replay the verified saved generation-source snapshots for historical corpus byte reproduction. Preparation is excluded from the timed child interval and the mode is recorded in `generation_sources.json`. Active corrected generation is still available through the normal GridWeave launcher and creates a new source identity. Future generation profiles record CPU, RAM, Python and dependency metadata in `host.json` before execution; this metadata is not evidence about the historical study host. The original timing medians remain historical observations.
++
++Reproduce the separate contract verification into a fresh output directory:
++
++```bash
++./GridWeave/.venv/bin/python research/GridWeave_Paper1/scripts/verify_contract_corrections.py --output /tmp/gridweave-contract-verification
++```
+--- before/research/GridWeave_Paper1/RUNNING_THE_STUDY.md
++++ after/research/GridWeave_Paper1/RUNNING_THE_STUDY.md
+@@ -77,7 +77,7 @@
+ - `config/study_v1.json` records the experiment configuration and research scope.
+ - `SEMANTIC_SPECIFICATION.md` defines supported meanings and precedence.
+ 
+-GraphSpec and RelationalSpec share serialization and time parsing, not assessment algorithms. Their independence is computational and methodological: they do not import the generator or its oracle and run without label access. They were authored in this task with knowledge of the existing profile. They are not independent human judgments or evidence of external institutional adoption.
++GraphSpec and RelationalSpec share serialization, hashing, timestamp parsing, public loading and envelope/profile admission; their assessment algorithms are separate. Their independence is computational and methodological: they do not import the generator or its oracle and run without label access. They were authored in this task with knowledge of the existing profile. They are not independent human judgments or evidence of external institutional adoption.
+ 
+ ## Reading the evidence
+ 
+@@ -86,3 +86,17 @@
+ The utility experiment counts a mutant as detected when a case class, baseline judgment, obligation map or matched receipt diagnosis differs. It retains survivors and detailed witnesses. The sixteen mutants represent eight fault families across two implementations; they are not sixteen independently observed operational bugs. Positive fixtures can expose structural reconstruction faults, while paired cases additionally exercise evidence defects.
+ 
+ The development record preserves a rejected-exception batch failure and a fixture timestamp construction error. Corrections were made to the relevant code and inputs, without changing expected labels to force agreement. Earlier draft scripts, blank human-review templates and pilot outputs are historical material, not unfinished requirements of the active workflow.
++
++## Contract correction and historical reproduction
++
++The active oracle enforces event <= submission <= evaluation and exactly one signature reference. Both new workers reject mismatched manifest/observer policy references (identifier, version or digest) and duplicate receipt IDs before assessment. The original 98-fixture catalogue is unchanged. Separate verification checks all four fields for the oracle on 638 saved units and both workers in 1,276 comparisons, three signature-cardinality probes, and 18 expected worker rejections across nine malformed variants. All 540 generated-unit labels are unchanged.
++
++The current manuscript is `${MANUSCRIPT_ROOT}/GridWeaveV2/main.tex`; the older Markdown/Word working drafts retain their historical status. The corrected source and the old research capsule have different identities. Do not replace the original datasets, measurements, capsule or source records to make their hashes agree with the corrected tree.
++
++Fresh full-study runs now replay the verified saved generation-source snapshots for historical corpus byte reproduction. Preparation is excluded from the timed child interval and the mode is recorded in `generation_sources.json`. Active corrected generation is still available through the normal GridWeave launcher and creates a new source identity. Future generation profiles record CPU, RAM, Python and dependency metadata in `host.json` before execution; this metadata is not evidence about the historical study host. The original timing medians remain historical observations.
++
++Reproduce the separate contract verification into a fresh output directory:
++
++```bash
++./GridWeave/.venv/bin/python research/GridWeave_Paper1/scripts/verify_contract_corrections.py --output /tmp/gridweave-contract-verification
++```
+--- before/research/GridWeave_Paper1/PROTOTYPE_STATUS.json
++++ after/research/GridWeave_Paper1/PROTOTYPE_STATUS.json
+@@ -21,12 +21,24 @@
+   "byte_identical_regenerations": 6,
+   "conformance_and_regression_tests": 6,
+   "existing_consumer_contract_tests": 20,
+-  "implementation_independence": "Separate graph, recursive SQL and related VERCLO assessment logic; shared wire/cryptography and same-task nonblind authorship disclosed",
++  "implementation_independence": "Separate graph and recursive SQL assessment logic; shared wire utilities and envelope/profile admission. VERCLO has its own consumer path. Same-task nonblind authorship disclosed.",
+   "independent_human_adjudication_claimed": false,
+   "excluded_completion_requirements": [
+     "licensing",
+     "clean installations",
+     "public release",
+     "commercial deployment"
+-  ]
++  ],
++  "historical_study_record": true,
++  "active_contract_correction": {
++    "record": "corrections/2026-11-08-contract-v1/verification/summary.json",
++    "status": "PASS",
++    "oracle_saved_units": 638,
++    "checker_case_comparisons": 1276,
++    "preserved_generated_label_changes": 0,
++    "malformed_worker_rejections": 18,
++    "paper_prototype_tests": 13,
++    "generator_tests": 22,
++    "historical_results_replaced": false
++  }
+ }

@@ -1,0 +1,37 @@
+{
+  "version": "VERCLO-research-1.4.1",
+  "date": "2026-10-26",
+  "implementation_completion": "Validated for the supplied signed-E2 dataset and the declared finite research checks",
+  "general_implementation_correctness_proved": false,
+  "thesis_complete": false,
+  "dataset": "datasets/reference",
+  "current_predictions": "results/reference-final-2026-10-26/predictions",
+  "current_evaluation": "results/reference-final-2026-10-26/evaluation",
+  "audit": "results/audit-2026-10-26",
+  "evaluation_status": "PASS",
+  "closure_matches": 420,
+  "cases": 420,
+  "false_closures": 0,
+  "missed_closures": 0,
+  "tests": {
+    "verifier": 96,
+    "contracts": 20,
+    "ingestion_evaluation_portability": 6,
+    "abstract_model": 9,
+    "total": 131,
+    "subtests": 384
+  },
+  "model_to_code_cases": 18,
+  "bounded_abstract_configurations": 8087,
+  "lean_build_this_audit": "NOT_EXECUTED_NO_LOCAL_LEAN_OR_LAKE",
+  "remaining_research_limits": [
+    "The seven-family synthetic signed-E2 corpus is not an independently authored or external replication.",
+    "Finite conformance and differential checks do not prove full implementation refinement to the Lean model.",
+    "The formal model assumes authenticated observations and validated capability facts; native public data verifies configured signatures but does not prove every scope, authorization or timing assertion independently.",
+    "Synthetic E2 signatures do not establish trustworthy real execution time, physical deletion or absence of undisclosed copies.",
+    "The optional E3-E5 and network backends have focused conformance/fault checks; the provided dataset does not validate real mechanism attestation or arbitrary Byzantine executions.",
+    "Authenticated no-applicable-obligation certificates are not implemented by the native input profile; empty scopes are rejected.",
+    "Incremental validation snapshots require explicit revocation updates and epoch changes from their trusted supplier.",
+    "C-PaE replay and transition components are research conformance components; this audit does not establish an end-to-end distributed protocol refinement theorem."
+  ]
+}

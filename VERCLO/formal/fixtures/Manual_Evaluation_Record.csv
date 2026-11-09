@@ -1,0 +1,17 @@
+case_id,manual_outcome,discovered_asset_ids,obligation_ids,authorization_valid,declared_scope_complete,obligation_set_complete,obligation_coverage,evidence_validity,contradiction_free,exception_justification,evidence_continuity,baseline_verifiable,ready,manual_rationale
+WC-01-CLOSED,CLOSED,A0|A1,OBL::A0::I0|OBL::A1::I1,true,true,true,true,true,true,true,true,true,true,Every induced obligation has timely admissible success evidence.
+WC-02-CLOSED-WITH-EXCEPTIONS,CLOSED_WITH_EXCEPTIONS,A0|A1,OBL::A0::I0|OBL::A1::I1,true,true,true,true,true,true,true,true,true,true,One obligation succeeds and the other has an authenticated unexpired policy-authorised exception.
+WC-03-PARTIALLY-CLOSED,PARTIALLY_CLOSED,A0|A1,OBL::A0::I0|OBL::A1::I1,true,true,true,false,true,true,true,true,true,true,Exactly one of two obligations has an admissible resolution.
+WC-04-OPEN,OPEN,A0|A1,OBL::A0::I0|OBL::A1::I1,true,true,true,false,true,true,true,true,true,true,The deadline passed with no admissible resolution.
+WC-05-DISPUTED,DISPUTED,A0|A1,OBL::A0::I0|OBL::A1::I1,true,true,true,true,true,false,true,true,true,true,Two admissible assertions give incompatible dispositions for the same obligation.
+WC-06-UNVERIFIABLE,UNVERIFIABLE,A0|A1,OBL::A0::I0|OBL::A1::I1,true,true,false,false,true,true,true,true,false,true,The obligation-set commitment is invalid so the evaluation baseline is not verifiable.
+WC-07-IN-PROGRESS,IN_PROGRESS,A0|A1,OBL::A0::I0|OBL::A1::I1,true,true,true,false,true,true,true,true,true,false,The deadline has not passed and early closure is not permitted.
+WC-08-HIDDEN-LINEAGE-LIMIT,CLOSED,A0,OBL::A0::I0,true,true,true,true,true,true,true,true,true,true,Closure is correct only relative to the authenticated observable graph; the perfectly hidden derivative is unknowable.
+WC-09-DISCOVERED-LINEAGE,PARTIALLY_CLOSED,A0|A1,OBL::A0::I0|OBL::A1::I1,true,true,true,false,true,true,true,true,true,true,Authenticated disclosure expands reachability and induces an unresolved second obligation.
+WC-10-LATE-EVIDENCE,OPEN,A0,OBL::A0::I0,true,true,true,false,true,true,true,true,true,true,The success assertion is observable but its event time is later than the obligation deadline.
+WC-11-INVALID-EXCEPTION,OPEN,A0,OBL::A0::I0,true,true,true,false,true,true,false,true,true,true,The asserted exception is not issued by an admitted exception authority.
+WC-12-BROKEN-CONTINUITY,OPEN,A0,OBL::A0::I0,true,true,true,false,false,true,true,false,true,true,Missing predecessor material breaks evidence continuity and makes the receipt inadmissible.
+WC-13-EARLY-CLOSURE,CLOSED,A0|A1,OBL::A0::I0|OBL::A1::I1,true,true,true,true,true,true,true,true,true,true,The policy permits early closure and every obligation already has a terminal success report.
+WC-14-NO-APPLICABLE,CLOSED,A0,,true,true,true,true,true,true,true,true,true,true,The authenticated no-applicable-obligations determination makes empty closure non-vacuous.
+WC-15-EMPTY-AMBIGUOUS,UNVERIFIABLE,A0,,true,true,true,true,true,true,true,true,false,true,An empty set without an authenticated no-applicable determination cannot establish the baseline.
+WC-16-VALID-KEY-FALSE-PHYSICAL-CLAIM,CLOSED,A0,OBL::A0::I0,true,true,true,true,true,true,true,true,true,true,The evidence-relative model accepts a valid signed assertion and cannot infer contrary physical state.

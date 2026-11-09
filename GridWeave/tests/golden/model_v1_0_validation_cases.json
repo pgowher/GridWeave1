@@ -1,0 +1,56 @@
+{
+  "suite_format": "pae.model-validation.v1",
+  "suite_id": "PAE-MODEL-v1.0-VALIDATION",
+  "version": "1.0.0",
+  "verifier_input_allowed": false,
+  "cases": [
+    {
+      "case_id": "MV-OMITTED-DERIVATIVE",
+      "class": "omitted_derivative",
+      "source": "WC-09-DISCOVERED-LINEAGE",
+      "expected_outcome": "PARTIALLY_CLOSED",
+      "expected_required_identifier": "OBL::A1::I1",
+      "rq_ids": ["RQ1", "RQ3"],
+      "experiment_ids": ["EXP-LINEAGE-DISCLOSURE", "EXP-VISIBILITY"]
+    },
+    {
+      "case_id": "MV-RETAINED-BACKUP",
+      "class": "retained_backup",
+      "source": "WC-01-CLOSED",
+      "transform": "add_declared_backup_replica_without_resolution",
+      "expected_outcome": "PARTIALLY_CLOSED",
+      "expected_required_identifier": "OBL::A0::I-BACKUP",
+      "rq_ids": ["RQ1", "RQ4"],
+      "experiment_ids": ["EXP-REPLICA-COVERAGE", "EXP-CUSTODIAN-FAILURE"]
+    },
+    {
+      "case_id": "MV-INVALID-EXCEPTION",
+      "class": "invalid_exception",
+      "source": "WC-11-INVALID-EXCEPTION",
+      "expected_outcome": "OPEN",
+      "expected_false_predicate": "exception_justification",
+      "rq_ids": ["RQ1", "RQ2"],
+      "experiment_ids": ["EXP-EXCEPTION-AUTHORITY"]
+    },
+    {
+      "case_id": "MV-CONTRADICTORY-RECEIPTS",
+      "class": "contradictory_receipts",
+      "closure_source": "WC-05-DISPUTED",
+      "grade_source": "B-CONFLICT",
+      "expected_outcome": "DISPUTED",
+      "expected_grade_status": "DISPUTED",
+      "rq_ids": ["RQ2", "RQ4"],
+      "experiment_ids": ["EXP-EQUIVOCATION", "EXP-EVIDENCE-CONFLICT"]
+    },
+    {
+      "case_id": "MV-INCOMPLETE-VISIBILITY",
+      "class": "incomplete_visibility",
+      "source": "WC-08-HIDDEN-LINEAGE-LIMIT",
+      "transform": "remove_perfectly_hidden_entities_and_relations",
+      "expected_outcome": "CLOSED",
+      "expected_equivalence": "observable_decision_unchanged",
+      "rq_ids": ["RQ1", "RQ3"],
+      "experiment_ids": ["EXP-HIDDEN-LINEAGE-BOUNDARY", "EXP-VISIBILITY"]
+    }
+  ]
+}

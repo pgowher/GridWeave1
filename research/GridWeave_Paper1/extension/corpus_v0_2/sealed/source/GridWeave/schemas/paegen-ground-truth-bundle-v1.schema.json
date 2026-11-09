@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/paegen-ground-truth/v1",
+  "$comment": "PaEGen interface 1.0.0; semantics frozen by PAE-FECM-v1.0.0.",
+  "title": "PaEGen sealed erasure-case ground truth",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "interface_version", "model_version", "access_class", "run_id", "scenario_id", "replicate_id", "config_sha256", "seed_stream_digest", "proof_limit_statement", "cases"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "interface_version": {"const": "1.0.0"},
+    "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "access_class": {"const": "evaluator_only"},
+    "run_id": {"type": "string", "minLength": 1},
+    "scenario_id": {"type": "string", "minLength": 1},
+    "replicate_id": {"type": "integer", "minimum": 0},
+    "config_sha256": {"$ref": "#/$defs/Digest"},
+    "seed_stream_digest": {"$ref": "#/$defs/Digest"},
+    "proof_limit_statement": {"type": "string", "minLength": 1},
+    "scenario_profile_id": {"type": "string", "minLength": 1},
+    "variant_id": {"type": "string", "minLength": 1},
+    "variant_class": {"enum": ["successful_closure", "partial_or_unverifiable", "adversarial_or_disputed"]},
+    "cases": {"type": "array", "items": {"$ref": "#/$defs/Case"}}
+  },
+  "$defs": {
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "StringArray": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "Obligation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["obligation_id", "event_id", "obligation_type", "subject_asset_id", "responsible_principal_id", "deadline", "coverage_member_ids", "exempt_member_ids", "dependency_event_ids"],
+      "properties": {
+        "obligation_id": {"type": "string"}, "event_id": {"type": "string"}, "obligation_type": {"type": "string"},
+        "subject_asset_id": {"type": "string"}, "responsible_principal_id": {"type": "string"},
+        "deadline": {"type": "string", "format": "date-time"},
+        "coverage_member_ids": {"$ref": "#/$defs/StringArray"}, "exempt_member_ids": {"$ref": "#/$defs/StringArray"},
+        "dependency_event_ids": {"$ref": "#/$defs/StringArray"}
+      }
+    },
+    "Relationship": {
+      "type": "object", "additionalProperties": false,
+      "required": ["edge_id", "scenario_id", "edge_type", "source_id", "target_id", "source_table", "target_table", "reason_code"],
+      "properties": {
+        "edge_id": {"type": "string"}, "scenario_id": {"type": "string"}, "edge_type": {"type": "string"},
+        "source_id": {"type": "string"}, "target_id": {"type": "string"}, "source_table": {"type": "string"},
+        "target_table": {"type": "string"}, "reason_code": {"type": "string"}
+      }
+    },
+    "Disposition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["obligation_id", "status", "world_disposition", "evidence_ids", "reason_codes"],
+      "properties": {
+        "obligation_id": {"type": "string"},
+        "status": {"enum": ["SUCCESS", "EXCEPTION", "UNRESOLVED"]},
+        "world_disposition": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM", "RETAINED", "FAILED", "UNKNOWN"]},
+        "evidence_ids": {"$ref": "#/$defs/StringArray"}, "reason_codes": {"$ref": "#/$defs/StringArray"}
+      }
+    },
+    "Exception": {
+      "type": "object", "additionalProperties": false,
+      "required": ["exception_id", "obligation_id", "replica_ids", "justification_code", "valid", "evidence_ids"],
+      "properties": {
+        "exception_id": {"type": "string"}, "obligation_id": {"type": "string"},
+        "replica_ids": {"$ref": "#/$defs/StringArray"}, "justification_code": {"type": "string"},
+        "valid": {"type": "boolean"}, "evidence_ids": {"$ref": "#/$defs/StringArray"}
+      }
+    },
+    "Case": {
+      "type": "object", "additionalProperties": false,
+      "required": ["case_id", "workflow_instance_id", "accepted_at", "evaluation_time", "root_asset_ids", "obligation_graph", "dispositions", "exceptions", "evidence", "closure_ground_truth"],
+      "properties": {
+        "case_id": {"type": "string"}, "workflow_instance_id": {"type": "string"},
+        "accepted_at": {"type": "string", "format": "date-time"}, "evaluation_time": {"type": "string", "format": "date-time"},
+        "root_asset_ids": {"$ref": "#/$defs/StringArray"},
+        "obligation_graph": {
+          "type": "object", "additionalProperties": false,
+          "required": ["asset_ids", "replica_ids", "relationship_edges", "obligations"],
+          "properties": {
+            "asset_ids": {"$ref": "#/$defs/StringArray"}, "replica_ids": {"$ref": "#/$defs/StringArray"},
+            "relationship_edges": {"type": "array", "items": {"$ref": "#/$defs/Relationship"}},
+            "obligations": {"type": "array", "items": {"$ref": "#/$defs/Obligation"}}
+          }
+        },
+        "dispositions": {"type": "array", "items": {"$ref": "#/$defs/Disposition"}},
+        "exceptions": {"type": "array", "items": {"$ref": "#/$defs/Exception"}},
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["receipt", "verification"],
+            "properties": {
+              "receipt": {"type": "object", "required": ["receipt_id", "obligation_id", "verification_status_truth"]},
+              "verification": {"type": "object", "required": ["receipt_id", "truth_matches_declared"]}
+            }
+          }
+        },
+        "closure_ground_truth": {
+          "type": "object", "additionalProperties": false,
+          "required": ["outcome", "resolved_obligation_ids", "unresolved_obligation_ids", "reason_codes"],
+          "properties": {
+            "outcome": {"enum": ["CLOSED", "CLOSED_WITH_EXCEPTIONS", "PARTIALLY_CLOSED", "OPEN", "DISPUTED", "UNVERIFIABLE"]},
+            "resolved_obligation_ids": {"$ref": "#/$defs/StringArray"}, "unresolved_obligation_ids": {"$ref": "#/$defs/StringArray"},
+            "reason_codes": {"$ref": "#/$defs/StringArray"}
+          }
+        }
+      }
+    }
+  }
+}

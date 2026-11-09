@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0", "model_version": "PAE-FECM-v1.0.0",
+  "scenario_id": "PBE-SG-BILLING-SETTLEMENT-EXCEPTION", "title": "Billing and settlement retention exception", "lifecycle_trigger": "BILLING_SETTLEMENT_EXCEPTION", "time_origin": "2026-07-01T00:00:00Z",
+  "standards_basis": [
+    {"standard_id": "IEC-61968-9:2024", "authoritative_url": "https://webstore.iec.ch/en/publication/75041", "applied_concepts": ["MeterReading", "billing", "time-based-energy-data"]},
+    {"standard_id": "IEC-61968-8:2015", "authoritative_url": "https://webstore.iec.ch/en/publication/22537", "applied_concepts": ["customer-agreement", "customer-operations", "service-request"]},
+    {"standard_id": "GDPR-Article-17-exceptions", "authoritative_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679", "applied_concepts": ["legal-obligation", "legal-claims", "bounded-retention"]}
+  ],
+  "synthetic_data_profile": {"mode": "synthetic_only", "subject_namespace": "SYN-BILLING", "direct_identifiers_prohibited": true},
+  "organizations": [
+    {"organization_id": "ORG-BS-SUPPLIER", "organization_type": "SUPPLIER", "roles": ["CONTROLLER", "CUSTODIAN"]},
+    {"organization_id": "ORG-BS-SETTLEMENT", "organization_type": "SETTLEMENT_BODY", "roles": ["PROCESSOR", "CUSTODIAN"]},
+    {"organization_id": "ORG-BS-DSO", "organization_type": "DISTRIBUTION_OPERATOR", "roles": ["AUDITOR"]}
+  ],
+  "repositories": [
+    {"repository_id": "REPO-BS-MDM", "organization_id": "ORG-BS-SUPPLIER", "repository_kind": "METER_DATA_MANAGEMENT", "region": "GB", "observable": true},
+    {"repository_id": "REPO-BS-BILLING", "organization_id": "ORG-BS-SUPPLIER", "repository_kind": "BILLING_LEDGER", "region": "GB", "observable": true},
+    {"repository_id": "REPO-BS-SETTLEMENT", "organization_id": "ORG-BS-SETTLEMENT", "repository_kind": "SETTLEMENT_ARCHIVE", "region": "GB", "observable": true}
+  ],
+  "assets": [
+    {"asset_id": "ASSET-BS-INTERVAL", "asset_type": "METER_READING", "repository_id": "REPO-BS-MDM", "parent_asset_ids": [], "replica_role": "primary", "personal_data_category": "PSEUDONYMOUS"},
+    {"asset_id": "ASSET-BS-INVOICE", "asset_type": "CUSTOMER_INVOICE", "repository_id": "REPO-BS-BILLING", "parent_asset_ids": ["ASSET-BS-INTERVAL"], "replica_role": "derived", "personal_data_category": "ACCOUNT"},
+    {"asset_id": "ASSET-BS-SETTLEMENT", "asset_type": "SETTLEMENT_RECORD", "repository_id": "REPO-BS-SETTLEMENT", "parent_asset_ids": ["ASSET-BS-INTERVAL"], "replica_role": "export", "personal_data_category": "PSEUDONYMOUS"}
+  ],
+  "policy_profile": {"profile_id": "POL-BILLING-SETTLEMENT-v1", "version": "1.0.0", "authorization_basis": "SERVICE_END_WITH_STATUTORY_RETENTION", "deadline_hours": 720, "valid_dispositions": ["ERASED", "RETAINED"], "evidence_floor": "E4"},
+  "obligations": [
+    {"template_id": "OBL-BS-INTERVAL", "asset_ids": ["ASSET-BS-INTERVAL"], "responsible_role": "CONTROLLER", "required_disposition": "ERASED", "deadline_offset_hours": 168, "evidence_types": ["deletion_acknowledgement"]},
+    {"template_id": "OBL-BS-INVOICE", "asset_ids": ["ASSET-BS-INVOICE"], "responsible_role": "CUSTODIAN", "required_disposition": "ERASED", "deadline_offset_hours": 168, "evidence_types": ["deletion_acknowledgement"]},
+    {"template_id": "OBL-BS-SETTLEMENT-RETAIN", "asset_ids": ["ASSET-BS-SETTLEMENT"], "responsible_role": "PROCESSOR", "required_disposition": "RETAINED", "deadline_offset_hours": 720, "evidence_types": ["retention_exception_attestation", "signed_audit_receipt"]}
+  ],
+  "exceptions": [
+    {"exception_id": "EXC-BS-STATUTORY-SETTLEMENT", "applies_to_obligation_id": "OBL-BS-SETTLEMENT-RETAIN", "justification_code": "STATUTORY_SETTLEMENT_AND_LEGAL_CLAIMS", "maximum_retention_days": 2555, "required_evidence_types": ["retention_exception_attestation", "policy_snapshot"]}
+  ],
+  "observable_metadata": {"observer_profiles": [{"observer_profile_id": "OBS-SG-AUDITOR", "access_class": "restricted"}, {"observer_profile_id": "OBS-SG-PUBLIC", "access_class": "public"}], "visible_fields": ["UsagePoint", "invoiceRef", "settlementRunRef", "retentionEnd"], "redacted_fields": ["accountNumber", "bankDetails", "serviceAddress"], "claim_disposition_visibility": "visible"},
+  "variants": [
+    {"variant_id": "success-with-exception", "variant_class": "successful_closure", "expected_closure": "CLOSED_WITH_EXCEPTIONS", "mutations": [], "expected_reason_codes": ["ALL_OBLIGATIONS_RESOLVED", "VALID_EXCEPTION_PRESENT"]},
+    {"variant_id": "partial-invoice", "variant_class": "partial_or_unverifiable", "expected_closure": "PARTIALLY_CLOSED", "mutations": [{"operation": "OMIT_RESOLUTION", "target_obligation_id": "OBL-BS-INVOICE"}], "expected_reason_codes": ["RESOLVED_AND_UNRESOLVED_OBLIGATIONS"]},
+    {"variant_id": "disputed-exception", "variant_class": "adversarial_or_disputed", "expected_closure": "DISPUTED", "mutations": [{"operation": "CONTRADICT_EVIDENCE", "target_obligation_id": "OBL-BS-SETTLEMENT-RETAIN"}], "expected_reason_codes": ["UNRESOLVED_CONTRADICTION"]}
+  ]
+}

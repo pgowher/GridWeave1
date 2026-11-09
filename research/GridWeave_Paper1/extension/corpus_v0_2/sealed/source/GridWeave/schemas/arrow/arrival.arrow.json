@@ -1,0 +1,149 @@
+{
+  "schema_id": "htgl.dataset.v1.arrival",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "6b5f925ef638c2337da6f1347346e97e77a6bac8a318d254d903e1fa6c143506",
+  "table_name": "arrival",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "arrival_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Arrival key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "replicate_id",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Repetition."
+      }
+    },
+    {
+      "name": "timestamp",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Arrival time."
+      }
+    },
+    {
+      "name": "arrival_bin",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Bin index."
+      }
+    },
+    {
+      "name": "event_family",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "event_family",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Consent, access, disclosure, correction, retention, erasure, operational, audit, etc."
+      }
+    },
+    {
+      "name": "region_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Region mark."
+      }
+    },
+    {
+      "name": "subject_cohort_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Subject/cohort mark."
+      }
+    },
+    {
+      "name": "model_class",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "arrival_model_class",
+        "privacy_class": "restricted",
+        "semantic_invariant": "conditioned_NHPP, unconditioned_NHPP, MMPP, Hawkes or replay."
+      }
+    },
+    {
+      "name": "intensity_per_second",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Calibrated \u03bb(t) at arrival."
+      }
+    },
+    {
+      "name": "regime_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "MMPP regime."
+      }
+    },
+    {
+      "name": "parent_arrival_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Triggering arrival for cascades."
+      }
+    },
+    {
+      "name": "anomaly_designated",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Designation before trace generation."
+      }
+    },
+    {
+      "name": "represented_arrival_count",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Population weight."
+      }
+    }
+  ]
+}

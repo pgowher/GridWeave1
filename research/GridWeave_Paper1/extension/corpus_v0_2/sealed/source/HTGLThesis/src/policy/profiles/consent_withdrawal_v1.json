@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "model_version": "PAE-FECM-v1.0.0",
+  "profile_id": "VERCLO-POLICY-CONSENT-WITHDRAWAL",
+  "version": "1.0.0",
+  "authorization_basis": "AUTHENTICATED_CONSENT_WITHDRAWAL",
+  "applicable_asset_kinds": ["interval_reading", "account_record", "charging_session", "feature", "export"],
+  "applicable_replica_classes": ["primary", "secondary", "cache", "backup", "export", "derived"],
+  "default_rule": {"deadline_hours": 72, "minimum_evidence_grade": "E3", "permitted_dispositions": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM"]},
+  "overrides": [],
+  "exception_authority_ids": ["AUTHORITY-RETENTION-REVIEW"],
+  "early_closure_allowed": true
+}

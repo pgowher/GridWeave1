@@ -1,0 +1,269 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/ground-truth/v1",
+  "$comment": "Frozen semantic baseline: Federated Erasure Closure Model v1.0.0 (PAE-FECM-v1.0.0).",
+  "title": "PaEGen evaluator-only ground-truth bundle",
+  "description": "Sealed scenario truth. This schema is forbidden as a VERCLO input contract.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "scenario_id",
+    "generated_at",
+    "policy_profiles",
+    "observer_profile_ids",
+    "state",
+    "transition_trace",
+    "adversary_plan",
+    "oracle"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "scenario_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+    "generated_at": {"$ref": "https://pae.local/schema/common/v1#/$defs/Timestamp"},
+    "policy_profiles": {
+      "type": "array",
+      "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/PolicyRef"},
+      "minItems": 1
+    },
+    "observer_profile_ids": {
+      "type": "array",
+      "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "state": {"$ref": "#/$defs/GroundTruthState"},
+    "transition_trace": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/TransitionTrace"},
+      "minItems": 1
+    },
+    "adversary_plan": {"$ref": "#/$defs/AdversaryPlan"},
+    "oracle": {"$ref": "#/$defs/Oracle"}
+  },
+  "$defs": {
+    "KeyDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_id", "owner_principal_id", "algorithm", "status", "compromised"],
+      "properties": {
+        "key_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+        "owner_principal_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+        "algorithm": {"type": "string", "minLength": 1, "maxLength": 64},
+        "status": {"enum": ["ACTIVE", "REVOKED", "EXPIRED"]},
+        "compromised": {"type": "boolean"}
+      }
+    },
+    "GroundTruthState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "at",
+        "organisations",
+        "principals",
+        "role_assignments",
+        "repositories",
+        "assets",
+        "replicas",
+        "relationships",
+        "cases",
+        "obligations",
+        "messages",
+        "evidence",
+        "exceptions",
+        "challenges",
+        "network_links",
+        "keys"
+      ],
+      "properties": {
+        "at": {"$ref": "https://pae.local/schema/common/v1#/$defs/Timestamp"},
+        "organisations": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/OrganisationTruth"}},
+        "principals": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/PrincipalTruth"}},
+        "role_assignments": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/RoleAssignment"}},
+        "repositories": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/RepositoryTruth"}},
+        "assets": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/AssetTruth"}},
+        "replicas": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/ReplicaTruth"}},
+        "relationships": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/RelationshipTruth"}},
+        "cases": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/CaseRecord"}},
+        "obligations": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Obligation"}},
+        "messages": {"type": "array", "items": {"$ref": "#/$defs/PaEGenMessage"}},
+        "evidence": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/EvidenceTruth"}},
+        "exceptions": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/ExceptionRecord"}},
+        "challenges": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/ChallengeRecord"}},
+        "network_links": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/NetworkLinkTruth"}},
+        "keys": {"type": "array", "items": {"$ref": "#/$defs/KeyDescriptor"}}
+      }
+    },
+    "PaEGenMessage": {
+      "allOf": [
+        {"$ref": "https://pae.local/schema/common/v1#/$defs/Message"},
+        {
+          "not": {
+            "required": ["message_type"],
+            "properties": {"message_type": {"const": "CLOSURE_DECISION"}}
+          }
+        }
+      ]
+    },
+    "TransitionTrace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transition_id",
+        "transition_type",
+        "actor_principal_id",
+        "actor_role",
+        "occurred_at",
+        "input_refs",
+        "output_refs",
+        "emitted_message_refs",
+        "truth_only",
+        "status",
+        "reason_codes"
+      ],
+      "properties": {
+        "transition_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+        "transition_type": {
+          "enum": [
+            "REGISTER_DOMAIN",
+            "CREATE_ASSET",
+            "CREATE_REPLICA",
+            "RECORD_DERIVATION",
+            "RECORD_EXPORT",
+            "SUBMIT_CASE",
+            "ACCEPT_CASE",
+            "DECLARE_SCOPE",
+            "INDUCE_OBLIGATIONS",
+            "DISPATCH_OBLIGATION",
+            "EXECUTE_DISPOSITION",
+            "ASSERT_EXCEPTION",
+            "SUBMIT_EVIDENCE",
+            "ANCHOR_EVIDENCE",
+            "DISCLOSE_LINEAGE",
+            "COMMIT_VIEW",
+            "OPEN_CHALLENGE",
+            "RESOLVE_CHALLENGE",
+            "CHANGE_CONNECTIVITY",
+            "REQUEST_CLOSURE",
+            "EVALUATE_CLOSURE"
+          ]
+        },
+        "actor_principal_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+        "actor_role": {"$ref": "https://pae.local/schema/common/v1#/$defs/Role"},
+        "occurred_at": {"$ref": "https://pae.local/schema/common/v1#/$defs/Timestamp"},
+        "input_refs": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/EntityRef"}},
+        "output_refs": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/EntityRef"}},
+        "emitted_message_refs": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"}, "uniqueItems": true},
+        "truth_only": {"type": "boolean"},
+        "status": {"enum": ["APPLIED", "REJECTED"]},
+        "reason_codes": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"}, "uniqueItems": true}
+      }
+    },
+    "AdversaryAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_id", "capability_id", "controller_principal_ids", "target_refs", "active_from", "parameters"],
+      "properties": {
+        "action_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+        "capability_id": {
+          "enum": [
+            "CAP-OMISSION",
+            "CAP-REPLAY",
+            "CAP-BACKDATE",
+            "CAP-FORGERY",
+            "CAP-EQUIVOCATION",
+            "CAP-COLLUSION",
+            "CAP-DELAYED-EXECUTION",
+            "CAP-INCOMPLETE-LINEAGE",
+            "CAP-NETWORK-PARTITION"
+          ]
+        },
+        "controller_principal_ids": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"}, "minItems": 1, "uniqueItems": true},
+        "target_refs": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/EntityRef"}, "minItems": 1},
+        "active_from": {"$ref": "https://pae.local/schema/common/v1#/$defs/Timestamp"},
+        "active_to": {"$ref": "https://pae.local/schema/common/v1#/$defs/Timestamp"},
+        "injected_transition_ref": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+        "parameters": {"type": "object"}
+      }
+    },
+    "AdversaryPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "controlled_principal_ids",
+        "controlled_repository_ids",
+        "compromised_key_ids",
+        "controlled_link_ids",
+        "enabled_capabilities",
+        "actions"
+      ],
+      "properties": {
+        "controlled_principal_ids": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"}, "uniqueItems": true},
+        "controlled_repository_ids": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"}, "uniqueItems": true},
+        "compromised_key_ids": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"}, "uniqueItems": true},
+        "controlled_link_ids": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"}, "uniqueItems": true},
+        "enabled_capabilities": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "CAP-OMISSION",
+              "CAP-REPLAY",
+              "CAP-BACKDATE",
+              "CAP-FORGERY",
+              "CAP-EQUIVOCATION",
+              "CAP-COLLUSION",
+              "CAP-DELAYED-EXECUTION",
+              "CAP-INCOMPLETE-LINEAGE",
+              "CAP-NETWORK-PARTITION"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "actions": {"type": "array", "items": {"$ref": "#/$defs/AdversaryAction"}}
+      }
+    },
+    "ObligationTruth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["obligation_id", "expected_resolution", "world_disposition", "reason_codes"],
+      "properties": {
+        "obligation_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+        "expected_resolution": {"enum": ["SUCCESS", "EXCEPTION", "UNRESOLVED", "OUTSIDE_DECLARED_SCOPE"]},
+        "world_disposition": {"enum": ["PRESENT", "ERASED", "CRYPTO_ERASED", "TRANSFORMED", "RETAINED", "FAILED", "UNKNOWN"]},
+        "reason_codes": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"}, "uniqueItems": true}
+      }
+    },
+    "CaseOracle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "evaluation_time",
+        "expected_outcome",
+        "baseline_verifiable_truth",
+        "obligation_truth",
+        "out_of_declared_scope_replica_refs",
+        "reason_codes"
+      ],
+      "properties": {
+        "case_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+        "evaluation_time": {"$ref": "https://pae.local/schema/common/v1#/$defs/Timestamp"},
+        "expected_outcome": {"enum": ["CLOSED", "CLOSED_WITH_EXCEPTIONS", "PARTIALLY_CLOSED", "OPEN", "DISPUTED", "UNVERIFIABLE"]},
+        "baseline_verifiable_truth": {"type": "boolean"},
+        "obligation_truth": {"type": "array", "items": {"$ref": "#/$defs/ObligationTruth"}},
+        "out_of_declared_scope_replica_refs": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"}, "uniqueItems": true},
+        "reason_codes": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"}, "minItems": 1, "uniqueItems": true}
+      }
+    },
+    "Oracle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["specification_id", "derived_by", "case_expectations"],
+      "properties": {
+        "specification_id": {"const": "PAE-FM-2.1"},
+        "derived_by": {"const": "INDEPENDENT_REFERENCE_SEMANTICS"},
+        "case_expectations": {"type": "array", "items": {"$ref": "#/$defs/CaseOracle"}, "minItems": 1}
+      }
+    }
+  }
+}

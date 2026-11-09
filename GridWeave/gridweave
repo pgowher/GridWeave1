@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+gridweave_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -x "$gridweave_root/.venv/bin/python" ]]; then
+    gridweave_python="$gridweave_root/.venv/bin/python"
+else
+    gridweave_python="${PYTHON:-python3}"
+fi
+exec "$gridweave_python" "$gridweave_root/run.py" "$@"

@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verclo.example/schemas/publication-campaign-report-v1.json",
+  "title": "VERCLO publication campaign report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "report_format",
+    "campaign_id",
+    "campaign_config_sha256",
+    "seed",
+    "model_version",
+    "protocol_version",
+    "evaluation_time",
+    "scenario_count",
+    "fault_families",
+    "policies",
+    "metrics",
+    "results",
+    "limitations",
+    "report_sha256"
+  ],
+  "properties": {
+    "report_format": {"const": "verclo.publication-campaign-report.v1"},
+    "campaign_id": {"type": "string", "minLength": 1},
+    "campaign_config_sha256": {"$ref": "#/$defs/sha256"},
+    "seed": {"type": "integer", "minimum": 0},
+    "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "protocol_version": {"const": "C-PAE-1.0.0"},
+    "evaluation_time": {"type": "string", "format": "date-time"},
+    "scenario_count": {"type": "integer", "minimum": 1},
+    "fault_families": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "policies": {
+      "type": "array",
+      "const": ["receipt-presence", "authenticated-receipt", "evidence-grade", "verclo"]
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt-presence", "authenticated-receipt", "evidence-grade", "verclo"],
+      "properties": {
+        "receipt-presence": {"$ref": "#/$defs/metrics"},
+        "authenticated-receipt": {"$ref": "#/$defs/metrics"},
+        "evidence-grade": {"$ref": "#/$defs/metrics"},
+        "verclo": {"$ref": "#/$defs/metrics"}
+      }
+    },
+    "results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/scenarioResult"}
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "report_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "rate": {"type": "number", "minimum": 0, "maximum": 1},
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "true_positive",
+        "true_negative",
+        "false_positive",
+        "false_negative",
+        "accuracy",
+        "balanced_accuracy",
+        "false_acceptance_rate",
+        "false_rejection_rate"
+      ],
+      "properties": {
+        "true_positive": {"type": "integer", "minimum": 0},
+        "true_negative": {"type": "integer", "minimum": 0},
+        "false_positive": {"type": "integer", "minimum": 0},
+        "false_negative": {"type": "integer", "minimum": 0},
+        "accuracy": {"$ref": "#/$defs/rate"},
+        "balanced_accuracy": {"$ref": "#/$defs/rate"},
+        "false_acceptance_rate": {"$ref": "#/$defs/rate"},
+        "false_rejection_rate": {"$ref": "#/$defs/rate"}
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["accepted_closed", "correct", "raw_decision", "reason_codes"],
+      "properties": {
+        "accepted_closed": {"type": "boolean"},
+        "correct": {"type": "boolean"},
+        "raw_decision": {"type": "string", "minLength": 1},
+        "reason_codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "scenarioResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenario_id", "fault_family", "expected_closed", "injected_faults", "mutation_log", "decisions"],
+      "properties": {
+        "scenario_id": {"type": "string", "minLength": 1},
+        "fault_family": {"type": "string", "minLength": 1},
+        "expected_closed": {"type": "boolean"},
+        "injected_faults": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "mutation_log": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "decisions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["receipt-presence", "authenticated-receipt", "evidence-grade", "verclo"],
+          "properties": {
+            "receipt-presence": {"$ref": "#/$defs/decision"},
+            "authenticated-receipt": {"$ref": "#/$defs/decision"},
+            "evidence-grade": {"$ref": "#/$defs/decision"},
+            "verclo": {"$ref": "#/$defs/decision"}
+          }
+        }
+      }
+    }
+  }
+}

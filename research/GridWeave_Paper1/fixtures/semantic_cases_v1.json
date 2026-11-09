@@ -1,0 +1,202 @@
+{
+  "version": "Paper1-Specification-Fixtures-1.1",
+  "authorship": "Constructed in this task from the declared profile; not human-independent or blind authoring",
+  "cases": [
+    {
+      "name": "resolved",
+      "expected": "CLOSED",
+      "target": "COVERED"
+    },
+    {
+      "name": "missing_one",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "MISSING"
+    },
+    {
+      "name": "missing_all",
+      "expected": "OPEN",
+      "all": "MISSING"
+    },
+    {
+      "name": "authenticated_conflict",
+      "expected": "DISPUTED",
+      "target": "CONTRADICTORY"
+    },
+    {
+      "name": "invalid_signature",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "untrusted_key",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "wrong_issuer",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "wrong_asset",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "wrong_replica",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "scope_incomplete",
+      "expected": "UNVERIFIABLE",
+      "target": "COVERED",
+      "baseline": false
+    },
+    {
+      "name": "scope_commitment_mismatch",
+      "expected": "UNVERIFIABLE",
+      "target": "COVERED",
+      "baseline": false
+    },
+    {
+      "name": "before_deadline",
+      "expected": "IN_PROGRESS",
+      "target": "COVERED"
+    },
+    {
+      "name": "before_deadline_incomplete_scope",
+      "expected": "IN_PROGRESS",
+      "target": "COVERED",
+      "baseline": false
+    },
+    {
+      "name": "active_exception",
+      "expected": "CLOSED_WITH_EXCEPTIONS",
+      "target": "EXCEPTED"
+    },
+    {
+      "name": "exact_exception_expiry",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "MISSING"
+    },
+    {
+      "name": "after_exception_expiry",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "MISSING"
+    },
+    {
+      "name": "expired_receipt",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "future_event",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "not_yet_valid",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "late_receipt",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "LATE"
+    },
+    {
+      "name": "exact_receipt_deadline",
+      "expected": "CLOSED",
+      "target": "COVERED"
+    },
+    {
+      "name": "exact_case_deadline",
+      "expected": "CLOSED",
+      "target": "COVERED"
+    },
+    {
+      "name": "all_late",
+      "expected": "OPEN",
+      "all": "LATE"
+    },
+    {
+      "name": "open_challenge",
+      "expected": "DISPUTED",
+      "target": "COVERED"
+    },
+    {
+      "name": "resolved_challenge",
+      "expected": "CLOSED",
+      "target": "COVERED"
+    },
+    {
+      "name": "authenticated_failure",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "nonterminal_evidence",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "exception_bad_signature",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "MISSING"
+    },
+    {
+      "name": "exception_unknown_authority",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "MISSING"
+    },
+    {
+      "name": "exception_effective_after_deadline",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "MISSING"
+    },
+    {
+      "name": "conflict_with_exception",
+      "expected": "DISPUTED",
+      "target": "CONTRADICTORY"
+    },
+    {
+      "name": "late_conflicting_statement",
+      "expected": "DISPUTED",
+      "target": "CONTRADICTORY"
+    },
+    {
+      "name": "valid_receipt_with_invalid_conflict",
+      "expected": "CLOSED",
+      "target": "COVERED"
+    },
+    {
+      "name": "graph_unavailable",
+      "expected": "UNVERIFIABLE",
+      "target": "COVERED",
+      "baseline": false
+    },
+    {
+      "name": "unresolved_reference",
+      "expected": "UNVERIFIABLE",
+      "target": "COVERED",
+      "baseline": false
+    },
+    {
+      "name": "no_applicable_obligations",
+      "expected": "UNVERIFIABLE",
+      "baseline": false,
+      "empty_obligations": true
+    },
+    {
+      "name": "submission_before_event",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    },
+    {
+      "name": "future_submission",
+      "expected": "PARTIALLY_CLOSED",
+      "target": "INVALID"
+    }
+  ]
+}

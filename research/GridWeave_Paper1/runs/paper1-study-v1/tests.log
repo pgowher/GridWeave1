@@ -1,0 +1,11 @@
+test_invalid_exception_assertions_do_not_abort_a_batch (test_consumer_regressions.ConsumerBoundaryRegression.test_invalid_exception_assertions_do_not_abort_a_batch) ... ok
+test_all_explicit_expectations_with_both_algorithms (test_semantics.SemanticConformance.test_all_explicit_expectations_with_both_algorithms) ... ok
+test_cycle_is_rejected_by_both_algorithms (test_semantics.SemanticConformance.test_cycle_is_rejected_by_both_algorithms) ... ok
+test_fault_catalogue_edits_exactly_one_site_and_changes_identity (test_semantics.SemanticConformance.test_fault_catalogue_edits_exactly_one_site_and_changes_identity) ... ok
+test_fixed_fixtures_reproduce_exactly (test_semantics.SemanticConformance.test_fixed_fixtures_reproduce_exactly) ... ok
+test_fixtures_cover_all_seven_classes_and_six_categories (test_semantics.SemanticConformance.test_fixtures_cover_all_seven_classes_and_six_categories) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 7.096s
+
+OK

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/cpae-error/v1",
+  "title": "C-PaE fail-closed protocol rejection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "protocol_version", "error_id", "offending_message_id", "case_id", "rejection_code", "rejected_at", "retryable", "state_unchanged", "details_commitment"],
+  "properties": {
+    "schema_id": {"const": "https://pae.local/schema/cpae-error/v1"},
+    "protocol_version": {"const": "C-PAE-1.0.0"},
+    "error_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9._:-]{2,127}$"},
+    "offending_message_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9._:-]{2,127}$"},
+    "case_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9._:-]{2,127}$"},
+    "rejection_code": {"type": "string", "minLength": 3},
+    "rejected_at": {"type": "string", "format": "date-time", "pattern": "Z$"},
+    "retryable": {"type": "boolean"},
+    "state_unchanged": {"const": true},
+    "details_commitment": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

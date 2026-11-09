@@ -1,0 +1,20 @@
+{
+  "status": "COMPLETE",
+  "manuscript": "${MANUSCRIPT_ROOT}/GridWeaveV2/main.tex",
+  "pdf": "${MANUSCRIPT_ROOT}/GridWeaveV2/main.pdf",
+  "pdf_sha256": "bc3084519b3858e6a2f5d9cf3098ad3de57eae0a461ebe4e3fb5654e56b0b9e8",
+  "manuscript_sha256": "305de858a41dd8103c278fc872f64f52e1434f8e8299ca531e8be024bfe5968c",
+  "paper_prototype_tests": 13,
+  "generator_tests": 22,
+  "oracle_units_verified": 638,
+  "checker_comparisons_verified": 1276,
+  "generated_label_changes": 0,
+  "malformed_worker_rejections": 18,
+  "signature_cardinality_probes": 3,
+  "historical_files_unchanged": 10924,
+  "original_figures_unchanged": 10,
+  "main_body_pages": 18,
+  "references_page": 19,
+  "corrected_source_manifest_sha256": "2884841a97eeec369da080da89a3dd6d11064ad92673f05653dbf2db52024b95",
+  "correction_verification_sha256": "459f648e3609e4fb83bc12bedc6b2cf13bc796674312b9838776fbe3f163d166"
+}

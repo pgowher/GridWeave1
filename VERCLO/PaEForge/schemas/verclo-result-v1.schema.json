@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paeforge.local/schema/verclo-result/v1",
+  "title": "PaEForge frozen VERCLO result v1",
+  "description": "A verifier-produced result frozen before PaEBench opens evaluator truth.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "contract_version", "model_version", "data_class", "exchange_id", "run_id", "scenario_id", "case_id", "seed", "evaluated_at", "evaluated_revision", "closure_class", "obligation_results", "obligation_sets", "visibility_limitation", "visibility_reason_codes", "reason_codes", "explanation", "physical_destruction_concluded", "input_commitments", "execution", "provenance"],
+  "properties": {
+    "schema_id": {"const": "https://paeforge.local/schema/verclo-result/v1"},
+    "schema_version": {"const": "1.0.0"},
+    "contract_version": {"const": "1.0.0"},
+    "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "data_class": {"const": "SYSTEM_OUTPUT"},
+    "exchange_id": {"$ref": "#/$defs/Identifier"},
+    "run_id": {"$ref": "#/$defs/Identifier"},
+    "scenario_id": {"$ref": "#/$defs/Identifier"},
+    "case_id": {"$ref": "#/$defs/Identifier"},
+    "seed": {"$ref": "#/$defs/SeedRef"},
+    "evaluated_at": {"$ref": "#/$defs/Timestamp"},
+    "evaluated_revision": {"type": "integer", "minimum": 0},
+    "closure_class": {"$ref": "#/$defs/ClosureClass"},
+    "obligation_results": {"type": "array", "items": {"$ref": "#/$defs/ObligationResult"}},
+    "obligation_sets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["covered", "missing", "excepted", "invalid", "late", "contradictory"],
+      "properties": {
+        "covered": {"$ref": "#/$defs/Identifiers"},
+        "missing": {"$ref": "#/$defs/Identifiers"},
+        "excepted": {"$ref": "#/$defs/Identifiers"},
+        "invalid": {"$ref": "#/$defs/Identifiers"},
+        "late": {"$ref": "#/$defs/Identifiers"},
+        "contradictory": {"$ref": "#/$defs/Identifiers"}
+      }
+    },
+    "visibility_limitation": {"$ref": "#/$defs/Identifier"},
+    "visibility_reason_codes": {"$ref": "#/$defs/Identifiers"},
+    "reason_codes": {"$ref": "#/$defs/Identifiers"},
+    "explanation": {"type": "string", "minLength": 1},
+    "physical_destruction_concluded": {"const": false},
+    "input_commitments": {
+      "type": "object", "additionalProperties": false,
+      "required": ["case_manifest_sha256", "observer_projection_sha256", "receipt_stream_sha256"],
+      "properties": {"case_manifest_sha256": {"$ref": "#/$defs/Digest"}, "observer_projection_sha256": {"$ref": "#/$defs/Digest"}, "receipt_stream_sha256": {"$ref": "#/$defs/Digest"}}
+    },
+    "execution": {
+      "type": "object", "additionalProperties": false,
+      "required": ["executed_operations_q", "duration_ns", "backend_id", "configuration_sha256"],
+      "properties": {"executed_operations_q": {"type": "integer", "minimum": 0}, "duration_ns": {"type": "integer", "minimum": 0}, "backend_id": {"$ref": "#/$defs/Identifier"}, "configuration_sha256": {"$ref": "#/$defs/Digest"}}
+    },
+    "provenance": {"$ref": "#/$defs/Provenance"}
+  },
+  "$defs": {
+    "Identifier": {"type": "string", "minLength": 1, "maxLength": 512},
+    "Identifiers": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "SemVer": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "Timestamp": {"type": "string", "format": "date-time"},
+    "SeedRef": {"type": "object", "additionalProperties": false, "required": ["replicate_id", "seed_stream_digest"], "properties": {"replicate_id": {"type": "integer", "minimum": 0}, "seed_stream_digest": {"$ref": "#/$defs/Digest"}}},
+    "ClosureClass": {"enum": ["CLOSED", "CLOSED_WITH_EXCEPTIONS", "PARTIALLY_CLOSED", "OPEN", "DISPUTED", "UNVERIFIABLE", "IN_PROGRESS"]},
+    "ObligationResult": {
+      "type": "object", "additionalProperties": false,
+      "required": ["obligation_id", "category", "required_grade", "receipt_ids", "reason_codes"],
+      "properties": {
+        "obligation_id": {"$ref": "#/$defs/Identifier"},
+        "category": {"enum": ["COVERED", "MISSING", "EXCEPTED", "INVALID", "LATE", "CONTRADICTORY"]},
+        "evidence_grade": {"type": ["string", "null"], "pattern": "^E[0-5]$"},
+        "required_grade": {"type": "string", "pattern": "^E[0-5]$"},
+        "disposition": {"type": ["string", "null"]},
+        "receipt_ids": {"$ref": "#/$defs/Identifiers"},
+        "reason_codes": {"$ref": "#/$defs/Identifiers"}
+      }
+    },
+    "Provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["producer", "producer_version", "source_revision", "frozen_at"],
+      "properties": {"producer": {"const": "VERCLO"}, "producer_version": {"$ref": "#/$defs/SemVer"}, "source_revision": {"$ref": "#/$defs/Identifier"}, "frozen_at": {"$ref": "#/$defs/Timestamp"}}
+    }
+  }
+}
+

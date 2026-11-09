@@ -1,0 +1,11 @@
+/.venv/
+/.runtime/
+**/__pycache__/
+**/.pytest_cache/
+**/*.egg-info/
+/HTGLThesis/build/
+/HTGLThesis/dist/
+/PaEForge/build/
+/PaEForge/dist/
+/node_modules/
+/environment/.env

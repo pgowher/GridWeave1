@@ -1,0 +1,92 @@
+{
+  "registry_id": "htgl.interoperability.mapping-registry.v1",
+  "version": "1.0.0",
+  "source": "2-Dataset Sections 23, 25 and novelty candidate N8",
+  "profiles": {
+    "jsonl_debug_view": {
+      "mapping_profile_id": "htgl.jsonl.observer-release.v1",
+      "profile_version": "1.0.0",
+      "target_standard": "JSON Lines UTF-8 compatibility profile",
+      "target_standard_version": "HTGL-JSONL-1.0.0",
+      "source_schemas": ["observer_release"],
+      "structural_losses": ["JSONL has no authoritative Arrow nullability or dictionary encoding; canonical Parquet remains authoritative."],
+      "mapping_defaults": {"cardinality": "one_to_one", "transformation": "canonical_json_value", "vocabulary_conversion": null, "disposition": "mapped", "rationale": "The sanitized observer field is preserved in one canonical JSON object."},
+      "mappings": {"observer_release": {
+        "observer_record_id": "$.observer_record_id", "observer_ref": "$.observer_ref", "projection_profile_id": "$.projection_profile_id", "visible_timestamp": "$.visible_timestamp", "visibility_class": "$.visibility_class", "redacted_field_paths": "$.redacted_field_paths", "schema_profile_id": "$.schema_profile_id", "payload": "$.payload", "payload.actor_classes": "$.payload.actor_classes", "payload.causal_parent_refs": "$.payload.causal_parent_refs", "payload.database_kind": "$.payload.database_kind", "payload.event_family": "$.payload.event_family", "payload.event_ref": "$.payload.event_ref", "payload.event_type": "$.payload.event_type", "payload.evidence_present": "$.payload.evidence_present", "payload.evidence_receipt_count": "$.payload.evidence_receipt_count", "payload.evidence_types": "$.payload.evidence_types", "payload.inferred_summary": "$.payload.inferred_summary", "payload.object_type": "$.payload.object_type", "payload.policy_purpose_id": "$.payload.policy_purpose_id", "payload.workflow_ref": "$.payload.workflow_ref", "payload.workflow_state_after": "$.payload.workflow_state_after", "payload.workflow_state_before": "$.payload.workflow_state_before", "projection_digest": "$.projection_digest"
+      }}
+    },
+    "csv": {
+      "mapping_profile_id": "htgl.csv.observer-release.v1",
+      "profile_version": "1.0.0",
+      "target_standard": "RFC 4180 flat convenience profile",
+      "target_standard_version": "RFC4180-2005+HTGL-1.0.0",
+      "source_schemas": ["observer_release"],
+      "structural_losses": ["Nested values are canonical JSON cell values and therefore are not native CSV scalar types.", "CSV output is size-gated and is never authoritative."],
+      "mapping_defaults": {"cardinality": "one_to_one", "transformation": "canonical_json_cell", "vocabulary_conversion": null, "disposition": "mapped", "rationale": "Each sanitized field is encoded in a named RFC 4180 column and can be decoded exactly."},
+      "mappings": {"observer_release": {
+        "observer_record_id": "observer_record_id", "observer_ref": "observer_ref", "projection_profile_id": "projection_profile_id", "visible_timestamp": "visible_timestamp", "visibility_class": "visibility_class", "redacted_field_paths": "redacted_field_paths", "schema_profile_id": "schema_profile_id", "payload": "payload", "payload.actor_classes": "payload.actor_classes", "payload.causal_parent_refs": "payload.causal_parent_refs", "payload.database_kind": "payload.database_kind", "payload.event_family": "payload.event_family", "payload.event_ref": "payload.event_ref", "payload.event_type": "payload.event_type", "payload.evidence_present": "payload.evidence_present", "payload.evidence_receipt_count": "payload.evidence_receipt_count", "payload.evidence_types": "payload.evidence_types", "payload.inferred_summary": "payload.inferred_summary", "payload.object_type": "payload.object_type", "payload.policy_purpose_id": "payload.policy_purpose_id", "payload.workflow_ref": "payload.workflow_ref", "payload.workflow_state_after": "payload.workflow_state_after", "payload.workflow_state_before": "payload.workflow_state_before", "projection_digest": "projection_digest"
+      }}
+    },
+    "xes": {
+      "mapping_profile_id": "htgl.xes.observer-workflow.v1",
+      "profile_version": "1.0.0",
+      "target_standard": "IEEE eXtensible Event Stream with HTGL extension",
+      "target_standard_version": "IEEE-1849-2023+HTGL-1.0.0",
+      "source_schemas": ["observer_release"],
+      "structural_losses": ["Workflow grouping is an observer projection and does not reproduce the authoritative causal DAG.", "HTGL policy and evidence values are extension attributes, not native XES conformance claims."],
+      "mapping_defaults": {"cardinality": "one_to_one", "transformation": "canonical_json_xes_attribute", "vocabulary_conversion": "htgl_xes_extension_v1", "disposition": "mapped", "rationale": "The field is retained as a namespaced XES event attribute; stable workflow, lifecycle and time concepts are also projected."},
+      "mappings": {"observer_release": {
+        "observer_record_id": "event.htgl:source.observer_record_id", "observer_ref": "event.org:resource", "projection_profile_id": "event.htgl:source.projection_profile_id", "visible_timestamp": "event.time:timestamp", "visibility_class": "event.htgl:visibility_class", "redacted_field_paths": "event.htgl:source.redacted_field_paths", "schema_profile_id": "event.htgl:source.schema_profile_id", "payload": "event.htgl:source.payload", "payload.actor_classes": "event.htgl:source.payload.actor_classes", "payload.causal_parent_refs": "event.htgl:source.payload.causal_parent_refs", "payload.database_kind": "event.htgl:source.payload.database_kind", "payload.event_family": "event.htgl:event_family", "payload.event_ref": "event.identity:id", "payload.event_type": "event.concept:name", "payload.evidence_present": "event.htgl:evidence_present", "payload.evidence_receipt_count": "event.htgl:source.payload.evidence_receipt_count", "payload.evidence_types": "event.htgl:source.payload.evidence_types", "payload.inferred_summary": "event.htgl:source.payload.inferred_summary", "payload.object_type": "event.htgl:object_type", "payload.policy_purpose_id": "event.htgl:purpose", "payload.workflow_ref": "trace.concept:name", "payload.workflow_state_after": "event.lifecycle:transition", "payload.workflow_state_before": "event.htgl:state_before", "projection_digest": "event.htgl:projection_digest"
+      }}
+    },
+    "jsonld": {
+      "mapping_profile_id": "htgl.prov-dpv-odrl.observer-release.v1",
+      "profile_version": "1.0.0",
+      "target_standard": "JSON-LD PROV-O DPV ODRL aligned HTGL profile",
+      "target_standard_version": "JSON-LD-1.1_PROV-O-20130430_DPV-2.1_ODRL-2.2_HTGL-1.0.0",
+      "source_schemas": ["observer_release"],
+      "structural_losses": ["DPV and ODRL terms express configured experimental labels and do not assert legal conclusions.", "Observer events are projected PROV activities and do not replace authoritative workflow or edge tables."],
+      "mapping_defaults": {"cardinality": "one_to_one", "transformation": "jsonld_typed_value_with_source_mirror", "vocabulary_conversion": "htgl_prov_dpv_odrl_profile_v1", "disposition": "mapped", "rationale": "The field is represented in the semantic graph and retained in the exact sanitized source mirror."},
+      "mappings": {"observer_release": {
+        "observer_record_id": "@graph[].@id", "observer_ref": "@graph[].prov:wasAttributedTo", "projection_profile_id": "@graph[].htgl:projectionProfile", "visible_timestamp": "@graph[].prov:generatedAtTime", "visibility_class": "@graph[].htgl:visibilityClass", "redacted_field_paths": "@graph[].htgl:redactedFieldPath", "schema_profile_id": "@graph[].htgl:schemaProfile", "payload": "@graph[].htgl:source", "payload.actor_classes": "@graph[].prov:qualifiedAssociation.prov:agent.@type", "payload.causal_parent_refs": "@graph[].prov:wasInformedBy", "payload.database_kind": "@graph[].htgl:databaseKind", "payload.event_family": "@graph[].dpv:hasProcessing", "payload.event_ref": "@graph[].htgl:eventRef", "payload.event_type": "@graph[].@type", "payload.evidence_present": "@graph[].htgl:evidencePresent", "payload.evidence_receipt_count": "@graph[].htgl:evidenceReceiptCount", "payload.evidence_types": "@graph[].htgl:evidenceType", "payload.inferred_summary": "@graph[].htgl:inferredSummary", "payload.object_type": "@graph[].dpv:hasPersonalData", "payload.policy_purpose_id": "@graph[].dpv:hasPurpose", "payload.workflow_ref": "@graph[].prov:wasPartOf", "payload.workflow_state_after": "@graph[].htgl:stateAfter", "payload.workflow_state_before": "@graph[].htgl:stateBefore", "projection_digest": "@graph[].htgl:projectionDigest"
+      }}
+    },
+    "cim": {
+      "mapping_profile_id": "htgl.cim-network-measurement.v1",
+      "profile_version": "1.0.0",
+      "target_standard": "IEC CIM base with HTGL extension",
+      "target_standard_version": "IEC-61970-301-2020+HTGL-1.0.0",
+      "source_schemas": ["network_area", "raw_network_state"],
+      "structural_losses": ["This is a deterministic CIM-aligned benchmark exchange profile, not IEC product certification.", "Governance-specific and represented-population fields remain documented HTGL extensions."],
+      "mapping_defaults": {"cardinality": "one_to_one", "transformation": "cim_xml_value_with_htgl_source_mirror", "vocabulary_conversion": "htgl_cim_class_registry_v1", "disposition": "mapped", "rationale": "The physical field maps to a CIM or namespaced HTGL element and remains available in the exact source mirror."},
+      "mappings": {
+        "network_area": {"network_area_id": "cim:IdentifiedObject.mRID", "scenario_id": "htgl:scenarioID", "region_id": "cim:SubGeographicalRegion.Region", "jurisdiction_id": "htgl:jurisdictionID", "network_area_kind": "cim:PowerSystemResource.PSRType", "parent_network_area_id": "cim:SubGeographicalRegion.Region", "controller_actor_id": "htgl:controllerActorID", "operator_actor_id": "htgl:operatorActorID", "fault_domain_id": "htgl:faultDomainID", "trust_domain_id": "htgl:trustDomainID", "represented_consumer_count": "htgl:representedConsumerCount", "represented_prosumer_count": "htgl:representedProsumerCount", "valid_from": "htgl:validFrom", "valid_to": "htgl:validTo", "source_profile_id": "htgl:sourceProfileID", "generation_source": "htgl:generationSource"},
+        "raw_network_state": {"network_state_id": "cim:MeasurementValue.mRID", "scenario_id": "htgl:scenarioID", "network_element_id": "cim:Measurement.PowerSystemResource", "timestamp": "cim:MeasurementValue.timeStamp", "element_class": "cim:PowerSystemResource.PSRType", "voltage_pu": "cim:AnalogValue.value[unit=pu]", "loading_percent": "cim:AnalogValue.value[unit=percent]", "active_power_kw": "cim:AnalogValue.value[unit=kW]", "reactive_power_kvar": "cim:AnalogValue.value[unit=kVAr]", "switch_open": "cim:DiscreteValue.value", "violation_flags": "htgl:violationFlag", "solver_backend": "htgl:solverBackend"}
+      }
+    },
+    "green_button": {
+      "mapping_profile_id": "htgl.green-button-interval-reading.v1",
+      "profile_version": "1.0.0",
+      "target_standard": "Green Button ESPI interval-reading exchange with HTGL extension",
+      "target_standard_version": "NAESB-REQ.21-ESPI-1.0+HTGL-1.0.0",
+      "source_schemas": ["raw_meter_reading"],
+      "structural_losses": ["This benchmark exchange does not assert customer authorization or Green Button Alliance certification.", "Reactive energy, voltage, provenance and represented counts use documented HTGL extensions when no native element is selected."],
+      "mapping_defaults": {"cardinality": "one_to_one", "transformation": "espi_xml_value_with_htgl_source_mirror", "vocabulary_conversion": "htgl_green_button_units_v1", "disposition": "mapped", "rationale": "The interval field maps to an ESPI or namespaced HTGL element and remains available in the exact source mirror."},
+      "mappings": {"raw_meter_reading": {
+        "reading_id": "espi:IntervalReading.id", "scenario_id": "htgl:scenarioID", "meter_id": "espi:UsagePoint.mRID", "cohort_id": "htgl:cohortID", "region_id": "htgl:regionID", "interval_start": "espi:IntervalReading.timePeriod.start", "interval_end": "espi:IntervalReading.timePeriod.duration", "import_energy_kwh": "espi:IntervalReading.value[flowDirection=forward]", "export_energy_kwh": "espi:IntervalReading.value[flowDirection=reverse]", "reactive_energy_kvarh": "htgl:reactiveEnergyKvarh", "voltage_v": "htgl:voltageV", "quality_flags": "espi:ReadingQuality.quality", "generation_backend": "htgl:generationBackend", "calibration_source_id": "htgl:calibrationSourceID", "represented_meter_count": "htgl:representedMeterCount"
+      }}
+    },
+    "sqlite": {
+      "mapping_profile_id": "htgl.sqlite.public-observer-index.v1",
+      "profile_version": "1.0.0",
+      "target_standard": "SQLite rebuildable exploration index",
+      "target_standard_version": "SQLite-3+HTGL-1.0.0",
+      "source_schemas": ["observer_release"],
+      "structural_losses": ["The database is a rebuildable public exploration index and is never authoritative.", "Nested fields remain canonical JSON inside record_json while selected query columns are duplicated for indexing."],
+      "mapping_defaults": {"cardinality": "one_to_one", "transformation": "canonical_json_record_with_index_projection", "vocabulary_conversion": null, "disposition": "mapped", "rationale": "The complete sanitized record is retained in record_json and selected fields are indexed for semantic queries."},
+      "mappings": {"observer_release": {
+        "observer_record_id": "observer_event.observer_record_id", "observer_ref": "observer_event.record_json.observer_ref", "projection_profile_id": "observer_event.projection_profile_id", "visible_timestamp": "observer_event.visible_timestamp", "visibility_class": "observer_event.visibility_class", "redacted_field_paths": "observer_event.record_json.redacted_field_paths", "schema_profile_id": "observer_event.record_json.schema_profile_id", "payload": "observer_event.record_json.payload", "payload.actor_classes": "observer_event.record_json.payload.actor_classes", "payload.causal_parent_refs": "observer_event.record_json.payload.causal_parent_refs", "payload.database_kind": "observer_event.record_json.payload.database_kind", "payload.event_family": "observer_event.event_family", "payload.event_ref": "observer_event.record_json.payload.event_ref", "payload.event_type": "observer_event.event_type", "payload.evidence_present": "observer_event.record_json.payload.evidence_present", "payload.evidence_receipt_count": "observer_event.record_json.payload.evidence_receipt_count", "payload.evidence_types": "observer_event.record_json.payload.evidence_types", "payload.inferred_summary": "observer_event.record_json.payload.inferred_summary", "payload.object_type": "observer_event.record_json.payload.object_type", "payload.policy_purpose_id": "observer_event.policy_purpose_id", "payload.workflow_ref": "observer_event.workflow_ref", "payload.workflow_state_after": "observer_event.record_json.payload.workflow_state_after", "payload.workflow_state_before": "observer_event.record_json.payload.workflow_state_before", "projection_digest": "observer_event.projection_digest"
+      }}
+    }
+  }
+}

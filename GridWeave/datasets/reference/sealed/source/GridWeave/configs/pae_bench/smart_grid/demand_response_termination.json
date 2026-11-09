@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "model_version": "PAE-FECM-v1.0.0",
+  "scenario_id": "PBE-SG-DEMAND-RESPONSE-TERMINATION",
+  "title": "Demand-response programme termination",
+  "lifecycle_trigger": "DEMAND_RESPONSE_TERMINATION",
+  "time_origin": "2026-01-01T00:00:00Z",
+  "standards_basis": [
+    {"standard_id": "OpenADR-3.0", "authoritative_url": "https://www.openadr.org/openadr-3-0", "applied_concepts": ["program", "event", "report", "VEN", "VTN"]},
+    {"standard_id": "IEC-61968-9:2024", "authoritative_url": "https://webstore.iec.ch/en/publication/75041", "applied_concepts": ["demand-response", "meter-reading", "load-control"]}
+  ],
+  "synthetic_data_profile": {"mode": "synthetic_only", "subject_namespace": "SYN-DR", "direct_identifiers_prohibited": true},
+  "organizations": [
+    {"organization_id": "ORG-DR-UTILITY", "organization_type": "UTILITY", "roles": ["CONTROLLER", "CUSTODIAN"]},
+    {"organization_id": "ORG-DR-AGGREGATOR", "organization_type": "AGGREGATOR", "roles": ["PROCESSOR", "CUSTODIAN"]},
+    {"organization_id": "ORG-DR-DSO", "organization_type": "DISTRIBUTION_OPERATOR", "roles": ["AUDITOR"]}
+  ],
+  "repositories": [
+    {"repository_id": "REPO-DR-UTILITY", "organization_id": "ORG-DR-UTILITY", "repository_kind": "DRMS", "region": "EU-WEST", "observable": true},
+    {"repository_id": "REPO-DR-AGGREGATOR", "organization_id": "ORG-DR-AGGREGATOR", "repository_kind": "VEN_PLATFORM", "region": "EU-WEST", "observable": true},
+    {"repository_id": "REPO-DR-ARCHIVE", "organization_id": "ORG-DR-AGGREGATOR", "repository_kind": "REPORT_ARCHIVE", "region": "EU-CENTRAL", "observable": false}
+  ],
+  "assets": [
+    {"asset_id": "ASSET-DR-ENROLMENT", "asset_type": "PROGRAM_ENROLMENT", "repository_id": "REPO-DR-UTILITY", "parent_asset_ids": [], "replica_role": "primary", "personal_data_category": "ACCOUNT"},
+    {"asset_id": "ASSET-DR-RESPONSE", "asset_type": "EVENT_RESPONSE", "repository_id": "REPO-DR-AGGREGATOR", "parent_asset_ids": ["ASSET-DR-ENROLMENT"], "replica_role": "derived", "personal_data_category": "PSEUDONYMOUS"},
+    {"asset_id": "ASSET-DR-REPORT", "asset_type": "PERFORMANCE_REPORT", "repository_id": "REPO-DR-ARCHIVE", "parent_asset_ids": ["ASSET-DR-RESPONSE"], "replica_role": "backup", "personal_data_category": "PSEUDONYMOUS"}
+  ],
+  "policy_profile": {"profile_id": "POL-DR-TERMINATION-v1", "version": "1.0.0", "authorization_basis": "PROGRAM_TERMINATION", "deadline_hours": 168, "valid_dispositions": ["ERASED"], "evidence_floor": "E3"},
+  "obligations": [
+    {"template_id": "OBL-DR-ENROLMENT", "asset_ids": ["ASSET-DR-ENROLMENT", "ASSET-DR-RESPONSE"], "responsible_role": "CUSTODIAN", "required_disposition": "ERASED", "deadline_offset_hours": 72, "evidence_types": ["deletion_acknowledgement", "replica_attestation"]},
+    {"template_id": "OBL-DR-REPORT", "asset_ids": ["ASSET-DR-REPORT"], "responsible_role": "PROCESSOR", "required_disposition": "ERASED", "deadline_offset_hours": 168, "evidence_types": ["deletion_acknowledgement"]}
+  ],
+  "exceptions": [],
+  "observable_metadata": {"observer_profiles": [{"observer_profile_id": "OBS-SG-AUDITOR", "access_class": "restricted"}, {"observer_profile_id": "OBS-SG-PUBLIC", "access_class": "public"}], "visible_fields": ["programID", "eventID", "reportID", "createdDateTime"], "redacted_fields": ["customerAccountID", "deviceID"], "claim_disposition_visibility": "visible"},
+  "variants": [
+    {"variant_id": "success", "variant_class": "successful_closure", "expected_closure": "CLOSED", "mutations": [], "expected_reason_codes": ["ALL_OBLIGATIONS_RESOLVED"]},
+    {"variant_id": "partial-report-archive", "variant_class": "partial_or_unverifiable", "expected_closure": "PARTIALLY_CLOSED", "mutations": [{"operation": "OMIT_RESOLUTION", "target_obligation_id": "OBL-DR-REPORT"}], "expected_reason_codes": ["RESOLVED_AND_UNRESOLVED_OBLIGATIONS"]},
+    {"variant_id": "disputed-enrolment", "variant_class": "adversarial_or_disputed", "expected_closure": "DISPUTED", "mutations": [{"operation": "CONTRADICT_EVIDENCE", "target_obligation_id": "OBL-DR-ENROLMENT"}], "expected_reason_codes": ["UNRESOLVED_CONTRADICTION"]}
+  ]
+}

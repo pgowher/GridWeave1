@@ -1,0 +1,3981 @@
+{
+  "contract_id": "htgl-dataset-generator-contract",
+  "contract_version": "1.1.0",
+  "source_hierarchy": {
+    "controlling": "Prompts/2-Dataset.extracted.md",
+    "background": "Prompts/1-Dataset.extracted.md"
+  },
+  "generator_boundary": "benchmark_artifacts_only_no_htgl_consensus_ledger_real_erasure_legal_enforcement_or_utility_deployment",
+  "claim_scale_terms": {
+    "N": "represented_population_or_exposure",
+    "n": "materialized_rows_or_sample_records",
+    "q": "downstream_replay_operations"
+  },
+  "dictionaries": {
+    "actor_class": [
+      "consumer",
+      "prosumer",
+      "dso",
+      "tso",
+      "supplier",
+      "aggregator",
+      "regulator",
+      "vendor",
+      "auditor",
+      "processor",
+      "validator",
+      "oversight"
+    ],
+    "actor_capability": [
+      "controller",
+      "processor",
+      "requester",
+      "custodian",
+      "oversight",
+      "auditor",
+      "validator",
+      "issuer",
+      "observer"
+    ],
+    "relationship_type": [
+      "controls",
+      "processes_for",
+      "supplies",
+      "aggregates",
+      "oversees",
+      "audits",
+      "discloses_to"
+    ],
+    "database_kind": [
+      "meter_data",
+      "billing",
+      "derms",
+      "crm",
+      "market",
+      "audit",
+      "archive",
+      "consent_registry",
+      "model_feature_store"
+    ],
+    "storage_class": [
+      "primary",
+      "replica",
+      "cache",
+      "archive",
+      "immutable_log"
+    ],
+    "object_type": [
+      "meter_interval",
+      "profile",
+      "bill",
+      "consent",
+      "model_feature",
+      "market_bid",
+      "operational_command",
+      "audit_record",
+      "evidence_record"
+    ],
+    "sensitivity": [
+      "low",
+      "moderate",
+      "high",
+      "restricted"
+    ],
+    "subject_scope": [
+      "individual",
+      "household",
+      "business",
+      "aggregate"
+    ],
+    "replica_role": [
+      "primary",
+      "secondary",
+      "cache",
+      "backup",
+      "export",
+      "derived"
+    ],
+    "deletion_status": [
+      "not_due",
+      "due",
+      "deleted",
+      "failed",
+      "unknown",
+      "exempt"
+    ],
+    "physical_backend": [
+      "procedural",
+      "opensynth_style_synthetic",
+      "smart_ds_style_synthetic"
+    ],
+    "quality_flag": [
+      "missing",
+      "estimated",
+      "clipped",
+      "clock_shifted",
+      "outage",
+      "synthetic",
+      "calibrated",
+      "solver_warning"
+    ],
+    "control_mode": [
+      "self_consumption",
+      "market",
+      "grid_support",
+      "charging",
+      "discharging",
+      "curtailed",
+      "uncontrolled"
+    ],
+    "network_element_class": [
+      "bus",
+      "line",
+      "transformer",
+      "switch",
+      "meter",
+      "feeder",
+      "substation",
+      "cim_aligned"
+    ],
+    "physical_violation_flag": [
+      "voltage_high",
+      "voltage_low",
+      "loading_high",
+      "solver_nonconvergence",
+      "islanding",
+      "thermal_limit"
+    ],
+    "context_event_class": [
+      "weather",
+      "tariff",
+      "price",
+      "outage",
+      "dispatch",
+      "firmware",
+      "clock",
+      "communications"
+    ],
+    "generation_source": [
+      "imported",
+      "calibrated",
+      "procedural",
+      "controlled_synthetic"
+    ],
+    "event_family": [
+      "consent",
+      "collection_processing",
+      "disclosure",
+      "access",
+      "correction",
+      "retention",
+      "erasure",
+      "operational",
+      "audit",
+      "incident",
+      "notification"
+    ],
+    "arrival_model_class": [
+      "conditioned_NHPP",
+      "unconditioned_NHPP",
+      "MMPP",
+      "Hawkes",
+      "replay"
+    ],
+    "event_type": [
+      "consent_requested",
+      "consent_granted",
+      "consent_withdrawn",
+      "collection_started",
+      "processing_started",
+      "access_requested",
+      "access_fulfilled",
+      "correction_requested",
+      "correction_applied",
+      "disclosure_proposed",
+      "transfer_authorized",
+      "transfer_received",
+      "retention_review_due",
+      "erasure_requested",
+      "erasure_propagated",
+      "erasure_executed",
+      "erasure_verified",
+      "audit_opened",
+      "audit_finding",
+      "incident_notified",
+      "operational_command_issued"
+    ],
+    "workflow_state": [
+      "not_requested",
+      "requested",
+      "granted",
+      "refused",
+      "withdrawn",
+      "expired",
+      "proposed",
+      "authorized",
+      "denied",
+      "transferred",
+      "received",
+      "reconciled",
+      "authenticated",
+      "scoped",
+      "fulfilled",
+      "appealed",
+      "closed",
+      "active",
+      "review_due",
+      "retained_under_rule",
+      "disposal_scheduled",
+      "propagated",
+      "executed",
+      "partial",
+      "verified",
+      "opened",
+      "evidence_collected",
+      "finding",
+      "remediation"
+    ],
+    "consent_state": [
+      "not_requested",
+      "requested",
+      "granted",
+      "refused",
+      "withdrawn",
+      "expired"
+    ],
+    "retention_state": [
+      "active",
+      "review_due",
+      "retained_under_rule",
+      "expired",
+      "disposal_scheduled"
+    ],
+    "erasure_state": [
+      "not_requested",
+      "received",
+      "authenticated",
+      "scoped",
+      "propagated",
+      "executed",
+      "partial",
+      "denied",
+      "verified",
+      "closed"
+    ],
+    "materialization_reason": [
+      "sampled",
+      "closure_added",
+      "anomaly_pair",
+      "census",
+      "replay"
+    ],
+    "edge_type": [
+      "causes",
+      "responds_to",
+      "derives",
+      "copies",
+      "discloses",
+      "invalidates",
+      "erases",
+      "evidences",
+      "precedes"
+    ],
+    "workflow_type": [
+      "consent",
+      "collection_processing",
+      "disclosure",
+      "access",
+      "correction",
+      "retention",
+      "erasure",
+      "audit",
+      "operational",
+      "incident"
+    ],
+    "rule_kind": [
+      "permission",
+      "prohibition",
+      "duty",
+      "retention",
+      "erasure",
+      "disclosure",
+      "evidence"
+    ],
+    "policy_action": [
+      "allow",
+      "deny",
+      "retain",
+      "erase",
+      "notify",
+      "escalate",
+      "no_op"
+    ],
+    "violation_type": [
+      "unauthorized_purpose",
+      "missing_erasure_propagation",
+      "premature_deletion",
+      "false_confirmation",
+      "causal_orphan",
+      "observer_omission",
+      "cross_region_rule_breach",
+      "clock_replay_conflict",
+      "none"
+    ],
+    "anomaly_type": [
+      "unauthorized_purpose",
+      "missing_erasure_propagation",
+      "premature_deletion",
+      "false_confirmation",
+      "causal_orphan",
+      "observer_omission",
+      "cross_region_rule_breach",
+      "clock_replay_conflict"
+    ],
+    "obligation_type": [
+      "authorization",
+      "provenance",
+      "replica_deletion",
+      "notification",
+      "retention_exception",
+      "anchor",
+      "audit_response",
+      "verification"
+    ],
+    "coverage_scope": [
+      "object",
+      "replica_set",
+      "workflow",
+      "actor_set",
+      "causal_closure"
+    ],
+    "evidence_type": [
+      "digest",
+      "hmac",
+      "signature",
+      "inclusion_proof",
+      "deletion_acknowledgement",
+      "replica_attestation",
+      "audit_finding",
+      "merkle_anchor",
+      "notification_receipt"
+    ],
+    "verification_status_truth": [
+      "valid",
+      "invalid",
+      "expired",
+      "missing_dependency",
+      "simulated_only"
+    ],
+    "visibility_class": [
+      "direct",
+      "shared",
+      "inferred",
+      "redacted",
+      "delayed",
+      "omitted"
+    ],
+    "omission_reason": [
+      "policy",
+      "transport_loss",
+      "compromise",
+      "redaction",
+      "out_of_scope",
+      "sampling"
+    ],
+    "privacy_class": [
+      "public",
+      "restricted",
+      "evaluator_only",
+      "sealed"
+    ],
+    "design_type": [
+      "stratified",
+      "PPS",
+      "cluster",
+      "nested_common_random_numbers",
+      "census"
+    ],
+    "primary_unit_type": [
+      "workflow",
+      "cohort",
+      "actor",
+      "object",
+      "time_bin",
+      "dependency_component"
+    ],
+    "closure_policy": [
+      "ancestor",
+      "descendant",
+      "replica",
+      "evidence",
+      "full_dependency_closure"
+    ],
+    "estimator_family": [
+      "Horvitz_Thompson",
+      "Hajek",
+      "analytic_weighted",
+      "none"
+    ],
+    "unit_type": [
+      "workflow",
+      "cohort",
+      "actor",
+      "object",
+      "time_bin",
+      "event",
+      "replica",
+      "evidence",
+      "dependency_component"
+    ],
+    "selection_reason": [
+      "primary_draw",
+      "closure_added",
+      "paired_counterfactual",
+      "census"
+    ],
+    "validation_severity": [
+      "info",
+      "warning",
+      "error",
+      "fatal"
+    ],
+    "validation_domain": [
+      "schema",
+      "physical",
+      "temporal",
+      "workflow",
+      "policy",
+      "evidence",
+      "observer",
+      "sampling",
+      "privacy",
+      "artifact",
+      "topology",
+      "anomaly",
+      "performance"
+    ],
+    "validation_status": [
+      "pass",
+      "fail",
+      "not_applicable",
+      "not_executed"
+    ],
+    "metric_domain": [
+      "physical",
+      "temporal",
+      "relational",
+      "topology",
+      "workflow",
+      "policy",
+      "anomaly",
+      "evidence",
+      "observer",
+      "sampling",
+      "privacy",
+      "performance",
+      "artifact"
+    ],
+    "metric_weighting": [
+      "unweighted",
+      "HT",
+      "Hajek",
+      "analytic"
+    ],
+    "media_type": [
+      "application/parquet",
+      "application/json",
+      "text/csv",
+      "application/xes+xml",
+      "application/ld+json",
+      "text/markdown",
+      "text/html",
+      "application/zip"
+    ],
+    "network_area_kind": [
+      "substation_area",
+      "feeder_area",
+      "low_voltage_area",
+      "microgrid",
+      "market_zone"
+    ]
+  },
+  "tables": [
+    {
+      "schema_id": "htgl.dataset.v1.run_scenario",
+      "table_name": "run_scenario",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "run_scenario.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "run_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Globally unique deterministic run key.",
+          "semantic_invariant": "Globally unique deterministic run key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario profile key.",
+          "semantic_invariant": "Scenario profile key."
+        },
+        {
+          "name": "replicate_id",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Independent statistical repetition.",
+          "semantic_invariant": "Independent statistical repetition."
+        },
+        {
+          "name": "contract_version",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Generator contract version.",
+          "semantic_invariant": "Generator contract version."
+        },
+        {
+          "name": "profile_name",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Human-readable scenario profile.",
+          "semantic_invariant": "Human-readable scenario profile."
+        },
+        {
+          "name": "start_time",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Simulated start.",
+          "semantic_invariant": "Simulated start."
+        },
+        {
+          "name": "end_time",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Simulated end.",
+          "semantic_invariant": "Simulated end."
+        },
+        {
+          "name": "represented_population",
+          "logical_type": "int64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Population represented by the world model.",
+          "semantic_invariant": "Population represented by the world model."
+        },
+        {
+          "name": "materialized_row_target",
+          "logical_type": "int64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Requested physical rows, separate from population.",
+          "semantic_invariant": "Requested physical rows, separate from population."
+        },
+        {
+          "name": "executed_operation_target",
+          "logical_type": "int64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Optional operations submitted to downstream HTGL.",
+          "semantic_invariant": "Optional operations submitted to downstream HTGL."
+        },
+        {
+          "name": "calibration_profile_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Versioned calibration bundle.",
+          "semantic_invariant": "Versioned calibration bundle."
+        },
+        {
+          "name": "policy_profile_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Versioned policy package.",
+          "semantic_invariant": "Versioned policy package."
+        },
+        {
+          "name": "publication_derived",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "True only for values measured from cited publication/data.",
+          "semantic_invariant": "True only for values measured from cited publication/data."
+        },
+        {
+          "name": "config_sha256",
+          "logical_type": "fixed_size_binary[32]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Digest of resolved configuration.",
+          "semantic_invariant": "Digest of resolved configuration."
+        }
+      ],
+      "schema_fingerprint": "b0e5d50f05a369b06100b6bcbc4d5991a5229fb688eefa3d7565f3efb75eb998"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.seed_stream",
+      "table_name": "seed_stream",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "seed_stream.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "run_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Run key.",
+          "semantic_invariant": "Run key."
+        },
+        {
+          "name": "stream_name",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Stable component stream name.",
+          "semantic_invariant": "Stable component stream name."
+        },
+        {
+          "name": "parent_stream_name",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Optional parent stream.",
+          "semantic_invariant": "Optional parent stream."
+        },
+        {
+          "name": "seed_material_hex",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Reproducible derived seed material; no secrets.",
+          "semantic_invariant": "Reproducible derived seed material; no secrets."
+        },
+        {
+          "name": "algorithm",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "PRNG and derivation algorithm/version.",
+          "semantic_invariant": "PRNG and derivation algorithm/version."
+        },
+        {
+          "name": "deterministic_id_namespace",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "UUIDv5/ULID namespace or equivalent.",
+          "semantic_invariant": "UUIDv5/ULID namespace or equivalent."
+        }
+      ],
+      "schema_fingerprint": "885189a3254f05639020c126c53930a9589ba692b98d2faf17f626643906802d"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.actor",
+      "table_name": "actor",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "actor.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "actor_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Stable actor key.",
+          "semantic_invariant": "Stable actor key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "actor_class",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "actor_class",
+          "privacy_class": "restricted",
+          "description": "Consumer, prosumer, DSO, TSO, supplier, aggregator, regulator, vendor, auditor, etc.",
+          "semantic_invariant": "Consumer, prosumer, DSO, TSO, supplier, aggregator, regulator, vendor, auditor, etc."
+        },
+        {
+          "name": "organization_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Organization boundary.",
+          "semantic_invariant": "Organization boundary."
+        },
+        {
+          "name": "region_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Primary region.",
+          "semantic_invariant": "Primary region."
+        },
+        {
+          "name": "jurisdiction_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Policy jurisdiction.",
+          "semantic_invariant": "Policy jurisdiction."
+        },
+        {
+          "name": "fault_domain_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Correlated-failure domain.",
+          "semantic_invariant": "Correlated-failure domain."
+        },
+        {
+          "name": "trust_domain_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Credential/trust domain.",
+          "semantic_invariant": "Credential/trust domain."
+        },
+        {
+          "name": "capabilities",
+          "logical_type": "list<dictionary<string>>",
+          "nullable": false,
+          "dictionary_source": "actor_capability",
+          "privacy_class": "restricted",
+          "description": "Controller, processor, requester, custodian, oversight and other roles.",
+          "semantic_invariant": "Controller, processor, requester, custodian, oversight and other roles."
+        },
+        {
+          "name": "valid_from",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Relationship validity start.",
+          "semantic_invariant": "Relationship validity start."
+        },
+        {
+          "name": "valid_to",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Validity end.",
+          "semantic_invariant": "Validity end."
+        },
+        {
+          "name": "synthetic_source",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "generation_source",
+          "privacy_class": "restricted",
+          "description": "procedural, imported-template or calibrated.",
+          "semantic_invariant": "procedural, imported-template or calibrated."
+        }
+      ],
+      "schema_fingerprint": "d85ca389e62617b9ce76d772686affe34c030f928e9043369e01e4ed78e87b62"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.actor_relationship",
+      "table_name": "actor_relationship",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "actor_relationship.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "relationship_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Stable relationship key.",
+          "semantic_invariant": "Stable relationship key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "source_actor_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Source actor FK.",
+          "semantic_invariant": "Source actor FK."
+        },
+        {
+          "name": "target_actor_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Target actor FK.",
+          "semantic_invariant": "Target actor FK."
+        },
+        {
+          "name": "relationship_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "relationship_type",
+          "privacy_class": "restricted",
+          "description": "controls, processes_for, supplies, aggregates, oversees, audits, discloses_to, etc.",
+          "semantic_invariant": "controls, processes_for, supplies, aggregates, oversees, audits, discloses_to, etc."
+        },
+        {
+          "name": "contract_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Optional data-sharing/processing contract.",
+          "semantic_invariant": "Optional data-sharing/processing contract."
+        },
+        {
+          "name": "policy_profile_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Relationship-specific policy profile.",
+          "semantic_invariant": "Relationship-specific policy profile."
+        },
+        {
+          "name": "valid_from",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Start.",
+          "semantic_invariant": "Start."
+        },
+        {
+          "name": "valid_to",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "End.",
+          "semantic_invariant": "End."
+        }
+      ],
+      "schema_fingerprint": "f00eae06ab963216ac5541da98549d8a470809b06595c62bd0f956f961917994"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.prosumer_cohort",
+      "table_name": "prosumer_cohort",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "prosumer_cohort.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "cohort_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Cohort key.",
+          "semantic_invariant": "Cohort key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "region_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Region FK.",
+          "semantic_invariant": "Region FK."
+        },
+        {
+          "name": "represented_consumer_count",
+          "logical_type": "int64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Represented consumers.",
+          "semantic_invariant": "Represented consumers."
+        },
+        {
+          "name": "represented_prosumer_count",
+          "logical_type": "int64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Represented prosumers.",
+          "semantic_invariant": "Represented prosumers."
+        },
+        {
+          "name": "der_adoption_fraction",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "DER adoption in [0,1].",
+          "semantic_invariant": "DER adoption in [0,1]."
+        },
+        {
+          "name": "dwelling_type",
+          "logical_type": "dictionary<string>",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Physical-demand conditioning attribute.",
+          "semantic_invariant": "Physical-demand conditioning attribute."
+        },
+        {
+          "name": "tariff_profile_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Tariff conditioning.",
+          "semantic_invariant": "Tariff conditioning."
+        },
+        {
+          "name": "climate_zone_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Weather/load conditioning.",
+          "semantic_invariant": "Weather/load conditioning."
+        },
+        {
+          "name": "subject_scope",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "subject_scope",
+          "privacy_class": "restricted",
+          "description": "individual, household, business or aggregate.",
+          "semantic_invariant": "individual, household, business or aggregate."
+        },
+        {
+          "name": "sampling_stratum",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Probability-sampling stratum.",
+          "semantic_invariant": "Probability-sampling stratum."
+        },
+        {
+          "name": "calibration_source_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Calibration provenance.",
+          "semantic_invariant": "Calibration provenance."
+        }
+      ],
+      "schema_fingerprint": "7c8a05f06e6e7a6e0ff749d6af807ead6e15f459b034b5b069d04dd2cb204cb7"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.network_area",
+      "table_name": "network_area",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 15.1 / Step 5 extension",
+      "parquet_file": "network_area.parquet",
+      "privacy_class": "restricted",
+      "schema_fingerprint": "e734414cdad570c3d67ae7bcbe9aa2c7251a2849c1c3542495b1e9e8e4552e64",
+      "fields": [
+        {
+          "name": "network_area_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Stable network-area key.",
+          "semantic_invariant": "Stable network-area key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario FK.",
+          "semantic_invariant": "Scenario FK."
+        },
+        {
+          "name": "region_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Owning region.",
+          "semantic_invariant": "Owning region."
+        },
+        {
+          "name": "jurisdiction_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Policy jurisdiction.",
+          "semantic_invariant": "Policy jurisdiction."
+        },
+        {
+          "name": "network_area_kind",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "network_area_kind",
+          "privacy_class": "restricted",
+          "description": "Network-area class.",
+          "semantic_invariant": "Network-area class."
+        },
+        {
+          "name": "parent_network_area_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Parent network area FK when nested.",
+          "semantic_invariant": "Parent network area FK when nested."
+        },
+        {
+          "name": "controller_actor_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Controller actor FK.",
+          "semantic_invariant": "Controller actor FK."
+        },
+        {
+          "name": "operator_actor_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Operator actor FK.",
+          "semantic_invariant": "Operator actor FK."
+        },
+        {
+          "name": "fault_domain_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Fault-domain assignment.",
+          "semantic_invariant": "Fault-domain assignment."
+        },
+        {
+          "name": "trust_domain_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Trust-domain assignment.",
+          "semantic_invariant": "Trust-domain assignment."
+        },
+        {
+          "name": "represented_consumer_count",
+          "logical_type": "int64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Represented consumers in area.",
+          "semantic_invariant": "Represented consumers in area."
+        },
+        {
+          "name": "represented_prosumer_count",
+          "logical_type": "int64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Represented prosumers in area.",
+          "semantic_invariant": "Represented prosumers in area."
+        },
+        {
+          "name": "valid_from",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Validity start.",
+          "semantic_invariant": "Validity start."
+        },
+        {
+          "name": "valid_to",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Validity end.",
+          "semantic_invariant": "Validity end."
+        },
+        {
+          "name": "source_profile_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Network profile or import source.",
+          "semantic_invariant": "Network profile or import source."
+        },
+        {
+          "name": "generation_source",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "generation_source",
+          "privacy_class": "restricted",
+          "description": "Generation source label.",
+          "semantic_invariant": "Generation source label."
+        }
+      ]
+    },
+    {
+      "schema_id": "htgl.dataset.v1.local_database",
+      "table_name": "local_database",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "local_database.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "database_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Local store key.",
+          "semantic_invariant": "Local store key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "controller_actor_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Controller FK.",
+          "semantic_invariant": "Controller FK."
+        },
+        {
+          "name": "operator_actor_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Operator/processor FK.",
+          "semantic_invariant": "Operator/processor FK."
+        },
+        {
+          "name": "region_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Physical region.",
+          "semantic_invariant": "Physical region."
+        },
+        {
+          "name": "database_kind",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "database_kind",
+          "privacy_class": "restricted",
+          "description": "meter data, billing, DERMS, CRM, market, audit, archive, etc.",
+          "semantic_invariant": "meter data, billing, DERMS, CRM, market, audit, archive, etc."
+        },
+        {
+          "name": "storage_class",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "storage_class",
+          "privacy_class": "restricted",
+          "description": "primary, replica, cache, archive or immutable-log.",
+          "semantic_invariant": "primary, replica, cache, archive or immutable-log."
+        },
+        {
+          "name": "supported_object_types",
+          "logical_type": "list<dictionary<string>>",
+          "nullable": false,
+          "dictionary_source": "object_type",
+          "privacy_class": "restricted",
+          "description": "Allowed data-object types.",
+          "semantic_invariant": "Allowed data-object types."
+        },
+        {
+          "name": "represented_record_count",
+          "logical_type": "int64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Represented records.",
+          "semantic_invariant": "Represented records."
+        },
+        {
+          "name": "retention_profile_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Retention policy FK.",
+          "semantic_invariant": "Retention policy FK."
+        },
+        {
+          "name": "encryption_profile_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Configured protection profile\u2014not proof of encryption.",
+          "semantic_invariant": "Configured protection profile\u2014not proof of encryption."
+        },
+        {
+          "name": "capacity_records",
+          "logical_type": "int64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Synthetic capacity metadata.",
+          "semantic_invariant": "Synthetic capacity metadata."
+        }
+      ],
+      "schema_fingerprint": "4418ee3ce711bfd6f8c0c0cd9c326d79d9f5e16fa8d263fe780728857a1629c4"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.data_object",
+      "table_name": "data_object",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "data_object.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "data_object_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Logical object key.",
+          "semantic_invariant": "Logical object key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "origin_database_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Origin database FK.",
+          "semantic_invariant": "Origin database FK."
+        },
+        {
+          "name": "object_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "object_type",
+          "privacy_class": "restricted",
+          "description": "meter interval, profile, bill, consent, model feature, market bid, etc.",
+          "semantic_invariant": "meter interval, profile, bill, consent, model feature, market bid, etc."
+        },
+        {
+          "name": "subject_cohort_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Subject/cohort FK.",
+          "semantic_invariant": "Subject/cohort FK."
+        },
+        {
+          "name": "sensitivity",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "sensitivity",
+          "privacy_class": "restricted",
+          "description": "Configured sensitivity class.",
+          "semantic_invariant": "Configured sensitivity class."
+        },
+        {
+          "name": "schema_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Payload schema FK.",
+          "semantic_invariant": "Payload schema FK."
+        },
+        {
+          "name": "created_at",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Creation time.",
+          "semantic_invariant": "Creation time."
+        },
+        {
+          "name": "valid_from",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Semantic validity start.",
+          "semantic_invariant": "Semantic validity start."
+        },
+        {
+          "name": "valid_to",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Semantic validity end.",
+          "semantic_invariant": "Semantic validity end."
+        },
+        {
+          "name": "source_physical_record_ids",
+          "logical_type": "list<string>",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Physical records that produced the object; empty if not applicable.",
+          "semantic_invariant": "Physical records that produced the object; empty if not applicable."
+        },
+        {
+          "name": "purpose_tags",
+          "logical_type": "list<string>",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Configured allowed/observed purposes.",
+          "semantic_invariant": "Configured allowed/observed purposes."
+        }
+      ],
+      "schema_fingerprint": "d17428b7206bf30db61718dc77b1a346ab28df7c96b74a4b55bd4b04337f3c54"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.data_object_replica",
+      "table_name": "data_object_replica",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "data_object_replica.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "replica_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Replica key.",
+          "semantic_invariant": "Replica key."
+        },
+        {
+          "name": "data_object_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Logical object FK.",
+          "semantic_invariant": "Logical object FK."
+        },
+        {
+          "name": "database_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Hosting database FK.",
+          "semantic_invariant": "Hosting database FK."
+        },
+        {
+          "name": "replica_role",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "replica_role",
+          "privacy_class": "restricted",
+          "description": "primary, secondary, cache, backup, export or derived.",
+          "semantic_invariant": "primary, secondary, cache, backup, export or derived."
+        },
+        {
+          "name": "created_by_event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Causal event FK.",
+          "semantic_invariant": "Causal event FK."
+        },
+        {
+          "name": "created_at",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Creation time.",
+          "semantic_invariant": "Creation time."
+        },
+        {
+          "name": "deletion_due_at",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Derived deadline.",
+          "semantic_invariant": "Derived deadline."
+        },
+        {
+          "name": "deleted_at",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "World-truth deletion time.",
+          "semantic_invariant": "World-truth deletion time."
+        },
+        {
+          "name": "deletion_status",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "deletion_status",
+          "privacy_class": "restricted",
+          "description": "not_due, due, deleted, failed, unknown or exempt.",
+          "semantic_invariant": "not_due, due, deleted, failed, unknown or exempt."
+        },
+        {
+          "name": "retention_basis_rule_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Rule retaining the replica.",
+          "semantic_invariant": "Rule retaining the replica."
+        }
+      ],
+      "schema_fingerprint": "7a3d1e8e8e0d080a4d7da6cc5c7bbb5fd74ba75ec7b6ce9783fe93117e8d75f0"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.raw_meter_reading",
+      "table_name": "raw_meter_reading",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "raw_meter_reading.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "reading_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Stable physical-reading key.",
+          "semantic_invariant": "Stable physical-reading key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "meter_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Synthetic meter/usage-point key.",
+          "semantic_invariant": "Synthetic meter/usage-point key."
+        },
+        {
+          "name": "cohort_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Cohort FK.",
+          "semantic_invariant": "Cohort FK."
+        },
+        {
+          "name": "region_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Region FK.",
+          "semantic_invariant": "Region FK."
+        },
+        {
+          "name": "interval_start",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "UTC interval start.",
+          "semantic_invariant": "UTC interval start."
+        },
+        {
+          "name": "interval_end",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "UTC interval end.",
+          "semantic_invariant": "UTC interval end."
+        },
+        {
+          "name": "import_energy_kwh",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Imported active energy; non-negative.",
+          "semantic_invariant": "Imported active energy; non-negative."
+        },
+        {
+          "name": "export_energy_kwh",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Exported active energy; non-negative.",
+          "semantic_invariant": "Exported active energy; non-negative."
+        },
+        {
+          "name": "reactive_energy_kvarh",
+          "logical_type": "float64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Reactive energy when modeled.",
+          "semantic_invariant": "Reactive energy when modeled."
+        },
+        {
+          "name": "voltage_v",
+          "logical_type": "float32",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Meter voltage when modeled.",
+          "semantic_invariant": "Meter voltage when modeled."
+        },
+        {
+          "name": "quality_flags",
+          "logical_type": "list<dictionary<string>>",
+          "nullable": false,
+          "dictionary_source": "quality_flag",
+          "privacy_class": "restricted",
+          "description": "missing, estimated, clipped, clock_shifted, outage, etc.",
+          "semantic_invariant": "missing, estimated, clipped, clock_shifted, outage, etc."
+        },
+        {
+          "name": "generation_backend",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "physical_backend",
+          "privacy_class": "restricted",
+          "description": "Controlled procedural synthetic profile or separately implemented external backend.",
+          "semantic_invariant": "Current executable profiles use controlled synthetic identifiers; external backend identifiers require a real versioned adapter and provenance contract."
+        },
+        {
+          "name": "calibration_source_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Source provenance without source record disclosure.",
+          "semantic_invariant": "Source provenance without source record disclosure."
+        },
+        {
+          "name": "represented_meter_count",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Weight represented by this materialized series.",
+          "semantic_invariant": "Weight represented by this materialized series."
+        }
+      ],
+      "schema_fingerprint": "bcb131adebc84ff6c3cd65f0e3d80d7df7add428d6f96b90172bc5ee726afc51"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.raw_der_telemetry",
+      "table_name": "raw_der_telemetry",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "raw_der_telemetry.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "telemetry_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Telemetry key.",
+          "semantic_invariant": "Telemetry key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "der_asset_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "PV, battery, EV or flexible-load asset.",
+          "semantic_invariant": "PV, battery, EV or flexible-load asset."
+        },
+        {
+          "name": "timestamp",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Sample time.",
+          "semantic_invariant": "Sample time."
+        },
+        {
+          "name": "active_power_kw",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Signed active power under documented convention.",
+          "semantic_invariant": "Signed active power under documented convention."
+        },
+        {
+          "name": "reactive_power_kvar",
+          "logical_type": "float64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Reactive power.",
+          "semantic_invariant": "Reactive power."
+        },
+        {
+          "name": "state_of_charge",
+          "logical_type": "float32",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Battery/EV state in [0,1].",
+          "semantic_invariant": "Battery/EV state in [0,1]."
+        },
+        {
+          "name": "availability",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Asset availability.",
+          "semantic_invariant": "Asset availability."
+        },
+        {
+          "name": "control_mode",
+          "logical_type": "dictionary<string>",
+          "nullable": true,
+          "dictionary_source": "control_mode",
+          "privacy_class": "restricted",
+          "description": "self-consumption, market, grid support, charging, etc.",
+          "semantic_invariant": "self-consumption, market, grid support, charging, etc."
+        },
+        {
+          "name": "quality_flags",
+          "logical_type": "list<dictionary<string>>",
+          "nullable": false,
+          "dictionary_source": "quality_flag",
+          "privacy_class": "restricted",
+          "description": "Synthetic measurement defects.",
+          "semantic_invariant": "Synthetic measurement defects."
+        },
+        {
+          "name": "trigger_event_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Governance/operational command that affected state.",
+          "semantic_invariant": "Governance/operational command that affected state."
+        }
+      ],
+      "schema_fingerprint": "3825e296bb5c01ab33c0f170c36c54bad5948057e5d49d96b0aa69aae1e763e1"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.raw_network_state",
+      "table_name": "raw_network_state",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "raw_network_state.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "network_state_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "State record key.",
+          "semantic_invariant": "State record key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "network_element_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Bus, line, transformer or switch key.",
+          "semantic_invariant": "Bus, line, transformer or switch key."
+        },
+        {
+          "name": "timestamp",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "State time.",
+          "semantic_invariant": "State time."
+        },
+        {
+          "name": "element_class",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "network_element_class",
+          "privacy_class": "restricted",
+          "description": "CIM-aligned element class where possible.",
+          "semantic_invariant": "CIM-aligned element class where possible."
+        },
+        {
+          "name": "voltage_pu",
+          "logical_type": "float64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Per-unit voltage.",
+          "semantic_invariant": "Per-unit voltage."
+        },
+        {
+          "name": "loading_percent",
+          "logical_type": "float64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Equipment loading.",
+          "semantic_invariant": "Equipment loading."
+        },
+        {
+          "name": "active_power_kw",
+          "logical_type": "float64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Active flow/injection.",
+          "semantic_invariant": "Active flow/injection."
+        },
+        {
+          "name": "reactive_power_kvar",
+          "logical_type": "float64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Reactive flow/injection.",
+          "semantic_invariant": "Reactive flow/injection."
+        },
+        {
+          "name": "switch_open",
+          "logical_type": "bool",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Switch state.",
+          "semantic_invariant": "Switch state."
+        },
+        {
+          "name": "violation_flags",
+          "logical_type": "list<dictionary<string>>",
+          "nullable": false,
+          "dictionary_source": "physical_violation_flag",
+          "privacy_class": "restricted",
+          "description": "Physical limit flags.",
+          "semantic_invariant": "Physical limit flags."
+        },
+        {
+          "name": "solver_backend",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Controlled analytic state-generator identity for the current contract; external solver identities require a future contract migration and executed adapter evidence.",
+          "semantic_invariant": "Controlled analytic state-generator identity for the current contract; external solver identities require a future contract migration and executed adapter evidence."
+        }
+      ],
+      "schema_fingerprint": "1dc9d54a0050b694160635f48c6c07109a4f5c784be77ae9abc8f363703088e9"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.raw_context_event",
+      "table_name": "raw_context_event",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "raw_context_event.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "context_event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Tariff, market, weather, outage or command event key.",
+          "semantic_invariant": "Tariff, market, weather, outage or command event key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "event_class",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "context_event_class",
+          "privacy_class": "restricted",
+          "description": "weather, tariff, price, outage, dispatch, firmware, clock or communications.",
+          "semantic_invariant": "weather, tariff, price, outage, dispatch, firmware, clock or communications."
+        },
+        {
+          "name": "region_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Affected region.",
+          "semantic_invariant": "Affected region."
+        },
+        {
+          "name": "asset_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Affected asset if specific.",
+          "semantic_invariant": "Affected asset if specific."
+        },
+        {
+          "name": "start_time",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Start.",
+          "semantic_invariant": "Start."
+        },
+        {
+          "name": "end_time",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "End.",
+          "semantic_invariant": "End."
+        },
+        {
+          "name": "numeric_value",
+          "logical_type": "float64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Typed numeric value.",
+          "semantic_invariant": "Typed numeric value."
+        },
+        {
+          "name": "unit",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "UCUM-style unit.",
+          "semantic_invariant": "UCUM-style unit."
+        },
+        {
+          "name": "categorical_value",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Typed categorical value.",
+          "semantic_invariant": "Typed categorical value."
+        },
+        {
+          "name": "generation_source",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "generation_source",
+          "privacy_class": "restricted",
+          "description": "imported, calibrated or procedural.",
+          "semantic_invariant": "imported, calibrated or procedural."
+        },
+        {
+          "name": "calibration_source_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Provenance.",
+          "semantic_invariant": "Provenance."
+        }
+      ],
+      "schema_fingerprint": "48efd2a2e2c9f20dbcc09c80eb08f271ce3a1e3fa7149781c601a9a4a8de1e8e"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.arrival",
+      "table_name": "arrival",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "arrival.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "arrival_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Arrival key.",
+          "semantic_invariant": "Arrival key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "replicate_id",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Repetition.",
+          "semantic_invariant": "Repetition."
+        },
+        {
+          "name": "timestamp",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Arrival time.",
+          "semantic_invariant": "Arrival time."
+        },
+        {
+          "name": "arrival_bin",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Bin index.",
+          "semantic_invariant": "Bin index."
+        },
+        {
+          "name": "event_family",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "event_family",
+          "privacy_class": "restricted",
+          "description": "Consent, access, disclosure, correction, retention, erasure, operational, audit, etc.",
+          "semantic_invariant": "Consent, access, disclosure, correction, retention, erasure, operational, audit, etc."
+        },
+        {
+          "name": "region_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Region mark.",
+          "semantic_invariant": "Region mark."
+        },
+        {
+          "name": "subject_cohort_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Subject/cohort mark.",
+          "semantic_invariant": "Subject/cohort mark."
+        },
+        {
+          "name": "model_class",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "arrival_model_class",
+          "privacy_class": "restricted",
+          "description": "conditioned_NHPP, unconditioned_NHPP, MMPP, Hawkes or replay.",
+          "semantic_invariant": "conditioned_NHPP, unconditioned_NHPP, MMPP, Hawkes or replay."
+        },
+        {
+          "name": "intensity_per_second",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Calibrated \u03bb(t) at arrival.",
+          "semantic_invariant": "Calibrated \u03bb(t) at arrival."
+        },
+        {
+          "name": "regime_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "MMPP regime.",
+          "semantic_invariant": "MMPP regime."
+        },
+        {
+          "name": "parent_arrival_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Triggering arrival for cascades.",
+          "semantic_invariant": "Triggering arrival for cascades."
+        },
+        {
+          "name": "anomaly_designated",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Designation before trace generation.",
+          "semantic_invariant": "Designation before trace generation."
+        },
+        {
+          "name": "represented_arrival_count",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Population weight.",
+          "semantic_invariant": "Population weight."
+        }
+      ],
+      "schema_fingerprint": "6b5f925ef638c2337da6f1347346e97e77a6bac8a318d254d903e1fa6c143506"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.governance_event",
+      "table_name": "governance_event",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "governance_event.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Deterministic event key.",
+          "semantic_invariant": "Deterministic event key."
+        },
+        {
+          "name": "source_event_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "External/imported source key.",
+          "semantic_invariant": "External/imported source key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "replicate_id",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Repetition.",
+          "semantic_invariant": "Repetition."
+        },
+        {
+          "name": "timestamp",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "World-truth time.",
+          "semantic_invariant": "World-truth time."
+        },
+        {
+          "name": "recorded_timestamp",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Recorder time after synthetic clock/transport effects.",
+          "semantic_invariant": "Recorder time after synthetic clock/transport effects."
+        },
+        {
+          "name": "event_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "event_type",
+          "privacy_class": "restricted",
+          "description": "Typed event.",
+          "semantic_invariant": "Typed event."
+        },
+        {
+          "name": "event_family",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "event_family",
+          "privacy_class": "restricted",
+          "description": "Workflow family.",
+          "semantic_invariant": "Workflow family."
+        },
+        {
+          "name": "source_actor_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Source actor FK.",
+          "semantic_invariant": "Source actor FK."
+        },
+        {
+          "name": "requesting_actor_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Requester FK.",
+          "semantic_invariant": "Requester FK."
+        },
+        {
+          "name": "controller_actor_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Controller FK.",
+          "semantic_invariant": "Controller FK."
+        },
+        {
+          "name": "processor_actor_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Processor FK.",
+          "semantic_invariant": "Processor FK."
+        },
+        {
+          "name": "oversight_actor_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Oversight actor FK.",
+          "semantic_invariant": "Oversight actor FK."
+        },
+        {
+          "name": "subject_cohort_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Cohort FK.",
+          "semantic_invariant": "Cohort FK."
+        },
+        {
+          "name": "local_database_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Database FK.",
+          "semantic_invariant": "Database FK."
+        },
+        {
+          "name": "data_object_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Object FK.",
+          "semantic_invariant": "Object FK."
+        },
+        {
+          "name": "workflow_instance_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Workflow FK.",
+          "semantic_invariant": "Workflow FK."
+        },
+        {
+          "name": "workflow_state_before",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "workflow_state",
+          "privacy_class": "restricted",
+          "description": "State before event.",
+          "semantic_invariant": "State before event."
+        },
+        {
+          "name": "workflow_state_after",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "workflow_state",
+          "privacy_class": "restricted",
+          "description": "State after event.",
+          "semantic_invariant": "State after event."
+        },
+        {
+          "name": "workflow_step_index",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Zero-based trace index.",
+          "semantic_invariant": "Zero-based trace index."
+        },
+        {
+          "name": "root_event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Root event FK.",
+          "semantic_invariant": "Root event FK."
+        },
+        {
+          "name": "causal_depth",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Longest depth from root.",
+          "semantic_invariant": "Longest depth from root."
+        },
+        {
+          "name": "policy_purpose_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Versioned purpose.",
+          "semantic_invariant": "Versioned purpose."
+        },
+        {
+          "name": "legal_basis_label_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Configured experimental legal-basis label.",
+          "semantic_invariant": "Configured experimental legal-basis label."
+        },
+        {
+          "name": "consent_state_after",
+          "logical_type": "dictionary<string>",
+          "nullable": true,
+          "dictionary_source": "consent_state",
+          "privacy_class": "restricted",
+          "description": "Post-event consent state.",
+          "semantic_invariant": "Post-event consent state."
+        },
+        {
+          "name": "retention_state_after",
+          "logical_type": "dictionary<string>",
+          "nullable": true,
+          "dictionary_source": "retention_state",
+          "privacy_class": "restricted",
+          "description": "Post-event retention state.",
+          "semantic_invariant": "Post-event retention state."
+        },
+        {
+          "name": "erasure_state_after",
+          "logical_type": "dictionary<string>",
+          "nullable": true,
+          "dictionary_source": "erasure_state",
+          "privacy_class": "restricted",
+          "description": "Post-event erasure state.",
+          "semantic_invariant": "Post-event erasure state."
+        },
+        {
+          "name": "payload_schema_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Typed payload schema.",
+          "semantic_invariant": "Typed payload schema."
+        },
+        {
+          "name": "payload_ref",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Reference to payload or physical record.",
+          "semantic_invariant": "Reference to payload or physical record."
+        },
+        {
+          "name": "represented_event_count",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Population weight.",
+          "semantic_invariant": "Population weight."
+        },
+        {
+          "name": "materialization_reason",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "materialization_reason",
+          "privacy_class": "restricted",
+          "description": "sampled, closure_added, anomaly_pair, census or replay.",
+          "semantic_invariant": "sampled, closure_added, anomaly_pair, census or replay."
+        }
+      ],
+      "schema_fingerprint": "88f4a2967ef73a691015f819917b86d0ca4b35fc49684d96c81d0684523b5895"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.event_edge",
+      "table_name": "event_edge",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "event_edge.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "edge_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Edge key.",
+          "semantic_invariant": "Edge key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "source_event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Parent/source event FK.",
+          "semantic_invariant": "Parent/source event FK."
+        },
+        {
+          "name": "target_event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Child/target event FK.",
+          "semantic_invariant": "Child/target event FK."
+        },
+        {
+          "name": "edge_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "edge_type",
+          "privacy_class": "restricted",
+          "description": "causes, responds_to, derives, copies, discloses, invalidates, erases, evidences or precedes.",
+          "semantic_invariant": "causes, responds_to, derives, copies, discloses, invalidates, erases, evidences or precedes."
+        },
+        {
+          "name": "cross_workflow",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Whether endpoints have different workflows.",
+          "semantic_invariant": "Whether endpoints have different workflows."
+        },
+        {
+          "name": "dependency_strength",
+          "logical_type": "float32",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Optional modeled strength.",
+          "semantic_invariant": "Optional modeled strength."
+        },
+        {
+          "name": "required_for_closure",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Sampling-closure flag.",
+          "semantic_invariant": "Sampling-closure flag."
+        },
+        {
+          "name": "rule_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Rule that created the dependency.",
+          "semantic_invariant": "Rule that created the dependency."
+        }
+      ],
+      "schema_fingerprint": "d35482a3f2f31f8b164556a1d17901f7a4c00ae07cc61c183c9d021eba9e3393"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.workflow_instance",
+      "table_name": "workflow_instance",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "workflow_instance.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "workflow_instance_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Workflow key.",
+          "semantic_invariant": "Workflow key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "workflow_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "workflow_type",
+          "privacy_class": "restricted",
+          "description": "Consent, access, disclosure, erasure, retention, audit, etc.",
+          "semantic_invariant": "Consent, access, disclosure, erasure, retention, audit, etc."
+        },
+        {
+          "name": "workflow_definition_version",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Automaton version.",
+          "semantic_invariant": "Automaton version."
+        },
+        {
+          "name": "root_event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Root FK.",
+          "semantic_invariant": "Root FK."
+        },
+        {
+          "name": "initial_state",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "workflow_state",
+          "privacy_class": "restricted",
+          "description": "Initial state.",
+          "semantic_invariant": "Initial state."
+        },
+        {
+          "name": "final_state",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "workflow_state",
+          "privacy_class": "restricted",
+          "description": "Final state.",
+          "semantic_invariant": "Final state."
+        },
+        {
+          "name": "started_at",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Start.",
+          "semantic_invariant": "Start."
+        },
+        {
+          "name": "ended_at",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "End; null if open.",
+          "semantic_invariant": "End; null if open."
+        },
+        {
+          "name": "terminal_event_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Terminal event FK.",
+          "semantic_invariant": "Terminal event FK."
+        },
+        {
+          "name": "is_conformant_world_truth",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Conformance truth before observer projection.",
+          "semantic_invariant": "Conformance truth before observer projection."
+        },
+        {
+          "name": "event_count",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Trace length.",
+          "semantic_invariant": "Trace length."
+        }
+      ],
+      "schema_fingerprint": "7d1480723ae691133b26c1edb86addd279d2836979203329864a25cab0edf733"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.policy_rule",
+      "table_name": "policy_rule",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "policy_rule.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "policy_rule_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Rule key.",
+          "semantic_invariant": "Rule key."
+        },
+        {
+          "name": "policy_profile_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Package key.",
+          "semantic_invariant": "Package key."
+        },
+        {
+          "name": "version",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Rule version.",
+          "semantic_invariant": "Rule version."
+        },
+        {
+          "name": "jurisdiction_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scoped jurisdiction.",
+          "semantic_invariant": "Scoped jurisdiction."
+        },
+        {
+          "name": "rule_kind",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "rule_kind",
+          "privacy_class": "restricted",
+          "description": "permission, prohibition, duty, retention, erasure, disclosure or evidence.",
+          "semantic_invariant": "permission, prohibition, duty, retention, erasure, disclosure or evidence."
+        },
+        {
+          "name": "action",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Evaluated action.",
+          "semantic_invariant": "Evaluated action."
+        },
+        {
+          "name": "asset_selector",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Machine-readable object selector.",
+          "semantic_invariant": "Machine-readable object selector."
+        },
+        {
+          "name": "party_selector",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Machine-readable actor selector.",
+          "semantic_invariant": "Machine-readable actor selector."
+        },
+        {
+          "name": "purpose_selector",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Purpose condition.",
+          "semantic_invariant": "Purpose condition."
+        },
+        {
+          "name": "condition_expression",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Safe declarative condition, not arbitrary code.",
+          "semantic_invariant": "Safe declarative condition, not arbitrary code."
+        },
+        {
+          "name": "priority",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Conflict-resolution priority.",
+          "semantic_invariant": "Conflict-resolution priority."
+        },
+        {
+          "name": "effective_from",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Start.",
+          "semantic_invariant": "Start."
+        },
+        {
+          "name": "effective_to",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "End.",
+          "semantic_invariant": "End."
+        },
+        {
+          "name": "source_citation",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Human-readable provenance; not a legal conclusion.",
+          "semantic_invariant": "Human-readable provenance; not a legal conclusion."
+        },
+        {
+          "name": "source_sha256",
+          "logical_type": "fixed_size_binary[32]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Rule-source digest.",
+          "semantic_invariant": "Rule-source digest."
+        }
+      ],
+      "schema_fingerprint": "b50ca62f7151b376a7b47dc205a058009965961ae73d9272c2cb987c7c2d2a7d"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.policy_decision_truth",
+      "table_name": "policy_decision_truth",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "policy_decision_truth.parquet",
+      "privacy_class": "evaluator_only",
+      "fields": [
+        {
+          "name": "decision_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Decision key.",
+          "semantic_invariant": "Decision key."
+        },
+        {
+          "name": "event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Event FK.",
+          "semantic_invariant": "Event FK."
+        },
+        {
+          "name": "oracle_version",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Independent oracle version.",
+          "semantic_invariant": "Independent oracle version."
+        },
+        {
+          "name": "expected_action",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "policy_action",
+          "privacy_class": "evaluator_only",
+          "description": "allow, deny, retain, erase, notify, escalate or no_op.",
+          "semantic_invariant": "allow, deny, retain, erase, notify, escalate or no_op."
+        },
+        {
+          "name": "observed_action",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "policy_action",
+          "privacy_class": "evaluator_only",
+          "description": "Action encoded in world truth.",
+          "semantic_invariant": "Action encoded in world truth."
+        },
+        {
+          "name": "is_violation",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Expected vs observed result.",
+          "semantic_invariant": "Expected vs observed result."
+        },
+        {
+          "name": "violation_type",
+          "logical_type": "dictionary<string>",
+          "nullable": true,
+          "dictionary_source": "violation_type",
+          "privacy_class": "evaluator_only",
+          "description": "Typed invariant/rule violation.",
+          "semantic_invariant": "Typed invariant/rule violation."
+        },
+        {
+          "name": "requires_retention",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Retention duty.",
+          "semantic_invariant": "Retention duty."
+        },
+        {
+          "name": "requires_erasure",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Erasure duty.",
+          "semantic_invariant": "Erasure duty."
+        },
+        {
+          "name": "is_cross_region",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Derived from actor regions, never actor-object inequality shortcut.",
+          "semantic_invariant": "Derived from actor regions, never actor-object inequality shortcut."
+        },
+        {
+          "name": "applied_rule_ids",
+          "logical_type": "list<string>",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Rule trace.",
+          "semantic_invariant": "Rule trace."
+        },
+        {
+          "name": "conflict_resolution_trace",
+          "logical_type": "list<string>",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Ordered resolution steps.",
+          "semantic_invariant": "Ordered resolution steps."
+        },
+        {
+          "name": "explanation_code",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Stable machine explanation.",
+          "semantic_invariant": "Stable machine explanation."
+        }
+      ],
+      "schema_fingerprint": "0792fa3962c9df5629aeddd78b991f2e403fa610f09551369deb5f48148d0b44"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.anomaly_instance",
+      "table_name": "anomaly_instance",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "anomaly_instance.parquet",
+      "privacy_class": "evaluator_only",
+      "fields": [
+        {
+          "name": "anomaly_instance_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Episode key.",
+          "semantic_invariant": "Episode key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "anomaly_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "anomaly_type",
+          "privacy_class": "evaluator_only",
+          "description": "Typed governance anomaly.",
+          "semantic_invariant": "Typed governance anomaly."
+        },
+        {
+          "name": "target_invariant_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Exactly targeted invariant for minimal cases.",
+          "semantic_invariant": "Exactly targeted invariant for minimal cases."
+        },
+        {
+          "name": "severity",
+          "logical_type": "float32",
+          "nullable": false,
+          "dictionary_source": "validation_severity",
+          "privacy_class": "evaluator_only",
+          "description": "Documented scale in [0,1].",
+          "semantic_invariant": "Documented scale in [0,1]."
+        },
+        {
+          "name": "start_time",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Start.",
+          "semantic_invariant": "Start."
+        },
+        {
+          "name": "end_time",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "End.",
+          "semantic_invariant": "End."
+        },
+        {
+          "name": "valid_counterfactual_workflow_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Valid member of pair.",
+          "semantic_invariant": "Valid member of pair."
+        },
+        {
+          "name": "invalid_counterfactual_workflow_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Invalid member of pair.",
+          "semantic_invariant": "Invalid member of pair."
+        },
+        {
+          "name": "changed_field_paths",
+          "logical_type": "list<string>",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Exact perturbations.",
+          "semantic_invariant": "Exact perturbations."
+        },
+        {
+          "name": "preserved_invariant_ids",
+          "logical_type": "list<string>",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Non-target invariants checked.",
+          "semantic_invariant": "Non-target invariants checked."
+        },
+        {
+          "name": "adversarial",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Adversarial designation.",
+          "semantic_invariant": "Adversarial designation."
+        },
+        {
+          "name": "episode_event_count",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Events in episode.",
+          "semantic_invariant": "Events in episode."
+        }
+      ],
+      "schema_fingerprint": "f9abc0501db133f7ad371c6c81cb04efe310bf23ebf47202303f6d3e88f3f1ce"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.evidence_obligation",
+      "table_name": "evidence_obligation",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "evidence_obligation.parquet",
+      "privacy_class": "evaluator_only",
+      "fields": [
+        {
+          "name": "obligation_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Obligation key.",
+          "semantic_invariant": "Obligation key."
+        },
+        {
+          "name": "event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Triggering event FK.",
+          "semantic_invariant": "Triggering event FK."
+        },
+        {
+          "name": "policy_rule_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Creating rule FK.",
+          "semantic_invariant": "Creating rule FK."
+        },
+        {
+          "name": "obligation_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "obligation_type",
+          "privacy_class": "evaluator_only",
+          "description": "authorization, provenance, replica deletion, notification, retention exception, anchor, etc.",
+          "semantic_invariant": "authorization, provenance, replica deletion, notification, retention exception, anchor, etc."
+        },
+        {
+          "name": "subject_object_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Object/replica subject.",
+          "semantic_invariant": "Object/replica subject."
+        },
+        {
+          "name": "responsible_actor_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Actor that must produce evidence.",
+          "semantic_invariant": "Actor that must produce evidence."
+        },
+        {
+          "name": "due_at",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Deadline.",
+          "semantic_invariant": "Deadline."
+        },
+        {
+          "name": "required_evidence_types",
+          "logical_type": "list<dictionary<string>>",
+          "nullable": false,
+          "dictionary_source": "evidence_type",
+          "privacy_class": "evaluator_only",
+          "description": "Acceptable receipt types.",
+          "semantic_invariant": "Acceptable receipt types."
+        },
+        {
+          "name": "minimum_count",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Minimum receipts.",
+          "semantic_invariant": "Minimum receipts."
+        },
+        {
+          "name": "coverage_scope",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "coverage_scope",
+          "privacy_class": "evaluator_only",
+          "description": "object, replica_set, workflow, actor_set or causal_closure.",
+          "semantic_invariant": "object, replica_set, workflow, actor_set or causal_closure."
+        }
+      ],
+      "schema_fingerprint": "a44f38d5612ea1191c9cdd8397e4afb43152b2518a6eed9c7cf0203d8282d0a0"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.evidence_receipt",
+      "table_name": "evidence_receipt",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "evidence_receipt.parquet",
+      "privacy_class": "evaluator_only",
+      "fields": [
+        {
+          "name": "receipt_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Receipt key.",
+          "semantic_invariant": "Receipt key."
+        },
+        {
+          "name": "obligation_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Obligation FK.",
+          "semantic_invariant": "Obligation FK."
+        },
+        {
+          "name": "event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Evidenced event FK.",
+          "semantic_invariant": "Evidenced event FK."
+        },
+        {
+          "name": "issuer_actor_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Issuer FK.",
+          "semantic_invariant": "Issuer FK."
+        },
+        {
+          "name": "evidence_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "evidence_type",
+          "privacy_class": "restricted",
+          "description": "digest, signature, inclusion proof, deletion acknowledgement, replica attestation, audit finding, etc.",
+          "semantic_invariant": "digest, signature, inclusion proof, deletion acknowledgement, replica attestation, audit finding, etc."
+        },
+        {
+          "name": "issued_at",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Issue time.",
+          "semantic_invariant": "Issue time."
+        },
+        {
+          "name": "canonical_digest",
+          "logical_type": "fixed_size_binary[32]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Digest of domain-separated canonical payload.",
+          "semantic_invariant": "Digest of domain-separated canonical payload."
+        },
+        {
+          "name": "algorithm",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "sha256, HMAC profile, signature profile or simulated marker.",
+          "semantic_invariant": "sha256, HMAC profile, signature profile or simulated marker."
+        },
+        {
+          "name": "key_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Synthetic key reference; no private keys released.",
+          "semantic_invariant": "Synthetic key reference; no private keys released."
+        },
+        {
+          "name": "anchor_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Optional transparency/Merkle anchor.",
+          "semantic_invariant": "Optional transparency/Merkle anchor."
+        },
+        {
+          "name": "verification_status_truth",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "verification_status_truth",
+          "privacy_class": "evaluator_only",
+          "description": "valid, invalid, expired, missing_dependency or simulated_only.",
+          "semantic_invariant": "valid, invalid, expired, missing_dependency or simulated_only."
+        },
+        {
+          "name": "covers_replica_ids",
+          "logical_type": "list<string>",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Replica coverage.",
+          "semantic_invariant": "Replica coverage."
+        },
+        {
+          "name": "payload_ref",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Optional detached evidence object.",
+          "semantic_invariant": "Optional detached evidence object."
+        }
+      ],
+      "schema_fingerprint": "dbc9be33182452ed09c5d708d4f4dd9535dada45a8a91d5972db3543a8ab5b21"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.observer_event",
+      "table_name": "observer_event",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "observer_event.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "observer_record_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Projection row key.",
+          "semantic_invariant": "Projection row key."
+        },
+        {
+          "name": "observer_actor_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Institution/observer FK.",
+          "semantic_invariant": "Institution/observer FK."
+        },
+        {
+          "name": "source_event_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Privileged event FK retained in protected mapping only or hashed in public views.",
+          "semantic_invariant": "Privileged event FK retained in protected mapping only or hashed in public views."
+        },
+        {
+          "name": "projection_profile_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Visibility rule profile.",
+          "semantic_invariant": "Visibility rule profile."
+        },
+        {
+          "name": "visible_timestamp",
+          "logical_type": "timestamp[us, UTC]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Observed time after delay/clock effects.",
+          "semantic_invariant": "Observed time after delay/clock effects."
+        },
+        {
+          "name": "visibility_class",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "visibility_class",
+          "privacy_class": "restricted",
+          "description": "direct, shared, inferred, redacted, delayed or omitted.",
+          "semantic_invariant": "direct, shared, inferred, redacted, delayed or omitted."
+        },
+        {
+          "name": "omission_reason",
+          "logical_type": "dictionary<string>",
+          "nullable": true,
+          "dictionary_source": "omission_reason",
+          "privacy_class": "restricted",
+          "description": "policy, transport_loss, compromise, redaction, out_of_scope or sampling.",
+          "semantic_invariant": "policy, transport_loss, compromise, redaction, out_of_scope or sampling."
+        },
+        {
+          "name": "redacted_field_paths",
+          "logical_type": "list<string>",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Redactions.",
+          "semantic_invariant": "Redactions."
+        },
+        {
+          "name": "schema_profile_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Institution-specific output schema.",
+          "semantic_invariant": "Institution-specific output schema."
+        },
+        {
+          "name": "payload_json",
+          "logical_type": "large_string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Projected event payload.",
+          "semantic_invariant": "Projected event payload."
+        },
+        {
+          "name": "projection_digest",
+          "logical_type": "fixed_size_binary[32]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Digest for projection integrity.",
+          "semantic_invariant": "Digest for projection integrity."
+        },
+        {
+          "name": "ground_truth_access_class",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "privacy_class",
+          "privacy_class": "restricted",
+          "description": "public, evaluator_only or sealed.",
+          "semantic_invariant": "public, evaluator_only or sealed."
+        }
+      ],
+      "schema_fingerprint": "e4d5a6ccfa568768c29fe00f2877e3642db9ad83852783666321561650a8f4af"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.sampling_design",
+      "table_name": "sampling_design",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "sampling_design.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "sample_design_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Design key.",
+          "semantic_invariant": "Design key."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "design_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "design_type",
+          "privacy_class": "restricted",
+          "description": "stratified, PPS, cluster, nested_common_random_numbers or census.",
+          "semantic_invariant": "stratified, PPS, cluster, nested_common_random_numbers or census."
+        },
+        {
+          "name": "primary_unit_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "primary_unit_type",
+          "privacy_class": "restricted",
+          "description": "workflow, cohort, actor, object or time_bin.",
+          "semantic_invariant": "workflow, cohort, actor, object or time_bin."
+        },
+        {
+          "name": "stratum_definition",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Resolved stratum expression.",
+          "semantic_invariant": "Resolved stratum expression."
+        },
+        {
+          "name": "target_sample_size",
+          "logical_type": "int64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Primary draw target.",
+          "semantic_invariant": "Primary draw target."
+        },
+        {
+          "name": "closure_policy",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "closure_policy",
+          "privacy_class": "restricted",
+          "description": "ancestor, descendant, replica, evidence or full dependency closure.",
+          "semantic_invariant": "ancestor, descendant, replica, evidence or full dependency closure."
+        },
+        {
+          "name": "estimator_family",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "estimator_family",
+          "privacy_class": "restricted",
+          "description": "Horvitz_Thompson, Hajek, analytic_weighted or none.",
+          "semantic_invariant": "Horvitz_Thompson, Hajek, analytic_weighted or none."
+        },
+        {
+          "name": "common_random_number_group",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Nested/comparable scale group.",
+          "semantic_invariant": "Nested/comparable scale group."
+        },
+        {
+          "name": "design_seed_stream",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Seed stream FK.",
+          "semantic_invariant": "Seed stream FK."
+        }
+      ],
+      "schema_fingerprint": "c4721d37d66564c1da0e1f428ed0ace77dad32d1ad766292c0c476e6fef0d092"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.sample_membership",
+      "table_name": "sample_membership",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "sample_membership.parquet",
+      "privacy_class": "evaluator_only",
+      "fields": [
+        {
+          "name": "sample_design_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Design FK.",
+          "semantic_invariant": "Design FK."
+        },
+        {
+          "name": "unit_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Primary or closure-added unit.",
+          "semantic_invariant": "Primary or closure-added unit."
+        },
+        {
+          "name": "unit_type",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "unit_type",
+          "privacy_class": "evaluator_only",
+          "description": "Unit type.",
+          "semantic_invariant": "Unit type."
+        },
+        {
+          "name": "stratum_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Stratum.",
+          "semantic_invariant": "Stratum."
+        },
+        {
+          "name": "first_order_inclusion_probability",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "\u03c0\u1d62 in (0,1].",
+          "semantic_invariant": "\u03c0\u1d62 in (0,1]."
+        },
+        {
+          "name": "design_weight",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "1/\u03c0\u1d62 before adjustment.",
+          "semantic_invariant": "1/\u03c0\u1d62 before adjustment."
+        },
+        {
+          "name": "selection_reason",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "selection_reason",
+          "privacy_class": "evaluator_only",
+          "description": "primary_draw, closure_added, paired_counterfactual or census.",
+          "semantic_invariant": "primary_draw, closure_added, paired_counterfactual or census."
+        },
+        {
+          "name": "primary_unit_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Primary unit causing closure addition.",
+          "semantic_invariant": "Primary unit causing closure addition."
+        },
+        {
+          "name": "analysis_weight",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "Final documented weight.",
+          "semantic_invariant": "Final documented weight."
+        },
+        {
+          "name": "estimator_eligible",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "evaluator_only",
+          "description": "False if probability semantics are unavailable.",
+          "semantic_invariant": "False if probability semantics are unavailable."
+        }
+      ],
+      "schema_fingerprint": "ca7aa5f77087380ec2adcc99c54fabd551b1db37e623d47a549613e857d94fae"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.validation_issue",
+      "table_name": "validation_issue",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "validation_issue.parquet",
+      "privacy_class": "restricted",
+      "fields": [
+        {
+          "name": "check_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Stable validation check.",
+          "semantic_invariant": "Stable validation check."
+        },
+        {
+          "name": "run_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Run FK.",
+          "semantic_invariant": "Run FK."
+        },
+        {
+          "name": "severity",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "validation_severity",
+          "privacy_class": "restricted",
+          "description": "info, warning, error or fatal.",
+          "semantic_invariant": "info, warning, error or fatal."
+        },
+        {
+          "name": "domain",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "validation_domain",
+          "privacy_class": "restricted",
+          "description": "schema, physical, temporal, workflow, policy, evidence, observer, sampling, privacy or artifact.",
+          "semantic_invariant": "schema, physical, temporal, workflow, policy, evidence, observer, sampling, privacy or artifact."
+        },
+        {
+          "name": "status",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "validation_status",
+          "privacy_class": "restricted",
+          "description": "pass, fail, not_applicable or not_executed.",
+          "semantic_invariant": "pass, fail, not_applicable or not_executed."
+        },
+        {
+          "name": "observed_value",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Observed statistic/value.",
+          "semantic_invariant": "Observed statistic/value."
+        },
+        {
+          "name": "expected_condition",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Acceptance expression.",
+          "semantic_invariant": "Acceptance expression."
+        },
+        {
+          "name": "affected_record_ids",
+          "logical_type": "list<string>",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Bounded examples or separate issue detail.",
+          "semantic_invariant": "Bounded examples or separate issue detail."
+        },
+        {
+          "name": "message",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Diagnostic.",
+          "semantic_invariant": "Diagnostic."
+        },
+        {
+          "name": "validator_version",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "restricted",
+          "description": "Validator build.",
+          "semantic_invariant": "Validator build."
+        }
+      ],
+      "schema_fingerprint": "d79927164e2d70d56399beaa3f668904c59606c8e596710c4fe3e34e6bdcfdb0"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.run_metric",
+      "table_name": "run_metric",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "run_metric.parquet",
+      "privacy_class": "public",
+      "fields": [
+        {
+          "name": "metric_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Stable metric key.",
+          "semantic_invariant": "Stable metric key."
+        },
+        {
+          "name": "run_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Run FK.",
+          "semantic_invariant": "Run FK."
+        },
+        {
+          "name": "scenario_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Scenario key.",
+          "semantic_invariant": "Scenario key."
+        },
+        {
+          "name": "replicate_id",
+          "logical_type": "int32",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Repetition.",
+          "semantic_invariant": "Repetition."
+        },
+        {
+          "name": "metric_domain",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "metric_domain",
+          "privacy_class": "public",
+          "description": "physical, temporal, relational, workflow, policy, anomaly, evidence, observer, sampling, privacy, performance or artifact.",
+          "semantic_invariant": "physical, temporal, relational, workflow, policy, anomaly, evidence, observer, sampling, privacy, performance or artifact."
+        },
+        {
+          "name": "metric_name",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Machine-readable name.",
+          "semantic_invariant": "Machine-readable name."
+        },
+        {
+          "name": "value",
+          "logical_type": "float64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Estimate.",
+          "semantic_invariant": "Estimate."
+        },
+        {
+          "name": "unit",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Unit or dimensionless.",
+          "semantic_invariant": "Unit or dimensionless."
+        },
+        {
+          "name": "standard_error",
+          "logical_type": "float64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Across repetitions or design-based estimate.",
+          "semantic_invariant": "Across repetitions or design-based estimate."
+        },
+        {
+          "name": "ci_lower",
+          "logical_type": "float64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Confidence-interval lower bound.",
+          "semantic_invariant": "Confidence-interval lower bound."
+        },
+        {
+          "name": "ci_upper",
+          "logical_type": "float64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Confidence-interval upper bound.",
+          "semantic_invariant": "Confidence-interval upper bound."
+        },
+        {
+          "name": "estimator",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Estimator/method.",
+          "semantic_invariant": "Estimator/method."
+        },
+        {
+          "name": "weighting",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "metric_weighting",
+          "privacy_class": "public",
+          "description": "unweighted, HT, Hajek or analytic.",
+          "semantic_invariant": "unweighted, HT, Hajek or analytic."
+        },
+        {
+          "name": "baseline_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Baseline/ablation comparator.",
+          "semantic_invariant": "Baseline/ablation comparator."
+        }
+      ],
+      "schema_fingerprint": "a8bb8a8915f3ab6e7e9dce6c07457423694d8b9f098a1e9cbd79cbd3d1d8ca8c"
+    },
+    {
+      "schema_id": "htgl.dataset.v1.artifact_manifest",
+      "table_name": "artifact_manifest",
+      "schema_version": "1.0.0",
+      "source_document": "2-Dataset Section 27",
+      "parquet_file": "artifact_manifest.parquet",
+      "privacy_class": "public",
+      "fields": [
+        {
+          "name": "artifact_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Artifact key.",
+          "semantic_invariant": "Artifact key."
+        },
+        {
+          "name": "run_id",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Run FK.",
+          "semantic_invariant": "Run FK."
+        },
+        {
+          "name": "relative_path",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Portable path.",
+          "semantic_invariant": "Portable path."
+        },
+        {
+          "name": "media_type",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": "media_type",
+          "privacy_class": "public",
+          "description": "IANA-like type.",
+          "semantic_invariant": "IANA-like type."
+        },
+        {
+          "name": "schema_id",
+          "logical_type": "string",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Schema reference.",
+          "semantic_invariant": "Schema reference."
+        },
+        {
+          "name": "record_count",
+          "logical_type": "int64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Logical records.",
+          "semantic_invariant": "Logical records."
+        },
+        {
+          "name": "uncompressed_bytes",
+          "logical_type": "int64",
+          "nullable": true,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Uncompressed size.",
+          "semantic_invariant": "Uncompressed size."
+        },
+        {
+          "name": "stored_bytes",
+          "logical_type": "int64",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Stored size.",
+          "semantic_invariant": "Stored size."
+        },
+        {
+          "name": "sha256",
+          "logical_type": "fixed_size_binary[32]",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Artifact digest.",
+          "semantic_invariant": "Artifact digest."
+        },
+        {
+          "name": "partition_keys",
+          "logical_type": "list<string>",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Partition keys.",
+          "semantic_invariant": "Partition keys."
+        },
+        {
+          "name": "privacy_class",
+          "logical_type": "dictionary<string>",
+          "nullable": false,
+          "dictionary_source": "privacy_class",
+          "privacy_class": "public",
+          "description": "public, restricted, evaluator_only or sealed.",
+          "semantic_invariant": "public, restricted, evaluator_only or sealed."
+        },
+        {
+          "name": "generation_stage",
+          "logical_type": "string",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Producing stage.",
+          "semantic_invariant": "Producing stage."
+        },
+        {
+          "name": "publication_eligible",
+          "logical_type": "bool",
+          "nullable": false,
+          "dictionary_source": null,
+          "privacy_class": "public",
+          "description": "Passed required release gates.",
+          "semantic_invariant": "Passed required release gates."
+        }
+      ],
+      "schema_fingerprint": "4c9fcba5ee0ef1a69084c41049362d5f11a06959cc37fea9881ea8030deedc46"
+    }
+  ],
+  "contract_fingerprint": "ed8ab03a7913f7b74e0ce5e71e73a90dc4589a1ee8ab490c2a499b7a51dc37ed"
+}

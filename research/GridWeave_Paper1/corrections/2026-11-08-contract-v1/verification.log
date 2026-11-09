@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "completed_at": "2026-11-08T16:46:19.389503+00:00",
+  "scope": "Separate correction verification; historical 1,914-comparison study unchanged",
+  "oracle_case_units": 638,
+  "oracle_scored_field_disagreements": 0,
+  "preserved_generated_units": 540,
+  "preserved_generated_label_changes": 0,
+  "previous_oracle_disagreeing_existing_fixtures": 2,
+  "corrected_checker_case_comparisons": 1276,
+  "corrected_checker_scored_field_disagreements": 0,
+  "signature_cardinality_probes": 3,
+  "signature_cardinality_assessments": 9,
+  "malformed_input_variants": 9,
+  "malformed_worker_rejections": 18,
+  "original_fixture_catalogue_units": 98,
+  "dataset_manifest_members_verified": 4482,
+  "sources_unchanged_during_verification": true
+}

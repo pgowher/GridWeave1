@@ -1,0 +1,109 @@
+{
+  "schema_id": "htgl.dataset.v1.validation_issue",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "d79927164e2d70d56399beaa3f668904c59606c8e596710c4fe3e34e6bdcfdb0",
+  "table_name": "validation_issue",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "check_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Stable validation check."
+      }
+    },
+    {
+      "name": "run_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Run FK."
+      }
+    },
+    {
+      "name": "severity",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "validation_severity",
+        "privacy_class": "restricted",
+        "semantic_invariant": "info, warning, error or fatal."
+      }
+    },
+    {
+      "name": "domain",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "validation_domain",
+        "privacy_class": "restricted",
+        "semantic_invariant": "schema, physical, temporal, workflow, policy, evidence, observer, sampling, privacy or artifact."
+      }
+    },
+    {
+      "name": "status",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "validation_status",
+        "privacy_class": "restricted",
+        "semantic_invariant": "pass, fail, not_applicable or not_executed."
+      }
+    },
+    {
+      "name": "observed_value",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Observed statistic/value."
+      }
+    },
+    {
+      "name": "expected_condition",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Acceptance expression."
+      }
+    },
+    {
+      "name": "affected_record_ids",
+      "type": "list<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Bounded examples or separate issue detail."
+      }
+    },
+    {
+      "name": "message",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Diagnostic."
+      }
+    },
+    {
+      "name": "validator_version",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Validator build."
+      }
+    }
+  ]
+}

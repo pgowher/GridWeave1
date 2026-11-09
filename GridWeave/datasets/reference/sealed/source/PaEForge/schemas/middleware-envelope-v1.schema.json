@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paeforge.local/schema/middleware-envelope/v1",
+  "title": "PaEForge middleware request envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "protocol_version", "request_id", "exchange", "policy", "execution"],
+  "properties": {
+    "schema_id": {"const": "https://paeforge.local/schema/middleware-envelope/v1"},
+    "schema_version": {"const": "1.0.0"},
+    "protocol_version": {"const": "1.0.0"},
+    "request_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "exchange": {
+      "type": "object", "additionalProperties": false,
+      "required": ["case_manifest", "observer_projection", "receipt_stream"],
+      "properties": {
+        "case_manifest": {"type": "object"},
+        "observer_projection": {"type": "object"},
+        "receipt_stream": {"type": "object"}
+      }
+    },
+    "policy": {"type": "object"},
+    "execution": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_revision", "configuration_sha256"],
+      "properties": {
+        "source_revision": {"type": "string", "minLength": 1, "maxLength": 512},
+        "configuration_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

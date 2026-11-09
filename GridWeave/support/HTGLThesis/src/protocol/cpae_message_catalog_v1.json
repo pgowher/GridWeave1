@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "protocol_version": "C-PAE-1.0.0",
+  "model_version": "PAE-FECM-v1.0.0",
+  "messages": [
+    {"message_type":"CASE_SUBMIT","sender_roles":["REQUESTER"],"recipient_roles":["CASE_COORDINATOR","CONTROLLER"],"protocol_transitions":["CPAE-TR-02"],"formal_transition_ids":["TR-06"],"body_definition":"CaseSubmit"},
+    {"message_type":"CASE_ACCEPT","sender_roles":["CASE_COORDINATOR","CONTROLLER"],"recipient_roles":["REQUESTER","AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-03"],"formal_transition_ids":["TR-07"],"body_definition":"CaseAccept"},
+    {"message_type":"SCOPE_DECLARE","sender_roles":["CASE_COORDINATOR","CONTROLLER","CUSTODIAN"],"recipient_roles":["AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-01","CPAE-TR-04"],"formal_transition_ids":["TR-02","TR-03","TR-04","TR-05","TR-08"],"body_definition":"ScopeDeclare"},
+    {"message_type":"SCOPE_COMMIT","sender_roles":["CASE_COORDINATOR","CONTROLLER"],"recipient_roles":["AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-05"],"formal_transition_ids":["TR-09"],"body_definition":"ScopeCommit"},
+    {"message_type":"LINEAGE_DISCLOSE","sender_roles":["CUSTODIAN","OBSERVER","AUDITOR"],"recipient_roles":["CASE_COORDINATOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-13"],"formal_transition_ids":["TR-15"],"body_definition":"LineageDisclose"},
+    {"message_type":"OBLIGATION_ASSIGN","sender_roles":["CASE_COORDINATOR","CONTROLLER"],"recipient_roles":["CUSTODIAN","REPOSITORY_OPERATOR"],"protocol_transitions":["CPAE-TR-06"],"formal_transition_ids":["TR-10"],"body_definition":"ObligationAssign"},
+    {"message_type":"ERASURE_COMMAND","sender_roles":["CASE_COORDINATOR","CONTROLLER"],"recipient_roles":["CUSTODIAN","REPOSITORY_OPERATOR"],"protocol_transitions":["CPAE-TR-07"],"formal_transition_ids":["TR-10"],"body_definition":"ErasureCommand"},
+    {"message_type":"TERMINAL_RECEIPT","sender_roles":["CUSTODIAN","REPOSITORY_OPERATOR"],"recipient_roles":["AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-10"],"formal_transition_ids":["TR-13"],"body_definition":"TerminalReceipt"},
+    {"message_type":"EXCEPTION_ASSERT","sender_roles":["EXCEPTION_AUTHORITY"],"recipient_roles":["AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-09"],"formal_transition_ids":["TR-12"],"body_definition":"ExceptionAssert"},
+    {"message_type":"EVIDENCE_ANCHOR","sender_roles":["VALIDATOR","AUDITOR"],"recipient_roles":["AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-12"],"formal_transition_ids":["TR-14"],"body_definition":"EvidenceAnchor"},
+    {"message_type":"VIEW_COMMIT","sender_roles":["OBSERVER","AUDITOR","VALIDATOR"],"recipient_roles":["AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-14"],"formal_transition_ids":["TR-16"],"body_definition":"ViewCommit"},
+    {"message_type":"CHALLENGE_OPEN","sender_roles":["REQUESTER","AUDITOR","VALIDATOR"],"recipient_roles":["CASE_COORDINATOR","CONTROLLER"],"protocol_transitions":["CPAE-TR-15"],"formal_transition_ids":["TR-17"],"body_definition":"ChallengeOpen"},
+    {"message_type":"CHALLENGE_RESOLVE","sender_roles":["CASE_COORDINATOR","CONTROLLER","EXCEPTION_AUTHORITY"],"recipient_roles":["REQUESTER","AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-16"],"formal_transition_ids":["TR-18"],"body_definition":"ChallengeResolve"},
+    {"message_type":"CLOSURE_QUERY","sender_roles":["REQUESTER","AUDITOR"],"recipient_roles":["VALIDATOR"],"protocol_transitions":["CPAE-TR-21"],"formal_transition_ids":["TR-20"],"body_definition":"ClosureQuery"},
+    {"message_type":"CLOSURE_DECISION","sender_roles":["VALIDATOR"],"recipient_roles":["REQUESTER","AUDITOR"],"protocol_transitions":["CPAE-TR-22"],"formal_transition_ids":["TR-21"],"body_definition":"ClosureDecision"},
+    {"message_type":"EVIDENCE_VALIDATION","sender_roles":["VALIDATOR","AUDITOR"],"recipient_roles":["CUSTODIAN","CASE_COORDINATOR","AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-11"],"formal_transition_ids":["TR-14"],"body_definition":"EvidenceValidation"},
+    {"message_type":"DISPUTE_OPEN","sender_roles":["AUDITOR","VALIDATOR"],"recipient_roles":["CASE_COORDINATOR","CONTROLLER","REQUESTER"],"protocol_transitions":["CPAE-TR-18"],"formal_transition_ids":["TR-17"],"body_definition":"DisputeOpen"},
+    {"message_type":"DISPUTE_RESOLVE","sender_roles":["CASE_COORDINATOR","CONTROLLER","EXCEPTION_AUTHORITY"],"recipient_roles":["REQUESTER","AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-19"],"formal_transition_ids":["TR-18"],"body_definition":"DisputeResolve"},
+    {"message_type":"EXCEPTION_DECISION","sender_roles":["VALIDATOR","AUDITOR","EXCEPTION_AUTHORITY"],"recipient_roles":["REQUESTER","CASE_COORDINATOR","CUSTODIAN"],"protocol_transitions":["CPAE-TR-20"],"formal_transition_ids":["TR-12","TR-18"],"body_definition":"ExceptionDecision"},
+    {"message_type":"AUDIT_QUERY","sender_roles":["REQUESTER","AUDITOR","VALIDATOR"],"recipient_roles":["AUDITOR","VALIDATOR","OBSERVER"],"protocol_transitions":["CPAE-TR-23"],"formal_transition_ids":["TR-20"],"body_definition":"AuditQuery"},
+    {"message_type":"AUDIT_RESPONSE","sender_roles":["AUDITOR","VALIDATOR","OBSERVER"],"recipient_roles":["REQUESTER","AUDITOR","VALIDATOR"],"protocol_transitions":["CPAE-TR-24"],"formal_transition_ids":["TR-16","TR-20"],"body_definition":"AuditResponse"}
+  ]
+}

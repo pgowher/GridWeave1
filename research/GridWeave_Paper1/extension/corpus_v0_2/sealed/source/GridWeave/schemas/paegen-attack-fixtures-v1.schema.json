@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "https://pae.local/schema/paegen-attack-fixtures/v1",
+  "type": "object", "additionalProperties": false, "required": ["schema_version", "model_version", "fixtures"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"}, "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "fixtures": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Fixture"}}
+  },
+  "$defs": {
+    "Fixture": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fixture_id", "attack_type", "scenario_id", "target_obligation_index", "receipt_profile_id", "projection_profile_id", "parameters", "expected_oracle_outcome", "expected_verifier_outcome", "expected_detection", "indistinguishability_class"],
+      "properties": {
+        "fixture_id": {"type": "string", "pattern": "^ADV-[A-Z0-9-]+$"},
+        "attack_type": {"enum": ["MISSING_RECIPIENT", "HIDDEN_DERIVATIVE", "FORGED_RECEIPT", "MALFORMED_RECEIPT", "REPLAY", "BACKDATING", "CONTRADICTION", "DELAY", "COLLUSION", "INCOMPLETE_LINEAGE"]},
+        "scenario_id": {"type": "string", "pattern": "^PBE-SG-"}, "target_obligation_index": {"type": "integer", "minimum": 0},
+        "receipt_profile_id": {"type": ["string", "null"]}, "projection_profile_id": {"type": "string"}, "parameters": {"type": "object"},
+        "expected_oracle_outcome": {"enum": ["CLOSED", "CLOSED_WITH_EXCEPTIONS", "PARTIALLY_CLOSED", "OPEN", "DISPUTED", "UNVERIFIABLE"]},
+        "expected_verifier_outcome": {"enum": ["CLOSED", "CLOSED_WITH_EXCEPTIONS", "PARTIALLY_CLOSED", "OPEN", "DISPUTED", "UNVERIFIABLE", "INDETERMINATE_BY_VIEW"]},
+        "expected_detection": {"enum": ["DETECTED", "NOT_DETECTABLE", "CONDITIONALLY_DETECTABLE"]},
+        "indistinguishability_class": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

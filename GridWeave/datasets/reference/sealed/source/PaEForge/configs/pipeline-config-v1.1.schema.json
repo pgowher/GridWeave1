@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paeforge.local/schema/pipeline-config/v1.1",
+  "title": "PaEForge vertical pipeline configuration v1.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "pipeline_version", "run_label", "repositories", "output", "paegen", "projection", "verclo", "evaluation"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "pipeline_version": {"const": "1.0.0"},
+    "run_label": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"},
+    "repositories": {
+      "type": "object", "additionalProperties": false,
+      "required": ["paegen", "verclo"],
+      "properties": {"paegen": {"type": "string", "minLength": 1}, "verclo": {"type": "string", "minLength": 1}}
+    },
+    "output": {
+      "type": "object", "additionalProperties": false,
+      "required": ["root", "contract_series"],
+      "properties": {"root": {"type": "string", "minLength": 1}, "contract_series": {"const": "v1"}}
+    },
+    "paegen": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scenario_id", "variant_id", "observer_profile_id", "root_seed"],
+      "properties": {
+        "scenario_id": {"type": "string", "minLength": 1},
+        "variant_id": {"type": "string", "minLength": 1},
+        "observer_profile_id": {"type": "string", "minLength": 1},
+        "root_seed": {"type": "string", "minLength": 16},
+        "scenario_directory": {"type": "string", "minLength": 1}
+      }
+    },
+    "projection": {
+      "type": "object", "additionalProperties": false,
+      "required": ["profile_id", "profile_version", "access_class", "expose_visible_repository_bindings", "include_only_observable_repositories", "scope_completeness_mode"],
+      "properties": {
+        "profile_id": {"type": "string", "minLength": 1},
+        "profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "access_class": {"enum": ["public", "restricted"]},
+        "expose_visible_repository_bindings": {"const": true},
+        "include_only_observable_repositories": {"const": true},
+        "scope_completeness_mode": {"enum": ["visible_assertion", "source_audited"]}
+      }
+    },
+    "verclo": {
+      "type": "object", "additionalProperties": false,
+      "required": ["backend_id", "synthetic_proof_format"],
+      "properties": {"backend_id": {"const": "deterministic-public-fixture-v1"}, "synthetic_proof_format": {"const": "PAEGEN-SYNTHETIC-ORDERED-V1"}}
+    },
+    "evaluation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["visibility_attribution"],
+      "properties": {"visibility_attribution": {"enum": ["NONE", "OBSERVER_LIMITATION", "VERIFIER_ERROR", "UNRESOLVED"]}}
+    }
+  }
+}

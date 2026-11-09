@@ -1,0 +1,81 @@
+{
+  "bundle_format": "htgl.anomaly.edit-grammar.v1",
+  "grammar_id": "EDIT-GRAMMAR-GOVERNANCE-v1",
+  "version": "1.0.0",
+  "cost_model": {
+    "cost_model_id": "EDIT-COST-v1",
+    "version": "1.0.0",
+    "aggregation": "sum_primitive_edit_costs",
+    "minimality_scope": "exact_first_acceptance_over_enumerated_target_grammar_within_configured_integer_cost_bound"
+  },
+  "baseline_profile_ids": [
+    "BASELINE-SEEDED-RANDOM-FIELD-CORRUPTION-v1",
+    "BASELINE-SEEDED-RANDOM-INVALID-TRANSITION-v1"
+  ],
+  "rules": [
+    {
+      "anomaly_type": "unauthorized_purpose",
+      "target_invariant_id": "INV-PURPOSE-PERMITTED",
+      "operations": ["replace_policy_purpose_with_unpermitted_controlled_id"],
+      "primitive_edit_cost": 1,
+      "severity": 0.50,
+      "protected_invariant_ids": ["INV-SCHEMA-CONFORMANT", "INV-PHYSICAL-CONTEXT-UNCHANGED", "INV-WORKFLOW-TRANSITION-LEGAL", "INV-WORKFLOW-EVENT-COUNT-RECONCILED", "INV-CAUSAL-PARENT-REQUIRED", "INV-CAUSAL-ACYCLIC", "INV-POLICY-TRACE-COMPLETE", "INV-EVIDENCE-CRYPTO-VALID", "INV-SAME-ACTORS", "INV-SAME-OBJECT", "INV-SAME-TIME"]
+    },
+    {
+      "anomaly_type": "missing_erasure_propagation",
+      "target_invariant_id": "INV-ERASURE-REPLICA-CLOSURE",
+      "operations": ["omit_one_timely_valid_replica_propagation_receipt"],
+      "primitive_edit_cost": 1,
+      "severity": 0.75,
+      "protected_invariant_ids": ["INV-SCHEMA-CONFORMANT", "INV-PHYSICAL-CONTEXT-UNCHANGED", "INV-WORKFLOW-TRANSITION-LEGAL", "INV-WORKFLOW-EVENT-COUNT-RECONCILED", "INV-PURPOSE-PERMITTED", "INV-POLICY-TRACE-COMPLETE", "INV-CAUSAL-PARENT-REQUIRED", "INV-CAUSAL-ACYCLIC", "INV-EVIDENCE-CRYPTO-VALID", "INV-SAME-ACTORS", "INV-SAME-OBJECT", "INV-SAME-TIME"]
+    },
+    {
+      "anomaly_type": "premature_deletion",
+      "target_invariant_id": "INV-RETENTION-DUTY-SATISFIED",
+      "operations": ["set_one_replica_deleted_one_microsecond_before_due"],
+      "primitive_edit_cost": 1,
+      "severity": 0.85,
+      "protected_invariant_ids": ["INV-SCHEMA-CONFORMANT", "INV-PHYSICAL-CONTEXT-UNCHANGED", "INV-WORKFLOW-TRANSITION-LEGAL", "INV-WORKFLOW-EVENT-COUNT-RECONCILED", "INV-PURPOSE-PERMITTED", "INV-POLICY-TRACE-COMPLETE", "INV-CAUSAL-PARENT-REQUIRED", "INV-CAUSAL-ACYCLIC", "INV-EVIDENCE-CRYPTO-VALID", "INV-SAME-ACTORS", "INV-SAME-OBJECT", "INV-SAME-TIME"]
+    },
+    {
+      "anomaly_type": "false_confirmation",
+      "target_invariant_id": "INV-RECEIPT-MATCHES-ACTION",
+      "operations": ["mark_one_receipted_replica_action_incomplete_without_mutating_receipt"],
+      "primitive_edit_cost": 1,
+      "severity": 0.90,
+      "protected_invariant_ids": ["INV-SCHEMA-CONFORMANT", "INV-PHYSICAL-CONTEXT-UNCHANGED", "INV-WORKFLOW-TRANSITION-LEGAL", "INV-WORKFLOW-EVENT-COUNT-RECONCILED", "INV-PURPOSE-PERMITTED", "INV-POLICY-TRACE-COMPLETE", "INV-CAUSAL-PARENT-REQUIRED", "INV-CAUSAL-ACYCLIC", "INV-EVIDENCE-CRYPTO-VALID", "INV-SAME-ACTORS", "INV-SAME-OBJECT", "INV-SAME-TIME"]
+    },
+    {
+      "anomaly_type": "causal_orphan",
+      "target_invariant_id": "INV-CAUSAL-PARENT-REQUIRED",
+      "operations": ["remove_one_required_incoming_event_edge"],
+      "primitive_edit_cost": 1,
+      "severity": 0.70,
+      "protected_invariant_ids": ["INV-SCHEMA-CONFORMANT", "INV-PHYSICAL-CONTEXT-UNCHANGED", "INV-WORKFLOW-TRANSITION-LEGAL", "INV-WORKFLOW-EVENT-COUNT-RECONCILED", "INV-PURPOSE-PERMITTED", "INV-POLICY-TRACE-COMPLETE", "INV-CAUSAL-ACYCLIC", "INV-EVIDENCE-CRYPTO-VALID", "INV-SAME-ACTORS", "INV-SAME-OBJECT", "INV-SAME-TIME"]
+    },
+    {
+      "anomaly_type": "observer_omission",
+      "target_invariant_id": "INV-OBSERVER-REQUIRED-EVIDENCE-VISIBLE",
+      "operations": ["omit_one_required_receipt_from_counterfactual_observer_delivery"],
+      "primitive_edit_cost": 1,
+      "severity": 0.60,
+      "protected_invariant_ids": ["INV-SCHEMA-CONFORMANT", "INV-PHYSICAL-CONTEXT-UNCHANGED", "INV-WORKFLOW-TRANSITION-LEGAL", "INV-WORKFLOW-EVENT-COUNT-RECONCILED", "INV-PURPOSE-PERMITTED", "INV-POLICY-TRACE-COMPLETE", "INV-CAUSAL-PARENT-REQUIRED", "INV-CAUSAL-ACYCLIC", "INV-EVIDENCE-CRYPTO-VALID", "INV-OBSERVER-WORLD-TRUTH-UNCHANGED", "INV-SAME-ACTORS", "INV-SAME-OBJECT", "INV-SAME-TIME"]
+    },
+    {
+      "anomaly_type": "cross_region_rule_breach",
+      "target_invariant_id": "INV-CROSS-REGION-PERMISSION",
+      "operations": ["replace_destination_actor_with_effective_same_class_actor_in_other_jurisdiction"],
+      "primitive_edit_cost": 1,
+      "severity": 0.80,
+      "protected_invariant_ids": ["INV-SCHEMA-CONFORMANT", "INV-PHYSICAL-CONTEXT-UNCHANGED", "INV-WORKFLOW-TRANSITION-LEGAL", "INV-WORKFLOW-EVENT-COUNT-RECONCILED", "INV-POLICY-TRACE-COMPLETE", "INV-CAUSAL-PARENT-REQUIRED", "INV-CAUSAL-ACYCLIC", "INV-EVIDENCE-CRYPTO-VALID", "INV-SAME-OBJECT", "INV-SAME-TIME"]
+    },
+    {
+      "anomaly_type": "clock_replay_conflict",
+      "target_invariant_id": "INV-RECORDED-TIME-CAUSAL-ORDER",
+      "operations": ["shift_one_child_recorded_time_one_microsecond_before_parent_without_changing_world_time"],
+      "primitive_edit_cost": 1,
+      "severity": 0.65,
+      "protected_invariant_ids": ["INV-SCHEMA-CONFORMANT", "INV-PHYSICAL-CONTEXT-UNCHANGED", "INV-WORKFLOW-TRANSITION-LEGAL", "INV-WORKFLOW-EVENT-COUNT-RECONCILED", "INV-PURPOSE-PERMITTED", "INV-POLICY-TRACE-COMPLETE", "INV-CAUSAL-PARENT-REQUIRED", "INV-CAUSAL-ACYCLIC", "INV-EVIDENCE-CRYPTO-VALID", "INV-WORLD-TIME-UNCHANGED", "INV-SAME-ACTORS", "INV-SAME-OBJECT", "INV-SAME-TIME"]
+    }
+  ]
+}

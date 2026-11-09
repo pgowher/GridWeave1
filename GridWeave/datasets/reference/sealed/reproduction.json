@@ -1,0 +1,1 @@
+{"include_audit":false,"max_states":100000,"scales":[1,2,4],"scenario_ids":null,"seed":"GRIDWEAVE-STANDALONE-2026-10-25","seed_visibility":"EVALUATOR_ONLY; do not disclose a holdout seed to predictors","strategy":"all"}

@@ -1,0 +1,118 @@
+{
+  "counts": {
+    "case_units": 120,
+    "pairs": 60,
+    "source_families": 6,
+    "control_units": 60,
+    "challenge_units": 60,
+    "distinct_control_inputs": 12,
+    "distinct_all_inputs": 66,
+    "family_scale_groups": 6
+  },
+  "structures": {
+    "asset": {
+      "all_case_classes": 12,
+      "control_classes": 6,
+      "definition": "Asset nodes and directed lineage only",
+      "classes_shared_across_splits": 0
+    },
+    "custody": {
+      "all_case_classes": 12,
+      "control_classes": 6,
+      "definition": "Asset, replica, repository and custodian node types; directed relation types",
+      "classes_shared_across_splits": 0
+    },
+    "semantic": {
+      "all_case_classes": 12,
+      "control_classes": 6,
+      "definition": "Custody graph plus asset kind, replica class and repository class",
+      "classes_shared_across_splits": 0
+    }
+  },
+  "checks": {
+    "exact_isomorphism_sanity_checks": "PASS",
+    "family_split_overlap": false,
+    "hidden_copy_pairs": 6,
+    "hidden_copy_pairs_equal_full_input_and_observer_truth_but_different_world": 6,
+    "frozen_source_files_checked": 318,
+    "frozen_source_errors": []
+  },
+  "structure_ranges": {
+    "assets": {
+      "min": 3,
+      "max": 5,
+      "distribution": {
+        "3": 20,
+        "4": 40,
+        "5": 60
+      }
+    },
+    "replicas": {
+      "min": 4,
+      "max": 7,
+      "distribution": {
+        "4": 40,
+        "5": 40,
+        "6": 20,
+        "7": 20
+      }
+    },
+    "repositories": {
+      "min": 4,
+      "max": 6,
+      "distribution": {
+        "4": 60,
+        "5": 40,
+        "6": 20
+      }
+    },
+    "custodians": {
+      "min": 3,
+      "max": 5,
+      "distribution": {
+        "3": 20,
+        "4": 60,
+        "5": 40
+      }
+    },
+    "max_replicas_per_asset": {
+      "min": 1,
+      "max": 3,
+      "distribution": {
+        "1": 80,
+        "2": 20,
+        "3": 20
+      }
+    },
+    "lineage_edges": {
+      "min": 1,
+      "max": 4,
+      "distribution": {
+        "1": 1,
+        "2": 21,
+        "3": 41,
+        "4": 57
+      }
+    },
+    "lineage_depth": {
+      "min": 1,
+      "max": 4,
+      "distribution": {
+        "1": 23,
+        "2": 77,
+        "3": 1,
+        "4": 19
+      }
+    },
+    "max_lineage_fanout": {
+      "min": 1,
+      "max": 4,
+      "distribution": {
+        "1": 60,
+        "2": 40,
+        "3": 1,
+        "4": 19
+      }
+    }
+  }
+}

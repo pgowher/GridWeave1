@@ -1,0 +1,150 @@
+{
+  "bundle_format": "htgl.anomaly.invariant-registry.v1",
+  "registry_id": "INVARIANT-REGISTRY-GOVERNANCE-v1",
+  "version": "1.0.0",
+  "acceptance_profile_id": "COUNTERFACTUAL-STRICT-TARGET-ONLY-v1",
+  "target_invariants": {
+    "unauthorized_purpose": "INV-PURPOSE-PERMITTED",
+    "missing_erasure_propagation": "INV-ERASURE-REPLICA-CLOSURE",
+    "premature_deletion": "INV-RETENTION-DUTY-SATISFIED",
+    "false_confirmation": "INV-RECEIPT-MATCHES-ACTION",
+    "causal_orphan": "INV-CAUSAL-PARENT-REQUIRED",
+    "observer_omission": "INV-OBSERVER-REQUIRED-EVIDENCE-VISIBLE",
+    "cross_region_rule_breach": "INV-CROSS-REGION-PERMISSION",
+    "clock_replay_conflict": "INV-RECORDED-TIME-CAUSAL-ORDER"
+  },
+  "invariants": [
+    {
+      "invariant_id": "INV-SCHEMA-CONFORMANT",
+      "domain": "schema",
+      "description": "Every materialized counterfactual row remains valid under its locked schema.",
+      "applicability": "always"
+    },
+    {
+      "invariant_id": "INV-PHYSICAL-CONTEXT-UNCHANGED",
+      "domain": "physical",
+      "description": "The physical trigger/context digest is identical across the protected pair.",
+      "applicability": "always"
+    },
+    {
+      "invariant_id": "INV-WORKFLOW-TRANSITION-LEGAL",
+      "domain": "workflow",
+      "description": "Every retained event state transition belongs to the versioned workflow automaton.",
+      "applicability": "workflow_present"
+    },
+    {
+      "invariant_id": "INV-WORKFLOW-EVENT-COUNT-RECONCILED",
+      "domain": "workflow",
+      "description": "The workflow event count is unchanged and reconciles with the counterfactual episode.",
+      "applicability": "workflow_present"
+    },
+    {
+      "invariant_id": "INV-PURPOSE-PERMITTED",
+      "domain": "policy",
+      "description": "The effective policy profile permits each observed purpose and action.",
+      "applicability": "policy_event_present"
+    },
+    {
+      "invariant_id": "INV-CROSS-REGION-PERMISSION",
+      "domain": "policy",
+      "description": "A cross-region or cross-jurisdiction transfer has a permitting policy decision and required duties.",
+      "applicability": "transfer_event_present"
+    },
+    {
+      "invariant_id": "INV-POLICY-TRACE-COMPLETE",
+      "domain": "policy",
+      "description": "Every recomputed policy decision has applied rules, conflict provenance, and an explanation code.",
+      "applicability": "policy_event_present"
+    },
+    {
+      "invariant_id": "INV-RETENTION-DUTY-SATISFIED",
+      "domain": "temporal",
+      "description": "No modeled replica deletion occurs before its declared deletion due time.",
+      "applicability": "replica_with_deadline_present"
+    },
+    {
+      "invariant_id": "INV-CAUSAL-PARENT-REQUIRED",
+      "domain": "causal",
+      "description": "Every workflow event with step index greater than zero has an authoritative incoming dependency edge.",
+      "applicability": "multi_event_workflow"
+    },
+    {
+      "invariant_id": "INV-CAUSAL-ACYCLIC",
+      "domain": "causal",
+      "description": "The counterfactual event-edge graph remains acyclic.",
+      "applicability": "workflow_present"
+    },
+    {
+      "invariant_id": "INV-ERASURE-REPLICA-CLOSURE",
+      "domain": "evidence",
+      "description": "Every non-exempt replica propagation duty has at least one timely independently valid receipt.",
+      "applicability": "erasure_propagation_present"
+    },
+    {
+      "invariant_id": "INV-RECEIPT-MATCHES-ACTION",
+      "domain": "evidence",
+      "description": "A valid-looking deletion acknowledgement corresponds to the modeled replica action truth.",
+      "applicability": "replica_deletion_receipt_present"
+    },
+    {
+      "invariant_id": "INV-EVIDENCE-CRYPTO-VALID",
+      "domain": "evidence",
+      "description": "Every retained episode receipt independently verifies under its configured synthetic evidence profile.",
+      "applicability": "receipt_present"
+    },
+    {
+      "invariant_id": "INV-OBSERVER-REQUIRED-EVIDENCE-VISIBLE",
+      "domain": "observer",
+      "description": "Every receipt designated required for the counterfactual observer is present and not omitted.",
+      "applicability": "observer_requirement_present"
+    },
+    {
+      "invariant_id": "INV-OBSERVER-WORLD-TRUTH-UNCHANGED",
+      "domain": "observer",
+      "description": "Observer-only edits do not mutate frozen world, policy, or evidence truth.",
+      "applicability": "observer_requirement_present"
+    },
+    {
+      "invariant_id": "INV-RECORDED-TIME-CAUSAL-ORDER",
+      "domain": "temporal",
+      "description": "Recorded observer/replay timestamps respect authoritative causal precedence.",
+      "applicability": "causal_edge_present"
+    },
+    {
+      "invariant_id": "INV-WORLD-TIME-UNCHANGED",
+      "domain": "temporal",
+      "description": "Canonical world timestamps remain identical across the valid and invalid pair.",
+      "applicability": "workflow_present"
+    },
+    {
+      "invariant_id": "INV-SAMPLING-PROBABILITY-VALID",
+      "domain": "sampling",
+      "description": "When sampling rows exist, first-order probabilities are in (0,1] and weights equal their inverse.",
+      "applicability": "sampling_membership_present"
+    },
+    {
+      "invariant_id": "INV-SAMPLING-ESTIMATOR-ELIGIBLE",
+      "domain": "sampling",
+      "description": "No population estimator is enabled without valid inclusion probabilities and explicit eligibility.",
+      "applicability": "sampling_membership_present"
+    },
+    {
+      "invariant_id": "INV-SAME-ACTORS",
+      "domain": "pair",
+      "description": "Actor fields are identical except where the target edit grammar explicitly permits a destination substitution.",
+      "applicability": "workflow_present"
+    },
+    {
+      "invariant_id": "INV-SAME-OBJECT",
+      "domain": "pair",
+      "description": "Object and database identities are identical across the protected pair.",
+      "applicability": "workflow_present"
+    },
+    {
+      "invariant_id": "INV-SAME-TIME",
+      "domain": "pair",
+      "description": "Canonical world event timestamps are identical; observer/replay time may change only for the clock target.",
+      "applicability": "workflow_present"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "schema_id": "htgl.dataset.v1.raw_meter_reading",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "bcb131adebc84ff6c3cd65f0e3d80d7df7add428d6f96b90172bc5ee726afc51",
+  "table_name": "raw_meter_reading",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "reading_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Stable physical-reading key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "meter_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Synthetic meter/usage-point key."
+      }
+    },
+    {
+      "name": "cohort_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Cohort FK."
+      }
+    },
+    {
+      "name": "region_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Region FK."
+      }
+    },
+    {
+      "name": "interval_start",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "UTC interval start."
+      }
+    },
+    {
+      "name": "interval_end",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "UTC interval end."
+      }
+    },
+    {
+      "name": "import_energy_kwh",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Imported active energy; non-negative."
+      }
+    },
+    {
+      "name": "export_energy_kwh",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Exported active energy; non-negative."
+      }
+    },
+    {
+      "name": "reactive_energy_kvarh",
+      "type": "float64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Reactive energy when modeled."
+      }
+    },
+    {
+      "name": "voltage_v",
+      "type": "float32",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Meter voltage when modeled."
+      }
+    },
+    {
+      "name": "quality_flags",
+      "type": "list<dictionary<string>>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "quality_flag",
+        "privacy_class": "restricted",
+        "semantic_invariant": "missing, estimated, clipped, clock_shifted, outage, etc."
+      }
+    },
+    {
+      "name": "generation_backend",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "physical_backend",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Current executable profiles use controlled synthetic identifiers; external backend identifiers require a real versioned adapter and provenance contract."
+      }
+    },
+    {
+      "name": "calibration_source_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Source provenance without source record disclosure."
+      }
+    },
+    {
+      "name": "represented_meter_count",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Weight represented by this materialized series."
+      }
+    }
+  ]
+}

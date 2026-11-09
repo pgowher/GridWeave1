@@ -1,0 +1,187 @@
+{
+  "bundle_format": "htgl.evidence.obligation-templates.v1",
+  "bundle_id": "OBLIGATION-TEMPLATES-REFERENCE-v1",
+  "version": "1.0.0",
+  "sufficiency_profile_id": "SUFFICIENCY-STRICT-v1",
+  "proof_limit_statement": "Evidence fixtures evaluate model-level verification assumptions and do not prove physical deletion.",
+  "templates": [
+    {
+      "template_id": "OBL-AUTH-v1",
+      "version": "1.0.0",
+      "clauses": [
+        {
+          "clause_id": "POLICY-TRACE-PROVENANCE",
+          "policy_rule_ids": ["POL-EVIDENCE-TRACE-DUTY"],
+          "workflow_types": [],
+          "event_types": [],
+          "obligation_type": "provenance",
+          "coverage_scope": "object",
+          "expansion_mode": "object",
+          "actor_roles": [],
+          "responsible_actor_role": "controller",
+          "deadline_seconds": 3600,
+          "required_evidence_types": ["digest", "hmac", "signature"],
+          "minimum_count_mode": "fixed",
+          "fixed_minimum_count": 1,
+          "requires_evidence_trigger": false
+        },
+        {
+          "clause_id": "ERASURE-REQUEST-AUTHENTICATION",
+          "policy_rule_ids": ["POL-ERASURE-DUTY"],
+          "workflow_types": ["erasure"],
+          "event_types": ["erasure_requested"],
+          "obligation_type": "authorization",
+          "coverage_scope": "object",
+          "expansion_mode": "object",
+          "actor_roles": [],
+          "responsible_actor_role": "requesting",
+          "deadline_seconds": 3600,
+          "required_evidence_types": ["hmac", "signature"],
+          "minimum_count_mode": "fixed",
+          "fixed_minimum_count": 1,
+          "requires_evidence_trigger": true
+        },
+        {
+          "clause_id": "ERASURE-REQUEST-SCOPING",
+          "policy_rule_ids": ["POL-ERASURE-DUTY"],
+          "workflow_types": ["erasure"],
+          "event_types": ["erasure_requested"],
+          "obligation_type": "provenance",
+          "coverage_scope": "object",
+          "expansion_mode": "object",
+          "actor_roles": [],
+          "responsible_actor_role": "controller",
+          "deadline_seconds": 7200,
+          "required_evidence_types": ["digest", "signature"],
+          "minimum_count_mode": "fixed",
+          "fixed_minimum_count": 1,
+          "requires_evidence_trigger": true
+        }
+      ]
+    },
+    {
+      "template_id": "OBL-REPLICA-ERASURE-v1",
+      "version": "1.0.0",
+      "clauses": [
+        {
+          "clause_id": "ERASURE-PROPAGATION-NON-EXEMPT-REPLICAS",
+          "policy_rule_ids": ["POL-ERASURE-DUTY"],
+          "workflow_types": ["erasure"],
+          "event_types": ["erasure_propagated"],
+          "obligation_type": "provenance",
+          "coverage_scope": "replica_set",
+          "expansion_mode": "non_exempt_replicas",
+          "actor_roles": [],
+          "responsible_actor_role": "replica_operator",
+          "deadline_seconds": 86400,
+          "required_evidence_types": ["replica_attestation"],
+          "minimum_count_mode": "fixed",
+          "fixed_minimum_count": 1,
+          "requires_evidence_trigger": true
+        },
+        {
+          "clause_id": "ERASURE-EXECUTION-NON-EXEMPT-REPLICAS",
+          "policy_rule_ids": ["POL-ERASURE-DUTY"],
+          "workflow_types": ["erasure"],
+          "event_types": ["erasure_executed"],
+          "obligation_type": "replica_deletion",
+          "coverage_scope": "replica_set",
+          "expansion_mode": "non_exempt_replicas",
+          "actor_roles": [],
+          "responsible_actor_role": "replica_operator",
+          "deadline_seconds": 86400,
+          "required_evidence_types": ["deletion_acknowledgement", "replica_attestation"],
+          "minimum_count_mode": "fixed",
+          "fixed_minimum_count": 1,
+          "requires_evidence_trigger": true
+        },
+        {
+          "clause_id": "ERASURE-RETENTION-EXCEPTION-REPLICAS",
+          "policy_rule_ids": ["POL-ERASURE-RETENTION-EXCEPTION"],
+          "workflow_types": ["erasure"],
+          "event_types": ["erasure_requested"],
+          "obligation_type": "retention_exception",
+          "coverage_scope": "replica_set",
+          "expansion_mode": "exempt_replicas",
+          "actor_roles": [],
+          "responsible_actor_role": "replica_operator",
+          "deadline_seconds": 7200,
+          "required_evidence_types": ["audit_finding", "signature"],
+          "minimum_count_mode": "fixed",
+          "fixed_minimum_count": 1,
+          "requires_evidence_trigger": true
+        },
+        {
+          "clause_id": "ERASURE-FINAL-VERIFICATION-CLOSURE",
+          "policy_rule_ids": ["POL-ERASURE-DUTY"],
+          "workflow_types": ["erasure"],
+          "event_types": ["erasure_verified"],
+          "obligation_type": "verification",
+          "coverage_scope": "causal_closure",
+          "expansion_mode": "causal_closure",
+          "actor_roles": [],
+          "responsible_actor_role": "oversight",
+          "deadline_seconds": 14400,
+          "required_evidence_types": ["inclusion_proof", "replica_attestation"],
+          "minimum_count_mode": "coverage_size",
+          "fixed_minimum_count": 1,
+          "requires_evidence_trigger": true
+        }
+      ]
+    },
+    {
+      "template_id": "OBL-AUDIT-v1",
+      "version": "1.0.0",
+      "clauses": [
+        {
+          "clause_id": "AUDIT-WORKFLOW-COVERAGE",
+          "policy_rule_ids": ["POL-EVIDENCE-TRACE-DUTY"],
+          "workflow_types": ["audit"],
+          "event_types": ["audit_finding"],
+          "obligation_type": "audit_response",
+          "coverage_scope": "workflow",
+          "expansion_mode": "workflow_events",
+          "actor_roles": [],
+          "responsible_actor_role": "oversight",
+          "deadline_seconds": 14400,
+          "required_evidence_types": ["audit_finding", "signature"],
+          "minimum_count_mode": "coverage_size",
+          "fixed_minimum_count": 1,
+          "requires_evidence_trigger": true
+        },
+        {
+          "clause_id": "INCIDENT-ACTOR-NOTIFICATION",
+          "policy_rule_ids": ["POL-EVIDENCE-TRACE-DUTY"],
+          "workflow_types": ["incident"],
+          "event_types": ["incident_notified"],
+          "obligation_type": "notification",
+          "coverage_scope": "actor_set",
+          "expansion_mode": "actor_set",
+          "actor_roles": ["source", "controller", "oversight"],
+          "responsible_actor_role": "coverage_actor",
+          "deadline_seconds": 3600,
+          "required_evidence_types": ["notification_receipt", "signature"],
+          "minimum_count_mode": "fixed",
+          "fixed_minimum_count": 1,
+          "requires_evidence_trigger": true
+        },
+        {
+          "clause_id": "AUDIT-FINDING-ANCHOR",
+          "policy_rule_ids": ["POL-EVIDENCE-TRACE-DUTY"],
+          "workflow_types": ["audit"],
+          "event_types": ["audit_finding"],
+          "obligation_type": "anchor",
+          "coverage_scope": "causal_closure",
+          "expansion_mode": "causal_closure",
+          "actor_roles": [],
+          "responsible_actor_role": "oversight",
+          "deadline_seconds": 14400,
+          "required_evidence_types": ["inclusion_proof", "merkle_anchor"],
+          "minimum_count_mode": "coverage_size",
+          "fixed_minimum_count": 1,
+          "requires_evidence_trigger": true
+        }
+      ]
+    }
+  ]
+}

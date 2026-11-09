@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/paebench-family/v1.1",
+  "title": "PaEBench 1.1 source case family",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["family_id", "domain", "subject_namespace", "split", "repositories", "assets", "obligations", "variants"],
+  "properties": {
+    "family_id": {"type": "string", "minLength": 3},
+    "domain": {"type": "string", "minLength": 3},
+    "subject_namespace": {"type": "string", "minLength": 3},
+    "split": {"enum": ["train", "development", "test"]},
+    "repositories": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["repository_id", "kind", "observer_visible"], "properties": {"repository_id": {"type": "string"}, "kind": {"type": "string"}, "observer_visible": {"type": "boolean"}}}},
+    "assets": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["asset_id", "repository_id", "parent_asset_ids"], "properties": {"asset_id": {"type": "string"}, "repository_id": {"type": "string"}, "parent_asset_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}}}},
+    "obligations": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["obligation_id", "asset_id", "principal_id", "required_disposition", "evidence_floor", "deadline_hours"], "properties": {"obligation_id": {"type": "string"}, "asset_id": {"type": "string"}, "principal_id": {"type": "string"}, "required_disposition": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM", "RETAINED"]}, "evidence_floor": {"enum": ["E2", "E3", "E4"]}, "deadline_hours": {"type": "integer", "minimum": 1}}}},
+    "variants": {"type": "array", "minItems": 3, "items": {"type": "object", "additionalProperties": false, "required": ["variant_id", "operation", "expected_closure"], "properties": {"variant_id": {"type": "string"}, "operation": {"enum": ["NONE", "OMIT_ALL", "OMIT_ONE", "CONFLICT", "BASELINE_MISSING", "EARLY_OMIT", "INVALID_SIGNATURE", "MATERIAL_MISSING", "EXCEPTION", "HIDDEN_COPY", "LATE_ONE"]}, "target_obligation_id": {"type": "string"}, "expected_closure": {"enum": ["CLOSED", "CLOSED_WITH_EXCEPTIONS", "PARTIALLY_CLOSED", "OPEN", "DISPUTED", "UNVERIFIABLE", "IN_PROGRESS"]}}}}
+  }
+}

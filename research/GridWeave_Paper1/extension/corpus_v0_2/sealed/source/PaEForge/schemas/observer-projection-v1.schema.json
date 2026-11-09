@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paeforge.local/schema/observer-projection/v1",
+  "title": "PaEForge VERCLO observer projection v1",
+  "description": "The sole case/topology input admitted to VERCLO. All fields are observer-visible metadata.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "contract_version", "model_version", "data_class", "exchange_id", "run_id", "scenario_id", "case_id", "seed", "produced_at", "evaluation_time", "observer", "policy", "case", "topology", "exceptions", "challenges", "projection_commitment", "provenance"],
+  "properties": {
+    "schema_id": {"const": "https://paeforge.local/schema/observer-projection/v1"},
+    "schema_version": {"const": "1.0.0"},
+    "contract_version": {"const": "1.0.0"},
+    "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "data_class": {"const": "VERIFIER_VISIBLE_INPUT"},
+    "exchange_id": {"$ref": "#/$defs/Identifier"},
+    "run_id": {"$ref": "#/$defs/Identifier"},
+    "scenario_id": {"$ref": "#/$defs/Identifier"},
+    "case_id": {"$ref": "#/$defs/Identifier"},
+    "seed": {"$ref": "#/$defs/SeedRef"},
+    "produced_at": {"$ref": "#/$defs/Timestamp"},
+    "evaluation_time": {"$ref": "#/$defs/Timestamp"},
+    "observer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["principal_id", "roles", "profile_id", "profile_version", "access_class"],
+      "properties": {
+        "principal_id": {"$ref": "#/$defs/Identifier"},
+        "roles": {"type": "array", "items": {"enum": ["AUDITOR", "VALIDATOR", "OBSERVER"]}, "minItems": 1, "uniqueItems": true},
+        "profile_id": {"$ref": "#/$defs/Identifier"},
+        "profile_version": {"$ref": "#/$defs/SemVer"},
+        "access_class": {"enum": ["public", "restricted"]}
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_id", "version", "sha256"],
+      "properties": {
+        "profile_id": {"$ref": "#/$defs/Identifier"},
+        "version": {"$ref": "#/$defs/SemVer"},
+        "sha256": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_id", "correlation_id", "request_id", "requester_principal_id", "root_asset_ids", "accepted_at"],
+      "properties": {
+        "dataset_id": {"$ref": "#/$defs/Identifier"},
+        "correlation_id": {"$ref": "#/$defs/Identifier"},
+        "request_id": {"$ref": "#/$defs/Identifier"},
+        "requester_principal_id": {"$ref": "#/$defs/Identifier"},
+        "root_asset_ids": {"$ref": "#/$defs/Identifiers"},
+        "accepted_at": {"$ref": "#/$defs/Timestamp"},
+        "metadata": {"type": "object", "additionalProperties": {"type": "string"}}
+      }
+    },
+    "topology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope_version", "graph_available", "declared_scope_complete", "unresolved_reference_ids", "assets", "repositories", "replicas", "lineage_edges"],
+      "properties": {
+        "scope_version": {"type": "integer", "minimum": 1},
+        "graph_available": {"type": "boolean"},
+        "declared_scope_complete": {"type": "boolean"},
+        "unresolved_reference_ids": {"$ref": "#/$defs/Identifiers"},
+        "scope_commitment": {"$ref": "#/$defs/Digest"},
+        "assets": {"type": "array", "items": {"$ref": "#/$defs/Asset"}},
+        "repositories": {"type": "array", "items": {"$ref": "#/$defs/Repository"}},
+        "replicas": {"type": "array", "items": {"$ref": "#/$defs/Replica"}},
+        "lineage_edges": {"type": "array", "items": {"$ref": "#/$defs/Lineage"}}
+      }
+    },
+    "exceptions": {"type": "array", "items": {"$ref": "#/$defs/Exception"}},
+    "challenges": {"type": "array", "items": {"$ref": "#/$defs/Challenge"}},
+    "projection_commitment": {"$ref": "#/$defs/Digest"},
+    "provenance": {"$ref": "#/$defs/Provenance"}
+  },
+  "$defs": {
+    "Identifier": {"type": "string", "minLength": 1, "maxLength": 256},
+    "Identifiers": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "SemVer": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "Timestamp": {"type": "string", "format": "date-time"},
+    "SeedRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["replicate_id", "seed_stream_digest"],
+      "properties": {"replicate_id": {"type": "integer", "minimum": 0}, "seed_stream_digest": {"$ref": "#/$defs/Digest"}}
+    },
+    "Visibility": {"enum": ["DECLARED", "DISCOVERABLE_AUTHENTICATED"]},
+    "Asset": {
+      "type": "object", "additionalProperties": false,
+      "required": ["asset_id", "dataset_id", "asset_kind", "visibility"],
+      "properties": {"asset_id": {"$ref": "#/$defs/Identifier"}, "dataset_id": {"$ref": "#/$defs/Identifier"}, "asset_kind": {"$ref": "#/$defs/Identifier"}, "visibility": {"$ref": "#/$defs/Visibility"}}
+    },
+    "Repository": {
+      "type": "object", "additionalProperties": false,
+      "required": ["repository_id", "organization_id", "custodian_principal_id", "repository_class", "visibility"],
+      "properties": {"repository_id": {"$ref": "#/$defs/Identifier"}, "organization_id": {"$ref": "#/$defs/Identifier"}, "custodian_principal_id": {"$ref": "#/$defs/Identifier"}, "repository_class": {"$ref": "#/$defs/Identifier"}, "visibility": {"$ref": "#/$defs/Visibility"}}
+    },
+    "Replica": {
+      "type": "object", "additionalProperties": false,
+      "required": ["replica_id", "asset_id", "repository_id", "replica_class", "visibility"],
+      "properties": {"replica_id": {"$ref": "#/$defs/Identifier"}, "asset_id": {"$ref": "#/$defs/Identifier"}, "repository_id": {"$ref": "#/$defs/Identifier"}, "replica_class": {"$ref": "#/$defs/Identifier"}, "visibility": {"$ref": "#/$defs/Visibility"}}
+    },
+    "Lineage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["relationship_id", "parent_asset_id", "child_asset_id", "relationship_type", "visibility"],
+      "properties": {"relationship_id": {"$ref": "#/$defs/Identifier"}, "parent_asset_id": {"$ref": "#/$defs/Identifier"}, "child_asset_id": {"$ref": "#/$defs/Identifier"}, "relationship_type": {"enum": ["DERIVED_FROM", "EXPORTED_FROM"]}, "visibility": {"$ref": "#/$defs/Visibility"}}
+    },
+    "Exception": {
+      "type": "object", "additionalProperties": false,
+      "required": ["exception_id", "obligation_id", "authority_principal_id", "basis_commitment", "effective_at", "expires_at"],
+      "properties": {"exception_id": {"$ref": "#/$defs/Identifier"}, "obligation_id": {"$ref": "#/$defs/Identifier"}, "authority_principal_id": {"$ref": "#/$defs/Identifier"}, "basis_commitment": {"$ref": "#/$defs/Digest"}, "effective_at": {"$ref": "#/$defs/Timestamp"}, "expires_at": {"$ref": "#/$defs/Timestamp"}}
+    },
+    "Challenge": {
+      "type": "object", "additionalProperties": false,
+      "required": ["challenge_id", "opened_at", "subject_ref", "reason_code", "status"],
+      "properties": {"challenge_id": {"$ref": "#/$defs/Identifier"}, "opened_at": {"$ref": "#/$defs/Timestamp"}, "subject_ref": {"$ref": "#/$defs/Identifier"}, "reason_code": {"$ref": "#/$defs/Identifier"}, "status": {"enum": ["OPEN", "RESOLVED", "REJECTED", "TIMED_OUT"]}}
+    },
+    "Provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["producer", "producer_version", "source_revision", "source_bundle_sha256"],
+      "properties": {"producer": {"const": "PaEGen"}, "producer_version": {"$ref": "#/$defs/SemVer"}, "source_revision": {"$ref": "#/$defs/Identifier"}, "source_bundle_sha256": {"$ref": "#/$defs/Digest"}}
+    }
+  }
+}
+

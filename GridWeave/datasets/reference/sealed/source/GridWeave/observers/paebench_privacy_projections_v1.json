@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "model_version": "PAE-FECM-v1.0.0",
+  "forbidden_fields": ["closure_ground_truth", "expected_oracle_outcome", "expected_verifier_outcome", "expected_detection", "variant_id", "variant_class", "verification_status_truth", "truth_matches_declared", "hidden_topology", "hidden_asset_ids", "collusion_truth"],
+  "hidden_topology_fields": ["undisclosed_repository_ids", "undisclosed_recipient_ids", "undisclosed_derivative_ids", "oracle_relationship_edges"],
+  "profiles": [
+    {"profile_id": "PRJ-RESTRICTED-AUDITOR", "access_class": "restricted", "source_profile_id": "OBS-SG-AUDITOR", "visible_sections": ["scenario_context", "case_declaration", "submitted_evidence"], "transformations": []},
+    {"profile_id": "PRJ-LINEAGE-REDACTED", "access_class": "restricted", "source_profile_id": "OBS-SG-AUDITOR", "visible_sections": ["scenario_context", "case_declaration", "submitted_evidence"], "transformations": ["REMOVE_PARENT_ASSET_IDS"]},
+    {"profile_id": "PRJ-COLLUDING-CUSTODIANS", "access_class": "restricted", "source_profile_id": "OBS-SG-AUDITOR", "visible_sections": ["scenario_context", "case_declaration", "submitted_evidence"], "transformations": ["PRESERVE_MUTUALLY_CONSISTENT_COLLUSIVE_CLAIMS"]}
+  ],
+  "known_indistinguishability": [
+    {"class_id": "IND-HIDDEN-RECIPIENT", "attack_type": "MISSING_RECIPIENT", "statement": "A recipient absent from every authenticated restricted view is indistinguishable from a world in which that recipient never received the asset."},
+    {"class_id": "IND-HIDDEN-DERIVATIVE", "attack_type": "HIDDEN_DERIVATIVE", "statement": "A derivative and lineage edge omitted from every available commitment are indistinguishable from a world in which the derivative was never created."},
+    {"class_id": "IND-COLLUSIVE-CONSISTENCY", "attack_type": "COLLUSION", "statement": "Consistent false claims from all visible custodians are indistinguishable from honest claims without an independent evidence path."}
+  ]
+}

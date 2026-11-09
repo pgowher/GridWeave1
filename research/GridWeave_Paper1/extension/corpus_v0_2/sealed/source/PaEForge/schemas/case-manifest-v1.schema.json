@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paeforge.local/schema/case-manifest/v1",
+  "title": "PaEForge verifier-visible case manifest v1",
+  "description": "A safe inventory for one VERCLO case. It cannot reference or describe sealed evaluator truth.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "contract_version", "model_version", "data_class", "exchange_id", "run_id", "scenario_id", "case_id", "seed", "policy", "artifacts", "provenance"],
+  "properties": {
+    "schema_id": {"const": "https://paeforge.local/schema/case-manifest/v1"},
+    "schema_version": {"const": "1.0.0"},
+    "contract_version": {"const": "1.0.0"},
+    "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "data_class": {"const": "VERIFIER_VISIBLE_INPUT"},
+    "exchange_id": {"$ref": "#/$defs/Identifier"},
+    "run_id": {"$ref": "#/$defs/Identifier"},
+    "scenario_id": {"$ref": "#/$defs/Identifier"},
+    "case_id": {"$ref": "#/$defs/Identifier"},
+    "seed": {"$ref": "#/$defs/Seed"},
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_id", "version", "sha256"],
+      "properties": {
+        "profile_id": {"$ref": "#/$defs/Identifier"},
+        "version": {"$ref": "#/$defs/SemVer"},
+        "sha256": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observer_projection", "receipt_stream"],
+      "properties": {
+        "observer_projection": {"$ref": "#/$defs/Artifact"},
+        "receipt_stream": {"$ref": "#/$defs/Artifact"}
+      }
+    },
+    "provenance": {"$ref": "#/$defs/Provenance"}
+  },
+  "$defs": {
+    "Identifier": {"type": "string", "minLength": 1, "maxLength": 256},
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "SemVer": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "Timestamp": {"type": "string", "format": "date-time"},
+    "RelativePath": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\u0000]+$"},
+    "Seed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["derivation", "replicate_id", "master_seed_commitment", "seed_stream_digest"],
+      "properties": {
+        "derivation": {"const": "NAMED_STREAM_SHA256_V1"},
+        "replicate_id": {"type": "integer", "minimum": 0},
+        "master_seed_commitment": {"$ref": "#/$defs/Digest"},
+        "seed_stream_digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "Artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "media_type", "path", "sha256"],
+      "properties": {
+        "schema_id": {"type": "string", "format": "uri"},
+        "media_type": {"const": "application/json"},
+        "path": {"$ref": "#/$defs/RelativePath"},
+        "sha256": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "Provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producer", "producer_version", "source_revision", "generated_at"],
+      "properties": {
+        "producer": {"const": "PaEGen"},
+        "producer_version": {"$ref": "#/$defs/SemVer"},
+        "source_revision": {"$ref": "#/$defs/Identifier"},
+        "generated_at": {"$ref": "#/$defs/Timestamp"}
+      }
+    }
+  }
+}
+

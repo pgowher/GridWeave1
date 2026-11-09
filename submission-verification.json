@@ -1,0 +1,117 @@
+{
+  "status": "PASS",
+  "scope": "Verification of the reviewer copy, separate from the historical measurements",
+  "original_frozen_files_verified": 10924,
+  "environment": {
+    "platform": "Linux x86-64",
+    "python": "3.14.4",
+    "setup": "Both setup scripts succeeded in new local environments using cached dependency wheels",
+    "full_study": "Ran from a separate directory with the prepared dependency environments"
+  },
+  "paper_prototype_tests_passed": 13,
+  "generator_tests_passed": 22,
+  "structural_census": {
+    "reference": {
+      "case_units": 420,
+      "distinct_all_inputs": 231,
+      "distinct_control_inputs": 42,
+      "recorded_source_files_verified": 318
+    },
+    "extension": {
+      "case_units": 120,
+      "distinct_all_inputs": 66,
+      "distinct_control_inputs": 12,
+      "recorded_source_files_verified": 320
+    }
+  },
+  "assessment": {
+    "case_class_comparisons": 1914,
+    "unresolved_scored_field_disagreements": 0,
+    "case_comparison_tables_byte_identical": 9,
+    "frozen_independent_fixture_units_passed_by_verclo": 98,
+    "regenerated_fixture_label_files_byte_identical": 98,
+    "regenerated_fixture_provenance": "Active wire source has a distinct identity. The original fixture corpus is preserved."
+  },
+  "utility": {
+    "observations_matching_excluding_timing": 9600,
+    "mutant_condition_rows_matching_excluding_timing": 240,
+    "witnesses_byte_identical": 116,
+    "mutants_detected_by_condition": [
+      {
+        "gridweave_pairs": 16,
+        "gridweave_positive": 4,
+        "ordinary_positive": 4
+      },
+      {
+        "gridweave_pairs": 16,
+        "gridweave_positive": 4,
+        "ordinary_positive": 4
+      },
+      {
+        "gridweave_pairs": 14,
+        "gridweave_positive": 4,
+        "ordinary_positive": 4
+      },
+      {
+        "gridweave_pairs": 16,
+        "gridweave_positive": 4,
+        "ordinary_positive": 4
+      },
+      {
+        "gridweave_pairs": 14,
+        "gridweave_positive": 4,
+        "ordinary_positive": 4
+      }
+    ]
+  },
+  "generation": {
+    "mode": "RECORDED_GENERATION_SOURCE_REPLAY",
+    "reference_manifests_matched": 3,
+    "extension_manifests_matched": 3,
+    "standalone_extension_replay_matched": true
+  },
+  "contract": {
+    "oracle_units": 638,
+    "checker_comparisons": 1276,
+    "malformed_input_rejections": 18,
+    "signature_cardinality_probes": 3
+  },
+  "final_repository_verification": {
+    "status": "PASS",
+    "scope": "Repeat verification after restoring the study and pruning the reviewer repository",
+    "environment": "Relocated copy on Linux with Python 3.14.4 and both declared environments",
+    "preserved_original_frozen_files_verified": 10924,
+    "tests_passed": {
+      "study_conformance": 13,
+      "generator": 22,
+      "consumer_integration": 6
+    },
+    "corpus_census": {
+      "reference": {
+        "case_units": 420,
+        "distinct_all_inputs": 231,
+        "distinct_control_inputs": 42
+      },
+      "extension": {
+        "case_units": 120,
+        "distinct_all_inputs": 66,
+        "distinct_control_inputs": 12
+      }
+    },
+    "primary_graph_and_relational_comparisons": 1276,
+    "supplementary_consumer_comparisons": 638,
+    "unresolved_scored_field_disagreements": 0,
+    "case_comparison_tables_byte_identical": 9,
+    "regenerated_fixture_labels_byte_identical": 98,
+    "utility_observations_matched_excluding_timing": 9600,
+    "utility_condition_rows_matched_excluding_timing": 240,
+    "utility_witnesses_byte_identical": 116,
+    "recorded_corpus_manifests_matched": {
+      "reference": 3,
+      "structural_extension": 3
+    },
+    "corrected_contract_checker_comparisons": 1276,
+    "corrected_contract_malformed_input_rejections": 18,
+    "verclo_packaged_source_members_verified": 134
+  }
+}

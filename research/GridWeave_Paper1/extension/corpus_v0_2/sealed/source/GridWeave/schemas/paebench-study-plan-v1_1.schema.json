@@ -1,0 +1,638 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/paebench-study-plan/v1.1",
+  "title": "PaEBench 1.1 materialized study plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "benchmark_id",
+    "model_version",
+    "status",
+    "oracle_boundary",
+    "tasks",
+    "external_baselines",
+    "independent_use_cases",
+    "evaluation_tracks",
+    "source_contract_sha256",
+    "extension"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1.0"
+    },
+    "benchmark_id": {
+      "const": "PaEBench-v1.1-extension"
+    },
+    "model_version": {
+      "const": "PAE-FECM-v1.0.0"
+    },
+    "status": {
+      "const": "MATERIALIZED_TASK_CONTRACT_BASELINES_NOT_EXECUTED"
+    },
+    "oracle_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "permitted_input_roots",
+        "prohibited_input_roots",
+        "sealed_fields"
+      ],
+      "properties": {
+        "permitted_input_roots": {
+          "$ref": "#/$defs/UniqueStrings"
+        },
+        "prohibited_input_roots": {
+          "$ref": "#/$defs/UniqueStrings"
+        },
+        "sealed_fields": {
+          "$ref": "#/$defs/UniqueStrings"
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "$ref": "#/$defs/Task"
+      }
+    },
+    "external_baselines": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "$ref": "#/$defs/Baseline"
+      }
+    },
+    "independent_use_cases": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "$ref": "#/$defs/UseCase"
+      }
+    },
+    "evaluation_tracks": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "$ref": "#/$defs/Track"
+      }
+    },
+    "source_contract_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "extension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "core_family_file",
+        "profile_schema",
+        "split_policy",
+        "transfer_split",
+        "seed",
+        "version_identity",
+        "correctness_gate"
+      ],
+      "properties": {
+        "core_family_file": {
+          "type": "string"
+        },
+        "profile_schema": {
+          "type": "string"
+        },
+        "split_policy": {
+          "const": "family_grouped_train_development_test"
+        },
+        "transfer_split": {
+          "const": "test_only"
+        },
+        "seed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version_identity": {
+          "const": "PaEBench-v1.1-extension"
+        },
+        "correctness_gate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "unsafe_close_ceiling",
+            "t2_set_f1_floor",
+            "t3_status_macro_f1_floor"
+          ],
+          "properties": {
+            "unsafe_close_ceiling": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "t2_set_f1_floor": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "t3_status_macro_f1_floor": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "UniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "Metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metric_id",
+        "name",
+        "direction",
+        "primary",
+        "definition"
+      ],
+      "properties": {
+        "metric_id": {
+          "type": "string",
+          "pattern": "^PBE-M-[A-Z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 3
+        },
+        "direction": {
+          "enum": [
+            "higher",
+            "lower",
+            "descriptive"
+          ]
+        },
+        "primary": {
+          "type": "boolean"
+        },
+        "definition": {
+          "type": "string",
+          "minLength": 12
+        }
+      }
+    },
+    "Task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_id",
+        "name",
+        "unit",
+        "input_contract",
+        "prohibited_inputs",
+        "output_contract",
+        "abstention_contract",
+        "metrics"
+      ],
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "pattern": "^PBE-T[1-9][0-9]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 5
+        },
+        "unit": {
+          "enum": [
+            "case",
+            "obligation",
+            "receipt",
+            "paired_case",
+            "run"
+          ]
+        },
+        "input_contract": {
+          "$ref": "#/$defs/UniqueStrings"
+        },
+        "prohibited_inputs": {
+          "$ref": "#/$defs/UniqueStrings"
+        },
+        "output_contract": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "abstention_contract": {
+          "type": "string",
+          "minLength": 12
+        },
+        "metrics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/Metric"
+          }
+        },
+        "eligibility_note": {
+          "type": "string"
+        }
+      }
+    },
+    "Upstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "project_url",
+        "documentation_url",
+        "license",
+        "version_pin"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "project_url": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "documentation_url": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "license": {
+          "type": "string",
+          "minLength": 2
+        },
+        "version_pin": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline_id",
+        "name",
+        "kind",
+        "execution_status",
+        "upstream",
+        "supported_tasks",
+        "adapter_contract",
+        "fairness_controls",
+        "capability_boundary"
+      ],
+      "properties": {
+        "baseline_id": {
+          "type": "string",
+          "pattern": "^PBE-EXT-[A-Z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 3
+        },
+        "kind": {
+          "enum": [
+            "policy_engine",
+            "provenance_validator",
+            "transparency_log",
+            "composite"
+          ]
+        },
+        "execution_status": {
+          "const": "NOT_EXECUTED"
+        },
+        "upstream": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/Upstream"
+          }
+        },
+        "supported_tasks": {
+          "$ref": "#/$defs/UniqueStrings"
+        },
+        "adapter_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_projection",
+            "output_mapping",
+            "network_policy",
+            "failure_mapping"
+          ],
+          "properties": {
+            "input_projection": {
+              "type": "string",
+              "minLength": 8
+            },
+            "output_mapping": {
+              "type": "string",
+              "minLength": 8
+            },
+            "network_policy": {
+              "enum": [
+                "offline",
+                "local_only"
+              ]
+            },
+            "failure_mapping": {
+              "type": "string",
+              "minLength": 8
+            }
+          }
+        },
+        "fairness_controls": {
+          "$ref": "#/$defs/UniqueStrings"
+        },
+        "capability_boundary": {
+          "type": "string",
+          "minLength": 20
+        }
+      }
+    },
+    "Actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actor_id",
+        "role"
+      ],
+      "properties": {
+        "actor_id": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "Repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_id",
+        "actor_id",
+        "kind",
+        "observer_visible"
+      ],
+      "properties": {
+        "repository_id": {
+          "type": "string"
+        },
+        "actor_id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "observer_visible": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_id",
+        "repository_id",
+        "kind",
+        "parent_asset_ids"
+      ],
+      "properties": {
+        "asset_id": {
+          "type": "string"
+        },
+        "repository_id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "parent_asset_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "obligation_id",
+        "asset_ids",
+        "responsible_actor_id",
+        "required_disposition",
+        "evidence_floor"
+      ],
+      "properties": {
+        "obligation_id": {
+          "type": "string"
+        },
+        "asset_ids": {
+          "$ref": "#/$defs/UniqueStrings"
+        },
+        "responsible_actor_id": {
+          "type": "string"
+        },
+        "required_disposition": {
+          "enum": [
+            "ERASED",
+            "CRYPTO_ERASED",
+            "APPROVED_TRANSFORM",
+            "RETAINED"
+          ]
+        },
+        "evidence_floor": {
+          "enum": [
+            "E0",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "E5"
+          ]
+        }
+      }
+    },
+    "Variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "variant_id",
+        "class",
+        "expected_closure",
+        "perturbation"
+      ],
+      "properties": {
+        "variant_id": {
+          "type": "string"
+        },
+        "class": {
+          "enum": [
+            "successful_closure",
+            "partial_or_unverifiable",
+            "adversarial_or_disputed"
+          ]
+        },
+        "expected_closure": {
+          "enum": [
+            "CLOSED",
+            "CLOSED_WITH_EXCEPTIONS",
+            "PARTIALLY_CLOSED",
+            "OPEN",
+            "DISPUTED",
+            "UNVERIFIABLE",
+            "IN_PROGRESS"
+          ]
+        },
+        "perturbation": {
+          "type": "string",
+          "minLength": 4
+        }
+      }
+    },
+    "UseCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "use_case_id",
+        "title",
+        "domain",
+        "independence_claim",
+        "source_basis",
+        "actors",
+        "repositories",
+        "assets",
+        "obligations",
+        "variants",
+        "split_policy"
+      ],
+      "properties": {
+        "use_case_id": {
+          "type": "string",
+          "pattern": "^PBE-XD-[A-Z0-9-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 8
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 3
+        },
+        "independence_claim": {
+          "type": "string",
+          "minLength": 30
+        },
+        "source_basis": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_id",
+              "url",
+              "applied_concepts"
+            ],
+            "properties": {
+              "source_id": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "pattern": "^https://"
+              },
+              "applied_concepts": {
+                "$ref": "#/$defs/UniqueStrings"
+              }
+            }
+          }
+        },
+        "actors": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/Actor"
+          }
+        },
+        "repositories": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/Repository"
+          }
+        },
+        "assets": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/$defs/Asset"
+          }
+        },
+        "obligations": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/Obligation"
+          }
+        },
+        "variants": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/Variant"
+          }
+        },
+        "split_policy": {
+          "const": "sealed_cross_domain_test_only"
+        }
+      }
+    },
+    "Track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "track_id",
+        "name",
+        "task_ids",
+        "case_sets",
+        "tuning_policy"
+      ],
+      "properties": {
+        "track_id": {
+          "type": "string",
+          "pattern": "^PBE-TRACK-[A-Z0-9-]+$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "task_ids": {
+          "$ref": "#/$defs/UniqueStrings"
+        },
+        "case_sets": {
+          "$ref": "#/$defs/UniqueStrings"
+        },
+        "tuning_policy": {
+          "type": "string",
+          "minLength": 12
+        }
+      }
+    }
+  }
+}

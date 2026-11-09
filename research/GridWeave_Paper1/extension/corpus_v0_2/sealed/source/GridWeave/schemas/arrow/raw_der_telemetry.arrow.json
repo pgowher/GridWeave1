@@ -1,0 +1,119 @@
+{
+  "schema_id": "htgl.dataset.v1.raw_der_telemetry",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "3825e296bb5c01ab33c0f170c36c54bad5948057e5d49d96b0aa69aae1e763e1",
+  "table_name": "raw_der_telemetry",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "telemetry_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Telemetry key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "der_asset_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "PV, battery, EV or flexible-load asset."
+      }
+    },
+    {
+      "name": "timestamp",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Sample time."
+      }
+    },
+    {
+      "name": "active_power_kw",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Signed active power under documented convention."
+      }
+    },
+    {
+      "name": "reactive_power_kvar",
+      "type": "float64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Reactive power."
+      }
+    },
+    {
+      "name": "state_of_charge",
+      "type": "float32",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Battery/EV state in [0,1]."
+      }
+    },
+    {
+      "name": "availability",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Asset availability."
+      }
+    },
+    {
+      "name": "control_mode",
+      "type": "dictionary<string>",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": "control_mode",
+        "privacy_class": "restricted",
+        "semantic_invariant": "self-consumption, market, grid support, charging, etc."
+      }
+    },
+    {
+      "name": "quality_flags",
+      "type": "list<dictionary<string>>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "quality_flag",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Synthetic measurement defects."
+      }
+    },
+    {
+      "name": "trigger_event_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Governance/operational command that affected state."
+      }
+    }
+  ]
+}

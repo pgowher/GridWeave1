@@ -1,0 +1,660 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/common/v1",
+  "$comment": "Frozen semantic baseline: Federated Erasure Closure Model v1.0.0 (PAE-FECM-v1.0.0).",
+  "title": "Proof-after-Erasure common formal-model types",
+  "description": "Normative shared record types. These define semantics and wire shape, not PaEGen or VERCLO algorithms.",
+  "$defs": {
+    "Identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "Digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "EntityKind": {
+      "enum": [
+        "ORGANISATION",
+        "PRINCIPAL",
+        "REPOSITORY",
+        "ASSET",
+        "REPLICA",
+        "RELATIONSHIP",
+        "CASE",
+        "OBLIGATION",
+        "EVIDENCE",
+        "EXCEPTION",
+        "CHALLENGE",
+        "MESSAGE",
+        "POLICY"
+      ]
+    },
+    "EntityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/EntityKind"},
+        "id": {"$ref": "#/$defs/Identifier"}
+      }
+    },
+    "Behavior": {
+      "enum": ["HONEST", "UNAVAILABLE", "NEGLIGENT", "MALICIOUS"]
+    },
+    "Role": {
+      "enum": [
+        "DATA_SUBJECT",
+        "REQUESTER",
+        "CONTROLLER",
+        "PROCESSOR",
+        "CUSTODIAN",
+        "REPOSITORY_OPERATOR",
+        "CASE_COORDINATOR",
+        "AUDITOR",
+        "VALIDATOR",
+        "EXCEPTION_AUTHORITY",
+        "OBSERVER",
+        "EVALUATOR"
+      ]
+    },
+    "Signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "key_id", "value"],
+      "properties": {
+        "algorithm": {"type": "string", "minLength": 1, "maxLength": 64},
+        "key_id": {"$ref": "#/$defs/Identifier"},
+        "value": {"type": "string", "minLength": 1, "maxLength": 4096}
+      }
+    },
+    "PolicyRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_profile_id", "version", "digest"],
+      "properties": {
+        "policy_profile_id": {"$ref": "#/$defs/Identifier"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "OrganisationTruth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "organisation_id",
+        "organisation_class",
+        "jurisdiction_id",
+        "trust_domain_id",
+        "fault_domain_id",
+        "behavior_profile"
+      ],
+      "properties": {
+        "organisation_id": {"$ref": "#/$defs/Identifier"},
+        "organisation_class": {
+          "enum": ["SUBJECT_GROUP", "CONTROLLER", "PROCESSOR", "UTILITY", "SERVICE_PROVIDER", "AUDIT_BODY", "VALIDATION_BODY", "REGULATOR", "OTHER"]
+        },
+        "jurisdiction_id": {"$ref": "#/$defs/Identifier"},
+        "trust_domain_id": {"$ref": "#/$defs/Identifier"},
+        "fault_domain_id": {"$ref": "#/$defs/Identifier"},
+        "behavior_profile": {"$ref": "#/$defs/Behavior"}
+      }
+    },
+    "OrganisationProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["organisation_id", "organisation_class", "jurisdiction_id"],
+      "properties": {
+        "organisation_id": {"$ref": "#/$defs/Identifier"},
+        "organisation_class": {
+          "enum": ["SUBJECT_GROUP", "CONTROLLER", "PROCESSOR", "UTILITY", "SERVICE_PROVIDER", "AUDIT_BODY", "VALIDATION_BODY", "REGULATOR", "OTHER"]
+        },
+        "jurisdiction_id": {"$ref": "#/$defs/Identifier"}
+      }
+    },
+    "PrincipalTruth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["principal_id", "principal_kind", "key_ids", "behavior_profile", "controlled_by_adversary"],
+      "properties": {
+        "principal_id": {"$ref": "#/$defs/Identifier"},
+        "principal_kind": {"enum": ["HUMAN", "SERVICE", "INSTITUTIONAL_AGENT"]},
+        "organisation_id": {"$ref": "#/$defs/Identifier"},
+        "key_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "behavior_profile": {"$ref": "#/$defs/Behavior"},
+        "controlled_by_adversary": {"type": "boolean"}
+      }
+    },
+    "PrincipalProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["principal_id", "principal_kind", "key_ids"],
+      "properties": {
+        "principal_id": {"$ref": "#/$defs/Identifier"},
+        "principal_kind": {"enum": ["HUMAN", "SERVICE", "INSTITUTIONAL_AGENT"]},
+        "organisation_id": {"$ref": "#/$defs/Identifier"},
+        "key_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "RoleAssignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assignment_id", "principal_id", "role", "scope_refs", "valid_from"],
+      "properties": {
+        "assignment_id": {"$ref": "#/$defs/Identifier"},
+        "principal_id": {"$ref": "#/$defs/Identifier"},
+        "organisation_id": {"$ref": "#/$defs/Identifier"},
+        "role": {"$ref": "#/$defs/Role"},
+        "scope_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/EntityRef"},
+          "minItems": 1
+        },
+        "valid_from": {"$ref": "#/$defs/Timestamp"},
+        "valid_to": {"$ref": "#/$defs/Timestamp"}
+      }
+    },
+    "RepositoryTruth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_id",
+        "repository_kind",
+        "owner_organisation_id",
+        "operator_principal_ids",
+        "trust_domain_id",
+        "fault_domain_id",
+        "availability",
+        "behavior_profile",
+        "controlled_by_adversary"
+      ],
+      "properties": {
+        "repository_id": {"$ref": "#/$defs/Identifier"},
+        "repository_kind": {"enum": ["METER_DATA", "BILLING", "DERMS", "CRM", "MARKET", "AUDIT", "ARCHIVE", "CONSENT_REGISTRY", "FEATURE_STORE", "OTHER"]},
+        "owner_organisation_id": {"$ref": "#/$defs/Identifier"},
+        "operator_principal_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "trust_domain_id": {"$ref": "#/$defs/Identifier"},
+        "fault_domain_id": {"$ref": "#/$defs/Identifier"},
+        "availability": {"enum": ["AVAILABLE", "DEGRADED", "UNAVAILABLE", "PARTITIONED"]},
+        "behavior_profile": {"$ref": "#/$defs/Behavior"},
+        "controlled_by_adversary": {"type": "boolean"}
+      }
+    },
+    "RepositoryProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_id", "repository_kind", "owner_organisation_id", "operator_principal_ids"],
+      "properties": {
+        "repository_id": {"$ref": "#/$defs/Identifier"},
+        "repository_kind": {"enum": ["METER_DATA", "BILLING", "DERMS", "CRM", "MARKET", "AUDIT", "ARCHIVE", "CONSENT_REGISTRY", "FEATURE_STORE", "OTHER"]},
+        "owner_organisation_id": {"$ref": "#/$defs/Identifier"},
+        "operator_principal_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "AssetTruth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset_id", "asset_kind", "asset_commitment", "created_at", "declaration_status"],
+      "properties": {
+        "asset_id": {"$ref": "#/$defs/Identifier"},
+        "asset_kind": {"enum": ["SOURCE", "EXPORT", "DERIVATIVE", "AGGREGATE", "FEATURE", "AUDIT_RECORD", "EVIDENCE_RECORD"]},
+        "asset_commitment": {"$ref": "#/$defs/Digest"},
+        "created_at": {"$ref": "#/$defs/Timestamp"},
+        "policy_tags": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "uniqueItems": true
+        },
+        "declaration_status": {"enum": ["DECLARED", "DISCOVERABLE", "HIDDEN"]}
+      }
+    },
+    "AssetProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset_id", "asset_kind", "asset_commitment", "created_at", "visibility"],
+      "properties": {
+        "asset_id": {"$ref": "#/$defs/Identifier"},
+        "asset_kind": {"enum": ["SOURCE", "EXPORT", "DERIVATIVE", "AGGREGATE", "FEATURE", "AUDIT_RECORD", "EVIDENCE_RECORD"]},
+        "asset_commitment": {"$ref": "#/$defs/Digest"},
+        "created_at": {"$ref": "#/$defs/Timestamp"},
+        "policy_tags": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "uniqueItems": true
+        },
+        "visibility": {"enum": ["DECLARED", "DISCLOSED", "INFERRED", "REDACTED"]}
+      }
+    },
+    "ReplicaTruth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "replica_id",
+        "asset_id",
+        "repository_id",
+        "replica_class",
+        "lifecycle_state",
+        "created_at",
+        "declaration_status"
+      ],
+      "properties": {
+        "replica_id": {"$ref": "#/$defs/Identifier"},
+        "asset_id": {"$ref": "#/$defs/Identifier"},
+        "repository_id": {"$ref": "#/$defs/Identifier"},
+        "replica_class": {"enum": ["PRIMARY", "SECONDARY", "CACHE", "BACKUP", "EXPORT_INSTANCE", "DERIVED_INSTANCE"]},
+        "lifecycle_state": {"enum": ["PRESENT", "ERASURE_PENDING", "ERASED", "CRYPTO_ERASED", "TRANSFORMED", "RETAINED", "FAILED", "UNKNOWN"]},
+        "created_at": {"$ref": "#/$defs/Timestamp"},
+        "state_changed_at": {"$ref": "#/$defs/Timestamp"},
+        "declaration_status": {"enum": ["DECLARED", "DISCOVERABLE", "HIDDEN"]}
+      }
+    },
+    "ReplicaProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["replica_id", "asset_id", "repository_id", "replica_class", "created_at", "visibility"],
+      "properties": {
+        "replica_id": {"$ref": "#/$defs/Identifier"},
+        "asset_id": {"$ref": "#/$defs/Identifier"},
+        "repository_id": {"$ref": "#/$defs/Identifier"},
+        "replica_class": {"enum": ["PRIMARY", "SECONDARY", "CACHE", "BACKUP", "EXPORT_INSTANCE", "DERIVED_INSTANCE"]},
+        "created_at": {"$ref": "#/$defs/Timestamp"},
+        "visibility": {"enum": ["DECLARED", "DISCLOSED", "INFERRED", "REDACTED"]}
+      }
+    },
+    "RelationshipKind": {
+      "enum": [
+        "OPERATED_BY",
+        "MANAGED_BY",
+        "ACTS_FOR",
+        "REPLICA_OF",
+        "STORED_IN",
+        "COPIED_FROM",
+        "DERIVED_FROM",
+        "EXPORTED_FROM",
+        "DISCLOSED_TO",
+        "AUDITS",
+        "VALIDATES_FOR"
+      ]
+    },
+    "RelationshipTruth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relationship_id", "relationship_kind", "source", "target", "valid_from", "declaration_status"],
+      "properties": {
+        "relationship_id": {"$ref": "#/$defs/Identifier"},
+        "relationship_kind": {"$ref": "#/$defs/RelationshipKind"},
+        "source": {"$ref": "#/$defs/EntityRef"},
+        "target": {"$ref": "#/$defs/EntityRef"},
+        "valid_from": {"$ref": "#/$defs/Timestamp"},
+        "valid_to": {"$ref": "#/$defs/Timestamp"},
+        "declaration_status": {"enum": ["DECLARED", "DISCOVERABLE", "HIDDEN"]},
+        "discovery_evidence_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "RelationshipProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relationship_id", "relationship_kind", "source", "target", "valid_from", "visibility"],
+      "properties": {
+        "relationship_id": {"$ref": "#/$defs/Identifier"},
+        "relationship_kind": {"$ref": "#/$defs/RelationshipKind"},
+        "source": {"$ref": "#/$defs/EntityRef"},
+        "target": {"$ref": "#/$defs/EntityRef"},
+        "valid_from": {"$ref": "#/$defs/Timestamp"},
+        "valid_to": {"$ref": "#/$defs/Timestamp"},
+        "visibility": {"enum": ["DECLARED", "DISCLOSED", "INFERRED", "REDACTED"]},
+        "supporting_evidence_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "CaseRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "requester_principal_id",
+        "root_asset_refs",
+        "policy_ref",
+        "status",
+        "accepted_at",
+        "snapshot_at",
+        "deadline",
+        "scope_version",
+        "scope_commitment",
+        "obligation_commitment"
+      ],
+      "properties": {
+        "case_id": {"$ref": "#/$defs/Identifier"},
+        "requester_principal_id": {"$ref": "#/$defs/Identifier"},
+        "root_asset_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "policy_ref": {"$ref": "#/$defs/PolicyRef"},
+        "status": {"enum": ["PROPOSED", "ACCEPTED", "READY", "DECIDED"]},
+        "accepted_at": {"$ref": "#/$defs/Timestamp"},
+        "snapshot_at": {"$ref": "#/$defs/Timestamp"},
+        "deadline": {"$ref": "#/$defs/Timestamp"},
+        "scope_version": {"type": "integer", "minimum": 1},
+        "scope_commitment": {"$ref": "#/$defs/Digest"},
+        "obligation_commitment": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "Obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "obligation_id",
+        "case_id",
+        "replica_id",
+        "custodian_principal_id",
+        "deadline",
+        "minimum_evidence_grade",
+        "permitted_success_dispositions",
+        "basis_scope_version"
+      ],
+      "properties": {
+        "obligation_id": {"$ref": "#/$defs/Identifier"},
+        "case_id": {"$ref": "#/$defs/Identifier"},
+        "replica_id": {"$ref": "#/$defs/Identifier"},
+        "custodian_principal_id": {"$ref": "#/$defs/Identifier"},
+        "deadline": {"$ref": "#/$defs/Timestamp"},
+        "minimum_evidence_grade": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5"]},
+        "permitted_success_dispositions": {
+          "type": "array",
+          "items": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM"]},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "basis_scope_version": {"type": "integer", "minimum": 1}
+      }
+    },
+    "ExceptionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exception_id",
+        "case_id",
+        "covered_obligation_refs",
+        "authority_principal_id",
+        "basis_commitment",
+        "effective_from",
+        "review_or_expiry_at",
+        "signature"
+      ],
+      "properties": {
+        "exception_id": {"$ref": "#/$defs/Identifier"},
+        "case_id": {"$ref": "#/$defs/Identifier"},
+        "covered_obligation_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "authority_principal_id": {"$ref": "#/$defs/Identifier"},
+        "basis_commitment": {"$ref": "#/$defs/Digest"},
+        "effective_from": {"$ref": "#/$defs/Timestamp"},
+        "review_or_expiry_at": {"$ref": "#/$defs/Timestamp"},
+        "signature": {"$ref": "#/$defs/Signature"}
+      }
+    },
+    "EvidenceTruth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "case_id",
+        "obligation_id",
+        "issuer_principal_id",
+        "evidence_type",
+        "claimed_disposition",
+        "claimed_event_at",
+        "issued_at",
+        "body_commitment",
+        "signature",
+        "verification_status_truth"
+      ],
+      "properties": {
+        "evidence_id": {"$ref": "#/$defs/Identifier"},
+        "case_id": {"$ref": "#/$defs/Identifier"},
+        "obligation_id": {"$ref": "#/$defs/Identifier"},
+        "issuer_principal_id": {"$ref": "#/$defs/Identifier"},
+        "evidence_type": {"enum": ["ASSERTION", "SIGNED_RECEIPT", "INCLUSION_PROOF", "LOG_ANCHOR", "STORAGE_ATTESTATION", "WITNESS_ATTESTATION"]},
+        "claimed_disposition": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM", "FAILED", "REFUSED", "UNREACHABLE"]},
+        "claimed_event_at": {"$ref": "#/$defs/Timestamp"},
+        "issued_at": {"$ref": "#/$defs/Timestamp"},
+        "received_at": {"$ref": "#/$defs/Timestamp"},
+        "body_commitment": {"$ref": "#/$defs/Digest"},
+        "anchor_ref": {"$ref": "#/$defs/Identifier"},
+        "witness_principal_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "uniqueItems": true
+        },
+        "claimed_grade": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5"]},
+        "signature": {"$ref": "#/$defs/Signature"},
+        "verification_status_truth": {"enum": ["VALID", "INVALID", "EXPIRED", "MISSING_DEPENDENCY", "SIMULATED_ONLY"]}
+      }
+    },
+    "EvidenceProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "case_id",
+        "obligation_id",
+        "issuer_principal_id",
+        "evidence_type",
+        "claimed_disposition",
+        "claimed_event_at",
+        "issued_at",
+        "body_commitment",
+        "signature"
+      ],
+      "properties": {
+        "evidence_id": {"$ref": "#/$defs/Identifier"},
+        "case_id": {"$ref": "#/$defs/Identifier"},
+        "obligation_id": {"$ref": "#/$defs/Identifier"},
+        "issuer_principal_id": {"$ref": "#/$defs/Identifier"},
+        "evidence_type": {"enum": ["ASSERTION", "SIGNED_RECEIPT", "INCLUSION_PROOF", "LOG_ANCHOR", "STORAGE_ATTESTATION", "WITNESS_ATTESTATION"]},
+        "claimed_disposition": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM", "FAILED", "REFUSED", "UNREACHABLE"]},
+        "claimed_event_at": {"$ref": "#/$defs/Timestamp"},
+        "issued_at": {"$ref": "#/$defs/Timestamp"},
+        "received_at": {"$ref": "#/$defs/Timestamp"},
+        "body_commitment": {"$ref": "#/$defs/Digest"},
+        "anchor_ref": {"$ref": "#/$defs/Identifier"},
+        "witness_principal_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "uniqueItems": true
+        },
+        "claimed_grade": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5"]},
+        "signature": {"$ref": "#/$defs/Signature"}
+      }
+    },
+    "ChallengeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["challenge_id", "case_id", "challenger_principal_id", "challenge_kind", "target_ref", "opened_at", "status"],
+      "properties": {
+        "challenge_id": {"$ref": "#/$defs/Identifier"},
+        "case_id": {"$ref": "#/$defs/Identifier"},
+        "challenger_principal_id": {"$ref": "#/$defs/Identifier"},
+        "challenge_kind": {"enum": ["SCOPE", "AUTHORITY", "EXCEPTION", "EVIDENCE", "ORDERING", "OUTCOME"]},
+        "target_ref": {"$ref": "#/$defs/EntityRef"},
+        "opened_at": {"$ref": "#/$defs/Timestamp"},
+        "status": {"enum": ["OPEN", "RESOLVED", "REJECTED"]},
+        "resolved_at": {"$ref": "#/$defs/Timestamp"},
+        "resolution_evidence_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "MessageType": {
+      "enum": [
+        "CASE_SUBMIT",
+        "CASE_ACCEPT",
+        "SCOPE_DECLARE",
+        "SCOPE_COMMIT",
+        "LINEAGE_DISCLOSE",
+        "OBLIGATION_ASSIGN",
+        "ERASURE_COMMAND",
+        "TERMINAL_RECEIPT",
+        "EXCEPTION_ASSERT",
+        "EVIDENCE_ANCHOR",
+        "VIEW_COMMIT",
+        "CHALLENGE_OPEN",
+        "CHALLENGE_RESOLVE",
+        "CLOSURE_QUERY",
+        "CLOSURE_DECISION"
+      ]
+    },
+    "MessageBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {"$ref": "#/$defs/Identifier"},
+        "request_ref": {"$ref": "#/$defs/Identifier"},
+        "root_asset_refs": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+        "policy_profile_ref": {"$ref": "#/$defs/Identifier"},
+        "scope_version": {"type": "integer", "minimum": 1},
+        "scope_commitment": {"$ref": "#/$defs/Digest"},
+        "obligation_commitment": {"$ref": "#/$defs/Digest"},
+        "relationship_refs": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+        "replica_refs": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+        "obligation_refs": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+        "disposition": {"enum": ["ERASED", "CRYPTO_ERASED", "APPROVED_TRANSFORM", "FAILED", "REFUSED", "UNREACHABLE"]},
+        "event_time": {"$ref": "#/$defs/Timestamp"},
+        "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true},
+        "exception_ref": {"$ref": "#/$defs/Identifier"},
+        "anchor_ref": {"$ref": "#/$defs/Identifier"},
+        "view_commitment": {"$ref": "#/$defs/Digest"},
+        "challenge_ref": {"$ref": "#/$defs/Identifier"},
+        "challenge_kind": {"enum": ["SCOPE", "AUTHORITY", "EXCEPTION", "EVIDENCE", "ORDERING", "OUTCOME"]},
+        "query_time": {"$ref": "#/$defs/Timestamp"},
+        "outcome": {"enum": ["CLOSED", "CLOSED_WITH_EXCEPTIONS", "PARTIALLY_CLOSED", "OPEN", "DISPUTED", "UNVERIFIABLE"]},
+        "evaluation_time": {"$ref": "#/$defs/Timestamp"},
+        "reason_codes": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "minItems": 1, "uniqueItems": true}
+      }
+    },
+    "Message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "message_id",
+        "message_type",
+        "sender_principal_id",
+        "sender_role",
+        "recipient_principal_ids",
+        "sequence_number",
+        "nonce",
+        "emitted_at",
+        "body_commitment",
+        "body",
+        "signature",
+        "delivery_state"
+      ],
+      "properties": {
+        "message_id": {"$ref": "#/$defs/Identifier"},
+        "message_type": {"$ref": "#/$defs/MessageType"},
+        "sender_principal_id": {"$ref": "#/$defs/Identifier"},
+        "sender_role": {"$ref": "#/$defs/Role"},
+        "recipient_principal_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/Identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "sequence_number": {"type": "integer", "minimum": 0},
+        "nonce": {"type": "string", "minLength": 16, "maxLength": 256},
+        "claimed_event_at": {"$ref": "#/$defs/Timestamp"},
+        "emitted_at": {"$ref": "#/$defs/Timestamp"},
+        "received_at": {"$ref": "#/$defs/Timestamp"},
+        "body_commitment": {"$ref": "#/$defs/Digest"},
+        "previous_message_commitment": {"$ref": "#/$defs/Digest"},
+        "body": {"$ref": "#/$defs/MessageBody"},
+        "signature": {"$ref": "#/$defs/Signature"},
+        "delivery_state": {"enum": ["CREATED", "IN_FLIGHT", "DELIVERED", "DROPPED", "QUARANTINED"]}
+      },
+      "allOf": [
+        {"if": {"properties": {"message_type": {"const": "CASE_SUBMIT"}}}, "then": {"properties": {"body": {"required": ["case_id", "request_ref", "root_asset_refs", "policy_profile_ref"]}}}},
+        {"if": {"properties": {"message_type": {"const": "CASE_ACCEPT"}}}, "then": {"properties": {"body": {"required": ["case_id", "request_ref", "policy_profile_ref"]}}}},
+        {"if": {"properties": {"message_type": {"const": "SCOPE_DECLARE"}}}, "then": {"properties": {"body": {"required": ["case_id", "scope_version", "relationship_refs", "replica_refs"]}}}},
+        {"if": {"properties": {"message_type": {"const": "SCOPE_COMMIT"}}}, "then": {"properties": {"body": {"required": ["case_id", "scope_version", "scope_commitment", "obligation_commitment"]}}}},
+        {"if": {"properties": {"message_type": {"const": "LINEAGE_DISCLOSE"}}}, "then": {"properties": {"body": {"required": ["case_id", "relationship_refs"]}}}},
+        {"if": {"properties": {"message_type": {"const": "OBLIGATION_ASSIGN"}}}, "then": {"properties": {"body": {"required": ["case_id", "obligation_refs"]}}}},
+        {"if": {"properties": {"message_type": {"const": "ERASURE_COMMAND"}}}, "then": {"properties": {"body": {"required": ["case_id", "obligation_refs"]}}}},
+        {"if": {"properties": {"message_type": {"const": "TERMINAL_RECEIPT"}}}, "then": {"properties": {"body": {"required": ["case_id", "obligation_refs", "disposition", "event_time", "evidence_refs"]}}}},
+        {"if": {"properties": {"message_type": {"const": "EXCEPTION_ASSERT"}}}, "then": {"properties": {"body": {"required": ["case_id", "obligation_refs", "exception_ref"]}}}},
+        {"if": {"properties": {"message_type": {"const": "EVIDENCE_ANCHOR"}}}, "then": {"properties": {"body": {"required": ["case_id", "anchor_ref", "evidence_refs"]}}}},
+        {"if": {"properties": {"message_type": {"const": "VIEW_COMMIT"}}}, "then": {"properties": {"body": {"required": ["case_id", "scope_version", "view_commitment"]}}}},
+        {"if": {"properties": {"message_type": {"const": "CHALLENGE_OPEN"}}}, "then": {"properties": {"body": {"required": ["case_id", "challenge_ref", "challenge_kind"]}}}},
+        {"if": {"properties": {"message_type": {"const": "CHALLENGE_RESOLVE"}}}, "then": {"properties": {"body": {"required": ["case_id", "challenge_ref", "reason_codes"]}}}},
+        {"if": {"properties": {"message_type": {"const": "CLOSURE_QUERY"}}}, "then": {"properties": {"body": {"required": ["case_id", "query_time"]}}}},
+        {"if": {"properties": {"message_type": {"const": "CLOSURE_DECISION"}}}, "then": {"properties": {"body": {"required": ["case_id", "outcome", "evaluation_time", "reason_codes"]}}}}
+      ]
+    },
+    "NetworkLinkTruth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["link_id", "source_principal_id", "target_principal_id", "state", "controlled_by_adversary"],
+      "properties": {
+        "link_id": {"$ref": "#/$defs/Identifier"},
+        "source_principal_id": {"$ref": "#/$defs/Identifier"},
+        "target_principal_id": {"$ref": "#/$defs/Identifier"},
+        "state": {"enum": ["UP", "DEGRADED", "PARTITIONED", "DOWN"]},
+        "valid_from": {"$ref": "#/$defs/Timestamp"},
+        "valid_to": {"$ref": "#/$defs/Timestamp"},
+        "controlled_by_adversary": {"type": "boolean"}
+      }
+    },
+    "AvailabilityObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation_id", "target_ref", "observed_state", "observed_at", "observer_principal_id", "evidence_refs"],
+      "properties": {
+        "observation_id": {"$ref": "#/$defs/Identifier"},
+        "target_ref": {"$ref": "#/$defs/EntityRef"},
+        "observed_state": {"enum": ["REACHABLE", "DEGRADED", "UNREACHABLE", "UNKNOWN"]},
+        "observed_at": {"$ref": "#/$defs/Timestamp"},
+        "observer_principal_id": {"$ref": "#/$defs/Identifier"},
+        "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/Identifier"}, "uniqueItems": true}
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "model_version": "PAE-FECM-v1.0.0",
+  "receipt_attacks": [
+    {"profile_id": "RCPT-FORGERY-v1", "attack_type": "FORGED_RECEIPT", "mutated_fields": ["authenticator", "key_id"], "observable_checks": ["SIGNATURE_VERIFICATION"], "admissible": false},
+    {"profile_id": "RCPT-MALFORMED-v1", "attack_type": "MALFORMED_RECEIPT", "mutated_fields": ["canonical_digest"], "observable_checks": ["SCHEMA_VALIDATION", "CANONICALIZATION"], "admissible": false},
+    {"profile_id": "RCPT-REPLAY-v1", "attack_type": "REPLAY", "mutated_fields": ["receipt_id", "nonce"], "observable_checks": ["DUPLICATE_ID", "NONCE_REUSE"], "admissible": false},
+    {"profile_id": "RCPT-BACKDATE-v1", "attack_type": "BACKDATING", "mutated_fields": ["issued_at"], "observable_checks": ["TEMPORAL_ORDERING"], "admissible": false},
+    {"profile_id": "RCPT-CONTRADICTION-v1", "attack_type": "CONTRADICTION", "mutated_fields": ["claimed_disposition"], "observable_checks": ["CONTRADICTION_FREEDOM"], "admissible": false},
+    {"profile_id": "RCPT-DELAY-v1", "attack_type": "DELAY", "mutated_fields": ["issued_at", "delivery_time"], "observable_checks": ["DEADLINE_VALIDITY"], "admissible": false},
+    {"profile_id": "RCPT-COLLUSIVE-v1", "attack_type": "COLLUSION", "mutated_fields": ["issuer_actor_id", "claimed_disposition"], "observable_checks": ["INDEPENDENCE_OF_CORROBORATION"], "admissible": false}
+  ]
+}

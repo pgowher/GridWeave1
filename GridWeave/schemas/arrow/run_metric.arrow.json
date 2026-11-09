@@ -1,0 +1,149 @@
+{
+  "schema_id": "htgl.dataset.v1.run_metric",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "a8bb8a8915f3ab6e7e9dce6c07457423694d8b9f098a1e9cbd79cbd3d1d8ca8c",
+  "table_name": "run_metric",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "metric_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Stable metric key."
+      }
+    },
+    {
+      "name": "run_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Run FK."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "replicate_id",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Repetition."
+      }
+    },
+    {
+      "name": "metric_domain",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "metric_domain",
+        "privacy_class": "public",
+        "semantic_invariant": "physical, temporal, relational, workflow, policy, anomaly, evidence, observer, sampling, privacy, performance or artifact."
+      }
+    },
+    {
+      "name": "metric_name",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Machine-readable name."
+      }
+    },
+    {
+      "name": "value",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Estimate."
+      }
+    },
+    {
+      "name": "unit",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Unit or dimensionless."
+      }
+    },
+    {
+      "name": "standard_error",
+      "type": "float64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Across repetitions or design-based estimate."
+      }
+    },
+    {
+      "name": "ci_lower",
+      "type": "float64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Confidence-interval lower bound."
+      }
+    },
+    {
+      "name": "ci_upper",
+      "type": "float64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Confidence-interval upper bound."
+      }
+    },
+    {
+      "name": "estimator",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Estimator/method."
+      }
+    },
+    {
+      "name": "weighting",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "metric_weighting",
+        "privacy_class": "public",
+        "semantic_invariant": "unweighted, HT, Hajek or analytic."
+      }
+    },
+    {
+      "name": "baseline_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "public",
+        "semantic_invariant": "Baseline/ablation comparator."
+      }
+    }
+  ]
+}

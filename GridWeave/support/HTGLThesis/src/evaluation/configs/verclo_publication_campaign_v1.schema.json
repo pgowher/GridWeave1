@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verclo.example/schemas/publication-campaign-v1.json",
+  "title": "VERCLO publication campaign configuration v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["config_format", "campaign_id", "seed", "scenarios"],
+  "properties": {
+    "config_format": {"const": "verclo.publication-campaign.v1"},
+    "campaign_id": {"type": "string", "minLength": 1},
+    "seed": {"type": "integer", "minimum": 0},
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["scenario_id", "fault_family", "expected_closed"],
+        "properties": {
+          "scenario_id": {"type": "string", "minLength": 1},
+          "fault_family": {"type": "string", "minLength": 1},
+          "expected_closed": {"type": "boolean"}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+paper_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+paper_python="$paper_root/../../GridWeave/.venv/bin/python"
+if [[ ! -x "$paper_python" ]]; then
+  echo 'The prepared GridWeave research environment is unavailable. Run with a Python environment containing the project requirements.' >&2
+  exit 1
+fi
+export PYTHONDONTWRITEBYTECODE=1
+exec "$paper_python" "$paper_root/run.py" "$@"

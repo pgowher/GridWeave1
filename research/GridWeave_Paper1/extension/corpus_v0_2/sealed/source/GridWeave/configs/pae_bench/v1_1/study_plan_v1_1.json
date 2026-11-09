@@ -1,0 +1,1007 @@
+{
+  "schema_version": "1.1.0",
+  "benchmark_id": "PaEBench-v1.1-extension",
+  "model_version": "PAE-FECM-v1.0.0",
+  "status": "MATERIALIZED_TASK_CONTRACT_BASELINES_NOT_EXECUTED",
+  "oracle_boundary": {
+    "permitted_input_roots": [
+      "observer-inputs/",
+      "public/schemas/",
+      "public/task-instructions/"
+    ],
+    "prohibited_input_roots": [
+      "sealed-ground-truth/",
+      "evaluator/expectations/",
+      "generator-internals/"
+    ],
+    "sealed_fields": [
+      "closure_ground_truth",
+      "verification_status_truth",
+      "variant_class",
+      "attack_id",
+      "expected_detection",
+      "hidden_topology"
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "PBE-T1",
+      "name": "Observer-relative closure classification",
+      "unit": "case",
+      "input_contract": [
+        "one observer bundle",
+        "public evidence and policy schemas",
+        "evaluation timestamp"
+      ],
+      "prohibited_inputs": [
+        "closure_ground_truth",
+        "variant_class",
+        "hidden topology",
+        "attack metadata"
+      ],
+      "output_contract": {
+        "case_id": "string",
+        "outcome": [
+          "CLOSED",
+          "CLOSED_WITH_EXCEPTIONS",
+          "PARTIALLY_CLOSED",
+          "OPEN",
+          "DISPUTED",
+          "UNVERIFIABLE",
+          "IN_PROGRESS"
+        ],
+        "reason_codes": "non-empty unique string array",
+        "abstained": "boolean"
+      },
+      "abstention_contract": "An abstention is encoded as outcome UNVERIFIABLE with a stated missing-baseline reason; silent omission is an error.",
+      "metrics": [
+        {
+          "metric_id": "PBE-M-T1-MACRO-F1",
+          "name": "macro F1",
+          "direction": "higher",
+          "primary": true,
+          "definition": "Unweighted mean of per-class F1 over the preregistered closure label set; absent support is reported, not dropped."
+        },
+        {
+          "metric_id": "PBE-M-T1-EXACT",
+          "name": "case exact match",
+          "direction": "higher",
+          "primary": false,
+          "definition": "Fraction of cases with the exact outcome and exact required reason-code set."
+        },
+        {
+          "metric_id": "PBE-M-T1-UNSAFE-CLOSE",
+          "name": "unsafe positive-closure rate",
+          "direction": "lower",
+          "primary": true,
+          "definition": "Fraction of non-closed oracle cases predicted CLOSED or CLOSED_WITH_EXCEPTIONS."
+        }
+      ]
+    },
+    {
+      "task_id": "PBE-T2",
+      "name": "Observable obligation-baseline reconstruction",
+      "unit": "case",
+      "input_contract": [
+        "observer-visible assets and lineage",
+        "public policy profile",
+        "declared custodians and repositories"
+      ],
+      "prohibited_inputs": [
+        "evaluator-only relationships",
+        "hidden asset identifiers",
+        "oracle obligation set"
+      ],
+      "output_contract": {
+        "case_id": "string",
+        "baseline_status": [
+          "VERIFIABLE",
+          "UNVERIFIABLE"
+        ],
+        "obligations": "set of asset-replica-repository-responsible-principal tuples",
+        "missing_information_codes": "unique string array"
+      },
+      "abstention_contract": "If visible inputs cannot authenticate a complete observer-relative baseline, emit UNVERIFIABLE rather than guessing hidden obligations.",
+      "metrics": [
+        {
+          "metric_id": "PBE-M-T2-SET-F1",
+          "name": "obligation set F1",
+          "direction": "higher",
+          "primary": true,
+          "definition": "Set F1 over canonical obligation tuples after identifier-normalized matching."
+        },
+        {
+          "metric_id": "PBE-M-T2-BASELINE-ACC",
+          "name": "baseline verifiability accuracy",
+          "direction": "higher",
+          "primary": false,
+          "definition": "Accuracy of VERIFIABLE versus UNVERIFIABLE against the observer-relative oracle."
+        }
+      ]
+    },
+    {
+      "task_id": "PBE-T3",
+      "name": "Evidence admissibility and defect diagnosis",
+      "unit": "receipt",
+      "input_contract": [
+        "public receipt envelope and payload",
+        "public key and anchor material released to the observer",
+        "obligation evidence requirements"
+      ],
+      "prohibited_inputs": [
+        "verification_status_truth",
+        "mutation operator",
+        "expected reason codes"
+      ],
+      "output_contract": {
+        "receipt_id": "string",
+        "admissibility": [
+          "ADMISSIBLE",
+          "REJECTED",
+          "INSUFFICIENT"
+        ],
+        "evidence_grade": [
+          "E0",
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "NONE"
+        ],
+        "primary_reason_code": "string",
+        "secondary_reason_codes": "unique string array"
+      },
+      "abstention_contract": "Unavailable verification material must yield INSUFFICIENT with an explicit reason and must not be treated as valid evidence.",
+      "metrics": [
+        {
+          "metric_id": "PBE-M-T3-STATUS-F1",
+          "name": "admissibility macro F1",
+          "direction": "higher",
+          "primary": true,
+          "definition": "Macro F1 across ADMISSIBLE, REJECTED, and INSUFFICIENT receipt outcomes."
+        },
+        {
+          "metric_id": "PBE-M-T3-REASON-EXACT",
+          "name": "precedence-aware reason accuracy",
+          "direction": "higher",
+          "primary": true,
+          "definition": "Fraction whose primary defect equals the first applicable reason in the frozen rejection precedence."
+        }
+      ]
+    },
+    {
+      "task_id": "PBE-T4",
+      "name": "Adversary detection with indistinguishability",
+      "unit": "paired_case",
+      "input_contract": [
+        "clean observer projection",
+        "attacked observer projection",
+        "public threat taxonomy"
+      ],
+      "prohibited_inputs": [
+        "attack_id",
+        "mutation trace",
+        "evaluator-only paired identifiers",
+        "expected detection"
+      ],
+      "output_contract": {
+        "case_id": "string",
+        "detection_status": [
+          "DETECTED",
+          "NOT_DETECTED",
+          "INDISTINGUISHABLE"
+        ],
+        "attack_family": "public taxonomy value or UNKNOWN",
+        "evidence_refs": "unique string array"
+      },
+      "abstention_contract": "Observer-equivalent worlds must be labelled INDISTINGUISHABLE; accusing an attack without differentiating evidence is a false accusation.",
+      "metrics": [
+        {
+          "metric_id": "PBE-M-T4-BAL-ACC",
+          "name": "detection balanced accuracy",
+          "direction": "higher",
+          "primary": true,
+          "definition": "Mean recall over DETECTED, NOT_DETECTED, and INDISTINGUISHABLE classes."
+        },
+        {
+          "metric_id": "PBE-M-T4-FAR",
+          "name": "indistinguishable-pair false accusation rate",
+          "direction": "lower",
+          "primary": true,
+          "definition": "Fraction of known observer-equivalent pairs incorrectly labelled DETECTED."
+        }
+      ]
+    },
+    {
+      "task_id": "PBE-T5",
+      "name": "Minimal closure repair explanation",
+      "unit": "case",
+      "input_contract": [
+        "observer bundle",
+        "system output for PBE-T1 through PBE-T3",
+        "public edit vocabulary"
+      ],
+      "prohibited_inputs": [
+        "generator mutation trace",
+        "sealed minimal edit certificate",
+        "hidden world state"
+      ],
+      "output_contract": {
+        "case_id": "string",
+        "repair_actions": "ordered array from the public edit vocabulary",
+        "target_ids": "unique observer-visible identifier array",
+        "claimed_post_repair_outcome": "closure label"
+      },
+      "abstention_contract": "If no observer-justified repair exists, return an empty action list and the reason REQUIRES_ADDITIONAL_VISIBILITY.",
+      "metrics": [
+        {
+          "metric_id": "PBE-M-T5-VALID",
+          "name": "repair validity",
+          "direction": "higher",
+          "primary": true,
+          "definition": "Fraction of proposed repairs that produce the claimed outcome when replayed by the sealed evaluator."
+        },
+        {
+          "metric_id": "PBE-M-T5-EXCESS",
+          "name": "repair excess edit distance",
+          "direction": "lower",
+          "primary": true,
+          "definition": "Proposed edit count minus sealed minimum among valid observer-permitted repairs."
+        }
+      ]
+    },
+    {
+      "task_id": "PBE-T6",
+      "name": "Correctness-gated resource efficiency",
+      "unit": "run",
+      "input_contract": [
+        "frozen task corpus",
+        "warm-up schedule",
+        "hardware and software inventory template"
+      ],
+      "prohibited_inputs": [
+        "sealed labels during timed execution",
+        "cross-system result cache",
+        "network services not declared by the adapter"
+      ],
+      "output_contract": {
+        "run_id": "string",
+        "per_case_outputs": "task-valid output array",
+        "wall_time_ms": "integer",
+        "peak_rss_bytes": "integer",
+        "environment_manifest": "digest-addressed object"
+      },
+      "abstention_contract": "Efficiency is descriptive and ineligible for ranking when the system fails the preregistered correctness floor.",
+      "metrics": [
+        {
+          "metric_id": "PBE-M-T6-LATENCY",
+          "name": "median and p95 case latency",
+          "direction": "lower",
+          "primary": false,
+          "definition": "Steady-state wall-clock milliseconds per case after the fixed warm-up, reported with the environment manifest."
+        },
+        {
+          "metric_id": "PBE-M-T6-RSS",
+          "name": "peak resident set size",
+          "direction": "lower",
+          "primary": false,
+          "definition": "Maximum resident bytes of the isolated baseline process tree during the measured run."
+        }
+      ],
+      "eligibility_note": "A system must meet the frozen PBE-T1 unsafe-close ceiling and task-specific validity gate before resource numbers are compared."
+    }
+  ],
+  "external_baselines": [
+    {
+      "baseline_id": "PBE-EXT-OPA",
+      "name": "Open Policy Agent observer-rule baseline",
+      "kind": "policy_engine",
+      "execution_status": "NOT_EXECUTED",
+      "upstream": [
+        {
+          "name": "Open Policy Agent",
+          "project_url": "https://github.com/open-policy-agent/opa",
+          "documentation_url": "https://www.openpolicyagent.org/docs",
+          "license": "Apache-2.0",
+          "version_pin": "TO_BE_FROZEN_AT_PREREGISTRATION"
+        }
+      ],
+      "supported_tasks": [
+        "PBE-T1",
+        "PBE-T2",
+        "PBE-T3",
+        "PBE-T6"
+      ],
+      "adapter_contract": {
+        "input_projection": "Convert only the released observer bundle and public policy tables to canonical JSON input.",
+        "output_mapping": "Map the Rego decision object to the exact PaEBench task schema without post-hoc label correction.",
+        "network_policy": "offline",
+        "failure_mapping": "Undefined, malformed, or timed-out decisions become explicit task errors, never negative labels."
+      },
+      "fairness_controls": [
+        "Rego rules may use training and development cases only",
+        "rule and data bundles are frozen before the sealed test split is opened",
+        "the same evaluation timestamp and public schema are supplied to every system"
+      ],
+      "capability_boundary": "OPA evaluates declared rules over supplied JSON; it does not authenticate receipts, discover wholly hidden lineage, or prove storage erasure."
+    },
+    {
+      "baseline_id": "PBE-EXT-PYSHACL",
+      "name": "W3C PROV plus SHACL lineage-validation baseline",
+      "kind": "provenance_validator",
+      "execution_status": "NOT_EXECUTED",
+      "upstream": [
+        {
+          "name": "pySHACL",
+          "project_url": "https://github.com/RDFLib/pySHACL",
+          "documentation_url": "https://github.com/RDFLib/pySHACL#python-module-use",
+          "license": "Apache-2.0",
+          "version_pin": "TO_BE_FROZEN_AT_PREREGISTRATION"
+        },
+        {
+          "name": "W3C PROV-O",
+          "project_url": "https://www.w3.org/TR/prov-o/",
+          "documentation_url": "https://www.w3.org/TR/prov-o/",
+          "license": "W3C-Document-License",
+          "version_pin": "W3C-Recommendation-2013-04-30"
+        },
+        {
+          "name": "W3C SHACL",
+          "project_url": "https://www.w3.org/TR/shacl/",
+          "documentation_url": "https://www.w3.org/TR/shacl/",
+          "license": "W3C-Document-License",
+          "version_pin": "W3C-Recommendation-2017-07-20"
+        }
+      ],
+      "supported_tasks": [
+        "PBE-T2",
+        "PBE-T3",
+        "PBE-T6"
+      ],
+      "adapter_contract": {
+        "input_projection": "Translate observer-visible custody and derivation edges to PROV-O RDF and apply frozen SHACL shapes.",
+        "output_mapping": "Map SHACL focus nodes and result paths to obligation tuples and public PaEBench defect codes.",
+        "network_policy": "offline",
+        "failure_mapping": "Parser failures, unsupported datatypes, and timeouts are task errors; non-conformance is reported only from SHACL results."
+      },
+      "fairness_controls": [
+        "RDF mapping and SHACL shapes are frozen on training and development cases",
+        "hidden nodes and evaluator-only edges are never materialized into the RDF graph",
+        "entailment mode and inference settings are pinned in the environment manifest"
+      ],
+      "capability_boundary": "SHACL validates graph constraints exposed in the observer projection; it cannot infer undisclosed recipients or establish cryptographic receipt authenticity."
+    },
+    {
+      "baseline_id": "PBE-EXT-REKOR",
+      "name": "Sigstore Rekor transparency-verification baseline",
+      "kind": "transparency_log",
+      "execution_status": "NOT_EXECUTED",
+      "upstream": [
+        {
+          "name": "Sigstore Rekor",
+          "project_url": "https://github.com/sigstore/rekor",
+          "documentation_url": "https://docs.sigstore.dev/logging/overview/",
+          "license": "Apache-2.0",
+          "version_pin": "TO_BE_FROZEN_AT_PREREGISTRATION"
+        }
+      ],
+      "supported_tasks": [
+        "PBE-T3",
+        "PBE-T4",
+        "PBE-T6"
+      ],
+      "adapter_contract": {
+        "input_projection": "Encode released receipt attestations in the frozen Rekor entry format and use a benchmark-local log and trust root.",
+        "output_mapping": "Map signature, inclusion, consistency, and integrated-time checks to the public evidence-defect taxonomy.",
+        "network_policy": "local_only",
+        "failure_mapping": "Missing inclusion or consistency material maps to INSUFFICIENT; invalid cryptographic material maps to REJECTED."
+      },
+      "fairness_controls": [
+        "all systems receive the same benchmark-local trust root and released verification material",
+        "no public Sigstore service is contacted during evaluation",
+        "the log snapshot and container digest are frozen before measurement"
+      ],
+      "capability_boundary": "Rekor establishes properties of signed log entries and append-only inclusion; it does not establish that the attested deletion occurred or that all obligations were discovered."
+    },
+    {
+      "baseline_id": "PBE-EXT-COMPOSITE",
+      "name": "OPA plus PROV-SHACL plus Rekor component composition",
+      "kind": "composite",
+      "execution_status": "NOT_EXECUTED",
+      "upstream": [
+        {
+          "name": "Open Policy Agent",
+          "project_url": "https://github.com/open-policy-agent/opa",
+          "documentation_url": "https://www.openpolicyagent.org/docs",
+          "license": "Apache-2.0",
+          "version_pin": "TO_BE_FROZEN_AT_PREREGISTRATION"
+        },
+        {
+          "name": "pySHACL",
+          "project_url": "https://github.com/RDFLib/pySHACL",
+          "documentation_url": "https://github.com/RDFLib/pySHACL#python-module-use",
+          "license": "Apache-2.0",
+          "version_pin": "TO_BE_FROZEN_AT_PREREGISTRATION"
+        },
+        {
+          "name": "Sigstore Rekor",
+          "project_url": "https://github.com/sigstore/rekor",
+          "documentation_url": "https://docs.sigstore.dev/logging/overview/",
+          "license": "Apache-2.0",
+          "version_pin": "TO_BE_FROZEN_AT_PREREGISTRATION"
+        }
+      ],
+      "supported_tasks": [
+        "PBE-T1",
+        "PBE-T2",
+        "PBE-T3",
+        "PBE-T4",
+        "PBE-T6"
+      ],
+      "adapter_contract": {
+        "input_projection": "Fan out the same observer projection to the three frozen component adapters with no extra fields.",
+        "output_mapping": "Feed Rekor and SHACL results to a frozen OPA combining policy and map its decision to PaEBench outputs.",
+        "network_policy": "local_only",
+        "failure_mapping": "Component uncertainty propagates conservatively; unavailable required material cannot be converted to a positive closure."
+      },
+      "fairness_controls": [
+        "component versions and the combining policy are frozen before sealed-test evaluation",
+        "only public component outputs enter the combining policy",
+        "no component is credited outside the tasks its native capability supports"
+      ],
+      "capability_boundary": "This is a strongest-component composition, not a claim that the upstream projects implement federated erasure verification or endorse the adapter."
+    }
+  ],
+  "independent_use_cases": [
+    {
+      "use_case_id": "PBE-XD-HEALTH-RESEARCH-WITHDRAWAL",
+      "title": "Clinical research consent withdrawal across care and research custodians",
+      "domain": "health research data exchange",
+      "independence_claim": "This profile is domain-separated from the smart-grid catalogue and uses health-exchange concepts that were not used to construct the seven canonical energy scenarios. It is a transfer test, not a statistically independent human-authored replication.",
+      "source_basis": [
+        {
+          "source_id": "HL7-FHIR-R5-CONSENT",
+          "url": "https://hl7.org/fhir/R5/consent.html",
+          "applied_concepts": [
+            "consent status",
+            "purpose",
+            "provision"
+          ]
+        },
+        {
+          "source_id": "HL7-FHIR-R5-PROVENANCE",
+          "url": "https://hl7.org/fhir/R5/provenance.html",
+          "applied_concepts": [
+            "agent",
+            "entity derivation",
+            "recorded activity"
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "actor_id": "XD-HR-CARE",
+          "role": "CONTROLLER"
+        },
+        {
+          "actor_id": "XD-HR-RESEARCH",
+          "role": "RECIPIENT"
+        },
+        {
+          "actor_id": "XD-HR-LAB",
+          "role": "PROCESSOR"
+        }
+      ],
+      "repositories": [
+        {
+          "repository_id": "XD-HR-CONSENT",
+          "actor_id": "XD-HR-CARE",
+          "kind": "FHIR_CONSENT_STORE",
+          "observer_visible": true
+        },
+        {
+          "repository_id": "XD-HR-DATASET",
+          "actor_id": "XD-HR-RESEARCH",
+          "kind": "RESEARCH_DATASET",
+          "observer_visible": true
+        },
+        {
+          "repository_id": "XD-HR-FEATURES",
+          "actor_id": "XD-HR-RESEARCH",
+          "kind": "DERIVED_FEATURE_STORE",
+          "observer_visible": false
+        },
+        {
+          "repository_id": "XD-HR-LAB-EXPORT",
+          "actor_id": "XD-HR-LAB",
+          "kind": "LAB_EXPORT",
+          "observer_visible": true
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "XD-HR-A-CONSENT",
+          "repository_id": "XD-HR-CONSENT",
+          "kind": "CONSENT_RECORD",
+          "parent_asset_ids": []
+        },
+        {
+          "asset_id": "XD-HR-A-DATASET",
+          "repository_id": "XD-HR-DATASET",
+          "kind": "PSEUDONYMIZED_RESEARCH_ROW",
+          "parent_asset_ids": [
+            "XD-HR-A-CONSENT"
+          ]
+        },
+        {
+          "asset_id": "XD-HR-A-FEATURE",
+          "repository_id": "XD-HR-FEATURES",
+          "kind": "DERIVED_COHORT_FEATURE",
+          "parent_asset_ids": [
+            "XD-HR-A-DATASET"
+          ]
+        },
+        {
+          "asset_id": "XD-HR-A-LAB",
+          "repository_id": "XD-HR-LAB-EXPORT",
+          "kind": "LAB_RESULT_EXPORT",
+          "parent_asset_ids": [
+            "XD-HR-A-DATASET"
+          ]
+        }
+      ],
+      "obligations": [
+        {
+          "obligation_id": "XD-HR-O-CONSENT",
+          "asset_ids": [
+            "XD-HR-A-CONSENT"
+          ],
+          "responsible_actor_id": "XD-HR-CARE",
+          "required_disposition": "APPROVED_TRANSFORM",
+          "evidence_floor": "E2"
+        },
+        {
+          "obligation_id": "XD-HR-O-DATASET",
+          "asset_ids": [
+            "XD-HR-A-DATASET"
+          ],
+          "responsible_actor_id": "XD-HR-RESEARCH",
+          "required_disposition": "ERASED",
+          "evidence_floor": "E3"
+        },
+        {
+          "obligation_id": "XD-HR-O-FEATURE",
+          "asset_ids": [
+            "XD-HR-A-FEATURE"
+          ],
+          "responsible_actor_id": "XD-HR-RESEARCH",
+          "required_disposition": "ERASED",
+          "evidence_floor": "E3"
+        },
+        {
+          "obligation_id": "XD-HR-O-LAB",
+          "asset_ids": [
+            "XD-HR-A-LAB"
+          ],
+          "responsible_actor_id": "XD-HR-LAB",
+          "required_disposition": "ERASED",
+          "evidence_floor": "E3"
+        }
+      ],
+      "variants": [
+        {
+          "variant_id": "success",
+          "class": "successful_closure",
+          "expected_closure": "CLOSED",
+          "perturbation": "none"
+        },
+        {
+          "variant_id": "hidden-feature",
+          "class": "partial_or_unverifiable",
+          "expected_closure": "PARTIALLY_CLOSED",
+          "perturbation": "omit resolution for XD-HR-O-FEATURE"
+        },
+        {
+          "variant_id": "conflicting-lab",
+          "class": "adversarial_or_disputed",
+          "expected_closure": "DISPUTED",
+          "perturbation": "add contradictory terminal evidence for XD-HR-O-LAB"
+        }
+      ],
+      "split_policy": "sealed_cross_domain_test_only"
+    },
+    {
+      "use_case_id": "PBE-XD-SAAS-TENANT-OFFBOARDING",
+      "title": "Multi-tenant SaaS offboarding with search, analytics, backup, and billing copies",
+      "domain": "cloud software service",
+      "independence_claim": "This profile is domain-separated from energy infrastructure and stresses software-service copies, subprocessors, indexes, and bounded billing retention. It is a transfer test, not a statistically independent human-authored replication.",
+      "source_basis": [
+        {
+          "source_id": "NIST-SP-800-88R2",
+          "url": "https://csrc.nist.gov/pubs/sp/800/88/r2/final",
+          "applied_concepts": [
+            "clear",
+            "purge",
+            "cryptographic erase",
+            "sanitization evidence"
+          ]
+        },
+        {
+          "source_id": "CNCF-CLOUD-NATIVE-DEFINITION",
+          "url": "https://github.com/cncf/toc/blob/main/DEFINITION.md",
+          "applied_concepts": [
+            "distributed systems",
+            "service boundaries",
+            "resilience"
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "actor_id": "XD-ST-CUSTOMER",
+          "role": "REQUESTER"
+        },
+        {
+          "actor_id": "XD-ST-SAAS",
+          "role": "CONTROLLER"
+        },
+        {
+          "actor_id": "XD-ST-CLOUD",
+          "role": "PROCESSOR"
+        },
+        {
+          "actor_id": "XD-ST-BILLING",
+          "role": "RECIPIENT"
+        }
+      ],
+      "repositories": [
+        {
+          "repository_id": "XD-ST-PRIMARY",
+          "actor_id": "XD-ST-SAAS",
+          "kind": "TENANT_DATABASE",
+          "observer_visible": true
+        },
+        {
+          "repository_id": "XD-ST-SEARCH",
+          "actor_id": "XD-ST-SAAS",
+          "kind": "SEARCH_INDEX",
+          "observer_visible": true
+        },
+        {
+          "repository_id": "XD-ST-ANALYTICS",
+          "actor_id": "XD-ST-CLOUD",
+          "kind": "ANALYTICS_WAREHOUSE",
+          "observer_visible": false
+        },
+        {
+          "repository_id": "XD-ST-BACKUP",
+          "actor_id": "XD-ST-CLOUD",
+          "kind": "ENCRYPTED_BACKUP",
+          "observer_visible": true
+        },
+        {
+          "repository_id": "XD-ST-INVOICE",
+          "actor_id": "XD-ST-BILLING",
+          "kind": "BILLING_LEDGER",
+          "observer_visible": true
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "XD-ST-A-ACCOUNT",
+          "repository_id": "XD-ST-PRIMARY",
+          "kind": "TENANT_ACCOUNT",
+          "parent_asset_ids": []
+        },
+        {
+          "asset_id": "XD-ST-A-INDEX",
+          "repository_id": "XD-ST-SEARCH",
+          "kind": "SEARCH_DOCUMENT",
+          "parent_asset_ids": [
+            "XD-ST-A-ACCOUNT"
+          ]
+        },
+        {
+          "asset_id": "XD-ST-A-ANALYTICS",
+          "repository_id": "XD-ST-ANALYTICS",
+          "kind": "USAGE_FEATURE",
+          "parent_asset_ids": [
+            "XD-ST-A-ACCOUNT"
+          ]
+        },
+        {
+          "asset_id": "XD-ST-A-BACKUP",
+          "repository_id": "XD-ST-BACKUP",
+          "kind": "BACKUP_REPLICA",
+          "parent_asset_ids": [
+            "XD-ST-A-ACCOUNT"
+          ]
+        },
+        {
+          "asset_id": "XD-ST-A-INVOICE",
+          "repository_id": "XD-ST-INVOICE",
+          "kind": "INVOICE_RECORD",
+          "parent_asset_ids": [
+            "XD-ST-A-ACCOUNT"
+          ]
+        }
+      ],
+      "obligations": [
+        {
+          "obligation_id": "XD-ST-O-ACCOUNT",
+          "asset_ids": [
+            "XD-ST-A-ACCOUNT"
+          ],
+          "responsible_actor_id": "XD-ST-SAAS",
+          "required_disposition": "ERASED",
+          "evidence_floor": "E3"
+        },
+        {
+          "obligation_id": "XD-ST-O-INDEX",
+          "asset_ids": [
+            "XD-ST-A-INDEX"
+          ],
+          "responsible_actor_id": "XD-ST-SAAS",
+          "required_disposition": "ERASED",
+          "evidence_floor": "E2"
+        },
+        {
+          "obligation_id": "XD-ST-O-ANALYTICS",
+          "asset_ids": [
+            "XD-ST-A-ANALYTICS"
+          ],
+          "responsible_actor_id": "XD-ST-CLOUD",
+          "required_disposition": "ERASED",
+          "evidence_floor": "E3"
+        },
+        {
+          "obligation_id": "XD-ST-O-BACKUP",
+          "asset_ids": [
+            "XD-ST-A-BACKUP"
+          ],
+          "responsible_actor_id": "XD-ST-CLOUD",
+          "required_disposition": "CRYPTO_ERASED",
+          "evidence_floor": "E4"
+        },
+        {
+          "obligation_id": "XD-ST-O-INVOICE",
+          "asset_ids": [
+            "XD-ST-A-INVOICE"
+          ],
+          "responsible_actor_id": "XD-ST-BILLING",
+          "required_disposition": "RETAINED",
+          "evidence_floor": "E3"
+        }
+      ],
+      "variants": [
+        {
+          "variant_id": "success-with-retention",
+          "class": "successful_closure",
+          "expected_closure": "CLOSED_WITH_EXCEPTIONS",
+          "perturbation": "retain invoice under a time-bounded declared exception"
+        },
+        {
+          "variant_id": "missing-analytics",
+          "class": "partial_or_unverifiable",
+          "expected_closure": "PARTIALLY_CLOSED",
+          "perturbation": "omit resolution for XD-ST-O-ANALYTICS"
+        },
+        {
+          "variant_id": "backdated-key-destruction",
+          "class": "adversarial_or_disputed",
+          "expected_closure": "DISPUTED",
+          "perturbation": "conflict backup key-destruction time with signed key-use evidence"
+        }
+      ],
+      "split_policy": "sealed_cross_domain_test_only"
+    },
+    {
+      "use_case_id": "PBE-XD-ML-TRAINING-WITHDRAWAL",
+      "title": "Training-data withdrawal across feature, checkpoint, embedding, and serving stores",
+      "domain": "machine-learning lifecycle",
+      "independence_claim": "This profile is domain-separated from transaction and meter workflows and stresses derived model artefacts whose acceptable disposition is policy-specific. It is a transfer test, not a claim that deletion from a trained model is universally solved.",
+      "source_basis": [
+        {
+          "source_id": "NIST-AI-RMF-1.0",
+          "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf",
+          "applied_concepts": [
+            "AI lifecycle",
+            "data provenance",
+            "risk documentation"
+          ]
+        },
+        {
+          "source_id": "SISA-MACHINE-UNLEARNING",
+          "url": "https://www.usenix.org/conference/usenixsecurity21/presentation/bourtoule",
+          "applied_concepts": [
+            "machine unlearning",
+            "sharding",
+            "retraining scope"
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "actor_id": "XD-ML-APP",
+          "role": "CONTROLLER"
+        },
+        {
+          "actor_id": "XD-ML-TRAINER",
+          "role": "PROCESSOR"
+        },
+        {
+          "actor_id": "XD-ML-SERVING",
+          "role": "RECIPIENT"
+        }
+      ],
+      "repositories": [
+        {
+          "repository_id": "XD-ML-RAW",
+          "actor_id": "XD-ML-APP",
+          "kind": "TRAINING_SOURCE",
+          "observer_visible": true
+        },
+        {
+          "repository_id": "XD-ML-FEATURE",
+          "actor_id": "XD-ML-TRAINER",
+          "kind": "FEATURE_STORE",
+          "observer_visible": true
+        },
+        {
+          "repository_id": "XD-ML-CHECKPOINT",
+          "actor_id": "XD-ML-TRAINER",
+          "kind": "MODEL_CHECKPOINT_REGISTRY",
+          "observer_visible": true
+        },
+        {
+          "repository_id": "XD-ML-EMBEDDING",
+          "actor_id": "XD-ML-SERVING",
+          "kind": "EMBEDDING_CACHE",
+          "observer_visible": false
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "XD-ML-A-SAMPLE",
+          "repository_id": "XD-ML-RAW",
+          "kind": "TRAINING_SAMPLE",
+          "parent_asset_ids": []
+        },
+        {
+          "asset_id": "XD-ML-A-FEATURE",
+          "repository_id": "XD-ML-FEATURE",
+          "kind": "FEATURE_VECTOR",
+          "parent_asset_ids": [
+            "XD-ML-A-SAMPLE"
+          ]
+        },
+        {
+          "asset_id": "XD-ML-A-CHECKPOINT",
+          "repository_id": "XD-ML-CHECKPOINT",
+          "kind": "MODEL_CHECKPOINT",
+          "parent_asset_ids": [
+            "XD-ML-A-FEATURE"
+          ]
+        },
+        {
+          "asset_id": "XD-ML-A-EMBEDDING",
+          "repository_id": "XD-ML-EMBEDDING",
+          "kind": "SERVING_EMBEDDING",
+          "parent_asset_ids": [
+            "XD-ML-A-FEATURE"
+          ]
+        }
+      ],
+      "obligations": [
+        {
+          "obligation_id": "XD-ML-O-SAMPLE",
+          "asset_ids": [
+            "XD-ML-A-SAMPLE"
+          ],
+          "responsible_actor_id": "XD-ML-APP",
+          "required_disposition": "ERASED",
+          "evidence_floor": "E3"
+        },
+        {
+          "obligation_id": "XD-ML-O-FEATURE",
+          "asset_ids": [
+            "XD-ML-A-FEATURE"
+          ],
+          "responsible_actor_id": "XD-ML-TRAINER",
+          "required_disposition": "ERASED",
+          "evidence_floor": "E3"
+        },
+        {
+          "obligation_id": "XD-ML-O-CHECKPOINT",
+          "asset_ids": [
+            "XD-ML-A-CHECKPOINT"
+          ],
+          "responsible_actor_id": "XD-ML-TRAINER",
+          "required_disposition": "APPROVED_TRANSFORM",
+          "evidence_floor": "E4"
+        },
+        {
+          "obligation_id": "XD-ML-O-EMBEDDING",
+          "asset_ids": [
+            "XD-ML-A-EMBEDDING"
+          ],
+          "responsible_actor_id": "XD-ML-SERVING",
+          "required_disposition": "ERASED",
+          "evidence_floor": "E3"
+        }
+      ],
+      "variants": [
+        {
+          "variant_id": "success-retrained",
+          "class": "successful_closure",
+          "expected_closure": "CLOSED",
+          "perturbation": "replace affected checkpoint with policy-approved retrained artefact"
+        },
+        {
+          "variant_id": "hidden-serving-cache",
+          "class": "partial_or_unverifiable",
+          "expected_closure": "PARTIALLY_CLOSED",
+          "perturbation": "omit resolution for XD-ML-O-EMBEDDING"
+        },
+        {
+          "variant_id": "checkpoint-equivocation",
+          "class": "adversarial_or_disputed",
+          "expected_closure": "DISPUTED",
+          "perturbation": "present conflicting checkpoint lineage and retraining attestations"
+        }
+      ],
+      "split_policy": "sealed_cross_domain_test_only"
+    }
+  ],
+  "evaluation_tracks": [
+    {
+      "track_id": "PBE-TRACK-CORE",
+      "name": "Canonical smart-grid and adversarial evaluation",
+      "task_ids": [
+        "PBE-T1",
+        "PBE-T2",
+        "PBE-T3",
+        "PBE-T4",
+        "PBE-T5",
+        "PBE-T6"
+      ],
+      "case_sets": [
+        "PaEBench-v1.0 canonical cases",
+        "PaEBench-v1.0 adversarial pairs"
+      ],
+      "tuning_policy": "Training and development partitions may be used; sealed test labels remain evaluator-only."
+    },
+    {
+      "track_id": "PBE-TRACK-XDOMAIN",
+      "name": "Sealed cross-domain transfer evaluation",
+      "task_ids": [
+        "PBE-T1",
+        "PBE-T2",
+        "PBE-T3",
+        "PBE-T4",
+        "PBE-T6"
+      ],
+      "case_sets": [
+        "PBE-XD-HEALTH-RESEARCH-WITHDRAWAL",
+        "PBE-XD-SAAS-TENANT-OFFBOARDING",
+        "PBE-XD-ML-TRAINING-WITHDRAWAL"
+      ],
+      "tuning_policy": "No rule, prompt, mapping, threshold, or code change is permitted after any cross-domain observer bundle is opened."
+    }
+  ],
+  "source_contract_sha256": "9627656a0608f86257774dbee07027249f2fc165fecc964b4537651a0972f104",
+  "extension": {
+    "core_family_file": "configs/pae_bench/v1_1/core_families.json",
+    "profile_schema": "schemas/paebench-family-v1_1.schema.json",
+    "split_policy": "family_grouped_train_development_test",
+    "transfer_split": "test_only",
+    "seed": "PAEBENCH-E1-V1.1",
+    "version_identity": "PaEBench-v1.1-extension",
+    "correctness_gate": {
+      "unsafe_close_ceiling": 0.0,
+      "t2_set_f1_floor": 0.9,
+      "t3_status_macro_f1_floor": 0.9
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "finding": "Independent fixture with an unauthorized exception authority aborted the VERCLO batch instead of leaving that obligation unresolved",
+  "fixture": "exception_unknown_authority",
+  "original_error": "ValueError: exception authority is not admitted by policy",
+  "resolution": "The public input worker now records inadmissible exception assertions and continues assessment; the case-manager API retains its strict checks",
+  "label_changes": false,
+  "status": "RESOLVED_REGRESSION_TESTS_AND_FULL_638_CASE_STUDY_PASS"
+}

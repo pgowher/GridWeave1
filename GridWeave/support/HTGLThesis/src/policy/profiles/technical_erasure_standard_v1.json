@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "model_version": "PAE-FECM-v1.0.0",
+  "profile_id": "VERCLO-POLICY-TECHNICAL-ERASURE",
+  "version": "1.0.0",
+  "authorization_basis": "AUTHENTICATED_ERASURE_REQUEST",
+  "applicable_asset_kinds": ["*"],
+  "applicable_replica_classes": ["primary", "secondary", "cache", "backup", "export", "derived"],
+  "default_rule": {"deadline_hours": 720, "minimum_evidence_grade": "E2", "permitted_dispositions": ["ERASED", "CRYPTO_ERASED"]},
+  "overrides": [
+    {"override_id": "BACKUP-E3", "asset_kinds": ["*"], "replica_classes": ["backup"], "rule": {"deadline_hours": 720, "minimum_evidence_grade": "E3", "permitted_dispositions": ["ERASED", "CRYPTO_ERASED"]}}
+  ],
+  "exception_authority_ids": ["AUTHORITY-RETENTION-REVIEW"],
+  "early_closure_allowed": false
+}

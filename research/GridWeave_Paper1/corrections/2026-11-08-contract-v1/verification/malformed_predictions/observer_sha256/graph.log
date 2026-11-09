@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/assessor_worker.py", line 34, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/assessor_worker.py", line 25, in main
+    for uid,o,s,p,c in load_public(public):
+                       ~~~~~~~~~~~^^^^^^^^
+  File "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/wire.py", line 50, in load_public
+    raise ValueError('Policy binding mismatch: '+label)
+ValueError: Policy binding mismatch: case manifest

@@ -1,0 +1,159 @@
+{
+  "schema_id": "htgl.dataset.v1.policy_rule",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "b50ca62f7151b376a7b47dc205a058009965961ae73d9272c2cb987c7c2d2a7d",
+  "table_name": "policy_rule",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "policy_rule_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Rule key."
+      }
+    },
+    {
+      "name": "policy_profile_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Package key."
+      }
+    },
+    {
+      "name": "version",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Rule version."
+      }
+    },
+    {
+      "name": "jurisdiction_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scoped jurisdiction."
+      }
+    },
+    {
+      "name": "rule_kind",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "rule_kind",
+        "privacy_class": "restricted",
+        "semantic_invariant": "permission, prohibition, duty, retention, erasure, disclosure or evidence."
+      }
+    },
+    {
+      "name": "action",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Evaluated action."
+      }
+    },
+    {
+      "name": "asset_selector",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Machine-readable object selector."
+      }
+    },
+    {
+      "name": "party_selector",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Machine-readable actor selector."
+      }
+    },
+    {
+      "name": "purpose_selector",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Purpose condition."
+      }
+    },
+    {
+      "name": "condition_expression",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Safe declarative condition, not arbitrary code."
+      }
+    },
+    {
+      "name": "priority",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Conflict-resolution priority."
+      }
+    },
+    {
+      "name": "effective_from",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Start."
+      }
+    },
+    {
+      "name": "effective_to",
+      "type": "timestamp[us, UTC]",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "End."
+      }
+    },
+    {
+      "name": "source_citation",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Human-readable provenance; not a legal conclusion."
+      }
+    },
+    {
+      "name": "source_sha256",
+      "type": "fixed_size_binary[32]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Rule-source digest."
+      }
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "schema_id": "htgl.dataset.v1.raw_context_event",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "48efd2a2e2c9f20dbcc09c80eb08f271ce3a1e3fa7149781c601a9a4a8de1e8e",
+  "table_name": "raw_context_event",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "context_event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Tariff, market, weather, outage or command event key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "event_class",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "context_event_class",
+        "privacy_class": "restricted",
+        "semantic_invariant": "weather, tariff, price, outage, dispatch, firmware, clock or communications."
+      }
+    },
+    {
+      "name": "region_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Affected region."
+      }
+    },
+    {
+      "name": "asset_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Affected asset if specific."
+      }
+    },
+    {
+      "name": "start_time",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Start."
+      }
+    },
+    {
+      "name": "end_time",
+      "type": "timestamp[us, UTC]",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "End."
+      }
+    },
+    {
+      "name": "numeric_value",
+      "type": "float64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Typed numeric value."
+      }
+    },
+    {
+      "name": "unit",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "UCUM-style unit."
+      }
+    },
+    {
+      "name": "categorical_value",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Typed categorical value."
+      }
+    },
+    {
+      "name": "generation_source",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "generation_source",
+        "privacy_class": "restricted",
+        "semantic_invariant": "imported, calibrated or procedural."
+      }
+    },
+    {
+      "name": "calibration_source_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Provenance."
+      }
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "registry_format": "pae.evidence-grades.v1",
+  "registry_id": "PAE-EVIDENCE-GRADES-v1",
+  "version": "1.0.0",
+  "source_receipt_profile_bundle_id": "RECEIPT-PROFILES-REFERENCE-v1",
+  "grade_order": ["E0", "E1", "E2", "E3", "E4", "E5"],
+  "proof_limit_statement": "No evidence grade, including E5, silently establishes universal physical destruction or legal compliance.",
+  "grades": [
+    {
+      "grade": "E0",
+      "capabilities": ["CASE_OR_REQUEST_RECORDED"],
+      "permits": ["conclude_that_a_case_or_request_record_exists"],
+      "cannot_establish": ["custodian_assertion", "authenticated_origin", "ordered_inclusion", "mechanism_execution", "physical_destruction"]
+    },
+    {
+      "grade": "E1",
+      "capabilities": ["CASE_OR_REQUEST_RECORDED", "ASSERTION_OR_COMMITMENT_PRESENT"],
+      "permits": ["compare_a_recorded_assertion_or_commitment"],
+      "cannot_establish": ["independently_authenticated_origin", "ordered_inclusion", "mechanism_execution", "physical_destruction"]
+    },
+    {
+      "grade": "E2",
+      "capabilities": ["CASE_OR_REQUEST_RECORDED", "ASSERTION_OR_COMMITMENT_PRESENT", "AUTHENTICATED_ORIGIN", "OBLIGATION_BINDING"],
+      "permits": ["attribute_a_bound_assertion_to_an_admitted_issuer"],
+      "cannot_establish": ["independent_log_order", "storage_mechanism_execution", "physical_destruction"]
+    },
+    {
+      "grade": "E3",
+      "capabilities": ["CASE_OR_REQUEST_RECORDED", "ASSERTION_OR_COMMITMENT_PRESENT", "AUTHENTICATED_ORIGIN", "OBLIGATION_BINDING", "INDEPENDENT_INTEGRITY", "ORDERED_INCLUSION"],
+      "permits": ["verify_integrity_and_inclusion_or_ordering_in_the_declared_log"],
+      "cannot_establish": ["storage_mechanism_execution_without_additional_evidence", "physical_destruction"]
+    },
+    {
+      "grade": "E4",
+      "capabilities": ["CASE_OR_REQUEST_RECORDED", "ASSERTION_OR_COMMITMENT_PRESENT", "AUTHENTICATED_ORIGIN", "OBLIGATION_BINDING", "INDEPENDENT_INTEGRITY", "ORDERED_INCLUSION", "ADMITTED_STORAGE_MECHANISM"],
+      "permits": ["conclude_that_an_admitted_storage_or_key_mechanism_reported_execution_under_its_assumptions"],
+      "cannot_establish": ["absence_of_unobserved_copies", "correctness_outside_the_mechanism_boundary", "physical_destruction"]
+    },
+    {
+      "grade": "E5",
+      "capabilities": ["CASE_OR_REQUEST_RECORDED", "ASSERTION_OR_COMMITMENT_PRESENT", "AUTHENTICATED_ORIGIN", "OBLIGATION_BINDING", "INDEPENDENT_INTEGRITY", "ORDERED_INCLUSION", "ADMITTED_STORAGE_MECHANISM", "INDEPENDENT_CORROBORATION"],
+      "permits": ["conclude_that_the_mechanism_assertion_is_corroborated_by_the_required_independent_quorum"],
+      "cannot_establish": ["absence_of_collusion_beyond_the_threshold", "absence_of_unobserved_copies", "universal_physical_destruction", "legal_compliance"]
+    }
+  ],
+  "receipt_types": [
+    {"evidence_type": "digest", "primitive": "digest", "standalone_grade": "E1", "requires_key": false, "requires_anchor": false, "terminal_assertion": false, "corroboration_eligible": false, "conclusion": "PAYLOAD_COMMITMENT_PRESENT"},
+    {"evidence_type": "hmac", "primitive": "hmac", "standalone_grade": "E2", "requires_key": true, "requires_anchor": false, "terminal_assertion": true, "corroboration_eligible": false, "conclusion": "AUTHENTICATED_SHARED_SECRET_ASSERTION"},
+    {"evidence_type": "signature", "primitive": "signature", "standalone_grade": "E2", "requires_key": true, "requires_anchor": false, "terminal_assertion": true, "corroboration_eligible": true, "conclusion": "AUTHENTICATED_SIGNATURE_ASSERTION"},
+    {"evidence_type": "inclusion_proof", "primitive": "merkle_inclusion", "standalone_grade": "E3", "requires_key": false, "requires_anchor": true, "terminal_assertion": false, "corroboration_eligible": false, "conclusion": "ORDERED_INCLUSION"},
+    {"evidence_type": "deletion_acknowledgement", "primitive": "signature", "standalone_grade": "E2", "requires_key": true, "requires_anchor": false, "terminal_assertion": true, "corroboration_eligible": false, "conclusion": "CUSTODIAN_DELETION_ASSERTION"},
+    {"evidence_type": "replica_attestation", "primitive": "hmac", "standalone_grade": "E2", "requires_key": true, "requires_anchor": false, "terminal_assertion": true, "corroboration_eligible": false, "conclusion": "REPLICA_STATE_ASSERTION"},
+    {"evidence_type": "audit_finding", "primitive": "signature", "standalone_grade": "E2", "requires_key": true, "requires_anchor": false, "terminal_assertion": true, "corroboration_eligible": true, "conclusion": "AUTHENTICATED_AUDITOR_FINDING"},
+    {"evidence_type": "merkle_anchor", "primitive": "merkle_inclusion", "standalone_grade": "E3", "requires_key": false, "requires_anchor": true, "terminal_assertion": false, "corroboration_eligible": false, "conclusion": "ANCHORED_BATCH_INCLUSION"},
+    {"evidence_type": "notification_receipt", "primitive": "signature", "standalone_grade": "E2", "requires_key": true, "requires_anchor": false, "terminal_assertion": false, "corroboration_eligible": false, "conclusion": "AUTHENTICATED_DELIVERY_ASSERTION"}
+  ],
+  "rejection_precedence": [
+    "UNKNOWN_RECEIPT_TYPE",
+    "MALFORMED_CANONICAL_PAYLOAD",
+    "UNRESOLVED_OBLIGATION_BINDING",
+    "MISSING_PROVENANCE",
+    "RECEIPT_NOT_YET_VALID",
+    "RECEIPT_EXPIRED",
+    "VERIFICATION_MATERIAL_UNAVAILABLE",
+    "CREDENTIAL_INVALID_AT_EVENT",
+    "INVALID_AUTHENTICATOR",
+    "INVALID_OR_MISSING_ANCHOR"
+  ],
+  "downgrade_reasons": [
+    "ORDERING_SUPPORT_MISSING",
+    "MECHANISM_ATTESTATION_MISSING",
+    "MECHANISM_ATTESTATION_EXPIRED",
+    "CORROBORATION_MISSING",
+    "CORROBORATION_NOT_INDEPENDENT",
+    "CORROBORATION_BELOW_QUORUM",
+    "INSUFFICIENT_GRADE_FOR_OBLIGATION",
+    "LATE_FOR_OBLIGATION"
+  ],
+  "dispute_reasons": ["CONFLICTING_ADMISSIBLE_EVIDENCE"]
+}

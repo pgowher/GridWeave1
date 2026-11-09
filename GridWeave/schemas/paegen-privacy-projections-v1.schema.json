@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "https://pae.local/schema/paegen-privacy-projections/v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "model_version", "forbidden_fields", "hidden_topology_fields", "profiles", "known_indistinguishability"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"}, "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "forbidden_fields": {"$ref": "#/$defs/Strings"}, "hidden_topology_fields": {"$ref": "#/$defs/Strings"},
+    "profiles": {"type": "array", "minItems": 1, "items": {
+      "type": "object", "additionalProperties": false, "required": ["profile_id", "access_class", "source_profile_id", "visible_sections", "transformations"],
+      "properties": {"profile_id": {"type": "string"}, "access_class": {"const": "restricted"}, "source_profile_id": {"type": "string"}, "visible_sections": {"$ref": "#/$defs/Strings"}, "transformations": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}}
+    }},
+    "known_indistinguishability": {"type": "array", "minItems": 1, "items": {
+      "type": "object", "additionalProperties": false, "required": ["class_id", "attack_type", "statement"],
+      "properties": {"class_id": {"type": "string"}, "attack_type": {"enum": ["MISSING_RECIPIENT", "HIDDEN_DERIVATIVE", "COLLUSION"]}, "statement": {"type": "string", "minLength": 40}}
+    }}
+  },
+  "$defs": {"Strings": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true}}
+}

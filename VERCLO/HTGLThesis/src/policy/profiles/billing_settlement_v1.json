@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "model_version": "PAE-FECM-v1.0.0",
+  "profile_id": "VERCLO-POLICY-BILLING-SETTLEMENT",
+  "version": "1.0.0",
+  "authorization_basis": "AUTHENTICATED_LIFECYCLE_TERMINATION",
+  "applicable_asset_kinds": ["account_record", "billing_record", "settlement_record", "interval_reading", "export"],
+  "applicable_replica_classes": ["primary", "secondary", "cache", "backup", "export", "derived"],
+  "default_rule": {"deadline_hours": 720, "minimum_evidence_grade": "E3", "permitted_dispositions": ["ERASED", "CRYPTO_ERASED"]},
+  "overrides": [
+    {"override_id": "SETTLEMENT-TRANSFORM", "asset_kinds": ["settlement_record"], "replica_classes": ["primary", "secondary", "export", "derived"], "rule": {"deadline_hours": 168, "minimum_evidence_grade": "E4", "permitted_dispositions": ["ERASED", "APPROVED_TRANSFORM"]}}
+  ],
+  "exception_authority_ids": ["AUTHORITY-SETTLEMENT-RETENTION", "AUTHORITY-RETENTION-REVIEW"],
+  "early_closure_allowed": false
+}

@@ -1,0 +1,149 @@
+{
+  "schema_id": "htgl.dataset.v1.run_scenario",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "b0e5d50f05a369b06100b6bcbc4d5991a5229fb688eefa3d7565f3efb75eb998",
+  "table_name": "run_scenario",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "run_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Globally unique deterministic run key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario profile key."
+      }
+    },
+    {
+      "name": "replicate_id",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Independent statistical repetition."
+      }
+    },
+    {
+      "name": "contract_version",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Generator contract version."
+      }
+    },
+    {
+      "name": "profile_name",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Human-readable scenario profile."
+      }
+    },
+    {
+      "name": "start_time",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Simulated start."
+      }
+    },
+    {
+      "name": "end_time",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Simulated end."
+      }
+    },
+    {
+      "name": "represented_population",
+      "type": "int64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Population represented by the world model."
+      }
+    },
+    {
+      "name": "materialized_row_target",
+      "type": "int64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Requested physical rows, separate from population."
+      }
+    },
+    {
+      "name": "executed_operation_target",
+      "type": "int64",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Optional operations submitted to downstream HTGL."
+      }
+    },
+    {
+      "name": "calibration_profile_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Versioned calibration bundle."
+      }
+    },
+    {
+      "name": "policy_profile_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Versioned policy package."
+      }
+    },
+    {
+      "name": "publication_derived",
+      "type": "bool",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "True only for values measured from cited publication/data."
+      }
+    },
+    {
+      "name": "config_sha256",
+      "type": "fixed_size_binary[32]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Digest of resolved configuration."
+      }
+    }
+  ]
+}

@@ -1,0 +1,1484 @@
+{
+  "kind": "Results derived from preserved machine-readable study outputs",
+  "experiments_rerun": false,
+  "assessors_or_mutants_executed": false,
+  "method_checks": {
+    "public_native_files": 3190,
+    "case_observations": 9600,
+    "aggregates": 240,
+    "first_witnesses": 116,
+    "frozen_rankings": true
+  },
+  "semantic_checks": {
+    "prediction_files": 1914,
+    "diagnostic_files": 638
+  },
+  "structure_audits": {
+    "reference": {
+      "audit_date": "2026-11-05",
+      "dataset": "${ARTIFACT_ROOT}/GridWeave/datasets/reference",
+      "manifest_sha256": "35778ae20cf2cda8a2c719b0713ee9c3fc2158eac75fb46679f35cae44db9b9f",
+      "method": "Direct file census and exact directed graph isomorphism; no generator oracle imports",
+      "limitations": [
+        "Not independent human adjudication",
+        "Graph equivalence excludes roots, policy, receipts, times, visibility and scope flags",
+        "Byte identity measures saved input equivalence; not semantic case equivalence",
+        "No new assessor utility or clean environment study"
+      ],
+      "counts": {
+        "case_units": 420,
+        "pairs": 210,
+        "source_families": 7,
+        "control_units": 210,
+        "challenge_units": 210,
+        "distinct_control_inputs": 42,
+        "distinct_all_inputs": 231,
+        "family_scale_groups": 21
+      },
+      "structures": {
+        "asset": {
+          "all_case_classes": 11,
+          "control_classes": 6,
+          "definition": "Asset nodes and directed lineage only",
+          "classes_shared_across_splits": 11
+        },
+        "custody": {
+          "all_case_classes": 23,
+          "control_classes": 12,
+          "definition": "Asset, replica, repository and custodian node types; directed relation types",
+          "classes_shared_across_splits": 12
+        },
+        "semantic": {
+          "all_case_classes": 42,
+          "control_classes": 21,
+          "definition": "Custody graph plus asset kind, replica class and repository class",
+          "classes_shared_across_splits": 0
+        }
+      },
+      "structure_ranges": {
+        "assets": {
+          "min": 3,
+          "max": 12,
+          "distribution": {
+            "3": 140,
+            "6": 140,
+            "12": 140
+          }
+        },
+        "replicas": {
+          "min": 3,
+          "max": 12,
+          "distribution": {
+            "3": 140,
+            "6": 140,
+            "12": 140
+          }
+        },
+        "repositories": {
+          "min": 3,
+          "max": 3,
+          "distribution": {
+            "3": 420
+          }
+        },
+        "custodians": {
+          "min": 2,
+          "max": 3,
+          "distribution": {
+            "2": 300,
+            "3": 120
+          }
+        },
+        "max_replicas_per_asset": {
+          "min": 1,
+          "max": 1,
+          "distribution": {
+            "1": 420
+          }
+        },
+        "lineage_edges": {
+          "min": 1,
+          "max": 8,
+          "distribution": {
+            "1": 7,
+            "2": 133,
+            "3": 7,
+            "4": 133,
+            "7": 7,
+            "8": 133
+          }
+        },
+        "lineage_depth": {
+          "min": 1,
+          "max": 2,
+          "distribution": {
+            "1": 125,
+            "2": 295
+          }
+        },
+        "max_lineage_fanout": {
+          "min": 1,
+          "max": 2,
+          "distribution": {
+            "1": 302,
+            "2": 118
+          }
+        }
+      },
+      "outcomes": {
+        "CLOSED": 198,
+        "CLOSED_WITH_EXCEPTIONS": 54,
+        "DISPUTED": 21,
+        "IN_PROGRESS": 21,
+        "OPEN": 21,
+        "PARTIALLY_CLOSED": 63,
+        "UNVERIFIABLE": 42
+      },
+      "splits": {
+        "train": {
+          "units": 180,
+          "families": 3
+        },
+        "validation": {
+          "units": 120,
+          "families": 2
+        },
+        "test": {
+          "units": 120,
+          "families": 2
+        }
+      },
+      "operation_transitions": [
+        {
+          "operation": "conflict",
+          "pairs": 21,
+          "transitions": {
+            "CLOSED -> DISPUTED": 18,
+            "CLOSED_WITH_EXCEPTIONS -> DISPUTED": 3
+          }
+        },
+        {
+          "operation": "expiry_crossing",
+          "pairs": 21,
+          "transitions": {
+            "CLOSED_WITH_EXCEPTIONS -> PARTIALLY_CLOSED": 21
+          }
+        },
+        {
+          "operation": "hidden_copy_twin",
+          "pairs": 21,
+          "transitions": {
+            "CLOSED -> CLOSED": 18,
+            "CLOSED_WITH_EXCEPTIONS -> CLOSED_WITH_EXCEPTIONS": 3
+          }
+        },
+        {
+          "operation": "lineage_gap",
+          "pairs": 21,
+          "transitions": {
+            "CLOSED -> UNVERIFIABLE": 18,
+            "CLOSED_WITH_EXCEPTIONS -> UNVERIFIABLE": 3
+          }
+        },
+        {
+          "operation": "omit_all",
+          "pairs": 21,
+          "transitions": {
+            "CLOSED -> OPEN": 18,
+            "CLOSED_WITH_EXCEPTIONS -> OPEN": 3
+          }
+        },
+        {
+          "operation": "omit_one",
+          "pairs": 21,
+          "transitions": {
+            "CLOSED -> PARTIALLY_CLOSED": 18,
+            "CLOSED_WITH_EXCEPTIONS -> PARTIALLY_CLOSED": 3
+          }
+        },
+        {
+          "operation": "permutation",
+          "pairs": 21,
+          "transitions": {
+            "CLOSED -> CLOSED": 18,
+            "CLOSED_WITH_EXCEPTIONS -> CLOSED_WITH_EXCEPTIONS": 3
+          }
+        },
+        {
+          "operation": "pre_deadline",
+          "pairs": 21,
+          "transitions": {
+            "CLOSED -> IN_PROGRESS": 18,
+            "CLOSED_WITH_EXCEPTIONS -> IN_PROGRESS": 3
+          }
+        },
+        {
+          "operation": "scope_gap",
+          "pairs": 21,
+          "transitions": {
+            "CLOSED -> UNVERIFIABLE": 18,
+            "CLOSED_WITH_EXCEPTIONS -> UNVERIFIABLE": 3
+          }
+        },
+        {
+          "operation": "signature_tamper",
+          "pairs": 21,
+          "transitions": {
+            "CLOSED -> PARTIALLY_CLOSED": 18,
+            "CLOSED_WITH_EXCEPTIONS -> PARTIALLY_CLOSED": 3
+          }
+        }
+      ],
+      "checks": {
+        "exact_isomorphism_sanity_checks": "PASS",
+        "family_split_overlap": false,
+        "hidden_copy_pairs": 21,
+        "hidden_copy_pairs_equal_full_input_and_observer_truth_but_different_world": 21,
+        "frozen_source_files_checked": 318,
+        "frozen_source_errors": []
+      },
+      "serialized_public_input_bytes": 6935764,
+      "tracked_profile": "REAL_ED25519_SYNTHETIC_E2",
+      "q_status": "NOT_EXECUTED"
+    },
+    "structural_extension": {
+      "audit_date": "2026-11-05",
+      "dataset": "${ARTIFACT_ROOT}/research/GridWeave_Paper1/extension/corpus_v0_2",
+      "manifest_sha256": "9cb0ffdcb00c55f5ee3f38c9251528aeedeed4cf0f9044c566a07f6c872602f2",
+      "method": "Direct file census and exact directed graph isomorphism; no generator oracle imports",
+      "limitations": [
+        "Not independent human adjudication",
+        "Graph equivalence excludes roots, policy, receipts, times, visibility and scope flags",
+        "Byte identity measures saved input equivalence; not semantic case equivalence",
+        "No new assessor utility or clean environment study"
+      ],
+      "counts": {
+        "case_units": 120,
+        "pairs": 60,
+        "source_families": 6,
+        "control_units": 60,
+        "challenge_units": 60,
+        "distinct_control_inputs": 12,
+        "distinct_all_inputs": 66,
+        "family_scale_groups": 6
+      },
+      "structures": {
+        "asset": {
+          "all_case_classes": 12,
+          "control_classes": 6,
+          "definition": "Asset nodes and directed lineage only",
+          "classes_shared_across_splits": 0
+        },
+        "custody": {
+          "all_case_classes": 12,
+          "control_classes": 6,
+          "definition": "Asset, replica, repository and custodian node types; directed relation types",
+          "classes_shared_across_splits": 0
+        },
+        "semantic": {
+          "all_case_classes": 12,
+          "control_classes": 6,
+          "definition": "Custody graph plus asset kind, replica class and repository class",
+          "classes_shared_across_splits": 0
+        }
+      },
+      "structure_ranges": {
+        "assets": {
+          "min": 3,
+          "max": 5,
+          "distribution": {
+            "3": 20,
+            "4": 40,
+            "5": 60
+          }
+        },
+        "replicas": {
+          "min": 4,
+          "max": 7,
+          "distribution": {
+            "4": 40,
+            "5": 40,
+            "6": 20,
+            "7": 20
+          }
+        },
+        "repositories": {
+          "min": 4,
+          "max": 6,
+          "distribution": {
+            "4": 60,
+            "5": 40,
+            "6": 20
+          }
+        },
+        "custodians": {
+          "min": 3,
+          "max": 5,
+          "distribution": {
+            "3": 20,
+            "4": 60,
+            "5": 40
+          }
+        },
+        "max_replicas_per_asset": {
+          "min": 1,
+          "max": 3,
+          "distribution": {
+            "1": 80,
+            "2": 20,
+            "3": 20
+          }
+        },
+        "lineage_edges": {
+          "min": 1,
+          "max": 4,
+          "distribution": {
+            "1": 1,
+            "2": 21,
+            "3": 41,
+            "4": 57
+          }
+        },
+        "lineage_depth": {
+          "min": 1,
+          "max": 4,
+          "distribution": {
+            "1": 23,
+            "2": 77,
+            "3": 1,
+            "4": 19
+          }
+        },
+        "max_lineage_fanout": {
+          "min": 1,
+          "max": 4,
+          "distribution": {
+            "1": 60,
+            "2": 40,
+            "3": 1,
+            "4": 19
+          }
+        }
+      },
+      "outcomes": {
+        "CLOSED": 66,
+        "CLOSED_WITH_EXCEPTIONS": 6,
+        "DISPUTED": 6,
+        "IN_PROGRESS": 6,
+        "OPEN": 6,
+        "PARTIALLY_CLOSED": 18,
+        "UNVERIFIABLE": 12
+      },
+      "splits": {
+        "train": {
+          "units": 0,
+          "families": 0
+        },
+        "validation": {
+          "units": 0,
+          "families": 0
+        },
+        "test": {
+          "units": 120,
+          "families": 6
+        }
+      },
+      "operation_transitions": [
+        {
+          "operation": "conflict",
+          "pairs": 6,
+          "transitions": {
+            "CLOSED -> DISPUTED": 6
+          }
+        },
+        {
+          "operation": "expiry_crossing",
+          "pairs": 6,
+          "transitions": {
+            "CLOSED_WITH_EXCEPTIONS -> PARTIALLY_CLOSED": 6
+          }
+        },
+        {
+          "operation": "hidden_copy_twin",
+          "pairs": 6,
+          "transitions": {
+            "CLOSED -> CLOSED": 6
+          }
+        },
+        {
+          "operation": "lineage_gap",
+          "pairs": 6,
+          "transitions": {
+            "CLOSED -> UNVERIFIABLE": 6
+          }
+        },
+        {
+          "operation": "omit_all",
+          "pairs": 6,
+          "transitions": {
+            "CLOSED -> OPEN": 6
+          }
+        },
+        {
+          "operation": "omit_one",
+          "pairs": 6,
+          "transitions": {
+            "CLOSED -> PARTIALLY_CLOSED": 6
+          }
+        },
+        {
+          "operation": "permutation",
+          "pairs": 6,
+          "transitions": {
+            "CLOSED -> CLOSED": 6
+          }
+        },
+        {
+          "operation": "pre_deadline",
+          "pairs": 6,
+          "transitions": {
+            "CLOSED -> IN_PROGRESS": 6
+          }
+        },
+        {
+          "operation": "scope_gap",
+          "pairs": 6,
+          "transitions": {
+            "CLOSED -> UNVERIFIABLE": 6
+          }
+        },
+        {
+          "operation": "signature_tamper",
+          "pairs": 6,
+          "transitions": {
+            "CLOSED -> PARTIALLY_CLOSED": 6
+          }
+        }
+      ],
+      "checks": {
+        "exact_isomorphism_sanity_checks": "PASS",
+        "family_split_overlap": false,
+        "hidden_copy_pairs": 6,
+        "hidden_copy_pairs_equal_full_input_and_observer_truth_but_different_world": 6,
+        "frozen_source_files_checked": 318,
+        "frozen_source_errors": []
+      },
+      "serialized_public_input_bytes": 1732486,
+      "tracked_profile": "REAL_ED25519_SYNTHETIC_E2",
+      "q_status": "NOT_EXECUTED"
+    }
+  },
+  "additional_topology_counts": {
+    "reference": {
+      "root_count_distribution": {
+        "4": 140,
+        "2": 140,
+        "1": 140
+      },
+      "join_node_count_distribution": {
+        "0": 420
+      }
+    },
+    "structural_extension": {
+      "root_count_distribution": {
+        "1": 100,
+        "2": 20
+      },
+      "join_node_count_distribution": {
+        "1": 39,
+        "0": 81
+      }
+    }
+  },
+  "case_class_comparisons": 1914,
+  "saved_units": 638,
+  "coverage": {
+    "graph": {
+      "baseline_verifiable_cases_scored": 638,
+      "obligation_categories_cases_scored": 638,
+      "obligation_categories_subjects_scored": 3858,
+      "outcome_cases_scored": 638,
+      "receipt_diagnoses_cases_scored": 638,
+      "receipt_diagnoses_subjects_scored": 3621,
+      "cases": 638
+    },
+    "sql": {
+      "baseline_verifiable_cases_scored": 638,
+      "obligation_categories_cases_scored": 638,
+      "obligation_categories_subjects_scored": 3858,
+      "outcome_cases_scored": 638,
+      "receipt_diagnoses_cases_scored": 638,
+      "receipt_diagnoses_subjects_scored": 3621,
+      "cases": 638
+    },
+    "verclo": {
+      "baseline_verifiable_cases_scored": 638,
+      "obligation_categories_cases_scored": 578,
+      "obligation_categories_not_scored_invalid_baseline": 326,
+      "obligation_categories_subjects_scored": 3532,
+      "outcome_cases_scored": 638,
+      "receipt_diagnoses_cases_scored": 578,
+      "receipt_diagnoses_not_scored_invalid_baseline": 326,
+      "receipt_diagnoses_subjects_scored": 3295,
+      "cases": 638
+    }
+  },
+  "unresolved_scored_field_disagreements": 0,
+  "exception_admission_witness": {
+    "unit_id": "972b6f7b822a71d2bc7868a889db42c1",
+    "fixture": "exception_unknown_authority",
+    "failure": {
+      "exception_id": "EXCEPTION-1",
+      "reason": "exception authority is not admitted by policy"
+    },
+    "expected_and_actual_class": "PARTIALLY_CLOSED",
+    "categories": {
+      "MISSING": 1,
+      "COVERED": 2
+    }
+  },
+  "fault_catalogue": [
+    "signature_bypass",
+    "contradiction_suppression",
+    "declared_scope_bypass",
+    "scope_commitment_bypass",
+    "exception_expiry_bypass",
+    "deadline_precedence_bypass",
+    "roots_only",
+    "replica_collapse"
+  ],
+  "detections": {
+    "ordinary_positive": [
+      [
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "sql/replica_collapse",
+        "sql/roots_only"
+      ],
+      [
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "sql/replica_collapse",
+        "sql/roots_only"
+      ],
+      [
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "sql/replica_collapse",
+        "sql/roots_only"
+      ],
+      [
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "sql/replica_collapse",
+        "sql/roots_only"
+      ],
+      [
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "sql/replica_collapse",
+        "sql/roots_only"
+      ]
+    ],
+    "gridweave_positive": [
+      [
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "sql/replica_collapse",
+        "sql/roots_only"
+      ],
+      [
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "sql/replica_collapse",
+        "sql/roots_only"
+      ],
+      [
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "sql/replica_collapse",
+        "sql/roots_only"
+      ],
+      [
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "sql/replica_collapse",
+        "sql/roots_only"
+      ],
+      [
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "sql/replica_collapse",
+        "sql/roots_only"
+      ]
+    ],
+    "gridweave_pairs": [
+      [
+        "graph/contradiction_suppression",
+        "graph/deadline_precedence_bypass",
+        "graph/declared_scope_bypass",
+        "graph/exception_expiry_bypass",
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "graph/scope_commitment_bypass",
+        "graph/signature_bypass",
+        "sql/contradiction_suppression",
+        "sql/deadline_precedence_bypass",
+        "sql/declared_scope_bypass",
+        "sql/exception_expiry_bypass",
+        "sql/replica_collapse",
+        "sql/roots_only",
+        "sql/scope_commitment_bypass",
+        "sql/signature_bypass"
+      ],
+      [
+        "graph/contradiction_suppression",
+        "graph/deadline_precedence_bypass",
+        "graph/declared_scope_bypass",
+        "graph/exception_expiry_bypass",
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "graph/scope_commitment_bypass",
+        "graph/signature_bypass",
+        "sql/contradiction_suppression",
+        "sql/deadline_precedence_bypass",
+        "sql/declared_scope_bypass",
+        "sql/exception_expiry_bypass",
+        "sql/replica_collapse",
+        "sql/roots_only",
+        "sql/scope_commitment_bypass",
+        "sql/signature_bypass"
+      ],
+      [
+        "graph/contradiction_suppression",
+        "graph/deadline_precedence_bypass",
+        "graph/declared_scope_bypass",
+        "graph/exception_expiry_bypass",
+        "graph/roots_only",
+        "graph/scope_commitment_bypass",
+        "graph/signature_bypass",
+        "sql/contradiction_suppression",
+        "sql/deadline_precedence_bypass",
+        "sql/declared_scope_bypass",
+        "sql/exception_expiry_bypass",
+        "sql/roots_only",
+        "sql/scope_commitment_bypass",
+        "sql/signature_bypass"
+      ],
+      [
+        "graph/contradiction_suppression",
+        "graph/deadline_precedence_bypass",
+        "graph/declared_scope_bypass",
+        "graph/exception_expiry_bypass",
+        "graph/replica_collapse",
+        "graph/roots_only",
+        "graph/scope_commitment_bypass",
+        "graph/signature_bypass",
+        "sql/contradiction_suppression",
+        "sql/deadline_precedence_bypass",
+        "sql/declared_scope_bypass",
+        "sql/exception_expiry_bypass",
+        "sql/replica_collapse",
+        "sql/roots_only",
+        "sql/scope_commitment_bypass",
+        "sql/signature_bypass"
+      ],
+      [
+        "graph/contradiction_suppression",
+        "graph/deadline_precedence_bypass",
+        "graph/declared_scope_bypass",
+        "graph/exception_expiry_bypass",
+        "graph/roots_only",
+        "graph/scope_commitment_bypass",
+        "graph/signature_bypass",
+        "sql/contradiction_suppression",
+        "sql/deadline_precedence_bypass",
+        "sql/declared_scope_bypass",
+        "sql/exception_expiry_bypass",
+        "sql/roots_only",
+        "sql/scope_commitment_bypass",
+        "sql/signature_bypass"
+      ]
+    ]
+  },
+  "class_only_detections": {
+    "ordinary_positive": [
+      1,
+      0,
+      1,
+      1,
+      1
+    ],
+    "gridweave_positive": [
+      4,
+      4,
+      4,
+      4,
+      2
+    ],
+    "gridweave_pairs": [
+      14,
+      14,
+      14,
+      14,
+      14
+    ]
+  },
+  "family_detections": {
+    "ordinary_positive": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ]
+    ],
+    "gridweave_positive": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ]
+    ],
+    "gridweave_pairs": [
+      [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0
+      ]
+    ]
+  },
+  "additional_mutants_beyond_positives": [
+    [
+      "graph/contradiction_suppression",
+      "graph/deadline_precedence_bypass",
+      "graph/declared_scope_bypass",
+      "graph/exception_expiry_bypass",
+      "graph/scope_commitment_bypass",
+      "graph/signature_bypass",
+      "sql/contradiction_suppression",
+      "sql/deadline_precedence_bypass",
+      "sql/declared_scope_bypass",
+      "sql/exception_expiry_bypass",
+      "sql/scope_commitment_bypass",
+      "sql/signature_bypass"
+    ],
+    [
+      "graph/contradiction_suppression",
+      "graph/deadline_precedence_bypass",
+      "graph/declared_scope_bypass",
+      "graph/exception_expiry_bypass",
+      "graph/scope_commitment_bypass",
+      "graph/signature_bypass",
+      "sql/contradiction_suppression",
+      "sql/deadline_precedence_bypass",
+      "sql/declared_scope_bypass",
+      "sql/exception_expiry_bypass",
+      "sql/scope_commitment_bypass",
+      "sql/signature_bypass"
+    ],
+    [
+      "graph/contradiction_suppression",
+      "graph/deadline_precedence_bypass",
+      "graph/declared_scope_bypass",
+      "graph/exception_expiry_bypass",
+      "graph/scope_commitment_bypass",
+      "graph/signature_bypass",
+      "sql/contradiction_suppression",
+      "sql/deadline_precedence_bypass",
+      "sql/declared_scope_bypass",
+      "sql/exception_expiry_bypass",
+      "sql/scope_commitment_bypass",
+      "sql/signature_bypass"
+    ],
+    [
+      "graph/contradiction_suppression",
+      "graph/deadline_precedence_bypass",
+      "graph/declared_scope_bypass",
+      "graph/exception_expiry_bypass",
+      "graph/scope_commitment_bypass",
+      "graph/signature_bypass",
+      "sql/contradiction_suppression",
+      "sql/deadline_precedence_bypass",
+      "sql/declared_scope_bypass",
+      "sql/exception_expiry_bypass",
+      "sql/scope_commitment_bypass",
+      "sql/signature_bypass"
+    ],
+    [
+      "graph/contradiction_suppression",
+      "graph/deadline_precedence_bypass",
+      "graph/declared_scope_bypass",
+      "graph/exception_expiry_bypass",
+      "graph/scope_commitment_bypass",
+      "graph/signature_bypass",
+      "sql/contradiction_suppression",
+      "sql/deadline_precedence_bypass",
+      "sql/declared_scope_bypass",
+      "sql/exception_expiry_bypass",
+      "sql/scope_commitment_bypass",
+      "sql/signature_bypass"
+    ]
+  ],
+  "positive_only_in_subset": [
+    [],
+    [],
+    [
+      "graph/replica_collapse",
+      "sql/replica_collapse"
+    ],
+    [],
+    [
+      "graph/replica_collapse",
+      "sql/replica_collapse"
+    ]
+  ],
+  "utility_costs": {
+    "ordinary_positive": [
+      {
+        "subset": 0,
+        "bytes_per_40_calls": 484260,
+        "seconds_per_640_calls": 2.1747363949689316
+      },
+      {
+        "subset": 1,
+        "bytes_per_40_calls": 509064,
+        "seconds_per_640_calls": 1.930079105986806
+      },
+      {
+        "subset": 2,
+        "bytes_per_40_calls": 509077,
+        "seconds_per_640_calls": 2.1324955160635
+      },
+      {
+        "subset": 3,
+        "bytes_per_40_calls": 489033,
+        "seconds_per_640_calls": 2.129400439967867
+      },
+      {
+        "subset": 4,
+        "bytes_per_40_calls": 487536,
+        "seconds_per_640_calls": 2.0823037050213316
+      }
+    ],
+    "gridweave_positive": [
+      {
+        "subset": 0,
+        "bytes_per_40_calls": 633449,
+        "seconds_per_640_calls": 2.6483531270532694
+      },
+      {
+        "subset": 1,
+        "bytes_per_40_calls": 651897,
+        "seconds_per_640_calls": 2.378827345015452
+      },
+      {
+        "subset": 2,
+        "bytes_per_40_calls": 650731,
+        "seconds_per_640_calls": 2.78897542503546
+      },
+      {
+        "subset": 3,
+        "bytes_per_40_calls": 639032,
+        "seconds_per_640_calls": 2.6863797590231115
+      },
+      {
+        "subset": 4,
+        "bytes_per_40_calls": 641410,
+        "seconds_per_640_calls": 2.6241007539902057
+      }
+    ],
+    "gridweave_pairs": [
+      {
+        "subset": 0,
+        "bytes_per_40_calls": 548973,
+        "seconds_per_640_calls": 2.124418223997054
+      },
+      {
+        "subset": 1,
+        "bytes_per_40_calls": 762490,
+        "seconds_per_640_calls": 2.8210362800491566
+      },
+      {
+        "subset": 2,
+        "bytes_per_40_calls": 608478,
+        "seconds_per_640_calls": 2.6046034330429393
+      },
+      {
+        "subset": 3,
+        "bytes_per_40_calls": 647637,
+        "seconds_per_640_calls": 2.814754971983348
+      },
+      {
+        "subset": 4,
+        "bytes_per_40_calls": 649183,
+        "seconds_per_640_calls": 2.4975660930031154
+      }
+    ]
+  },
+  "concrete_mutant_witnesses": {
+    "0-graph-signature_bypass-gridweave_pairs": {
+      "actual": {
+        "baseline_verifiable": true,
+        "obligation_categories": {
+          "OBL-23B68FF9FB36DC2E72E3A22C50A7C27A": "COVERED",
+          "OBL-240D80CEAF6329170748FA5669254A20": "COVERED",
+          "OBL-3AF1DA37D86B5A79708A2AB9B6CC0CA3": "COVERED",
+          "OBL-4DD12E46F47D2FCA0B7E8568D6380D23": "COVERED",
+          "OBL-612116F14BEC73EF4856145497A7876E": "COVERED",
+          "OBL-62C5D33C830985CA6A193F6AB4A1A594": "COVERED",
+          "OBL-6C80377DF8F603D34A1A0C539849EEA7": "COVERED",
+          "OBL-705DDD8E23E586B6A9A411EE49B5145F": "COVERED",
+          "OBL-738B48F11DD072F912B491A6CC5990EA": "COVERED",
+          "OBL-752E1B2E55858E6FCEB5D662ABD1A32D": "COVERED",
+          "OBL-D2DE77A7D34D1EF2A8938AED2DB0707B": "COVERED",
+          "OBL-F534C148DA6DFE2A26657B1A078B58FD": "COVERED"
+        },
+        "outcome": "CLOSED",
+        "receipt_diagnoses": {
+          "RCP-13F6BE14621C9268BFE06649874142A9": "AUTHENTICATED_E2",
+          "RCP-3A9F5AE15A5AF460B43723744D5EAB3D": "AUTHENTICATED_E2",
+          "RCP-3D7A448166CD19936FB1F901F149CFA8": "AUTHENTICATED_E2",
+          "RCP-7B01153564225F11F7E24287136E505C": "AUTHENTICATED_E2",
+          "RCP-7C881C029E45CFF5F9D87DAB6B32B63F": "AUTHENTICATED_E2",
+          "RCP-7FFAEBC61B24DD5E14387E69E016710F": "AUTHENTICATED_E2",
+          "RCP-927AA423E04DB5F7213F34F7E4BB1A10": "AUTHENTICATED_E2",
+          "RCP-A076299F92DAC5B2590FEA26013DAC30": "AUTHENTICATED_E2",
+          "RCP-B9018C06847F23526FC72DD44B785992": "AUTHENTICATED_E2",
+          "RCP-C2F37975F90C4797AD16B10E5EB86669": "AUTHENTICATED_E2",
+          "RCP-C4783848C4E146C7A91B4173D5810935": "AUTHENTICATED_E2",
+          "RCP-DACCDFD01636351561D685A2CB1D17A7": "AUTHENTICATED_E2"
+        },
+        "receipt_reasons": {
+          "RCP-13F6BE14621C9268BFE06649874142A9": [],
+          "RCP-3A9F5AE15A5AF460B43723744D5EAB3D": [],
+          "RCP-3D7A448166CD19936FB1F901F149CFA8": [],
+          "RCP-7B01153564225F11F7E24287136E505C": [],
+          "RCP-7C881C029E45CFF5F9D87DAB6B32B63F": [],
+          "RCP-7FFAEBC61B24DD5E14387E69E016710F": [],
+          "RCP-927AA423E04DB5F7213F34F7E4BB1A10": [],
+          "RCP-A076299F92DAC5B2590FEA26013DAC30": [],
+          "RCP-B9018C06847F23526FC72DD44B785992": [],
+          "RCP-C2F37975F90C4797AD16B10E5EB86669": [],
+          "RCP-C4783848C4E146C7A91B4173D5810935": [],
+          "RCP-DACCDFD01636351561D685A2CB1D17A7": []
+        }
+      },
+      "condition": "gridweave_pairs",
+      "differing_fields": [
+        "outcome",
+        "obligation_categories",
+        "receipt_diagnoses"
+      ],
+      "expected": {
+        "baseline_verifiable": true,
+        "obligation_categories": {
+          "OBL-23B68FF9FB36DC2E72E3A22C50A7C27A": "COVERED",
+          "OBL-240D80CEAF6329170748FA5669254A20": "COVERED",
+          "OBL-3AF1DA37D86B5A79708A2AB9B6CC0CA3": "COVERED",
+          "OBL-4DD12E46F47D2FCA0B7E8568D6380D23": "COVERED",
+          "OBL-612116F14BEC73EF4856145497A7876E": "COVERED",
+          "OBL-62C5D33C830985CA6A193F6AB4A1A594": "COVERED",
+          "OBL-6C80377DF8F603D34A1A0C539849EEA7": "COVERED",
+          "OBL-705DDD8E23E586B6A9A411EE49B5145F": "COVERED",
+          "OBL-738B48F11DD072F912B491A6CC5990EA": "INVALID",
+          "OBL-752E1B2E55858E6FCEB5D662ABD1A32D": "COVERED",
+          "OBL-D2DE77A7D34D1EF2A8938AED2DB0707B": "COVERED",
+          "OBL-F534C148DA6DFE2A26657B1A078B58FD": "COVERED"
+        },
+        "outcome": "PARTIALLY_CLOSED",
+        "receipt_diagnoses": {
+          "RCP-13F6BE14621C9268BFE06649874142A9": "AUTHENTICATED_E2",
+          "RCP-3A9F5AE15A5AF460B43723744D5EAB3D": "AUTHENTICATED_E2",
+          "RCP-3D7A448166CD19936FB1F901F149CFA8": "AUTHENTICATED_E2",
+          "RCP-7B01153564225F11F7E24287136E505C": "AUTHENTICATED_E2",
+          "RCP-7C881C029E45CFF5F9D87DAB6B32B63F": "AUTHENTICATED_E2",
+          "RCP-7FFAEBC61B24DD5E14387E69E016710F": "AUTHENTICATED_E2",
+          "RCP-927AA423E04DB5F7213F34F7E4BB1A10": "AUTHENTICATED_E2",
+          "RCP-A076299F92DAC5B2590FEA26013DAC30": "AUTHENTICATED_E2",
+          "RCP-B9018C06847F23526FC72DD44B785992": "REJECTED",
+          "RCP-C2F37975F90C4797AD16B10E5EB86669": "AUTHENTICATED_E2",
+          "RCP-C4783848C4E146C7A91B4173D5810935": "AUTHENTICATED_E2",
+          "RCP-DACCDFD01636351561D685A2CB1D17A7": "AUTHENTICATED_E2"
+        },
+        "specification": "GridWeave signed-E2 Model-v1 subset; half-open exception expiry; timing precedes baseline"
+      },
+      "mutant": "graph/signature_bypass",
+      "repetition": 0,
+      "unit_id": "7a7fb7630d755b1f593687a99e23fa6c",
+      "census": {
+        "unit_id": "7a7fb7630d755b1f593687a99e23fa6c",
+        "role": "challenge",
+        "pair_id": "fa67e0119f4fd5dd24360e34bb8aa944",
+        "family": "06b0acc9a2306e90bc459e12e51f40e8",
+        "scenario": "PBE-SG-REGULATORY-ERASURE",
+        "scale": "4",
+        "operation": "signature_tamper",
+        "split": "train",
+        "outcome": "PARTIALLY_CLOSED",
+        "receipts": "12",
+        "exceptions": "0",
+        "assets": "12",
+        "replicas": "12",
+        "repositories": "3",
+        "custodians": "2",
+        "max_replicas_per_asset": "1",
+        "lineage_edges": "8",
+        "lineage_depth": "2",
+        "max_lineage_fanout": "1",
+        "asset_structure_class": "1",
+        "custody_structure_class": "1",
+        "semantic_structure_class": "12"
+      }
+    },
+    "0-graph-contradiction_suppression-gridweave_pairs": {
+      "actual": {
+        "baseline_verifiable": true,
+        "obligation_categories": {
+          "OBL-4D287A6114FA55991D12E1274DB8E379": "COVERED",
+          "OBL-9376C60A4328F761DEEAB883226AF55C": "COVERED",
+          "OBL-E04A13A819845716DC228CE89B27EF81": "COVERED"
+        },
+        "outcome": "CLOSED",
+        "receipt_diagnoses": {
+          "RCP-21FFB8B135ADA741E59FB5BC3D33FEDE": "AUTHENTICATED_E2",
+          "RCP-570805EA19F8F43F9E5978E23018073C": "AUTHENTICATED_E2",
+          "RCP-63C30694E862E9FFCF45F5EB33EC3225": "AUTHENTICATED_E2",
+          "RCP-7C843393D20DD2481EE7684752051481": "AUTHENTICATED_E2"
+        },
+        "receipt_reasons": {
+          "RCP-21FFB8B135ADA741E59FB5BC3D33FEDE": [],
+          "RCP-570805EA19F8F43F9E5978E23018073C": [],
+          "RCP-63C30694E862E9FFCF45F5EB33EC3225": [],
+          "RCP-7C843393D20DD2481EE7684752051481": []
+        }
+      },
+      "condition": "gridweave_pairs",
+      "differing_fields": [
+        "outcome",
+        "obligation_categories"
+      ],
+      "expected": {
+        "baseline_verifiable": true,
+        "obligation_categories": {
+          "OBL-4D287A6114FA55991D12E1274DB8E379": "COVERED",
+          "OBL-9376C60A4328F761DEEAB883226AF55C": "CONTRADICTORY",
+          "OBL-E04A13A819845716DC228CE89B27EF81": "COVERED"
+        },
+        "outcome": "DISPUTED",
+        "receipt_diagnoses": {
+          "RCP-21FFB8B135ADA741E59FB5BC3D33FEDE": "AUTHENTICATED_E2",
+          "RCP-570805EA19F8F43F9E5978E23018073C": "AUTHENTICATED_E2",
+          "RCP-63C30694E862E9FFCF45F5EB33EC3225": "AUTHENTICATED_E2",
+          "RCP-7C843393D20DD2481EE7684752051481": "AUTHENTICATED_E2"
+        },
+        "specification": "GridWeave signed-E2 Model-v1 subset; half-open exception expiry; timing precedes baseline"
+      },
+      "mutant": "graph/contradiction_suppression",
+      "repetition": 0,
+      "unit_id": "201d050ba41a973231df24663d8911ad",
+      "census": {
+        "unit_id": "201d050ba41a973231df24663d8911ad",
+        "role": "challenge",
+        "pair_id": "8864a9239c92fd68a6c0f240e3752286",
+        "family": "06b0acc9a2306e90bc459e12e51f40e8",
+        "scenario": "PBE-SG-REGULATORY-ERASURE",
+        "scale": "1",
+        "operation": "conflict",
+        "split": "train",
+        "outcome": "DISPUTED",
+        "receipts": "4",
+        "exceptions": "0",
+        "assets": "3",
+        "replicas": "3",
+        "repositories": "3",
+        "custodians": "2",
+        "max_replicas_per_asset": "1",
+        "lineage_edges": "2",
+        "lineage_depth": "2",
+        "max_lineage_fanout": "1",
+        "asset_structure_class": "5",
+        "custody_structure_class": "6",
+        "semantic_structure_class": "17"
+      }
+    },
+    "0-graph-replica_collapse-gridweave_pairs": {
+      "actual": {
+        "baseline_verifiable": true,
+        "obligation_categories": {
+          "OBL-A5FC223FE557196263B5B3741B5E75F4": "COVERED",
+          "OBL-AD43B95584D8D3D5F6B588D956185BE7": "COVERED",
+          "OBL-ADF2DE1DB814996B3ABBDDE0AD0F8E8D": "COVERED",
+          "OBL-CC3BB03772158876C60847685EFCE571": "COVERED"
+        },
+        "outcome": "CLOSED",
+        "receipt_diagnoses": {
+          "RCP-05C78843D76CB7353C3BFE4E5B0D5892": "AUTHENTICATED_E2",
+          "RCP-65AD1ACF627442C13C28C1DCDC17605D": "AUTHENTICATED_E2",
+          "RCP-CC7165D6100FCA8106843A931360E437": "AUTHENTICATED_E2",
+          "RCP-D71BD12F6B42422A1735B12F99115151": "AUTHENTICATED_E2"
+        },
+        "receipt_reasons": {
+          "RCP-05C78843D76CB7353C3BFE4E5B0D5892": [],
+          "RCP-65AD1ACF627442C13C28C1DCDC17605D": [],
+          "RCP-CC7165D6100FCA8106843A931360E437": [],
+          "RCP-D71BD12F6B42422A1735B12F99115151": []
+        }
+      },
+      "condition": "gridweave_pairs",
+      "differing_fields": [
+        "obligation_categories",
+        "receipt_diagnoses"
+      ],
+      "expected": {
+        "baseline_verifiable": true,
+        "obligation_categories": {
+          "OBL-A5FC223FE557196263B5B3741B5E75F4": "COVERED",
+          "OBL-AD43B95584D8D3D5F6B588D956185BE7": "COVERED",
+          "OBL-ADF2DE1DB814996B3ABBDDE0AD0F8E8D": "COVERED",
+          "OBL-C4DA1406B2692615B37F8AAFE62227FE": "COVERED",
+          "OBL-CC3BB03772158876C60847685EFCE571": "COVERED"
+        },
+        "outcome": "CLOSED",
+        "receipt_diagnoses": {
+          "RCP-05C78843D76CB7353C3BFE4E5B0D5892": "AUTHENTICATED_E2",
+          "RCP-65AD1ACF627442C13C28C1DCDC17605D": "AUTHENTICATED_E2",
+          "RCP-CC7165D6100FCA8106843A931360E437": "AUTHENTICATED_E2",
+          "RCP-D71BD12F6B42422A1735B12F99115151": "AUTHENTICATED_E2",
+          "RCP-FF4BA54194166E92B98A1373646EFBFB": "AUTHENTICATED_E2"
+        },
+        "specification": "GridWeave signed-E2 Model-v1 subset; half-open exception expiry; timing precedes baseline"
+      },
+      "mutant": "graph/replica_collapse",
+      "repetition": 0,
+      "unit_id": "88527404d6a054d32265516c295aaacb",
+      "census": {
+        "unit_id": "88527404d6a054d32265516c295aaacb",
+        "role": "control",
+        "pair_id": "9a712fde4b316ee9e92409f8e1229b08",
+        "family": "10c357b500f8745e7d1a5f5327291434",
+        "scenario": "PBE-SG-PAPER1-COMMUNITY_ENERGY_SCOPE",
+        "scale": "1",
+        "operation": "pre_deadline",
+        "split": "test",
+        "outcome": "CLOSED",
+        "receipts": "5",
+        "exceptions": "0",
+        "assets": "5",
+        "replicas": "6",
+        "repositories": "6",
+        "custodians": "5",
+        "max_replicas_per_asset": "2",
+        "lineage_edges": "3",
+        "lineage_depth": "2",
+        "max_lineage_fanout": "2",
+        "asset_structure_class": "5",
+        "custody_structure_class": "5",
+        "semantic_structure_class": "5"
+      }
+    },
+    "0-graph-roots_only-ordinary_positive": {
+      "actual": {
+        "baseline_verifiable": true,
+        "obligation_categories": {
+          "OBL-2EE4784ED225CF062BDD59841D649419": "EXCEPTED"
+        },
+        "outcome": "CLOSED_WITH_EXCEPTIONS",
+        "receipt_diagnoses": {},
+        "receipt_reasons": {}
+      },
+      "condition": "ordinary_positive",
+      "differing_fields": [
+        "obligation_categories",
+        "receipt_diagnoses"
+      ],
+      "expected": {
+        "baseline_verifiable": true,
+        "obligation_categories": {
+          "OBL-122137921AA2286E8782BBB2A181BBAC": "COVERED",
+          "OBL-2EE4784ED225CF062BDD59841D649419": "EXCEPTED",
+          "OBL-CE53D47B89ACCE78A471D1909CBC1A53": "COVERED"
+        },
+        "outcome": "CLOSED_WITH_EXCEPTIONS",
+        "receipt_diagnoses": {
+          "RECEIPT-1": "AUTHENTICATED_E2",
+          "RECEIPT-2": "AUTHENTICATED_E2"
+        },
+        "specification": "Paper1 explicit specification-authored fixture expectations v1"
+      },
+      "mutant": "graph/roots_only",
+      "repetition": 0,
+      "unit_id": "178f63e721e6b243a2024c4340bceb90"
+    }
+  },
+  "generation": {
+    "reference": {
+      "n": 3,
+      "wall_seconds": [
+        126.74122462000014,
+        123.5910070630016,
+        125.19689369299886
+      ],
+      "memory_mib": [
+        72.015625,
+        72.10546875,
+        72.36328125
+      ],
+      "median_wall_seconds": 125.19689369299886,
+      "median_peak_child_mib": 72.10546875,
+      "public_output_bytes": 7247084,
+      "total_output_bytes": 11707276,
+      "manifest_matches": 3
+    },
+    "structural_extension": {
+      "n": 3,
+      "wall_seconds": [
+        30.393486768000002,
+        36.86484792400006,
+        29.00158244100021
+      ],
+      "memory_mib": [
+        66.13671875,
+        66.13671875,
+        66.13671875
+      ],
+      "median_wall_seconds": 30.393486768000002,
+      "median_peak_child_mib": 66.13671875,
+      "public_output_bytes": 1821206,
+      "total_output_bytes": 5604324,
+      "manifest_matches": 3
+    }
+  },
+  "recorded_platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "recorded_runner_python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "source_sha256": {
+    "${ARTIFACT_ROOT}/GridWeave/datasets/reference/dataset-manifest.json": "35778ae20cf2cda8a2c719b0713ee9c3fc2158eac75fb46679f35cae44db9b9f",
+    "${ARTIFACT_ROOT}/GridWeave/datasets/reference/public/index.json": "7f145e5bca6bf301bd5cae06c285864a7de3cd846ffbcfb5720a051ed982592e",
+    "${ARTIFACT_ROOT}/GridWeave/datasets/reference/sealed/pairs.json": "d9525df550d7ba6bec8a8eaeb6eeb4e7e21b31393cf73630559da665dcdd5e60",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/config/study_v1.json": "d6cc796b263992e3b80da05055342a4804aae90e148212dd7d80e1b82b17b1af",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/evidence/case_census.csv": "65f84d97a577de2dd564f244469ec10f8d3427b08c87dc8049ff6c71cb8f0421",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/evidence/extension_census/case_census.csv": "3057d27bde7e55baae8b60718b50eddd1fd77d84a9e4ae3a68f30383a1fb620b",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/evidence/extension_census/reference_audit.json": "86ff23a5d28f9319422f727651da0dba24af39e8664840b0ed1107a7399b4ab3",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/evidence/reference_audit.json": "788cf57094d8fb5a75c3dbc8eced7755d33e92a36867d2d2be1dcf2b78c3ed9c",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/extension/corpus_v0_2/dataset-manifest.json": "9cb0ffdcb00c55f5ee3f38c9251528aeedeed4cf0f9044c566a07f6c872602f2",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/extension/corpus_v0_2/public/index.json": "91bade4801a13c2ff5dd85643426a280c3414d8d4f9a3b4471412118a0bc3b38",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/extension/corpus_v0_2/sealed/pairs.json": "89267bcd16e0acfa11ec622c1dd9f5ca50949353c97a9536d1d18954213cc81d",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/adjudication.py": "470100e3f9472b6d3321e02ead42cab322de27d5788a9dd2a95da4087b5604ad",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/profiling.py": "2d5f88443f527d3eef8633d5894abfdf6a2331dccd4c35b989dd1ecd74c1ce99",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/study.py": "7668717ada639d3f07ee9f1956ae8ee4c4434cc609bed27eff517ffd0cd93826",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/utility.py": "d5f37dfb1215ac7b14244de5b4a9b1d3b9947621c8007c010b30e97c4c130c97",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/wire.py": "dc75dbb91f8183ba4728b4de423de04e3bd25b141f9f25f5b9590ecb99f56704",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/dataset-identities.json": "cf93e4c3e774edb046a829b10ef023bd7f38b99c4efe6ee3a55bed2b0b7524f3",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/generation_profile/observations.json": "cc08758a695602a7351dfd551293501d3fa8920f0a1a264c71107c9e640cdd06",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/generation_profile/summary.json": "646d7a10d217de6b27288a955deca442a9e66b72739af776b189ac01c2c6c725",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/independent_fixtures/dataset-manifest.json": "b7916e7cb39df62bbdc01aa7db451e41c3b4649971652cf7d20ccd00f34941e2",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/independent_fixtures/public/index.json": "26439735e3cf47883e40cb335de156da3dd831b3eac6c980909d30e9737f88f5",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/independent_fixtures/sealed/fixture-catalogue.json": "f18fc868ec0d0549bd96b270281e09332608a4cc9ea8e2b15ee7de2fb7ebabeb",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/source-freeze.json": "0f696c9bbe57c1afa0d357c5e3839e90ac3291b5da602e5e785dbbaf473b5b76",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/study_summary.json": "e1ae7e5d9d69d8d9429f0f8b1a45ba4855b4da81905955ed6c74dcb3aa81a88f",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/tests.log": "8985e3d35cab9d69ccfbaf9bd5d9c0f08de81baa0530801528da08b5249d47ae",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/utility/case_observations.csv": "07fd8b8d1187343319c9ec4f036ce952de10af4ef86f7b48ccdc3488cf1ad7ba",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/utility/mutant_condition_results.csv": "a8bfa11f09ca6c6c05234d75339954f4b4b41ca40dc530ca3760b5ba3a476d18",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/utility/study-freeze.json": "e898e6c338c4952d052d3ca63f85fc133419ab5f6e3e70ca1dab9c5bd17182fe",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/utility/summary.json": "c148a9665d419946e37a3fb54bea5a83c0528f9769e3564f18cac3a4cc77af79",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/scripts/audit_reference.py": "6078377637d25c19beabd2c4151dcd4c277d2b3c1e3f28503df406ddd91250ed",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/tests/test_consumer_regressions.py": "ac08e12e4c5d30bb201e4d93beab809372045cebb640f4ddf139a9c672356c37",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/tests/test_semantics.py": "c3c295ec89577e71f1136e12c9a0f6b840531a5921d5ad408e5859d1bd8887f8",
+    "${ARTIFACT_ROOT}/GridWeave/glossory1.md": "5286a39c0d035329de73c4dc1ce08b472a87145b982bd874bbba14c725cc38de",
+    "${ARTIFACT_ROOT}/GridWeave/src/gridweave/oracle.py": "d32f6adae588baef3c89dda48a85e24d1db5c60c9667829e7a27a09ae3d80787",
+    "${ARTIFACT_ROOT}/VERCLO/HTGLThesis/src/erasure/federated_closure_evaluator.py": "2d67d153ee8329ea70b5dc745734fea5af16eab9b4c2b2264e4d56241c62c3f2",
+    "${ARTIFACT_ROOT}/VERCLO/HTGLThesis/src/verclo/case_manager.py": "0d0c6d3eac08ac9c84d3582d4ee3c8675ccef369b235224c284203436ea3f3fa",
+    "${ARTIFACT_ROOT}/VERCLO/HTGLThesis/src/verclo/graph_builder.py": "c4ba5aef6121e9a54281215fbfab276c59b978af99cd2fb36193fce9d92f1387",
+    "${ARTIFACT_ROOT}/VERCLO/PaEForge/src/paeforge_pipeline/native_dataset_backend.py": "e11312b9664b2c5f353dad645c0c71b0a5b6f18286d8724958dfc11e12fcf425",
+    "${ARTIFACT_ROOT}/VERCLO/PaEForge/src/paeforge_pipeline/native_dataset_batch_worker.py": "b15b2765212400914da51bf5e431a5977d3a08b663c0b608757c7e68f21cf4f1",
+    "${ARTIFACT_ROOT}/VERCLO/PaEForge/src/paeforge_pipeline/verclo_worker.py": "8d29f81ad86d83f16baba09550a4cdbf22598473c1dc473857c19c195842f34b",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/SEMANTIC_SPECIFICATION.md": "0e3bef52b3458ba93639248396133e1caff4135c7a7df6a208828df82b7c11d4",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/evidence/development_findings/exception_admission.json": "c8fd821d5b68e391dfcb676b0d72793b1635d707a390ae3a7301b936b9838469",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/evidence/development_findings/resolutions.json": "c4df470ce5b196e983755957a78744dea64b2460450c4d725780576dc6cb343a",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/fixtures/semantic_cases_v1.json": "8ef71a3f1f5855f72540fb91fc847ac5494838fa5d07a953a8018990451d9d4a",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/assessor_worker.py": "f4f1bce23e75079eae34db98c28debe6fec41690bb0460a13dbb6722b355c963",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/fixture_builder.py": "ea2170c6c703be8908a57ce33beb235e9537521e8c16a8c885ee74a3314897a4",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/graph_assessor.py": "0425618101efd57d6f17756d74311e463f74952ebe6661a98cb127e8f1003ede",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/paper1/sql_assessor.py": "365b8028d56aa0c7ecbd4c137b0c4cfbd9390d34686c5770eaf90163dc91ace5",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/development-study-1/adjudication/independent_fixtures/verclo/disagreements.json": "2a52d7554c0ebfecabdb7f653334cc5e3e56a9a66593633c626f3e09847bc84a",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/development-study-1/independent_fixtures/public/cases/22db807dd568c9d35228161158b86b6a/receipt-stream.json": "56096421b82284263c2ee739cd49279ab5e90ff34f2c7ab62fd1145de17c1f34",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/development-study-1/independent_fixtures/public/cases/4ea80e46be786d41617daceb1bbb0e4a/receipt-stream.json": "4cb16c134f337b2a306f7bc75ecc82b0ec9032d8cf3511700d6d639a089ccfb8",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/development-study-1/independent_fixtures/public/cases/82119ea3342d21d75651ba6a83996107/receipt-stream.json": "42209f484f51ec6929e7b3947945939451df56314bd7c16609be0756ec96c9aa",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/development-study-1/independent_fixtures/public/cases/e7d21efd87a3fb78a1b1489f8a43dc69/receipt-stream.json": "fd75cd17134cc763ad0cf2e797490dfd75f746c0dc9925b6700d603abe869b24",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/development-study-1/independent_fixtures/sealed/fixture-catalogue.json": "a867ff6a2feff5b3be56c7a675ced341a3d40bba9f7265d7c600605d974011fb",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/development-study-1/independent_fixtures/sealed/source-records/semantic_cases_v1.json.json": "1170eb168ce999bda7eb43fa3fa49fafe2a8d8a195af64413b352bdad2aaa6ef",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/development-study-1/study_summary.json": "86c9521815ee0e5044e68dd89b0c273ee648a4925df810262234c8c7ae74104f",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/adjudication_summary.json": "d847887e151d7b14c8b0ab35953d660a3196e1a7baada9d4ca9bfbd6bac1cba3",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/fixture_generation.json": "e7078abee30e9100010e45a76a298156eabf89ab6284426280bda28f5e02a8a8",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/independent_fixtures/public/cases/22db807dd568c9d35228161158b86b6a/receipt-stream.json": "9e6357cdcaa2cd305e1143cd6c3c8072f334cbcb32688b8aebd37f1ca9693a28",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/independent_fixtures/public/cases/4ea80e46be786d41617daceb1bbb0e4a/receipt-stream.json": "a8b03b3ffff42d0a798801f6b822c5a006ccf44e18f35f1a5a38f68483802f17",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/independent_fixtures/public/cases/82119ea3342d21d75651ba6a83996107/receipt-stream.json": "910ac94a2d7ba64a15f4818f5a74f3700c19e52882ed014430b4327b97ea5055",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/independent_fixtures/public/cases/e7d21efd87a3fb78a1b1489f8a43dc69/receipt-stream.json": "7edad7b1ac41a82682ecdef550c01c3c8382e17f4e0d9cc4a9f900a0ae614a37",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/independent_fixtures/graph/results-manifest.json": "5ef3e81ff5c5fc6cdcbf29143fec8dbb814decada5465be7f99284203adc70a0",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/independent_fixtures/sql/results-manifest.json": "cb93f6207629701cb2d61abcc0d1a5e7a23349b96c44092ea67c1dfc4b4e9c50",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/independent_fixtures/verclo/results-manifest.json": "0dcdfc3e97628c7d7e4be031de37d440703fbab4021bcfd7bfde165753f41eba",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/independent_fixtures/verclo/source-identity.json": "bcc2dcc8d911a24e748992113308f4e5ab27bb531f1af2fdc74166e4aff1dfbf",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/reference/graph/results-manifest.json": "58e7220a843a91387ccdcfdc6ec504b444d40fda1f64390c723727c4e9625fcd",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/reference/sql/results-manifest.json": "fb50726e10f2538dc70dadb0ccfe4bf39b93bed6df0691812a46abd01fa90453",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/reference/verclo/results-manifest.json": "8d4c8a8c14c1f393e3422645355a5428cd64cbb60dd6c2a5e44c07e22cb8bb7e",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/reference/verclo/source-identity.json": "bcc2dcc8d911a24e748992113308f4e5ab27bb531f1af2fdc74166e4aff1dfbf",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/structural_extension/graph/results-manifest.json": "deb97364a4d7581f4827c5f8f2933dc2e9869e7d354bf289fc9966651635e0d1",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/structural_extension/sql/results-manifest.json": "484e7c9493e163bad2dbcd695cfcbba911424736a604780b5b2598348e1257c6",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/structural_extension/verclo/results-manifest.json": "e86fada7bb1c344c1a2a8db43acbe5970dcd33d0b4fd8e9d86e936f477545957",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/structural_extension/verclo/source-identity.json": "bcc2dcc8d911a24e748992113308f4e5ab27bb531f1af2fdc74166e4aff1dfbf",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/extension/profiles/structural_profiles_v0_2.json": "b3841c405d6f14e55fefba14830ce4085a348d9efbe33b9c0df1cfd578ac2d11",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/adjudication/reference/graph/disagreements.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/adjudication/reference/sql/disagreements.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/adjudication/reference/verclo/disagreements.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/adjudication/structural_extension/graph/disagreements.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/adjudication/structural_extension/sql/disagreements.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/adjudication/structural_extension/verclo/disagreements.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/adjudication/independent_fixtures/graph/disagreements.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/adjudication/independent_fixtures/sql/disagreements.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/adjudication/independent_fixtures/verclo/disagreements.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/independent_fixtures/verclo/diagnostics/972b6f7b822a71d2bc7868a889db42c1.json": "cee2701962d78e8e7e530c92c11dcd0539595b70a7e7e5261f2557afb77bc2e7",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/predictions/independent_fixtures/verclo/972b6f7b822a71d2bc7868a889db42c1.json": "6c49198247036cbdad8c74a68c037baae149863564022ecde4637a5cd96bbb7b",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/independent_fixtures/sealed/cases/972b6f7b822a71d2bc7868a889db42c1.json": "72c1925ca294aedd7b2d3aabec2ab1f79600e3f676778ab224cfcefa777b0649",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/independent_fixtures/public/cases/972b6f7b822a71d2bc7868a889db42c1/observer-projection.json": "50ac0052d961b02a5c61db70d530467774c1247e56a8b8c7ceea28c6a549a4a3",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/independent_fixtures/public/configuration/972b6f7b822a71d2bc7868a889db42c1/policies/policy.json": "55396124b1f467cb2ee8e15e768b35ea1ebc54419f26654756fad5b2c8915d02",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/utility/witnesses/0-graph-signature_bypass-gridweave_pairs.json": "9295ae83e0cbab287831fc20c95b9c9fcc832eb15f0f6e8eaf0d6b1ff9878c63",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/utility/witnesses/0-graph-contradiction_suppression-gridweave_pairs.json": "60381f48a8e059360d240acdcce1532fd02f01710cdc3a5ef2b8eaa8df98c34d",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/utility/witnesses/0-graph-replica_collapse-gridweave_pairs.json": "0cf29720f0e714ef709f31ba43cc6cd12da266b995cc67968ba49546f7b0081b",
+    "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1/utility/witnesses/0-graph-roots_only-ordinary_positive.json": "095f9d2333bf233f1e6f42e361937ef40b6ae90617e4c0d2262acc184f3d592e"
+  },
+  "builder_sha256": "b2a54af3e06ccf8a7a7c3d9fa51c4ad69a2cc000dd474d6b27f3e61bb926c29e"
+}

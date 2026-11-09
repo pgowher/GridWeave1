@@ -1,0 +1,30 @@
+{
+  "model_id": "PAE-FECM",
+  "model_version": "1.0.0",
+  "release_tag": "PAE-FECM-v1.0.0",
+  "status": "FROZEN",
+  "approved": true,
+  "approval_basis": "User attested that the reviewer signed the approval record on 2026-09-03; signer identity and signature artifact are not stored in this workspace.",
+  "schemas": [
+    "schemas/pae-common-v1.schema.json",
+    "schemas/pae-ground-truth-v1.schema.json",
+    "schemas/pae-observable-view-v1.schema.json",
+    "schemas/pae-closure-worked-case-v1.schema.json"
+  ],
+  "evidence_registries": [
+    "evidence/evidence_grade_profiles_v1.json",
+    "evidence/evidence_grade_cases_v1.json"
+  ],
+  "model_tests": [
+    "tests/unit/test_phase2_closure_semantics.py",
+    "tests/unit/test_phase2_evidence_grades.py",
+    "tests/unit/test_model_v1_0_validation.py"
+  ],
+  "reference_oracles": [
+    "tests/reference_closure_oracle.py",
+    "tests/reference_evidence_grade_oracle.py"
+  ],
+  "compatibility_rule": "PaEBench ground truth must conform to these schemas and pass the frozen model-validation cases. Semantic changes require an approved model change request and a new model version.",
+  "git_tag": null,
+  "git_tag_status": "UNAVAILABLE_EMPTY_GIT_METADATA"
+}

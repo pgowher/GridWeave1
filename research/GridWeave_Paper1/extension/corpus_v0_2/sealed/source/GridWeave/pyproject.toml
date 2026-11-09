@@ -1,0 +1,84 @@
+[project]
+name = "gridweave"
+version = "0.2.1"
+description = "GridWeave: reproducible smart-grid datasets and signed, oracle-separated VERCLO inputs."
+requires-python = ">=3.11"
+dependencies = [
+  "pyarrow>=15.0.0",
+  "cryptography>=46.0.0",
+  "jsonschema>=4.19.0",
+]
+
+[project.scripts]
+gridweave = "gridweave.cli:main"
+htgl-dataset = "htgl_dataset_generator.cli.main:main"
+htgl-factorial-study = "htgl_dataset_generator.cli.study:main"
+paebench-v1 = "htgl_dataset_generator.paegen.release:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"htgl_dataset_generator.metrics" = ["metric_registry_v1.json"]
+"htgl_dataset_generator.validation" = ["threshold_profiles_v1.json"]
+"htgl_dataset_generator.adapters" = ["adapter_mappings_v1.json"]
+"htgl_dataset_generator.baselines" = ["baseline_profiles_v1.json"]
+"htgl_dataset_generator.experiments" = ["factorial_study_v1.json"]
+
+[tool.setuptools.data-files]
+"schemas" = [
+  "schemas/paebench-family-v1_1.schema.json",
+  "schemas/paebench-family-v1_2.schema.json",
+  "schemas/paebench-observer-case-v1_1.schema.json",
+  "schemas/paebench-observer-case-v1_2.schema.json",
+  "schemas/paebench-sealed-case-v1_1.schema.json",
+  "schemas/paebench-sealed-case-v1_2.schema.json",
+  "schemas/paebench-study-plan-v1_1.schema.json",
+  "schemas/paebench-study-plan-v1_2.schema.json",
+  "schemas/htgl_contract_v1.json",
+  "schemas/pae-common-v1.schema.json",
+  "schemas/pae-ground-truth-v1.schema.json",
+  "schemas/pae-observable-view-v1.schema.json",
+  "schemas/pae-closure-worked-case-v1.schema.json",
+  "schemas/paegen-ground-truth-bundle-v1.schema.json",
+  "schemas/paegen-observer-bundle-v1.schema.json",
+  "schemas/paegen-scenario-manifest-v1.schema.json",
+  "schemas/paegen-smart-grid-scenario-v1.schema.json",
+  "schemas/paegen-attack-fixtures-v1.schema.json",
+  "schemas/paegen-adversarial-receipts-v1.schema.json",
+  "schemas/paegen-privacy-projections-v1.schema.json",
+  "schemas/paebench-study-contract-v1.schema.json",
+]
+"schemas/arrow" = ["schemas/arrow/*.json"]
+"policies" = ["policies/htgl_reference_policy_v1.json"]
+"policies/golden" = ["policies/golden/htgl_reference_policy_cases_v1.json"]
+"anomalies" = [
+  "anomalies/edit_grammar_v1.json",
+  "anomalies/invariant_registry_v1.json",
+  "anomalies/paebench_attack_fixtures_v1.json",
+]
+"evidence" = [
+  "evidence/obligation_templates_v1.json",
+  "evidence/receipt_profiles_v1.json",
+  "evidence/evidence_grade_profiles_v1.json",
+  "evidence/evidence_grade_cases_v1.json",
+  "evidence/paebench_adversarial_receipts_v1.json",
+]
+"observers" = [
+  "observers/observer_profiles_v1.json",
+  "observers/paebench_privacy_projections_v1.json",
+]
+"configs" = ["configs/reference_10k.json", "configs/small_deterministic.json", "configs/represented_450m.json"]
+"configs/pae_bench/smart_grid" = ["configs/pae_bench/smart_grid/*.json"]
+"configs/pae_bench" = ["configs/pae_bench/benchmark_study_contract_v1.json"]
+
+"configs/pae_bench/v1_1" = ["configs/pae_bench/v1_1/*.json"]
+"configs/pae_bench/v1_2" = ["configs/pae_bench/v1_2/*.json"]
+
+[tool.htgl]
+contract = "schemas/htgl_contract_v1.json"
+authoritative_storage = "arrow_schema_parquet_zstd"

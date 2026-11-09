@@ -1,0 +1,14 @@
+[
+  {
+    "dataset": "reference",
+    "returncode": 0,
+    "manifest_sha256": "35778ae20cf2cda8a2c719b0713ee9c3fc2158eac75fb46679f35cae44db9b9f",
+    "cases": 420
+  },
+  {
+    "dataset": "extension",
+    "returncode": 0,
+    "manifest_sha256": "9cb0ffdcb00c55f5ee3f38c9251528aeedeed4cf0f9044c566a07f6c872602f2",
+    "cases": 120
+  }
+]

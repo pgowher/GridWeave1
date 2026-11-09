@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paeforge.local/schema/evaluation-report/v1",
+  "title": "PaEForge PaEBench evaluation report v1",
+  "description": "Evaluator-only post-run comparison. This artifact is never a VERCLO input.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "contract_version", "model_version", "data_class", "access_class", "exchange_id", "run_id", "scenario_id", "case_id", "seed", "evaluated_at", "expected_closure", "observed_closure", "classification", "visibility_attribution", "metrics", "inputs", "provenance"],
+  "properties": {
+    "schema_id": {"const": "https://paeforge.local/schema/evaluation-report/v1"},
+    "schema_version": {"const": "1.0.0"},
+    "contract_version": {"const": "1.0.0"},
+    "model_version": {"const": "PAE-FECM-v1.0.0"},
+    "data_class": {"const": "EVALUATOR_OUTPUT"},
+    "access_class": {"const": "evaluator_only"},
+    "exchange_id": {"$ref": "#/$defs/Identifier"},
+    "run_id": {"$ref": "#/$defs/Identifier"},
+    "scenario_id": {"$ref": "#/$defs/Identifier"},
+    "case_id": {"$ref": "#/$defs/Identifier"},
+    "seed": {"$ref": "#/$defs/SeedRef"},
+    "evaluated_at": {"$ref": "#/$defs/Timestamp"},
+    "expected_closure": {"enum": ["CLOSED", "CLOSED_WITH_EXCEPTIONS", "PARTIALLY_CLOSED", "OPEN", "DISPUTED", "UNVERIFIABLE"]},
+    "observed_closure": {"enum": ["CLOSED", "CLOSED_WITH_EXCEPTIONS", "PARTIALLY_CLOSED", "OPEN", "DISPUTED", "UNVERIFIABLE", "IN_PROGRESS"]},
+    "classification": {"enum": ["MATCH", "MISMATCH", "NOT_FINAL"]},
+    "visibility_attribution": {"enum": ["NONE", "OBSERVER_LIMITATION", "VERIFIER_ERROR", "UNRESOLVED"]},
+    "metrics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["truth_obligation_count", "verclo_obligation_count", "true_positive_obligations", "false_positive_obligations", "false_negative_obligations", "false_closure", "missed_closure"],
+      "properties": {
+        "truth_obligation_count": {"type": "integer", "minimum": 0},
+        "verclo_obligation_count": {"type": "integer", "minimum": 0},
+        "true_positive_obligations": {"type": "integer", "minimum": 0},
+        "false_positive_obligations": {"type": "integer", "minimum": 0},
+        "false_negative_obligations": {"type": "integer", "minimum": 0},
+        "false_closure": {"type": "boolean"},
+        "missed_closure": {"type": "boolean"}
+      }
+    },
+    "inputs": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sealed_truth_sha256", "verclo_result_sha256"],
+      "properties": {"sealed_truth_sha256": {"$ref": "#/$defs/Digest"}, "verclo_result_sha256": {"$ref": "#/$defs/Digest"}}
+    },
+    "provenance": {"$ref": "#/$defs/Provenance"}
+  },
+  "$defs": {
+    "Identifier": {"type": "string", "minLength": 1, "maxLength": 512},
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "SemVer": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "Timestamp": {"type": "string", "format": "date-time"},
+    "SeedRef": {"type": "object", "additionalProperties": false, "required": ["replicate_id", "seed_stream_digest"], "properties": {"replicate_id": {"type": "integer", "minimum": 0}, "seed_stream_digest": {"$ref": "#/$defs/Digest"}}},
+    "Provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["producer", "producer_version", "source_revision", "generated_at", "verclo_result_frozen_before_truth_open"],
+      "properties": {"producer": {"const": "PaEBench"}, "producer_version": {"$ref": "#/$defs/SemVer"}, "source_revision": {"$ref": "#/$defs/Identifier"}, "generated_at": {"$ref": "#/$defs/Timestamp"}, "verclo_result_frozen_before_truth_open": {"const": true}}
+    }
+  }
+}

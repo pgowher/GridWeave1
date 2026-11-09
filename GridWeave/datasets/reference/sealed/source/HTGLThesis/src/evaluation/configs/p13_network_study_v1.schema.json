@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verclo.example/schemas/p13-network-study-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "study_format",
+    "study_id",
+    "config",
+    "environment",
+    "backends",
+    "observations",
+    "fault_cases",
+    "claims",
+    "study_sha256"
+  ],
+  "properties": {
+    "study_format": {"const": "verclo.p13-network-study.v1"},
+    "study_id": {"const": "P13-REPLACEABLE-TRUST-ANCHORS-v1"},
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repetitions", "warmups", "timeout_seconds"],
+      "properties": {
+        "repetitions": {"type": "integer", "minimum": 3},
+        "warmups": {"type": "integer", "minimum": 0},
+        "timeout_seconds": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "environment": {
+      "type": "object",
+      "required": ["python", "platform", "transport", "cryptography"]
+    },
+    "backends": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["backend", "repetitions", "success_rate", "latency_median_ns", "latency_p95_ns", "messages_median", "request_bytes_median", "response_bytes_median"],
+        "properties": {
+          "backend": {"type": "string", "minLength": 1},
+          "repetitions": {"type": "integer", "minimum": 3},
+          "success_rate": {"type": "number", "minimum": 0, "maximum": 1},
+          "latency_median_ns": {"type": "integer", "minimum": 0},
+          "latency_p95_ns": {"type": "integer", "minimum": 0},
+          "messages_median": {"type": "integer", "minimum": 0},
+          "request_bytes_median": {"type": "integer", "minimum": 0},
+          "response_bytes_median": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "minItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["backend", "repetition", "accepted", "latency_ns", "messages_sent", "request_bytes", "response_bytes"],
+        "properties": {
+          "backend": {"type": "string"},
+          "repetition": {"type": "integer", "minimum": 0},
+          "accepted": {"type": "boolean"},
+          "latency_ns": {"type": "integer", "minimum": 0},
+          "messages_sent": {"type": "integer", "minimum": 0},
+          "request_bytes": {"type": "integer", "minimum": 0},
+          "response_bytes": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "fault_cases": {
+      "type": "array",
+      "minItems": 11,
+      "maxItems": 11,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["scenario_id", "fault_profile", "expected_accepted", "accepted", "correct", "diagnostics", "prepare_votes", "commit_votes", "messages_sent"],
+        "properties": {
+          "scenario_id": {"type": "string", "minLength": 1},
+          "fault_profile": {"type": "object"},
+          "expected_accepted": {"type": "boolean"},
+          "accepted": {"type": "boolean"},
+          "correct": {"const": true},
+          "diagnostics": {"type": "array", "items": {"type": "string"}},
+          "prepare_votes": {"type": "integer", "minimum": 0},
+          "commit_votes": {"type": "integer", "minimum": 0},
+          "messages_sent": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["supported", "excluded"],
+      "properties": {
+        "supported": {"type": "array", "items": {"type": "string"}},
+        "excluded": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "study_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

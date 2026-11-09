@@ -1,0 +1,186 @@
+{
+  "suite_version": "1.0.0",
+  "specification_id": "PAE-FM-2.2",
+  "defaults": {
+    "evaluation_time": "2026-09-16T00:00:00Z",
+    "case_deadline": "2026-09-15T00:00:00Z",
+    "root_asset_ids": ["A0"],
+    "policy": {
+      "applicable_asset_kinds": ["SOURCE", "EXPORT", "DERIVATIVE", "AGGREGATE", "FEATURE"],
+      "applicable_replica_classes": ["PRIMARY", "SECONDARY", "CACHE", "BACKUP", "EXPORT_INSTANCE", "DERIVED_INSTANCE"],
+      "allowed_dispositions": ["ERASED", "CRYPTO_ERASED"],
+      "minimum_grade": "E3",
+      "exception_authority_ids": ["P-EXCEPTION-AUTHORITY"],
+      "early_closure_allowed": false
+    },
+    "baseline": {
+      "authorization_valid": true,
+      "policy_authenticated": true,
+      "scope_commitment_valid": true,
+      "obligation_commitment_valid": true,
+      "graph_available": true,
+      "committed_obligation_ids": "AUTO",
+      "no_applicable_determination_valid": false
+    },
+    "assets": [
+      {"asset_id": "A0", "kind": "SOURCE"},
+      {"asset_id": "A1", "kind": "DERIVATIVE"}
+    ],
+    "lineage": [
+      {"source_asset_id": "A0", "target_asset_id": "A1", "kind": "DERIVED_FROM", "status": "DECLARED", "authenticated": true}
+    ],
+    "replicas": [
+      {"replica_id": "I0", "asset_id": "A0", "repository_id": "R0", "custodian_id": "P-C0", "replica_class": "PRIMARY", "status": "DECLARED", "authenticated": true},
+      {"replica_id": "I1", "asset_id": "A1", "repository_id": "R1", "custodian_id": "P-C1", "replica_class": "DERIVED_INSTANCE", "status": "DECLARED", "authenticated": true}
+    ],
+    "evidence": [],
+    "exceptions": [],
+    "challenges": []
+  },
+  "cases": [
+    {
+      "case_id": "WC-01-CLOSED",
+      "title": "All declared obligations have timely E3 success evidence",
+      "evidence": [
+        {"evidence_id": "E0", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-10T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}},
+        {"evidence_id": "E1", "obligation_id": "OBL::A1::I1", "issuer_id": "P-C1", "disposition": "CRYPTO_ERASED", "event_time": "2026-09-11T00:00:00Z", "grade": "E4", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}}
+      ]
+    },
+    {
+      "case_id": "WC-02-CLOSED-WITH-EXCEPTIONS",
+      "title": "One deletion and one valid bounded retention exception",
+      "evidence": [
+        {"evidence_id": "E0", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-10T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}}
+      ],
+      "exceptions": [
+        {"exception_id": "X1", "obligation_ids": ["OBL::A1::I1"], "authority_id": "P-EXCEPTION-AUTHORITY", "basis_commitment": "sha256:basis-1", "effective_at": "2026-09-12T00:00:00Z", "expires_at": "2026-12-01T00:00:00Z", "authenticated": true}
+      ]
+    },
+    {
+      "case_id": "WC-03-PARTIALLY-CLOSED",
+      "title": "One of two obligations is resolved",
+      "evidence": [
+        {"evidence_id": "E0", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-10T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}}
+      ]
+    },
+    {
+      "case_id": "WC-04-OPEN",
+      "title": "No obligation has an admissible resolution"
+    },
+    {
+      "case_id": "WC-05-DISPUTED",
+      "title": "Authenticated incompatible terminal assertions",
+      "evidence": [
+        {"evidence_id": "E0A", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-10T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}},
+        {"evidence_id": "E0B", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "FAILED", "event_time": "2026-09-10T00:00:01Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}},
+        {"evidence_id": "E1", "obligation_id": "OBL::A1::I1", "issuer_id": "P-C1", "disposition": "ERASED", "event_time": "2026-09-11T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}}
+      ]
+    },
+    {
+      "case_id": "WC-06-UNVERIFIABLE",
+      "title": "Obligation commitment cannot be authenticated",
+      "baseline": {"obligation_commitment_valid": false}
+    },
+    {
+      "case_id": "WC-07-IN-PROGRESS",
+      "title": "Deadline has not passed and early closure is disabled",
+      "evaluation_time": "2026-09-12T00:00:00Z",
+      "evidence": [
+        {"evidence_id": "E0", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-10T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}}
+      ]
+    },
+    {
+      "case_id": "WC-08-HIDDEN-LINEAGE-LIMIT",
+      "title": "Perfectly hidden derivative is outside the observable closure claim",
+      "lineage": [
+        {"source_asset_id": "A0", "target_asset_id": "A1", "kind": "DERIVED_FROM", "status": "HIDDEN", "authenticated": false}
+      ],
+      "replicas": [
+        {"replica_id": "I0", "asset_id": "A0", "repository_id": "R0", "custodian_id": "P-C0", "replica_class": "PRIMARY", "status": "DECLARED", "authenticated": true},
+        {"replica_id": "I1", "asset_id": "A1", "repository_id": "R1", "custodian_id": "P-C1", "replica_class": "DERIVED_INSTANCE", "status": "HIDDEN", "authenticated": false}
+      ],
+      "evidence": [
+        {"evidence_id": "E0", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-10T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}}
+      ]
+    },
+    {
+      "case_id": "WC-09-DISCOVERED-LINEAGE",
+      "title": "Authenticated pre-evaluation disclosure expands obligations",
+      "lineage": [
+        {"source_asset_id": "A0", "target_asset_id": "A1", "kind": "DERIVED_FROM", "status": "DISCOVERABLE", "authenticated": true, "disclosed_at": "2026-09-13T00:00:00Z"}
+      ],
+      "replicas": [
+        {"replica_id": "I0", "asset_id": "A0", "repository_id": "R0", "custodian_id": "P-C0", "replica_class": "PRIMARY", "status": "DECLARED", "authenticated": true},
+        {"replica_id": "I1", "asset_id": "A1", "repository_id": "R1", "custodian_id": "P-C1", "replica_class": "DERIVED_INSTANCE", "status": "DISCOVERABLE", "authenticated": true, "disclosed_at": "2026-09-13T00:00:00Z"}
+      ],
+      "evidence": [
+        {"evidence_id": "E0", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-10T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}}
+      ]
+    },
+    {
+      "case_id": "WC-10-LATE-EVIDENCE",
+      "title": "Authentic success evidence issued after the obligation deadline",
+      "assets": [{"asset_id": "A0", "kind": "SOURCE"}],
+      "lineage": [],
+      "replicas": [{"replica_id": "I0", "asset_id": "A0", "repository_id": "R0", "custodian_id": "P-C0", "replica_class": "PRIMARY", "status": "DECLARED", "authenticated": true}],
+      "evidence": [
+        {"evidence_id": "E0", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-15T00:00:01Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}}
+      ]
+    },
+    {
+      "case_id": "WC-11-INVALID-EXCEPTION",
+      "title": "Exception issuer lacks policy authority",
+      "assets": [{"asset_id": "A0", "kind": "SOURCE"}],
+      "lineage": [],
+      "replicas": [{"replica_id": "I0", "asset_id": "A0", "repository_id": "R0", "custodian_id": "P-C0", "replica_class": "PRIMARY", "status": "DECLARED", "authenticated": true}],
+      "exceptions": [
+        {"exception_id": "X0", "obligation_ids": ["OBL::A0::I0"], "authority_id": "P-C0", "basis_commitment": "sha256:basis-0", "effective_at": "2026-09-12T00:00:00Z", "expires_at": "2026-12-01T00:00:00Z", "authenticated": true}
+      ]
+    },
+    {
+      "case_id": "WC-12-BROKEN-CONTINUITY",
+      "title": "Receipt is otherwise valid but its predecessor is unavailable",
+      "assets": [{"asset_id": "A0", "kind": "SOURCE"}],
+      "lineage": [],
+      "replicas": [{"replica_id": "I0", "asset_id": "A0", "repository_id": "R0", "custodian_id": "P-C0", "replica_class": "PRIMARY", "status": "DECLARED", "authenticated": true}],
+      "evidence": [
+        {"evidence_id": "E0", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-10T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": false}}
+      ]
+    },
+    {
+      "case_id": "WC-13-EARLY-CLOSURE",
+      "title": "Policy permits early closure after every obligation reports success",
+      "evaluation_time": "2026-09-12T00:00:00Z",
+      "policy": {"early_closure_allowed": true},
+      "evidence": [
+        {"evidence_id": "E0", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-10T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}},
+        {"evidence_id": "E1", "obligation_id": "OBL::A1::I1", "issuer_id": "P-C1", "disposition": "ERASED", "event_time": "2026-09-11T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}}
+      ]
+    },
+    {
+      "case_id": "WC-14-NO-APPLICABLE",
+      "title": "Authenticated no-applicable-obligations determination avoids vacuous ambiguity",
+      "assets": [{"asset_id": "A0", "kind": "AUDIT_RECORD"}],
+      "lineage": [],
+      "replicas": [{"replica_id": "I0", "asset_id": "A0", "repository_id": "R0", "custodian_id": "P-C0", "replica_class": "PRIMARY", "status": "DECLARED", "authenticated": true}],
+      "baseline": {"no_applicable_determination_valid": true}
+    },
+    {
+      "case_id": "WC-15-EMPTY-AMBIGUOUS",
+      "title": "Empty obligation set without authenticated determination fails closed",
+      "assets": [{"asset_id": "A0", "kind": "AUDIT_RECORD"}],
+      "lineage": [],
+      "replicas": [{"replica_id": "I0", "asset_id": "A0", "repository_id": "R0", "custodian_id": "P-C0", "replica_class": "PRIMARY", "status": "DECLARED", "authenticated": true}]
+    },
+    {
+      "case_id": "WC-16-VALID-KEY-FALSE-PHYSICAL-CLAIM",
+      "title": "Valid evidence can close the recorded claim while physical truth is false",
+      "assets": [{"asset_id": "A0", "kind": "SOURCE"}],
+      "lineage": [],
+      "replicas": [{"replica_id": "I0", "asset_id": "A0", "repository_id": "R0", "custodian_id": "P-C0", "replica_class": "PRIMARY", "status": "DECLARED", "authenticated": true}],
+      "evidence": [
+        {"evidence_id": "E0", "obligation_id": "OBL::A0::I0", "issuer_id": "P-C0", "disposition": "ERASED", "event_time": "2026-09-10T00:00:00Z", "grade": "E3", "authenticated": true, "binding_valid": true, "integrity_valid": true, "ordering_valid": true, "physical_truth_matches": false, "continuity": {"chain_authenticated": true, "sequence_contiguous": true, "predecessors_available": true}}
+      ]
+    }
+  ]
+}

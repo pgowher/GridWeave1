@@ -1,0 +1,912 @@
+{
+  "run": {
+    "contract_version": {
+      "value": "1.1.0",
+      "source": "controlled_synthetic"
+    },
+    "code_version": {
+      "value": "0.1.0",
+      "source": "controlled_synthetic"
+    },
+    "container_version": {
+      "value": "local-dev.v1",
+      "source": "controlled_synthetic"
+    },
+    "run_id": {
+      "value": "RUN-REPRESENTED-450M-0001",
+      "source": "controlled_synthetic"
+    },
+    "scenario_id": {
+      "value": "SCN-REPRESENTED-450M",
+      "source": "controlled_synthetic"
+    },
+    "selected_scenario_ids": {
+      "value": [
+        "SCN-REPRESENTED-450M"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "replicate_count": {
+      "value": 30,
+      "source": "controlled_synthetic"
+    },
+    "root_seed": {
+      "value": "HTGL-REPRESENTED-450M-SEED-0001",
+      "source": "controlled_synthetic"
+    },
+    "horizon_start": {
+      "value": "2026-01-01T00:00:00Z",
+      "source": "controlled_synthetic"
+    },
+    "horizon_end": {
+      "value": "2026-01-02T00:00:00Z",
+      "source": "controlled_synthetic"
+    },
+    "time_zone": {
+      "value": "UTC",
+      "source": "controlled_synthetic"
+    },
+    "calibration_profile_id": {
+      "value": "CAL-CONTROLLED-SYNTHETIC-REPRESENTED-450M-v1",
+      "source": "controlled_synthetic"
+    },
+    "policy_profile_id": {
+      "value": "POLICY-HTGL-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    }
+  },
+  "claim_scale": {
+    "represented_population": {
+      "value": 450000000,
+      "source": "controlled_synthetic"
+    },
+    "materialized_row_target": {
+      "value": 100000,
+      "source": "controlled_synthetic"
+    },
+    "executed_operation_target": {
+      "value": null,
+      "source": "controlled_synthetic"
+    },
+    "aggregation_semantics": {
+      "value": "weighted_population_probability_sample",
+      "source": "controlled_synthetic"
+    },
+    "replay_semantics": {
+      "value": "weighted_analytic_only_no_downstream_execution",
+      "source": "controlled_synthetic"
+    },
+    "estimator_eligible": {
+      "value": true,
+      "source": "controlled_synthetic"
+    },
+    "scale_claim_allowed": {
+      "value": true,
+      "source": "controlled_synthetic"
+    },
+    "operational_claim_allowed": {
+      "value": false,
+      "source": "controlled_synthetic"
+    }
+  },
+  "world": {
+    "regions": {
+      "value": [
+        "R-NORTH",
+        "R-SOUTH",
+        "R-EAST",
+        "R-WEST",
+        "R-CENTRAL"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "jurisdictions": {
+      "value": [
+        "J-NORTH",
+        "J-SOUTH",
+        "J-EAST",
+        "J-WEST",
+        "J-CENTRAL"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "actor_relationship_counts": {
+      "value": {
+        "controls": 1500,
+        "processes_for": 3000,
+        "supplies": 2000,
+        "aggregates": 1000,
+        "oversees": 500,
+        "audits": 200,
+        "discloses_to": 5000
+      },
+      "source": "controlled_synthetic"
+    },
+    "cohorts": {
+      "value": [
+        {
+          "cohort_id": "COHORT-450M-URBAN",
+          "represented_count": 260000000
+        },
+        {
+          "cohort_id": "COHORT-450M-SUBURBAN",
+          "represented_count": 140000000
+        },
+        {
+          "cohort_id": "COHORT-450M-RURAL",
+          "represented_count": 50000000
+        }
+      ],
+      "source": "controlled_synthetic"
+    },
+    "organizations": {
+      "value": [
+        {
+          "organization_id": "ORG-DSO-0001",
+          "actor_class": "dso"
+        },
+        {
+          "organization_id": "ORG-SUPPLIER-0001",
+          "actor_class": "supplier"
+        },
+        {
+          "organization_id": "ORG-AUDITOR-0001",
+          "actor_class": "auditor"
+        }
+      ],
+      "source": "controlled_synthetic"
+    },
+    "fault_domains": {
+      "value": [
+        "FD-NORTH-OPS",
+        "FD-SOUTH-OPS",
+        "FD-EAST-OPS"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "trust_domains": {
+      "value": [
+        "TD-UTILITY",
+        "TD-MARKET",
+        "TD-OVERSIGHT"
+      ],
+      "source": "controlled_synthetic"
+    }
+  },
+  "physical": {
+    "backend": {
+      "value": "procedural",
+      "source": "controlled_synthetic"
+    },
+    "backend_version": {
+      "value": "procedural.v1",
+      "source": "controlled_synthetic"
+    },
+    "calibration_bundle_id": {
+      "value": "CAL-CONTROLLED-SYNTHETIC-REPRESENTED-450M-v1",
+      "source": "controlled_synthetic"
+    },
+    "calibration_source_ids": {
+      "value": [
+        "SRC-CONTROLLED-SYNTHETIC-REPRESENTED-LOAD-SHAPE-v1",
+        "SRC-CONTROLLED-SYNTHETIC-REPRESENTED-BEHAVIOR-v1",
+        "SRC-CONTROLLED-SYNTHETIC-REPRESENTED-TOPOLOGY-v1",
+        "SRC-CONTROLLED-SYNTHETIC-REPRESENTED-DER-v1"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "conditioning_variables": {
+      "value": [
+        "dwelling_type",
+        "tariff_profile",
+        "climate_zone",
+        "der_adoption"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "interval_seconds": {
+      "value": 900,
+      "source": "controlled_synthetic"
+    },
+    "units": {
+      "value": {
+        "energy": "kWh",
+        "power": "kW",
+        "voltage": "V"
+      },
+      "source": "controlled_synthetic"
+    },
+    "meter_error_profile_id": {
+      "value": "METER-ERROR-v1",
+      "source": "controlled_synthetic"
+    },
+    "solver_backend": {
+      "value": "procedural_analytic:v1",
+      "source": "controlled_synthetic"
+    },
+    "solver_tolerances": {
+      "value": {
+        "voltage_pu": 0.05,
+        "loading_percent": 100.0
+      },
+      "source": "controlled_synthetic"
+    }
+  },
+  "catalog": {
+    "database_profiles": {
+      "value": [
+        "DB-METER",
+        "DB-BILLING",
+        "DB-AUDIT"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "object_profiles": {
+      "value": [
+        "OBJ-METER-INTERVAL",
+        "OBJ-CONSENT",
+        "OBJ-ERASURE"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "replica_profiles": {
+      "value": [
+        "primary",
+        "backup",
+        "audit_export"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "retention_profiles": {
+      "value": [
+        "RET-AMI-30D",
+        "RET-AUDIT-365D"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "security_profiles": {
+      "value": [
+        "SEC-SYNTH-DIGEST",
+        "SEC-SYNTH-HMAC"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "derivation_rules": {
+      "value": [
+        "DERIVE-BILLING-FROM-METER",
+        "DERIVE-AUDIT-FROM-EVIDENCE"
+      ],
+      "source": "controlled_synthetic"
+    }
+  },
+  "arrivals": {
+    "model_classes": {
+      "value": [
+        "conditioned_NHPP",
+        "unconditioned_NHPP",
+        "MMPP",
+        "Hawkes"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "base_rates_per_day": {
+      "value": {
+        "consent": 0.02,
+        "access": 0.004,
+        "disclosure": 0.002,
+        "erasure": 0.0002,
+        "audit": 5e-05,
+        "incident": 1e-05
+      },
+      "source": "controlled_synthetic"
+    },
+    "diurnal_profile_id": {
+      "value": "DIURNAL-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "weekday_profile_id": {
+      "value": "WEEKDAY-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "scenario_factors": {
+      "value": {
+        "normal": 1.0,
+        "outage": 2.0
+      },
+      "source": "controlled_synthetic"
+    },
+    "conditioned_total": {
+      "value": 100000,
+      "source": "controlled_synthetic"
+    },
+    "hawkes_parameters": {
+      "value": {
+        "kernel": "exponential.v1",
+        "spectral_radius_bound": 0.8
+      },
+      "source": "controlled_synthetic"
+    },
+    "mmpp_parameters": {
+      "value": {
+        "states": [
+          "normal",
+          "stress",
+          "incident"
+        ],
+        "generator_matrix_id": "MMPP-450M-v1"
+      },
+      "source": "controlled_synthetic"
+    }
+  },
+  "workflows": {
+    "definition_versions": {
+      "value": {
+        "consent": "consent.v1",
+        "collection_processing": "collection_processing.v1",
+        "disclosure": "disclosure.v1",
+        "access": "access.v1",
+        "correction": "correction.v1",
+        "retention": "retention.v1",
+        "erasure": "erasure.v1",
+        "audit": "audit.v1",
+        "operational": "operational.v1",
+        "incident": "incident.v1"
+      },
+      "source": "controlled_synthetic"
+    },
+    "families": {
+      "value": [
+        "consent",
+        "collection_processing",
+        "disclosure",
+        "access",
+        "correction",
+        "retention",
+        "erasure",
+        "audit",
+        "operational",
+        "incident"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "transition_probability_profile_id": {
+      "value": "TRANSITION-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "delay_model_id": {
+      "value": "DELAY-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "resource_profile_id": {
+      "value": "RESOURCE-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "mix_profile_id": {
+      "value": "MIX-BALANCED-RIGHTS-v1",
+      "source": "controlled_synthetic"
+    },
+    "open_horizon_policy": {
+      "value": "allow_open_nonterminal_with_reason",
+      "source": "controlled_synthetic"
+    }
+  },
+  "policy": {
+    "profile_id": {
+      "value": "POLICY-HTGL-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "profile_version": {
+      "value": "1.0.0",
+      "source": "controlled_synthetic"
+    },
+    "rule_source_ids": {
+      "value": [
+        "RULESRC-DPV-ODRL-MAPPING",
+        "RULESRC-HTGL-REFERENCE"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "conflict_strategy": {
+      "value": "priority_then_specificity",
+      "source": "controlled_synthetic"
+    },
+    "golden_suite_id": {
+      "value": "GOLDEN-POLICY-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "evaluator_profile": {
+      "value": "safe_declarative_v1",
+      "source": "controlled_synthetic"
+    },
+    "golden_decision_accuracy_target": {
+      "value": 1.0,
+      "source": "controlled_synthetic"
+    },
+    "rule_trace_coverage_target": {
+      "value": 1.0,
+      "source": "controlled_synthetic"
+    },
+    "conflict_resolution_agreement_target": {
+      "value": 1.0,
+      "source": "controlled_synthetic"
+    }
+  },
+  "anomaly": {
+    "types": {
+      "value": [
+        "unauthorized_purpose",
+        "missing_erasure_propagation",
+        "premature_deletion",
+        "false_confirmation",
+        "causal_orphan",
+        "observer_omission",
+        "cross_region_rule_breach",
+        "clock_replay_conflict"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "prevalence": {
+      "value": {
+        "unauthorized_purpose": 0.001,
+        "missing_erasure_propagation": 0.001,
+        "premature_deletion": 0.001,
+        "false_confirmation": 0.001,
+        "causal_orphan": 0.001,
+        "observer_omission": 0.001,
+        "cross_region_rule_breach": 0.001,
+        "clock_replay_conflict": 0.001
+      },
+      "source": "controlled_synthetic"
+    },
+    "oversampling_strategy": {
+      "value": "paired_counterfactual_weighted",
+      "source": "controlled_synthetic"
+    },
+    "invariant_registry_id": {
+      "value": "INVARIANT-REGISTRY-GOVERNANCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "invariant_registry_version": {
+      "value": "1.0.0",
+      "source": "controlled_synthetic"
+    },
+    "invariant_registry_sha256": {
+      "value": "5e6e74b15e425d950a9eba3a6b8f13ba0b7ccb34573c7be593d6e78303509c0a",
+      "source": "controlled_synthetic"
+    },
+    "target_invariant_ids": {
+      "value": [
+        "INV-PURPOSE-PERMITTED",
+        "INV-ERASURE-REPLICA-CLOSURE",
+        "INV-RETENTION-DUTY-SATISFIED",
+        "INV-RECEIPT-MATCHES-ACTION",
+        "INV-CAUSAL-PARENT-REQUIRED",
+        "INV-OBSERVER-REQUIRED-EVIDENCE-VISIBLE",
+        "INV-CROSS-REGION-PERMISSION",
+        "INV-RECORDED-TIME-CAUSAL-ORDER"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "protected_invariant_ids": {
+      "value": [
+        "INV-SAME-ACTORS",
+        "INV-SAME-OBJECT",
+        "INV-SAME-TIME"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "edit_grammar_id": {
+      "value": "EDIT-GRAMMAR-GOVERNANCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "edit_grammar_version": {
+      "value": "1.0.0",
+      "source": "controlled_synthetic"
+    },
+    "edit_grammar_sha256": {
+      "value": "f8823e5fd01a53ed6ec261e162a264f7a51eb1aef43c4aee13d0ccd7bcd6f366",
+      "source": "controlled_synthetic"
+    },
+    "cost_model_id": {
+      "value": "EDIT-COST-v1",
+      "source": "controlled_synthetic"
+    },
+    "cost_model_version": {
+      "value": "1.0.0",
+      "source": "controlled_synthetic"
+    },
+    "acceptance_profile_id": {
+      "value": "COUNTERFACTUAL-STRICT-TARGET-ONLY-v1",
+      "source": "controlled_synthetic"
+    },
+    "baseline_profile_ids": {
+      "value": [
+        "BASELINE-SEEDED-RANDOM-FIELD-CORRUPTION-v1",
+        "BASELINE-SEEDED-RANDOM-INVALID-TRANSITION-v1"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "search_bound": {
+      "value": 3,
+      "source": "controlled_synthetic"
+    }
+  },
+  "evidence": {
+    "obligation_template_bundle_id": {
+      "value": "OBLIGATION-TEMPLATES-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "obligation_template_bundle_version": {
+      "value": "1.0.0",
+      "source": "controlled_synthetic"
+    },
+    "obligation_template_bundle_sha256": {
+      "value": "420af839e7875ec5121bb857678449c077610aa4f3cc45d0ff6ab9bd9ead9753",
+      "source": "controlled_synthetic"
+    },
+    "obligation_template_ids": {
+      "value": [
+        "OBL-AUTH-v1",
+        "OBL-REPLICA-ERASURE-v1",
+        "OBL-AUDIT-v1"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "sufficiency_profile_id": {
+      "value": "SUFFICIENCY-STRICT-v1",
+      "source": "controlled_synthetic"
+    },
+    "receipt_profile_bundle_id": {
+      "value": "RECEIPT-PROFILES-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "receipt_profile_bundle_version": {
+      "value": "1.0.0",
+      "source": "controlled_synthetic"
+    },
+    "receipt_profile_bundle_sha256": {
+      "value": "f40dc548e02686a6fdc5c4048663d4ee60c8bde4e040d5b6675e713a2ddefec8",
+      "source": "controlled_synthetic"
+    },
+    "canonicalization_profile_id": {
+      "value": "HTGL-CANONICAL-TLV-UTC-US-v1",
+      "source": "controlled_synthetic"
+    },
+    "receipt_profiles": {
+      "value": [
+        "digest",
+        "hmac",
+        "signature",
+        "inclusion_proof",
+        "deletion_acknowledgement",
+        "replica_attestation",
+        "audit_finding",
+        "merkle_anchor",
+        "notification_receipt"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "anchor_profiles": {
+      "value": [
+        "ANCHOR-MERKLE-SYNTH-v1"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "honest_rate": {
+      "value": 0.98,
+      "source": "controlled_synthetic"
+    },
+    "adversarial_rate": {
+      "value": 0.02,
+      "source": "controlled_synthetic"
+    },
+    "adversarial_case_weights": {
+      "value": {
+        "invalid": 0.14,
+        "late": 0.14,
+        "malformed": 0.14,
+        "contradictory": 0.15,
+        "forged_under_synthetic_key": 0.14,
+        "incomplete": 0.15,
+        "missing_dependency": 0.14
+      },
+      "source": "controlled_synthetic"
+    },
+    "synthetic_key_profile_id": {
+      "value": "KEYS-SYNTHETIC-NO-SECRETS-v1",
+      "source": "controlled_synthetic"
+    },
+    "ml_removal_profile_ids": {
+      "value": [],
+      "source": "controlled_synthetic"
+    },
+    "proof_limit_statement": {
+      "value": "Evidence fixtures evaluate model-level verification assumptions and do not prove physical deletion.",
+      "source": "controlled_synthetic"
+    }
+  },
+  "observer": {
+    "profile_bundle_id": {
+      "value": "OBSERVER-PROFILES-REFERENCE-v1",
+      "source": "controlled_synthetic"
+    },
+    "profile_bundle_version": {
+      "value": "1.0.0",
+      "source": "controlled_synthetic"
+    },
+    "profile_bundle_sha256": {
+      "value": "2faf07b14b592b9fe2586fd30a6db826f14ab9e080c91e2441814fba9e52893b",
+      "source": "controlled_synthetic"
+    },
+    "visibility_dsl_profile_id": {
+      "value": "OBSERVER-VISIBILITY-DSL-v1",
+      "source": "controlled_synthetic"
+    },
+    "leakage_scan_profile_id": {
+      "value": "OBSERVER-NONLEAKAGE-STRICT-v1",
+      "source": "controlled_synthetic"
+    },
+    "task_registry_id": {
+      "value": "OBSERVER-RESEARCH-TASKS-v1",
+      "source": "controlled_synthetic"
+    },
+    "observer_profile_ids": {
+      "value": [
+        "OBS-FULL-EVALUATOR",
+        "OBS-DSO-DIRECT",
+        "OBS-AUDITOR-DELAYED",
+        "OBS-PUBLIC-LOSSY",
+        "OBS-ADVERSARIAL-OMISSION",
+        "OBS-COLLUSION-UTILITY-AUDITOR"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "visibility_profiles": {
+      "value": [
+        "direct",
+        "shared",
+        "inferred",
+        "redacted",
+        "delayed",
+        "omitted"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "redaction_profiles": {
+      "value": [
+        "REDACT-TRUTH-LABELS-v1"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "delay_profiles": {
+      "value": [
+        "DELAY-NONE-v1",
+        "DELAY-OBSERVER-v1"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "loss_profiles": {
+      "value": [
+        "LOSS-NONE-v1",
+        "LOSS-LOW-v1",
+        "LOSS-PUBLIC-v1"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "collusion_profiles": {
+      "value": [
+        "COLLUSION-UTILITY-AUDITOR-v1"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "forbidden_field_sets": {
+      "value": [
+        "FORBID-TRUTH-LABELS",
+        "FORBID-PAIR-IDS",
+        "FORBID-SEALED-IDS",
+        "FORBID-SAMPLING-PROBABILITIES"
+      ],
+      "source": "controlled_synthetic"
+    }
+  },
+  "sampling": {
+    "design_types": {
+      "value": [
+        "stratified",
+        "PPS",
+        "cluster",
+        "nested_common_random_numbers"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "primary_unit_types": {
+      "value": [
+        "workflow",
+        "cohort"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "strata_definitions": {
+      "value": [
+        "workflow=region_id:event_family",
+        "cohort=region_id:sampling_stratum"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "pps_measure": {
+      "value": "represented_event_count",
+      "source": "controlled_synthetic"
+    },
+    "target_sample_size": {
+      "value": 10000,
+      "source": "controlled_synthetic"
+    },
+    "closure_policy": {
+      "value": "full_dependency_closure",
+      "source": "controlled_synthetic"
+    },
+    "estimator_families": {
+      "value": [
+        "Horvitz_Thompson",
+        "Hajek"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "common_random_groups": {
+      "value": [
+        "REPRESENTED-450M-CRN"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "simulation_repetitions": {
+      "value": 200,
+      "source": "controlled_synthetic"
+    },
+    "confidence_level": {
+      "value": 0.95,
+      "source": "controlled_synthetic"
+    },
+    "maximum_absolute_relative_bias": {
+      "value": 0.15,
+      "source": "controlled_synthetic"
+    },
+    "minimum_ci_coverage": {
+      "value": 0.85,
+      "source": "controlled_synthetic"
+    }
+  },
+  "validation": {
+    "required_check_ids": {
+      "value": [
+        "SCHEMA-001",
+        "FK-001",
+        "TEMPORAL-ARRIVAL-001",
+        "WORKFLOW-001",
+        "POLICY-001",
+        "EVIDENCE-001",
+        "OBSERVER-001",
+        "SAMPLING-001",
+        "N-N-Q-001",
+        "MANIFEST-001"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "metric_threshold_profile_id": {
+      "value": "THRESHOLD-REPRESENTED-450M-v1",
+      "source": "controlled_synthetic"
+    },
+    "repetition_count": {
+      "value": 30,
+      "source": "controlled_synthetic"
+    },
+    "alpha": {
+      "value": 0.05,
+      "source": "controlled_synthetic"
+    },
+    "confidence_interval_method": {
+      "value": "percentile",
+      "source": "controlled_synthetic"
+    },
+    "multiplicity_correction": {
+      "value": "holm",
+      "source": "controlled_synthetic"
+    }
+  },
+  "output": {
+    "release_profile_id": {
+      "value": "procedural-controlled-synthetic-v1",
+      "source": "controlled_synthetic"
+    },
+    "output_profile_id": {
+      "value": "OUTPUT-REPRESENTED-450M-v1",
+      "source": "controlled_synthetic"
+    },
+    "schema_contract_id": {
+      "value": "htgl-dataset-generator-contract",
+      "source": "controlled_synthetic"
+    },
+    "schema_contract_fingerprint": {
+      "value": "ed8ab03a7913f7b74e0ce5e71e73a90dc4589a1ee8ab490c2a499b7a51dc37ed",
+      "source": "controlled_synthetic"
+    },
+    "dictionary_version": {
+      "value": "1.1.0",
+      "source": "controlled_synthetic"
+    },
+    "parquet_compression": {
+      "value": "ZSTD",
+      "source": "controlled_synthetic"
+    },
+    "partition_keys": {
+      "value": [
+        "scenario_id",
+        "replicate_id",
+        "date"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "row_group_target_bytes": {
+      "value": 134217728,
+      "source": "controlled_synthetic"
+    },
+    "adapters": {
+      "value": [
+        "jsonl_debug_view",
+        "csv",
+        "xes",
+        "jsonld"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "access_classes": {
+      "value": [
+        "public",
+        "restricted",
+        "evaluator_only",
+        "sealed"
+      ],
+      "source": "controlled_synthetic"
+    },
+    "manifest_policy": {
+      "value": "final_bytes_sha256_schema_bound",
+      "source": "controlled_synthetic"
+    },
+    "archive_policy": {
+      "value": "deterministic_atomic_release",
+      "source": "controlled_synthetic"
+    },
+    "table_schema_ids": {
+      "value": [
+        "htgl.dataset.v1.run_scenario",
+        "htgl.dataset.v1.seed_stream",
+        "htgl.dataset.v1.actor",
+        "htgl.dataset.v1.actor_relationship",
+        "htgl.dataset.v1.prosumer_cohort",
+        "htgl.dataset.v1.network_area",
+        "htgl.dataset.v1.local_database",
+        "htgl.dataset.v1.data_object",
+        "htgl.dataset.v1.data_object_replica",
+        "htgl.dataset.v1.raw_meter_reading",
+        "htgl.dataset.v1.raw_der_telemetry",
+        "htgl.dataset.v1.raw_network_state",
+        "htgl.dataset.v1.raw_context_event",
+        "htgl.dataset.v1.arrival",
+        "htgl.dataset.v1.governance_event",
+        "htgl.dataset.v1.event_edge",
+        "htgl.dataset.v1.workflow_instance",
+        "htgl.dataset.v1.policy_rule",
+        "htgl.dataset.v1.policy_decision_truth",
+        "htgl.dataset.v1.anomaly_instance",
+        "htgl.dataset.v1.evidence_obligation",
+        "htgl.dataset.v1.evidence_receipt",
+        "htgl.dataset.v1.observer_event",
+        "htgl.dataset.v1.sampling_design",
+        "htgl.dataset.v1.sample_membership",
+        "htgl.dataset.v1.validation_issue",
+        "htgl.dataset.v1.run_metric",
+        "htgl.dataset.v1.artifact_manifest"
+      ],
+      "source": "controlled_synthetic"
+    }
+  }
+}

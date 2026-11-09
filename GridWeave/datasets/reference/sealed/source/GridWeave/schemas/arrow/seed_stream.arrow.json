@@ -1,0 +1,69 @@
+{
+  "schema_id": "htgl.dataset.v1.seed_stream",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "885189a3254f05639020c126c53930a9589ba692b98d2faf17f626643906802d",
+  "table_name": "seed_stream",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "run_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Run key."
+      }
+    },
+    {
+      "name": "stream_name",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Stable component stream name."
+      }
+    },
+    {
+      "name": "parent_stream_name",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Optional parent stream."
+      }
+    },
+    {
+      "name": "seed_material_hex",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Reproducible derived seed material; no secrets."
+      }
+    },
+    {
+      "name": "algorithm",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "PRNG and derivation algorithm/version."
+      }
+    },
+    {
+      "name": "deterministic_id_namespace",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "UUIDv5/ULID namespace or equivalent."
+      }
+    }
+  ]
+}

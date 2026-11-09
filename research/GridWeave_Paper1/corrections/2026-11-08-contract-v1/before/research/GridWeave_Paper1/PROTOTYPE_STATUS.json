@@ -1,0 +1,32 @@
+{
+  "status": "READY_FOR_CURRENT_WORKSPACE_RESEARCH_USE",
+  "study_version": "GridWeave-Paper1-Study-1.0",
+  "supported_profile": "Default signed E2 policy, no overrides or early closure",
+  "study_path": "${ARTIFACT_ROOT}/research/GridWeave_Paper1/runs/paper1-study-v1",
+  "case_units": 638,
+  "assessors": [
+    "GraphSpec",
+    "RelationalSpec",
+    "VERCLO"
+  ],
+  "class_comparisons": 1914,
+  "unresolved_semantic_field_disagreements": 0,
+  "independent_fixture_cases": 98,
+  "ordinary_positive_fixture_cases": 60,
+  "explicit_semantic_fixture_cases": 38,
+  "seeded_mutants": 16,
+  "fault_families": 8,
+  "utility_case_evaluations": 9600,
+  "generation_repetitions_per_corpus": 3,
+  "byte_identical_regenerations": 6,
+  "conformance_and_regression_tests": 6,
+  "existing_consumer_contract_tests": 20,
+  "implementation_independence": "Separate graph, recursive SQL and related VERCLO assessment logic; shared wire/cryptography and same-task nonblind authorship disclosed",
+  "independent_human_adjudication_claimed": false,
+  "excluded_completion_requirements": [
+    "licensing",
+    "clean installations",
+    "public release",
+    "commercial deployment"
+  ]
+}

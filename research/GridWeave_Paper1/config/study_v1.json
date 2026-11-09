@@ -1,0 +1,13 @@
+{
+ "study_version":"GridWeave-Paper1-Study-1.0",
+ "profile":"REAL_ED25519_SYNTHETIC_E2_DEFAULT",
+ "assessors":["graph","sql","verclo"],
+ "utility_case_budget":40,
+ "utility_repetitions":5,
+ "generation_repetitions":3,
+ "utility_conditions":["ordinary_positive","gridweave_positive","gridweave_pairs"],
+ "scope":"Research prototype in the current workspace",
+ "independence":"No shared assessment code between graph, SQL and VERCLO; same-task nonblind authorship and shared wire/cryptography primitives are disclosed",
+ "completion_checks":["all predictions complete and frozen before label joins","all checker disagreements resolved or explicitly reported","independent construction fixtures tested","matched-budget utility experiment completed","regression tests pass","source and data identities recorded"],
+ "excluded_completion_requirements":["licensing","clean installations","public release","commercial deployment","external human review or institutional endorsement"]
+}

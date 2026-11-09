@@ -1,0 +1,32 @@
+{
+  "profile_version": "1.0.0",
+  "profiles": {
+    "THRESHOLD-REFERENCE-v1": {
+      "source_label": "controlled_synthetic",
+      "engineering_basis": "Reference publication preflight resource envelope; measured evidence remains mandatory.",
+      "max_affected_record_ids": 16,
+      "minimum_rows_per_second": 1.0,
+      "maximum_peak_memory_bytes": 17179869184,
+      "maximum_bytes_per_row": 1048576.0,
+      "minimum_parallel_efficiency": 0.01
+    },
+    "THRESHOLD-REPRESENTED-450M-v1": {
+      "source_label": "controlled_synthetic",
+      "engineering_basis": "Represented-scale study preflight envelope; this is not an operational 450M capacity threshold.",
+      "max_affected_record_ids": 16,
+      "minimum_rows_per_second": 1.0,
+      "maximum_peak_memory_bytes": 34359738368,
+      "maximum_bytes_per_row": 1048576.0,
+      "minimum_parallel_efficiency": 0.01
+    },
+    "THRESHOLD-SMALL-v1": {
+      "source_label": "controlled_synthetic",
+      "engineering_basis": "Deterministic test preflight resource envelope; measured evidence remains mandatory.",
+      "max_affected_record_ids": 16,
+      "minimum_rows_per_second": 1.0,
+      "maximum_peak_memory_bytes": 4294967296,
+      "maximum_bytes_per_row": 1048576.0,
+      "minimum_parallel_efficiency": 0.01
+    }
+  }
+}

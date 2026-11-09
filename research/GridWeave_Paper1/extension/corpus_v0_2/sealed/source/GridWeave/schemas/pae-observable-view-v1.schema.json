@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pae.local/schema/observable-view/v1",
+  "$comment": "Frozen semantic baseline: Federated Erasure Closure Model v1.0.0 (PAE-FECM-v1.0.0).",
+  "title": "VERCLO observable input view",
+  "description": "The only permitted Phase 2.1 scenario input surface for VERCLO. Oracle, attack and behavioural truth fields cannot be represented.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "scenario_id",
+    "produced_at",
+    "as_of",
+    "observer",
+    "policy_profiles",
+    "declared_entities",
+    "case_records",
+    "declared_obligations",
+    "messages",
+    "evidence",
+    "exceptions",
+    "challenges",
+    "availability_observations",
+    "redactions",
+    "projection_commitment"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "scenario_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+    "produced_at": {"$ref": "https://pae.local/schema/common/v1#/$defs/Timestamp"},
+    "as_of": {"$ref": "https://pae.local/schema/common/v1#/$defs/Timestamp"},
+    "observer": {"$ref": "#/$defs/ObserverDescriptor"},
+    "policy_profiles": {
+      "type": "array",
+      "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/PolicyRef"},
+      "minItems": 1
+    },
+    "declared_entities": {"$ref": "#/$defs/DeclaredEntities"},
+    "case_records": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/CaseRecord"}, "minItems": 1},
+    "declared_obligations": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/Obligation"}},
+    "messages": {"type": "array", "items": {"$ref": "#/$defs/DeliveredMessage"}},
+    "evidence": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/EvidenceProjection"}},
+    "exceptions": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/ExceptionRecord"}},
+    "challenges": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/ChallengeRecord"}},
+    "availability_observations": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/AvailabilityObservation"}},
+    "redactions": {"type": "array", "items": {"$ref": "#/$defs/Redaction"}},
+    "projection_commitment": {"$ref": "https://pae.local/schema/common/v1#/$defs/Digest"}
+  },
+  "$defs": {
+    "ObserverDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["principal_id", "roles", "projection_profile_id", "projection_profile_version"],
+      "properties": {
+        "principal_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+        "roles": {
+          "type": "array",
+          "items": {"enum": ["AUDITOR", "VALIDATOR", "OBSERVER"]},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "projection_profile_id": {"$ref": "https://pae.local/schema/common/v1#/$defs/Identifier"},
+        "projection_profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+      }
+    },
+    "DeclaredEntities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["organisations", "principals", "role_assignments", "repositories", "assets", "replicas", "relationships"],
+      "properties": {
+        "organisations": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/OrganisationProjection"}},
+        "principals": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/PrincipalProjection"}},
+        "role_assignments": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/RoleAssignment"}},
+        "repositories": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/RepositoryProjection"}},
+        "assets": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/AssetProjection"}},
+        "replicas": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/ReplicaProjection"}},
+        "relationships": {"type": "array", "items": {"$ref": "https://pae.local/schema/common/v1#/$defs/RelationshipProjection"}}
+      }
+    },
+    "DeliveredMessage": {
+      "allOf": [
+        {"$ref": "https://pae.local/schema/common/v1#/$defs/Message"},
+        {"properties": {"delivery_state": {"enum": ["DELIVERED", "QUARANTINED"]}}},
+        {
+          "not": {
+            "required": ["message_type"],
+            "properties": {"message_type": {"const": "CLOSURE_DECISION"}}
+          }
+        }
+      ]
+    },
+    "Redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_ref", "field_paths", "reason"],
+      "properties": {
+        "record_ref": {"$ref": "https://pae.local/schema/common/v1#/$defs/EntityRef"},
+        "field_paths": {"type": "array", "items": {"type": "string", "pattern": "^/"}, "minItems": 1, "uniqueItems": true},
+        "reason": {"enum": ["MINIMISATION", "AUTHORISATION", "LINKABILITY_RISK", "POLICY"]}
+      }
+    }
+  }
+}

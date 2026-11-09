@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-05",
+  "issue_type": "CONSUMER_REPORTING_METADATA_INCONSISTENCY",
+  "artifact": "extension_verclo_evaluation/evaluation.json",
+  "numeric_field": "synthetic_source_families_N",
+  "observed_numeric_value": 6,
+  "text_field": "statistical_scope",
+  "observed_text": "Paired synthetic cases share seven source families; no independent-sample confidence interval or external generalization claim",
+  "expected_text_semantics": "Refer to six families or derive the text from the actual family count",
+  "classification_effect": "None observed; 120 closure matches",
+  "counted_as_seeded_fault": false,
+  "assessor_code_changed": true,
+  "owning_source": "VERCLO/PaEForge/src/paeforge_pipeline/dataset_evaluator.py",
+  "resolution_status": "RESOLVED_IN_PAPER1_STUDY_V1",
+  "resolution": "Family count is derived from actual data; unpaired case-unit fixtures and producer label provenance are supported and regression tested"
+}

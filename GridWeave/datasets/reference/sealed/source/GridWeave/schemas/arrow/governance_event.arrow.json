@@ -1,0 +1,319 @@
+{
+  "schema_id": "htgl.dataset.v1.governance_event",
+  "schema_version": "1.0.0",
+  "schema_fingerprint": "88f4a2967ef73a691015f819917b86d0ca4b35fc49684d96c81d0684523b5895",
+  "table_name": "governance_event",
+  "format": "arrow-logical-schema-json",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Deterministic event key."
+      }
+    },
+    {
+      "name": "source_event_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "External/imported source key."
+      }
+    },
+    {
+      "name": "scenario_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Scenario key."
+      }
+    },
+    {
+      "name": "replicate_id",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Repetition."
+      }
+    },
+    {
+      "name": "timestamp",
+      "type": "timestamp[us, UTC]",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "World-truth time."
+      }
+    },
+    {
+      "name": "recorded_timestamp",
+      "type": "timestamp[us, UTC]",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Recorder time after synthetic clock/transport effects."
+      }
+    },
+    {
+      "name": "event_type",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "event_type",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Typed event."
+      }
+    },
+    {
+      "name": "event_family",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "event_family",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Workflow family."
+      }
+    },
+    {
+      "name": "source_actor_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Source actor FK."
+      }
+    },
+    {
+      "name": "requesting_actor_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Requester FK."
+      }
+    },
+    {
+      "name": "controller_actor_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Controller FK."
+      }
+    },
+    {
+      "name": "processor_actor_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Processor FK."
+      }
+    },
+    {
+      "name": "oversight_actor_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Oversight actor FK."
+      }
+    },
+    {
+      "name": "subject_cohort_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Cohort FK."
+      }
+    },
+    {
+      "name": "local_database_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Database FK."
+      }
+    },
+    {
+      "name": "data_object_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Object FK."
+      }
+    },
+    {
+      "name": "workflow_instance_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Workflow FK."
+      }
+    },
+    {
+      "name": "workflow_state_before",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "workflow_state",
+        "privacy_class": "restricted",
+        "semantic_invariant": "State before event."
+      }
+    },
+    {
+      "name": "workflow_state_after",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "workflow_state",
+        "privacy_class": "restricted",
+        "semantic_invariant": "State after event."
+      }
+    },
+    {
+      "name": "workflow_step_index",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Zero-based trace index."
+      }
+    },
+    {
+      "name": "root_event_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Root event FK."
+      }
+    },
+    {
+      "name": "causal_depth",
+      "type": "int32",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Longest depth from root."
+      }
+    },
+    {
+      "name": "policy_purpose_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Versioned purpose."
+      }
+    },
+    {
+      "name": "legal_basis_label_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Configured experimental legal-basis label."
+      }
+    },
+    {
+      "name": "consent_state_after",
+      "type": "dictionary<string>",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": "consent_state",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Post-event consent state."
+      }
+    },
+    {
+      "name": "retention_state_after",
+      "type": "dictionary<string>",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": "retention_state",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Post-event retention state."
+      }
+    },
+    {
+      "name": "erasure_state_after",
+      "type": "dictionary<string>",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": "erasure_state",
+        "privacy_class": "restricted",
+        "semantic_invariant": "Post-event erasure state."
+      }
+    },
+    {
+      "name": "payload_schema_id",
+      "type": "string",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Typed payload schema."
+      }
+    },
+    {
+      "name": "payload_ref",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Reference to payload or physical record."
+      }
+    },
+    {
+      "name": "represented_event_count",
+      "type": "float64",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": null,
+        "privacy_class": "restricted",
+        "semantic_invariant": "Population weight."
+      }
+    },
+    {
+      "name": "materialization_reason",
+      "type": "dictionary<string>",
+      "nullable": false,
+      "metadata": {
+        "dictionary_source": "materialization_reason",
+        "privacy_class": "restricted",
+        "semantic_invariant": "sampled, closure_added, anomaly_pair, census or replay."
+      }
+    }
+  ]
+}
